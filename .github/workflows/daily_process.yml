@@ -1,0 +1,46 @@
+name: Daily Arxiv Bot
+
+on:
+  schedule:
+    # 每天 UTC 时间 0点 (北京时间 8点) 运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动点按钮触发
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r daily_paper_bot/requirements.txt
+
+      - name: Run Arxiv Bot (Scrape & Summarize)
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: "deepseek-chat"
+        run: |
+          python daily_paper_bot/main.py
+
+      - name: Run Merge Script (Generate Website)
+        run: |
+          python daily_paper_bot/merge_reports.py
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Auto update: New papers & Website build"
+          file_pattern: 'reports/* pdfs/* daily_paper_bot/processed_ids.txt index.html'
+
