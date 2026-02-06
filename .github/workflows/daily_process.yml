@@ -50,10 +50,13 @@ jobs:
           git add reports/ || true
           git add pdfs/ || true
           git add daily_paper_bot/*.txt || true
-          git add index.html || true
+          git add public/ || true
           
           # 提交（如果没东西提交就跳过）
           git commit -m "🤖 Auto update: New papers & Website build" || echo "No changes to commit"
+          
+          # 先拉取远程最新代码，避免冲突
+          git pull --rebase origin main || true
           
           # 推送
           git push origin HEAD:main
