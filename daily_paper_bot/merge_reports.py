@@ -3,11 +3,12 @@ import re
 import markdown
 from datetime import datetime
 
-import shutil # 新增
+import shutil
 
 REPORTS_DIR = "reports"
 OUTPUT_FILE = "reports/All_Papers_Archive.html"
-INDEX_FILE = "index.html"  # 网站首页文件
+PUBLIC_DIR = "public"  # 新增：对外发布的目录
+INDEX_FILE = "public/index.html"  # 首页生成到 public 里面
 
 def parse_md_file(filepath):
     """
@@ -272,6 +273,9 @@ def generate_archive_html(all_papers):
     print(f"汇总报告已生成: {OUTPUT_FILE}")
     
     # --- 新增：复制为 index.html ---
+    if not os.path.exists(PUBLIC_DIR):
+        os.makedirs(PUBLIC_DIR)
+        
     shutil.copy(OUTPUT_FILE, INDEX_FILE)
     print(f"已更新网站首页: {INDEX_FILE}")
 
