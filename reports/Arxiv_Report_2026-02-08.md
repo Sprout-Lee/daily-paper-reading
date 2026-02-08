@@ -1,0 +1,1608 @@
+# Arxiv Daily Deep Report - 2026-02-08
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 58
+---
+
+## 1. Zero-Shot TTS With Enhanced Audio Prompts: Bsc Submission For The 2026 Wildspoof Challenge TTS Track
+
+**作者**: Jose Giraldo, Alex Peiró-Lilja, Rodolfo Zevallos, Cristina España-Bonet
+**链接**: [2602.05770](https://arxiv.org/abs/2602.05770)
+**分类**: Text-to-Speech | **关键词**: zero-shot TTS, audio enhancement, non-autoregressive models, wild speech, prompt optimization
+
+## 核心痛点
+传统TTS系统依赖高质量录音室数据（如LibriTTS、MLS），难以处理野外自发语音，面临环境噪声、转录错误、韵律多样性（如犹豫、填充词）和时长建模困难等挑战。
+
+## 方法创新
+1. **语音增强**：采用Sidon模型进行多阶段增强，显著优于标准Demucs，提升信号质量。
+2. **非自回归架构**：使用StyleTTS2和F5-TTS，结合灵活时长建模，改善韵律自然度。
+3. **微调策略**：在增强后的TITW-Easy数据集上微调预训练模型，而非从头训练，提高鲁棒性。
+4. **推理参数分析**：系统研究参考提示音频的质量和长度对零样本合成性能的影响。
+
+## 实验结果
+- **音频质量**：使用增强提示音频，F5-TTS在KSUT集上达到4.21 UTMOS和3.47 DNSMOS，StyleTTS2在KSUT集上达到4.21 UTMOS和2.99 DNSMOS。
+- **可懂度**：增强提示降低WER，F5-TTS在KSKT集上WER为0.07（增强后），StyleTTS2在KSKT集上WER为0.14（增强后）。
+- **说话人相似性**：长提示音频（平均7.7秒）提升SECS和降低F0 RMSE，短提示（平均5.5秒）导致相似性下降，尤其对StyleTTS2影响显著。
+- **模型比较**：F5-TTS在可懂度和音频质量上总体更优，被选为WildSpoof挑战最终提交模型；从头训练的小型F5-TTS变体性能较差（3.27 UTMOS），突显迁移学习价值。
+
+## 一句话评价
+该研究通过结合语音增强、非自回归架构和精细的推理参数优化，有效提升了零样本TTS在野外语音场景下的性能，为现实语音生成提供了实用方案。
+
+---
+
+## 2. Wave-Trainer-Fit: Neural Vocoder with Trainable Prior and Fixed-Point Iteration towards High-Quality Speech Generation from SSL features
+
+**作者**: Hien Ohnaka, Yuma Shirahata, Masaya Kawamura
+**链接**: [2602.05443](https://arxiv.org/abs/2602.05443)
+**分类**: Speech Synthesis | **关键词**: Neural Vocoder, Self-Supervised Learning, Variational Autoencoder, Speech Synthesis, Waveform Generation
+
+## 核心痛点
+
+传统神经声码器（如WaveFit）在从自监督学习（SSL）特征生成高质量语音波形时面临两大挑战：1）由于SSL特征缺乏信号处理知识，无法使用手工设计的先验噪声采样方法，只能从高斯噪声开始推理；2）无法利用梅尔频谱图的能量信息进行显式增益调整，模型需要隐式学习能量预测，增加了训练难度。
+
+## 方法创新
+
+WaveTrainerFit在WaveFit基础上引入两大关键改进：
+
+1. **可训练先验**：通过变分自编码器（VAE）学习目标语音的分布，使推理过程从接近目标语音的噪声开始，而非高斯噪声，从而减少推理步数。
+
+2. **参考感知增益调整**：对可训练先验施加约束，使其学习语音能量，从而进行显式增益调整，解放声码器隐式能量预测的任务，让模型更专注于波形建模的关键方面。
+
+## 实验结果
+
+- **客观评估**：WaveTrainerFit在更少推理步数下实现了比WaveFit更高质量的波形生成。
+- **鲁棒性**：即使在深层SSL特征（包含有限声学信息）条件下，也能生成自然波形。
+- **主观评估**：在说话人相似度方面优于基线方法。
+
+## 一句话评价
+
+WaveTrainerFit通过引入可训练先验和参考感知增益调整，显著提升了从SSL特征生成语音的质量和效率，为数据驱动特征的声码器设计提供了新思路。
+
+---
+
+## 3. Exterior sound field estimation based on physics-constrained kernel
+
+**作者**: Juliano G. C. Ribeiro, Ryo Matsuda, Jorge Trevino
+**链接**: [2602.05236](https://arxiv.org/abs/2602.05236)
+**分类**: Acoustic Signal Processing | **关键词**: Physics-informed machine learning, Sound field interpolation, Gaussian process regression, Exterior sound field problem
+
+## 核心痛点
+
+外部声场插值是一个具有挑战性的问题，传统方法通常需要特定的麦克风阵列配置和先验的源条件知识。现有方法如球面波函数展开对正则化和麦克风分布敏感，而基于神经网络的物理信息模型在训练时可能因源点发散而困难。
+
+## 方法创新
+
+本文提出了一种基于高斯过程回归的插值方法，使用具有可训练内积公式的点源再生核来拟合外部声场。该方法的关键创新在于：
+1. 定义了一个基于加权内积的再生核希尔伯特空间，使用参数化权重函数自动衰减高阶谐波分量
+2. 核函数基于非齐次亥姆霍兹方程的外部波函数解，默认满足物理约束
+3. 允许使用任意分布的麦克风阵列，不依赖于特定的阵列配置
+
+## 实验结果
+
+在数值模拟实验中，将提出的方法与传统的球面波函数展开方法和已建立的物理信息机器学习模型（点神经元网络）进行比较：
+1. 在100 Hz至2.5 kHz的分析频率范围内，平均插值误差降低约2 dB
+2. 在目标区域内更一致地重建真实声场
+3. 在球形阵列分布和完全随机分布两种情况下均表现出优越性能
+
+## 一句话评价
+
+本文提出的物理约束核方法为外部声场估计提供了一种灵活且准确的新框架，突破了传统方法对麦克风阵列配置的限制。
+
+---
+
+## 4. ARCHI-TTS: A flow-matching-based Text-to-Speech Model with Self-supervised Semantic Aligner and Accelerated Inference
+
+**作者**: Chunyat Wu, Jiajun Deng, Zhengxi Liu, Zheqi Dai, Haolin He, Qiuqiang Kong
+**链接**: [2602.05207](https://arxiv.org/abs/2602.05207)
+**分类**: Text-to-Speech | **关键词**: flow matching, semantic aligner, non-autoregressive TTS, accelerated inference, zero-shot synthesis
+
+## 核心痛点
+1. **文本-语音对齐建模困难**：现有非自回归TTS模型在文本与音频的时序和语义对齐方面存在挑战，传统方法如音素级时长或单调对齐搜索可能影响语音自然度。
+2. **推理计算成本高**：基于扩散的迭代去噪过程需要大量计算资源，导致推理延迟和效率低下。
+
+## 方法创新
+1. **自监督语义对齐器**：采用Transformer编码器架构，通过文本序列和语音长度序列（掩码嵌入）的交互，动态生成与文本对齐的语义表示，无需显式时长标注。
+2. **加速推理策略**：在条件编码器中复用编码特征跨去噪步骤，显著减少计算开销，无需额外蒸馏训练。
+3. **压缩语音潜在表示**：使用变分自编码器（VAE）将音频压缩为低令牌率（12.5Hz）的潜在表示，替代高冗余的梅尔频谱图。
+4. **辅助CTC损失**：在条件编码器中引入CTC损失，增强文本语义理解和对齐。
+5. **条件流匹配框架**：基于最优传输路径的流匹配目标训练模型，结合DiT块构建条件编码器和速度解码器。
+
+## 实验结果
+1. **性能指标**：在LibriSpeech-PC test-clean上达到1.98%的词错误率（WER），在SeedTTS test-en/test-zh上分别达到1.47%/1.42%的WER。
+2. **效率优势**：使用8块RTX5090 GPU训练4天，数据量仅为典型系统的一小部分，推理时无需训练即可加速。
+3. **主观质量**：在平均意见得分（MOS）评估中，在自然度、说话人相似度和质量方面与工业级TTS系统竞争。
+4. **超越基线**：在多个数据集上一致优于近期最先进的TTS系统。
+
+## 一句话评价
+ARCHI-TTS通过创新的语义对齐器和高效推理设计，在保持高质量语音合成的同时，显著提升了计算效率，为零样本TTS提供了实用且可扩展的解决方案。
+
+---
+
+## 5. HyperPotter: Spell the Charm of High-Order Interactions in Audio Deepfake Detection
+
+**作者**: Qing Wen, Haohao Li, Zhongjie Ba, Peng Cheng, Miao He, Li Lu, Kui Ren
+**链接**: [2602.05670](https://arxiv.org/abs/2602.05670)
+**分类**: Audio Deepfake Detection | **关键词**: High-Order Interactions, Hypergraph, Audio Deepfake Detection
+
+## 核心痛点
+音频深度伪造检测（ADD）现有方法主要依赖局部或成对特征交互，忽略了高阶交互（HOIs），导致难以捕捉合成音频中跨多个声学维度的协同伪影，限制了检测的泛化能力。
+
+## 方法创新
+提出HyperPotter，一种基于超图的框架，通过聚类超边和类感知原型初始化，显式建模高阶协同交互。关键组件包括关系伪影放大模块和原型导向的超边初始化机制，以增强信息性协同伪影并高效构建关系。
+
+## 实验结果
+在11个数据集上平均相对增益22.15%，优于基线；在4个跨域挑战数据集上超越最先进方法13.96%，显示出对多样化攻击和说话者的优越泛化性能。
+
+## 一句话评价
+该研究首次从信息论角度探讨音频深度伪造检测中的高阶效应，通过超图建模协同交互，显著提升了检测的泛化能力。
+
+---
+
+## 6. Phase-Only Positioning in Distributed MIMO Under Phase Impairments: AP Selection Using Deep Learning
+
+**作者**: Fatih Ayten, Musa Furkan Keskin, Akshay Jain, Mehmet C. Ilter, Ossi Kaltiokallio, Jukka Talvitie, Elena Simona Lohan, Mikko Valkama
+**链接**: [2602.05034](https://arxiv.org/abs/2602.05034)
+**分类**: Wireless Positioning and Localization | **关键词**: Carrier phase positioning, Distributed MIMO, Deep learning, AP selection, Phase synchronization errors
+
+## 核心痛点
+
+论文针对分布式多输入多输出（D-MIMO）网络中仅使用载波相位进行高精度定位时面临的挑战：
+1. **相位同步误差**：分布式天线点（AP）之间的相位同步误差会显著降低定位性能。
+2. **计算复杂度**：传统方法在估计所有可能的整数模糊度时计算开销大，难以满足下一代无线网络对低延迟的要求。
+3. **相位敏感性**：仅依赖相位测量时，系统对硬件损伤和环境噪声高度敏感。
+
+## 方法创新
+
+论文提出了一种基于深度学习的相位仅定位框架，主要包括两个核心部分：
+1. **双曲线交点定位方法**：
+   - 使用差分相位测量，通过超几何关系确定用户设备（UE）位置。
+   - 包含差分模糊度估计器（基于多层感知机MLP）和梯度下降（GD）求解器。
+2. **基于深度学习的AP选择方法**：
+   - 设计神经网络（NN）动态选择最优的AP对（仅估计两个模糊度），以最大化定位精度。
+   - 特征工程：结合测量特征（如差分相位、信噪比SNR）和几何特征（如AP间距离、角度关系）。
+   - 网络结构：输入层（8I维）、5个隐藏层（ReLU激活）、输出层（线性激活，预测所有可能AP对的定位误差）。
+
+## 实验结果
+
+- **仿真设置**：100m²区域，9个分布式AP，5G NR上行导频配置，考虑相位扰动和噪声。
+- **性能提升**：
+  - 在相位同步误差存在下，相比基线方法（如估计所有模糊度），定位精度显著提高。
+  - 推理复杂度降低约19.7%（从1.262×10⁶ FLOPs降至约0.594×10⁶ FLOPs）。
+- **训练细节**：
+  - 差分模糊度估计器：使用70万训练样本，神经元参数D=150。
+  - AP选择网络：使用20万训练样本，神经元参数A=100，通过最小化均方误差（MSE）损失优化。
+
+## 一句话评价
+
+该研究通过深度学习驱动的AP选择策略，有效解决了D-MIMO网络中相位仅定位的同步误差和计算效率问题，为6G高精度低延迟定位提供了实用化方案。
+
+---
+
+## 7. LALM-as-a-Judge: Benchmarking Large Audio-Language Models for Safety Evaluation in Multi-Turn Spoken Dialogues
+
+**作者**: Amir Ivry, Shinji Watanabe
+**链接**: [2602.04796](https://arxiv.org/abs/2602.04796)
+**分类**: Audio-Language Models for Safety Evaluation | **关键词**: Large Audio-Language Models, Safety Evaluation, Multi-Turn Spoken Dialogues, Controlled Benchmark, Paralinguistic Cues
+
+## 核心痛点
+当前语音对话系统（SDS）的安全评估主要依赖文本中心方法，忽略了音频特有的副语言线索（如语调、强调）和转录错误，且缺乏针对多轮口语对话的结构化安全评估资源。
+
+## 方法创新
+1. **LALM-as-a-Judge基准**：首个针对多轮口语对话安全评估的大规模音频-语言模型（LALM）基准，包含24,000个受控生成的不安全对话变体（3-10轮）。
+2. **受控不安全对话生成**：从安全对话（DEEPDIALOGUE数据集）出发，通过GPT-4o生成单轮不安全内容（覆盖8个有害类别和5个严重等级），并使用Coqui XTTS-v2合成语音，保持其他轮次不变。
+3. **系统化评估框架**：评估三个开源LALM（Qwen2-Audio、Audio Flamingo 3、MERaLiON）作为零样本安全法官，在音频、转录或多模态输入下输出[0,1]安全分数，并分析敏感性、特异性（严重等级排序）和稳定性（轮次位置偏差）。
+
+## 实验结果
+1. **架构与模态权衡**：最敏感的法官在轮次间最不稳定，而稳定配置可能牺牲对轻度有害内容的检测。
+2. **转录质量瓶颈**：Whisper-Large转录可能显著降低转录模式的敏感性，但基本保持严重等级排序。
+3. **音频关键作用**：当副语言线索或转录保真度对类别至关重要时（如强调、环境信号），音频输入变得关键。
+4. **人类验证**：在160个对话上，5名人类评分者确认了可靠的不安全检测和有意义的严重等级量表。
+
+## 一句话评价
+该研究填补了多轮口语对话安全评估的空白，通过受控基准揭示了LALM作为安全法官的架构-模态权衡，为实践者提供了基于转录质量和声学环境的配置指导。
+
+---
+
+## 8. Universal Robust Speech Adaptation for Cross-Domain Speech Recognition and Enhancement
+
+**作者**: Chien-Chun Wang, Hung-Shin Lee, Hsin-Min Wang, Berlin Chen
+**链接**: [2602.04307](https://arxiv.org/abs/2602.04307)
+**分类**: Speech Recognition and Audio Enhancement | **关键词**: Automatic Speech Recognition, Speech Enhancement, Domain Adaptation, Generative Adversarial Network, Noise and Channel Distortion
+
+## 核心痛点
+预训练的自动语音识别（ASR）和语音增强（SE）模型在匹配的噪声和信道条件下表现优异，但在面对域偏移（特别是未见过的噪声和信道失真）时性能严重下降。现有方法通常独立处理噪声或信道失真，缺乏统一框架，且依赖大量标注数据或复杂训练流程，限制了实际应用的可扩展性。
+
+## 方法创新
+提出URSA-GAN（Universal Robust Speech Adaptation Generative Adversarial Network），一个统一的、域感知的生成框架，旨在同时缓解噪声和信道条件的不匹配。关键创新包括：
+1. **双嵌入架构**：包含噪声编码器和信道编码器，分别预训练以捕获域相关表示，这些嵌入用于条件化GAN生成器，合成在声学上与目标域对齐的语音，同时保留语音内容。
+2. **动态随机扰动**：一种新颖的正则化技术，在生成过程中向嵌入引入受控变异性，提升对未见域的鲁棒性。
+3. **两阶段训练流程**：第一阶段训练编码器提取噪声和信道嵌入；第二阶段使用这些嵌入指导生成器合成目标域语音，判别器确保生成语音的真实性。
+
+## 实验结果
+在多样噪声和信道不匹配场景下评估：
+- ASR任务：在跨域信道条件下，URSA-GAN有效降低字符错误率（CER）。
+- SE任务：在噪声语音场景中，改善感知指标。
+- 混合评估：在结合噪声和信道退化的复合测试条件下，URSA-GAN展现出泛化能力，ASR性能相对提升16.16%，SE指标相对提升15.58%。
+
+## 一句话评价
+URSA-GAN通过统一处理噪声和信道失真，以数据高效的方式显著提升了ASR和SE系统在复杂真实场景中的鲁棒性和泛化能力。
+
+---
+
+## 9. Sounding Highlights: Dual-Pathway Audio Encoders for Audio-Visual Video Highlight Detection
+
+**作者**: Seohyun Joo, Yoori Oh
+**链接**: [2602.03891](https://arxiv.org/abs/2602.03891)
+**分类**: Audio-Visual Video Highlight Detection | **关键词**: Video Highlight Detection, Audio-Visual Learning, Multimodal Fusion, Spectro-Temporal Dynamics
+
+## 核心痛点
+现有音频-视觉视频高光检测模型通常未充分利用音频模态，主要依赖预训练模型提取的高层语义特征，而忽略了声音丰富的频谱-时间动态特性。这导致模型无法有效捕捉音频中的瞬态声学事件（如突然的声音变化），而这些事件往往是视频关键时刻的重要线索。
+
+## 方法创新
+提出DA ViHD框架，核心是双通路音频编码器：
+1. **语义通路**：使用预训练的PANN模型处理原始音频波形，提取高层语义信息（如语音、音乐、特定声音事件）
+2. **动态通路**：处理对数梅尔频谱图，通过多分支架构捕获频谱-时间动态特性
+   - 使用时间注意力图和速度注意力图
+   - 引入显著性门控机制
+   - 采用频率动态卷积层，动态组合基础核的输出来形成自适应滤波器
+
+音频特征融合采用早期自注意力策略，先对两个通路的特征分别进行自注意力处理，再通过元素级乘法融合，让动态特征调制语义特征以增强显著信息。
+
+## 实验结果
+在Mr.HiSum大规模基准测试上取得了新的最先进性能，证明了双面音频表示对提升高光检测性能的关键作用。
+
+## 一句话评价
+该研究通过创新的双通路音频编码器设计，有效解决了现有模型对音频动态特性利用不足的问题，为音频-视觉视频高光检测领域提供了新的技术思路。
+
+---
+
+## 10. Benchmarking Automatic Speech Recognition for Indian Languages in Agricultural Contexts
+
+**作者**: Chandrashekar M S, Vineet Singh, Lakshmi Pedapudi
+**链接**: [2602.03868](https://arxiv.org/abs/2602.03868)
+**分类**: Speech Recognition | **关键词**: Automatic Speech Recognition, Agricultural Technology, Indian Languages, Low-Resource Languages, Domain-Specific ASR
+
+## 核心痛点
+印度农业咨询服务数字化面临自动语音识别（ASR）系统在农业领域多语言（特别是低资源语言）中准确转录的挑战，传统ASR评估框架无法有效处理农业术语错误带来的实际风险（如农药名称误识别可能导致作物损失）。
+
+## 方法创新
+1. **提出农业加权词错误率（AWWER）**：基于农业术语词典（权重1-4）对错误进行加权，优先惩罚核心农业术语错误。
+2. **引入LLM基于效用的评分**：使用GPT-4o评估转录实用性（1-4分），关注语义准确性。
+3. **多模型基准测试框架**：评估10个ASR模型在印地语、泰卢固语和奥里亚语上的性能，涵盖开源、商业和研究模型。
+4. **音频质量分析**：分析真实农业现场录音的噪声水平（低/中/高）和音频问题类型（如背景谈话、风声）。
+5. **说话人日志化影响量化**：展示说话人日志化与最佳说话人选择在多说话人录音中可显著降低WER（最高66%）。
+
+## 实验结果
+- **数据集**：10,934条农业现场录音（印地语4,626条、泰卢固语4,075条、奥里亚语2,233条）。
+- **整体性能**：印地语最佳WER 16.2%（Google STT），泰卢固语33.2%（Google STT），奥里亚语35.1%（Azure Diarize with best-speaker）。
+- **模型排名**：印地语中Google STT和Vaani领先；泰卢固语中Google STT最佳；奥里亚语中Azure Diarize（最佳说话人）表现突出。
+- **音频质量**：奥里亚语高噪声样本比例最高（13.6%），背景谈话是主要音频问题。
+- **说话人日志化效果**：对奥里亚语多说话人录音，WER从70.7%（Google STT）降至35.1%（Azure Diarize）。
+
+## 一句话评价
+该研究通过引入领域特定评估指标和全面基准测试，为低资源农业ASR系统提供了实用的改进方向和基线标准。
+
+---
+
+## 11. Speaker-Aware Simulation Improves Conversational Speech Recognition
+
+**作者**: Máté Gedeon, Péter Mihajlik
+**链接**: [2602.04776](https://arxiv.org/abs/2602.04776)
+**分类**: Speech Recognition | **关键词**: Conversational speech, automatic speech recognition, simulated conversations, data augmentation
+
+## 核心痛点
+自动语音识别（ASR）在对话语音中面临挑战，主要由于大规模、标注良好的多说话人对话数据稀缺，尤其是在低资源语言（如匈牙利语）中。现有方法如简单拼接增强缺乏真实对话的动态时序特性，导致ASR模型在真实多说话人对话中泛化能力差。
+
+## 方法创新
+1. **SASC（Speaker-Aware Simulated Conversations）框架的匈牙利语应用**：首次将SASC框架应用于匈牙利语，通过建模说话人特定的时序行为（如停顿和重叠），从单说话人录音生成真实的多说话人对话数据。
+2. **C-SASC（扩展变体）**：在SASC基础上，引入基于话语时长的条件停顿建模，以更准确地反映人类对话中的局部时序依赖关系，同时保持原方法的简单性和效率。
+3. **数据生成与实验设置**：使用匈牙利语BEA-Large语料库生成合成对话，并结合BEA-Dialogue真实对话数据进行ASR训练。实验基于CallHome、BEA-Dialogue和GRASS语料库的对话统计，评估多种模拟配置。
+
+## 实验结果
+- SASC和C-SASC均优于基于简单拼接的数据增强方法，在对话语音识别性能上取得一致提升。
+- C-SASC通过时长条件建模带来适度但系统的增益，尤其在字符级错误率上表现显著，但其效果取决于源对话统计与目标领域的匹配程度。
+- 实验还分析了模拟数据集大小、说话人配对策略和房间脉冲响应（RIR）增强的影响，揭示了缩放行为和收益递减现象。
+
+## 一句话评价
+该研究成功将说话人感知的对话模拟框架扩展到匈牙利语，并通过C-SASC进一步优化时序建模，为低资源语言的对话ASR提供了有效的数据增强策略，同时强调了时序细节建模的益处与局限性。
+
+---
+
+## 12. Frontend Token Enhancement for Token-Based Speech Recognition
+
+**作者**: Takanori Ashihara, Shota Horiguchi, Kohei Matsuura, Tsubasa Ochiai, Marc Delcroix
+**链接**: [2602.04217](https://arxiv.org/abs/2602.04217)
+**分类**: Speech Recognition | **关键词**: discrete speech representation, semantic token, automatic speech recognition, speech enhancement, noise robustness
+
+## 核心痛点
+
+基于离散化语音表示（如语义或语音学标记）的自动语音识别（ASR）系统，虽然具有高效性，但在环境噪声下性能会显著下降，噪声鲁棒性尚未得到充分研究。现有研究主要集中在基于连续特征（如FBANK或SSL特征）的ASR系统上，而针对标记ASR的前端增强策略仍存在空白。
+
+## 方法创新
+
+本文首次系统性地提出了四种前端增强模型，根据输入/输出表示进行分类：
+1. **Wave-to-Wave (W2W-E)**：传统语音增强，将噪声波形转换为增强波形。
+2. **Token-to-Token (T2T-E)**：直接从噪声标记映射到增强标记。
+3. **Vector-to-Token (V2T-E)**：使用SSL模型的加权和特征作为输入，输出增强标记。
+4. **Wave-to-Token (W2T-E)**：直接以噪声波形为输入，输出增强标记，简化系统结构。
+
+这些模型独立于ASR后端训练，具有模块化优势。W2T-E方法通过微调整个SSL模型（使用CTC损失）实现，尽管训练成本较高，但推理成本最低。
+
+## 实验结果
+
+在CHiME-4数据集上的实验表明：
+- **W2T-E增强前端在标记ASR中表现最佳**，在大多数情况下甚至优于基于连续SSL特征的ASR系统。
+- 标记级准确率（如UED）与ASR准确率（WER）并不总是正相关，表明仅优化标记级指标可能不足以预测识别性能。
+- 实验还比较了不同tokenization模型（如MLP、E-Branchformer、TCN）在V2T-E中的效果。
+
+## 一句话评价
+
+本文通过系统性的前端增强策略，显著提升了基于标记的ASR在噪声环境下的鲁棒性，为高效且鲁棒的语音处理系统提供了重要基础。
+
+---
+
+## 13. Audit After Segmentation: Reference-Free Mask Quality Assessment for Language-Referred Audio-Visual Segmentation
+
+**作者**: Jinxing Zhou, Yanghao Zhou, Yaoting Wang, Zongyan Han, Jiaqi Ma, Henghui Ding, Rao Muhammad Anwer, Hisham Cholakkal
+**链接**: [2602.03892](https://arxiv.org/abs/2602.03892)
+**分类**: Multimodal Segmentation | **关键词**: Mask Quality Assessment, Language-Referred Audio-Visual Segmentation, Multimodal Large Language Models, Reference-Free Evaluation, Segmentation Benchmark
+
+## 核心痛点
+
+语言引导的音频-视觉分割（Ref-AVS）任务旨在通过联合推理视频、音频和文本来分割自然语言描述的目标对象。现有研究主要关注生成分割掩码，并通过与真实掩码计算IoU来评估模型性能。然而，在实际部署中，真实掩码往往不可用（即无参考），导致无法自动评估掩码质量。现有数据集和模型缺乏对掩码质量评估的显式建模或自动化支持，这限制了分割系统的可靠性和可解释性。
+
+## 方法创新
+
+1. **提出新任务MQA-RefAVS**：在Ref-AVS背景下引入掩码质量评估任务，要求在不依赖真实掩码的情况下，自动评估候选分割掩码的质量。具体包括：估计掩码与未观察到的真实掩码的IoU、识别错误类型（如完美、完全错误、内部切割、膨胀、侵蚀、合并）、推荐质量控制操作（如接受、小修、大修、拒绝）。
+
+2. **构建基准数据集MQ-RAVSBench**：基于Ref-AVSBench数据集构建，包含1,840个视频、2,046个参考文本，生成26,061个掩码实例。每个掩码涵盖六种代表性错误模式，模拟真实质量变化，从完全准确到几何缺陷和语义错误。数据集分为训练集和测试集，测试集进一步分为Seen和Unseen子集以评估泛化能力。
+
+3. **提出模型MQ-Auditor**：基于多模态大语言模型（MLLM）的审计器，通过监督指令调优训练，显式推理音频、视觉、语言和掩码信息。MQ-Auditor在推理时不需真实掩码，可直接估计IoU和评估质量，支持下游分割改进。
+
+## 实验结果
+
+在MQ-RAVSBench上的广泛实验表明，掩码质量评估在Ref-AVS设置中具有挑战性，现有开源和商业MLLMs（如Gemini-3-Flash）表现不佳。相比之下，MQ-Auditor能提供更准确和可靠的评估。此外，MQ-Auditor可与现有Ref-AVS模型（如TGS-Agent）集成，有效检测分割失败并提升分割性能。
+
+## 一句话评价
+
+该研究填补了Ref-AVS中掩码质量评估的空白，通过新任务、基准数据集和高效模型，提升了分割系统的可解释性和实用性，为多模态分割的可靠部署提供了重要支持。
+
+---
+
+## 14. Decoding Ambiguous Emotions with Test-Time Scaling in Audio-Language Models
+
+**作者**: Hong Jia, Weibin Li, Jingyao Wu, Xiaofeng Yu, Yan Gao, Jintao Cheng, Xiaoyu Tang, Feng Xia, Ting Dang
+**链接**: [2602.03873](https://arxiv.org/abs/2602.03873)
+**分类**: Speech Emotion Recognition | **关键词**: Ambiguous Emotion Recognition, Audio-Language Models, Test-Time Scaling, Speech Emotion Datasets, Affective Computing
+
+## 核心痛点
+1. **情感模糊性挑战**：现实世界中的情感状态往往是模糊、重叠且依赖语境的，而现有研究大多将情感识别简化为离散分类问题，导致模型在处理复杂情感时不可靠。
+2. **数据标注困难**：高质量模糊情感数据稀缺且标注主观性强，难以用于监督学习。
+3. **模型局限性**：现有音频语言模型（ALMs）未针对情感识别进行显式训练，其处理模糊情感的能力尚未充分探索。
+
+## 方法创新
+1. **首次引入测试时缩放（TTS）基准**：针对ALMs在模糊情感识别任务中，系统评估了五种TTS策略（包括思维链提示和基于验证器的搜索方法）。
+2. **综合评估框架**：在三个主流语音情感数据集上，对比了八种最先进的ALMs，并深入分析了模型容量、TTS策略与情感模糊度之间的交互关系。
+3. **问题形式化定义**：将情感标注视为多标注者概率分布，通过熵值量化情感模糊度，为评估提供了理论基础。
+
+## 实验结果（基于摘要内容）
+1. **基准覆盖广泛**：评估了包括Qwen2-Audio、Gemini在内的八种ALMs，覆盖了从低到高不同模糊度的情感场景。
+2. **TTS策略有效性**：初步结果表明TTS（特别是思维链提示和束搜索结合验证器的方法）能提升模型在模糊情感识别中的适应性和推理能力。
+3. **关键发现**：模型性能与情感模糊度呈负相关，TTS在高模糊度场景下提升更显著，但现有奖励模型在情感任务中仍存在不足。
+
+## 一句话评价
+该研究首次系统地将测试时缩放技术引入音频语言模型的模糊情感识别领域，为构建更鲁棒、情境感知的情感智能系统奠定了重要基准。
+
+---
+
+## 15. Conditional Flow Matching for Visually-Guided Acoustic Highlighting
+
+**作者**: Hugo Malard, Gael Le Lan, Daniel Wong, David Lou Alon, Yi-Chiao Wu, Sanjeel Parekh
+**链接**: [2602.03762](https://arxiv.org/abs/2602.03762)
+**分类**: Audio Enhancement | **关键词**: Conditional Flow Matching, Visually-Guided Acoustic Highlighting, Generative Modeling, Audio-Visual Alignment, Rollout Loss
+
+## 核心痛点
+
+视觉引导声学高亮任务旨在通过视频流指导，将不平衡的音频重新平衡，创造连贯的视听体验。现有方法主要基于判别模型，但音频混音存在固有的模糊性（如不平衡音频与平衡音频之间没有自然的一对一映射），导致模型难以处理这种多对多关系，常造成视觉和听觉焦点错位。
+
+## 方法创新
+
+1. **生成式重构**：将任务重新定义为生成问题，引入条件流匹配框架，通过匹配概率分布而非点对点映射，更好地处理音频混音的多对多特性。
+2. **滚动损失**：针对流匹配中早期预测误差（如选择增强的声源）会随步骤累积并偏离数据流形的问题，提出滚动损失，在最终步骤惩罚漂移，鼓励自校正轨迹，稳定长程流积分。
+3. **改进的条件模块**：在向量场回归前融合音频和视觉线索，实现显式的跨模态声源选择，使条件网络能保留与目标声源相关的视觉成分，提升语义对齐。
+
+## 实验结果
+
+通过广泛的定量和定性评估，该方法在视觉引导音频混音任务上一致超越先前最先进的判别方法，验证了生成建模在此类问题中的优越性。实验使用Muddy Mix数据集，并采用四步流匹配（与推理步骤数一致），滚动损失通过端到端反向传播优化模型权重，而非仅输入。
+
+## 一句话评价
+
+该研究通过条件流匹配框架和滚动损失创新，有效解决了视觉引导声学高亮中音频混音的模糊性问题，实现了跨模态对齐的显著提升。
+
+---
+
+## 16. A Unified SVD-Modal Solution for Sparse Sound Field Reconstruction with Hybrid Spherical-Linear Microphone Arrays
+
+**作者**: Shunxi Xu, Thushara Abhayapala, Craig T. Jin
+**链接**: [2602.03398](https://arxiv.org/abs/2602.03398)
+**分类**: Audio Signal Processing | **关键词**: Sparse Recovery, Hybrid Spherical-Linear Microphone Arrays, Sound Field Reconstruction
+
+## 核心痛点
+- 球形麦克风阵列（SMA）在稀疏恢复（SR）中受限于有限球谐（SH）阶数，导致低频分辨率低和高频混叠问题。
+- 线性麦克风阵列（LMA）对房间混响敏感，直接与SMA拼接会引入虚假成分，降低SR性能。
+- 现有方法（如直接拼接和残差细化）对混合阵列处理缺乏统一的理论框架。
+
+## 方法创新
+- 提出基于奇异值分解（SVD）的数据驱动稀疏恢复框架，将混合SMA-LMA阵列建模为单一阵列。
+- 通过SVD得到正交的麦克风和声场模态，在SMA-only情况下简化为SH处理，而LMA引入超越SH的互补模态。
+- 模态分析显示SVD模态与SH在频率上存在一致偏差，证实了改进的空间选择性。
+- 使用截断SVD构建稳定字典，通过投影和去相关处理观测数据，实现鲁棒的稀疏系数估计。
+
+## 实验结果
+- 在混响条件下（RT60 = 0.3秒），实验评估了能量图失配和角度误差。
+- 与SMA-only和直接拼接方法相比，SVD-modal方法在频率、距离和源数量上均表现出更低的能量图失配和角度误差。
+- 模态解决方案（9、16、25个模态）在能量图保真度和定位精度之间取得平衡：较少模态有利于能量图保真度，较多模态提高定位精度。
+- 结果证实了该方法在混响环境中的鲁棒性和准确性，优于基线方法。
+
+## 一句话评价
+该论文提出了一种基于SVD的统一模态框架，有效解决了混合SMA-LMA阵列在稀疏声场重建中的挑战，通过数据驱动模态提升了空间分辨率和鲁棒性，为声场分析提供了理论依据。
+
+---
+
+## 17. Mići Princ -- A Little Boy Teaching Speech Technologies the Chakavian Dialect
+
+**作者**: Nikola Ljubešić, Peter Rupnik, Tea Perinčić
+**链接**: [2602.03245](https://arxiv.org/abs/2602.03245)
+**分类**: Speech Recognition | **关键词**: The Little Prince, Chakavian dialect, text and speech dataset, automatic speech recognition
+
+## 核心痛点
+本文针对克罗地亚语查卡维亚方言缺乏开放语音数据集的问题，指出当前语音技术主要关注资源丰富的标准语言，忽视了方言变体，尤其是在语音模态中。这限制了方言在人工智能研究和应用中的发展。
+
+## 方法创新
+1. **数据集构建**：通过翻译《小王子》为查卡维亚方言，创建了首个克罗地亚语方言语音数据集，包含印刷和音频书籍的对齐文本和语音数据。
+2. **数据处理流程**：包括章节分割、语音活动检测、修剪、说话人分离、手动校正和单词对齐，使用Kaldi工具进行对齐，并生成JSON和EXB格式。
+3. **ASR数据集适配**：将数据重新分割为不超过30秒的片段，适用于自动语音识别实验，并发布到HuggingFace数据集中心。
+4. **模型微调**：基于Whisper-large-v3模型，针对查卡维亚方言进行微调，提升识别性能。
+
+## 实验结果
+- 微调后，在选定测试数据上，词错误率降低了一半，字符级错误减少了三分之二。
+- 发布了首个能够处理查卡维亚方言的ASR系统，在未见说话人上相对词错误率降低了约40%。
+- 数据集包含11,591个单词、547个说话人轮次和79分钟的纯语音时长，已通过CLARIN.SI和HuggingFace平台发布。
+
+## 一句话评价
+本研究通过创新性地构建和发布首个查卡维亚方言语音数据集，并成功微调ASR模型，显著提升了方言语音识别性能，为方言保护和人工智能应用提供了宝贵资源。
+
+---
+
+## 18. WST-X Series: Wavelet Scattering Transform for Interpretable Speech Deepfake Detection
+
+**作者**: Xi Xuan, Davide Carbone, Ruchi Pandey, Wenxin Zhang, Tomi H. Kinnunen
+**链接**: [2602.02980](https://arxiv.org/abs/2602.02980)
+**分类**: Audio Forensics/Speech Deepfake Detection | **关键词**: Speech deepfake, Wavelet scattering transform, Interpretability, Audio forensics, Self-supervised learning
+
+## 核心痛点
+
+当前语音深度伪造检测（SDD）前端设计面临两大挑战：
+1. **传统数字信号处理（DSP）方法**（如MFCCs、LFCCs、CQCCs）虽然透明、计算高效，但难以捕捉高层次语义细节，导致性能不足。
+2. **自监督学习（SSL）方法**（如XLSR、HuBERT、MMS）性能优越但缺乏可解释性，可能忽略细粒度频谱异常，且计算成本高、可解释性差，这在音频取证等需要透明证据的领域尤为关键。
+
+## 方法创新
+
+论文提出**WST-X系列**，首次将小波散射变换（WST）应用于语音深度伪造检测，结合了DSP的透明性和SSL的鲁棒性：
+- **WST原理**：通过小波模算子级联生成稳定、平移不变的表示，无需训练数据，具有清晰的物理解释（多尺度过程分析）。
+- **WST-X系列设计**：
+  - **WST-X1（并行集成）**：结合1D WST（处理原始波形）和PT-XLSR（基于提示调优的XLSR模型），通过双分支架构融合特征。
+  - **WST-X2（级联集成）**：先使用PT-XLSR提取SSL特征，再应用2D WST分析时间-特征平面中的结构异常。
+- **参数优化**：强调小平均尺度（J）、高频率分辨率（Q）和方向分辨率（L）对捕捉细微伪影的关键作用。
+
+## 实验结果
+
+在Deepfake-Eval-2024数据集上评估，使用minDCF、EER、F1-score和AUC等指标：
+- **WST-X表现**：在多种参数设置下，WST-X系列显著优于现有前端（具体数据在截断部分未完整显示，但摘要指出“outperforms existing front-ends by a wide margin”）。
+- **关键发现**：小J值（如J=2）结合高Q和L值能有效捕获细微伪影，突显平移不变和形变稳定特征的价值。
+
+## 一句话评价
+
+WST-X系列通过小波散射变换桥接了传统DSP与SSL方法的优势，为语音深度伪造检测提供了高性能且可解释的新前端，有望推动音频取证领域的发展。
+
+---
+
+## 19. WAXAL: A Large-Scale Multilingual African Language Speech Corpus
+
+**作者**: Abdoulaye Diack, Perry Nelson, Kwaku Agbesi, Angela Nakalembe, MohamedElfatih MohamedKhair, Vusumuzi Dube, Tavonga Siyavora, Subhashini Venugopalan, Jason Hickey, Uche Okonkwo, Abhishek Bapna, Isaac Wiafe, Raynard Dodzi Helegah, Elikem Doe Atsakpo, Charles Nutrokpor, Fiifi Baffoe Payin Winful, Kafui Kwashie Solaga, Jamal-Deen Abdulai, Akon Obu Ekpezu, Audace Niyonkuru, Samuel Rutunda, Boris Ishimwe, Michael Melese, Engineer Bainomugisha, Joyce Nakatumba-Nabende, Andrew Katumba, Claire Babirye, Jonathan Mukiibi, Vincent Kimani, Samuel Kibacia, James Maina, Fridah Emmah, Ahmed Ibrahim Shekarau, Ibrahim Shehu Adamu, Yusuf Abdullahi, Howard Lakougna, Bob MacDonald, Hadar Shemtov, Aisha Walcott-Bryant, Moustapha Cisse, Avinatan Hassidim, Jeff Dean, Yossi Matias
+**链接**: [2602.02734](https://arxiv.org/abs/2602.02734)
+**分类**: Speech Recognition, Text-to-Speech | **关键词**: African language, ASR, TTS, speech corpus, multilingual dataset
+
+## 核心痛点
+
+语音技术发展主要服务于高资源语言，导致撒哈拉以南非洲语言使用者面临显著的数字化鸿沟。该地区拥有超过2000种语言，但缺乏大规模、高质量、开放许可的语音语料库，阻碍了自动语音识别（ASR）和文本转语音（TTS）系统的开发。
+
+## 方法创新
+
+1. **大规模多语言数据集构建**：WAXAL数据集包含21种撒哈拉以南非洲语言，覆盖超过1亿使用者。
+2. **双模态数据收集**：
+   - ASR数据集：约1250小时的自然语音，通过图像提示收集，涵盖多样化的说话者和环境。
+   - TTS数据集：超过180小时的高质量单说话者录音，基于语音平衡脚本。
+3. **本地化合作**：与非洲四所学术和社区组织合作，确保数据收集的本地专业知识和社区参与。
+4. **质量控制与标注**：10%的ASR音频由本地语言专家转录，并移除个人身份信息。
+
+## 实验结果
+
+- **ASR数据集**：14种语言，约1250小时，224,767个实例，数据量1.7 TB。
+- **TTS数据集**：10种语言，约186小时，17,660个实例，数据量99 GB。
+- **语言覆盖**：包括Acholi、Kiswahili、Luganda、Akan、Ewe等语言，部分语言仅包含ASR或TTS数据。
+- **开放许可**：数据集以CC-BY-4.0许可证发布，促进学术和商业研究。
+
+## 一句话评价
+
+WAXAL数据集通过大规模、多语言的语音资源，显著填补了非洲语言在语音技术领域的资源空白，为开发包容性技术和数字语言保护提供了重要基础。
+
+---
+
+## 20. Automated Dysphagia Screening Using Noninvasive Neck Acoustic Sensing
+
+**作者**: Jade Chng, Rong Xing, Yunfei Luo, Kristen Linnemeyer-Risser, Tauhidur Rahman, Andrew Yousef, Philip A Weissbrod
+**链接**: [2602.02725](https://arxiv.org/abs/2602.02725)
+**分类**: Audio-based Medical Diagnostics | **关键词**: Dysphagia Screening, Noninvasive Acoustic Sensing, Machine Learning, Signal Processing, Pharyngeal Health
+
+## 核心痛点
+当前吞咽困难（dysphagia）的诊断主要依赖侵入性方法（如FEES、VFSS）或放射成像，这些方法成本高、需要专业人员操作，且临床吞咽评估缺乏客观性和准确性，导致诊断敏感性和特异性有限。
+
+## 方法创新
+本研究提出了一种自动化框架，利用便携式非侵入性颈部声学传感结合机器学习进行吞咽困难筛查。通过采集吞咽过程中的颈部声学信号，提取特征（包括频率、振幅、曲线下面积等），并采用随机森林分类器（RFC）进行异常检测。创新点包括：在FEES期间实时收集声学数据，使用超过600个吞咽事件进行模型训练，结合领域知识特征和预训练音频模型（如OPERA、OpenSMILE），并评估了固定参数和滑动窗口分割策略以模拟临床部署。
+
+## 实验结果
+在患者级分割的测试中，异常检测任务（2类）的AUC-ROC达到0.904（使用领域知识特征），AUC-PRC为0.913，平衡准确率为0.755。分割和聚合分析显示，滑动窗口分割的AUC-ROC为0.893，固定参数分割为0.868，而人工分割的吞咽事件达到0.967。这些结果表明非侵入性声学传感在吞咽健康监测中具有可行性和高准确性。
+
+## 一句话评价
+该研究通过非侵入性声学传感和机器学习，为吞咽困难筛查提供了一种高效、可扩展的解决方案，有望改善临床诊断的客观性和可及性。
+
+---
+
+## 21. RIR-Former: Coordinate-Guided Transformer for Continuous Reconstruction of Room Impulse Responses
+
+**作者**: Shaoheng Xu, Chunyi Sun, Jihui Zhang, Prasanga N. Samarasinghe, Thushara D. Abhayapala
+**链接**: [2602.01861](https://arxiv.org/abs/2602.01861)
+**分类**: Acoustic Signal Processing / Room Acoustics | **关键词**: room impulse response, RIR reconstruction, transformer models, acoustic signal processing, spatial interpolation
+
+## 核心痛点
+- 密集测量房间脉冲响应（RIR）耗时耗力，不切实际
+- 现有方法存在多种局限：依赖均匀阵列、忽略相位信息、仅处理低频段、需要逐场景重新训练、破坏时间结构等
+- 传统模型在声学挑战性环境中表现不佳，学习模型泛化能力有限
+
+## 方法创新
+- 提出RIR-Former：基于Transformer的单步前馈模型，支持任意位置重建
+- 引入正弦编码模块，有效整合麦克风位置信息
+- 设计分段多分支解码器，分别处理早期反射和后期混响
+- 网格无关方法，支持任意阵列布局
+
+## 实验结果
+- 在多种模拟声学环境中评估，包括不同房间大小、混响时间、麦克风几何和声源位置
+- 在归一化均方误差（NMSE）和余弦距离（CD）指标上持续优于最先进基线
+- 在不同缺失率和阵列配置下表现稳健
+- 模型具有强泛化能力和计算效率
+
+## 一句话评价
+RIR-Former通过Transformer架构和创新的分段解码设计，实现了高效、通用的RIR重建，解决了现有方法在灵活性和泛化性方面的关键限制。
+
+---
+
+## 22. Short-wave admittance correction for a time-domain cochlear transmission line model
+
+**作者**: François Deloche, Morgan Thienpont, Sarah Verhulst
+**链接**: [2602.01758](https://arxiv.org/abs/2602.01758)
+**分类**: Auditory Modeling and Cochlear Mechanics | **关键词**: transmission line model, cochlear mechanics, short-wave admittance, time-domain simulation, pressure focusing
+
+## 核心痛点
+论文指出，时域传输线（TL）模型在模拟耳蜗基底膜（BM）位移时，通常基于一维（1-D）假设，忽略了耳蜗实际配置中的高维效应，如短波区域的压力聚焦和横向粘性阻尼。这些效应在频率域中更容易表达，但在时域实现中难以整合。具体地，1-D非线性TL模型假设增益和频率选择性紧密耦合，而小哺乳动物（如沙鼠）的耳蜗频率选择性对声级依赖性较弱，导致模型在模拟高压缩性时表现不足，缺乏约10 dB的压缩增益。
+
+## 方法创新
+论文提出了一种时域短波导纳校正方法，以在TL模型中整合2-D效应。该方法基于Sisto等人的频率域2-D TL模型（S-2D模型），该模型包含压力聚焦和粘性阻尼效应。通过自回归滤波和回归技术，将压力聚焦因子（α）和粘性阻尼项引入到时域V-1D模型中，形成新的V*模型。校正因子通过反馈环路实现声级依赖性，从而在时域中模拟波长相关效应，解耦增益和频率选择性。
+
+## 实验结果
+在针对沙鼠耳蜗生理学定制的TL模型中实施校正后，模型实现了增益和频率选择性的部分解耦，提供了额外的5 dB增益，并将压缩机制的声音范围扩展了10 dB。这解决了初始模型中压缩不足的问题，更准确地模拟了小哺乳动物的耳蜗响应。
+
+## 一句话评价
+该研究通过创新的时域校正方法，有效整合了2-D流体效应，提升了TL模型在小哺乳动物耳蜗模拟中的准确性和适用性。
+
+---
+
+## 23. Joint Optimization of ASV and CM tasks: BTUEF Team's Submission for WildSpoof Challenge
+
+**作者**: Oguzhan Kurnaz, Jagabandhu Mishra, Tomi Kinnunen, Cemal Hanilci
+**链接**: [2602.01722](https://arxiv.org/abs/2602.01722)
+**分类**: Spoofing-Aware Speaker Verification | **关键词**: Spoofing-Aware Speaker Verification, WildSpoof, Joint Optimization, Nonlinear Fusion, a-DCF
+
+## 核心痛点
+自动说话人验证（ASV）系统在安全关键应用中广泛使用，但容易受到重放、文本到语音和语音转换等欺骗攻击的威胁。虽然专用的反欺骗（CM）系统可以检测欺骗语音，但它们不验证说话人身份，使得在对抗条件下，单独的ASV或CM系统不足。这促使了欺骗感知说话人验证（SASV）的发展，以联合处理说话人验证和欺骗检测。
+
+## 方法创新
+本文提出了一种模块化的SASV框架，通过非线性融合、显式建模交互以及使用依赖于操作条件的可训练a-DCF损失进行优化，有效重用公开可用的ASV和CM系统。具体方法包括：
+- **ASV分支**：使用固定的ASV编码器（如ECAPA-TDNN或ReDimNet）提取说话人嵌入，通过加权余弦相似度计算说话人相似性，并进行仿射校准以生成适合融合的对数似然比（LLR）。
+- **CM分支**：使用冻结的CM编码器（如SSL-AASIST）提取欺骗嵌入，与ASV测试嵌入拼接后通过MLP分类器生成CM分数，同样进行仿射校准。
+- **分数融合**：通过非线性分数级融合公式（公式1）结合校准后的ASV和CM LLR，其中参数控制说话人和欺骗证据的相对贡献，生成单一的SASV分数。
+- **联合优化**：所有可训练组件（嵌入重加权、校准层、CM分类器和融合模块）在SASV决策级别进行端到端优化，使用二进制交叉熵和a-DCF的加权组合作为损失函数。
+
+## 实验结果
+在WildSpoof挑战赛数据集上评估，使用ECAPA-TDNN和ReDimNet作为ASV嵌入提取器，SSL-AASIST作为CM模型。关键结果包括：
+- 基线系统中，SKA-TDNN在开发集上表现最佳（a-DCF为0.3118）。
+- 提出的SASV配置中，最佳性能通过结合预训练的ReDimNet ASV嵌入和微调的SSL-AASIST表示实现，在进展评估集上a-DCF为0.0515，在最终评估集上为0.2163。
+- 微调SSL-AASIST组件显著提升了性能（例如，从0.1193降至0.0985）。
+- 最终评估集性能较低，可能由于难度增加或未见条件，需进一步分析。
+
+## 一句话评价
+该研究通过模块化框架和联合优化，有效提升了SASV的鲁棒性，在WildSpoof挑战赛中展示了显著性能改进，但最终评估集表现暗示泛化挑战仍需解决。
+
+---
+
+## 24. HuPER: A Human-Inspired Framework for Phonetic Perception
+
+**作者**: Chenxu Guo, Jiachen Lian, Yisi Liu, Baihe Huang, Shriyaa Narayanan, Cheol Jun Cho, Gopala Anumanchipalli
+**链接**: [2602.01634](https://arxiv.org/abs/2602.01634)
+**分类**: Speech Recognition | **关键词**: Phonetic Perception, Adaptive Inference, Multi-path Perception, Zero-shot Transfer, Data-efficient Learning
+
+## 核心痛点
+1. **语音建模进展不平衡**：尽管基于单词的自动语音识别（ASR）已接近或超越人类水平，但音素级建模进展有限，即使采用相似的扩展方法，提升也不明显。
+2. **监督不匹配**：当前音素模型通常依赖G2P生成的规范目标（如“last Sunday”），但这些目标编码了语音信号中不存在的音系和语法规律，导致模型无法充分利用其声学-音素能力，并削弱后续的音系和词汇推断。
+3. **处理路径单一**：人类音素感知是一个动态闭环系统，而大多数音素识别模型隐含地假设单向、前馈的处理流程，缺乏对多路径、闭环动态的建模机制。
+
+## 方法创新
+1. **HuPER框架**：提出首个统一且显式的计算框架，模拟人类音素感知，将音素感知建模为对声学-音素证据和语言知识的自适应推断。
+2. **自适应多路径推理机制**：通过HuPER-Scheduler根据信号质量和任务上下文选择推理路径，包括：
+   - 清晰语音：依赖自下而上的推理。
+   - 退化或模糊条件：整合HuPER-Perceiver输出与Dysfluent WFST约束。
+   - 参考引导场景：通过约束图整合已知预期文本。
+3. **HuPER-Recognizer自学习策略**：采用双重稳健风险校正（DRRC），通过Corrector模型将规范音素序列转换为基于声学的音素代理，解决伪标签训练中的确认偏差和统计偏差问题。
+4. **模块化设计**：包括HuPER-Recognizer（类似STG，自下而上声学-音素感知）、HuPER-Perceiver（类似STS，音素-词汇整合）、Dysfluent WFST（显式自上而下约束）和HuPER-Scheduler（类似IFG，路径调度）。
+
+## 实验结果
+1. **数据效率高**：仅使用100小时训练数据，在五个英语基准测试中达到最先进的音素错误率（平均PFER=8.82）。
+2. **强大的零样本多语言迁移**：在95种未见语言上表现出强大的零样本迁移能力。
+3. **自适应多路径感知**：首个实现在不同声学条件下自适应、多路径音素感知的框架，提升退化语音和紊乱语音条件下的鲁棒性。
+4. **开源资源**：所有训练数据、模型和代码均已开源，代码和演示可在https://github.com/HuPER29/HuPER获取。
+
+## 一句话评价
+HuPER通过模拟人类音素感知的自适应多路径机制，在数据效率和跨语言泛化方面取得了突破性进展，为音素级语音处理提供了新的研究方向。
+
+---
+
+## 25. SSNAPS: Audio-Visual Separation of Speech and Background Noise with Diffusion Inverse Sampling
+
+**作者**: Yochai Yemini, Yoav Ellinson, Rami Ben-Ari, Sharon Gannot, Ethan Fetaya
+**链接**: [2602.01394](https://arxiv.org/abs/2602.01394)
+**分类**: Audio Enhancement | **关键词**: Speech Separation, Diffusion Models, Unsupervised Learning, Audio-Visual Processing, Background Noise Removal
+
+## 核心痛点
+传统监督式语音分离方法在噪声环境下缺乏灵活性，当声学环境变化时通常需要重新训练，性能容易下降。现有基于扩散模型的语音分离方法在背景噪声存在时研究较少，且现有逆采样方法（如DPS）因使用精确的SDE/ODE求解器而抑制了采样过程中的全局信号调整。
+
+## 方法创新
+1. **SSNAPS框架**：提出基于扩散逆采样的音频-视觉语音与背景噪声分离方法，采用无监督生成框架，使用两个独立的扩散先验模型分别建模干净语音和环境噪声。
+2. **DAPS改进**：将DAPS（解耦退火后验采样）重新表述以适应多源分离场景，能够从两个不同分布中估计多个统计独立的信号。
+3. **多说话人处理**：支持任意数量说话人的分离，实验验证了1、2、3个说话人混合噪声场景。
+4. **离屏分离扩展**：首次提出基于逆采样技术的离屏说话人分离方法。
+5. **高保真噪声分离**：分离出的噪声分量具有高保真度，可用于下游声学场景检测任务。
+
+## 实验结果
+1. 在1、2、3个说话人混合噪声的所有条件下，SSNAPS在词错误率（WER）上始终优于领先的监督基线方法。
+2. 方法完全无监督，不依赖于特定任务或条件的训练数据。
+3. 通过音频-视觉信息（唇部区域视频）增强语音先验的准确性。
+
+## 一句话评价
+SSNAPS通过创新的扩散逆采样框架，在无监督条件下实现了多说话人语音与背景噪声的高效分离，在灵活性和性能方面均超越现有监督方法。
+
+---
+
+## 26. Adapting Where It Matters: Depth-Aware Adaptation for Efficient Multilingual Speech Recognition in Low-Resource Languages
+
+**作者**: Yang Xiao, Eun-Jung Holden, Ting Dang
+**链接**: [2602.01008](https://arxiv.org/abs/2602.01008)
+**分类**: Speech Recognition | **关键词**: Multilingual Speech Recognition, Low-Resource Languages, Parameter-Efficient Fine-Tuning, Depth-Aware Adaptation, U-Shaped Plasticity
+
+## 核心痛点
+- 当前多语言语音识别（ASR）基础模型在高资源语言上表现优异，但在低资源语言上性能下降，主要由于数据稀缺和效率限制。
+- 全模型微调计算成本高且易过拟合，而参数高效方法（如LoRA）均匀适应所有层，忽略了内部表示，影响效果和效率。
+
+## 方法创新
+- 提出DAMA（Depth-Aware Model Adaptation）框架，基于U形适应性模式（早期和晚期层语言特定需更多适应，中间层保留共享语义需较少适应），分配适应能力。
+- 引入三个机制：深度感知秩调度（根据层角色分配适应容量）、基于奇异值分解（SVD）的初始化（约束适应并保持U形模式）、冻结中间层基础（进一步提高效率）。
+
+## 实验结果
+- 在18种低资源语言上评估，使用Common Voice和FLEURS数据集。
+- DAMA匹配或超越最先进基线准确率，同时减少约80%可训练参数。
+- 在极端数据稀缺（0.5至1小时数据）下，实现高达29%的相对词错误率（WER）降低。
+- 效率分析显示GPU内存利用率提升24%，训练时间加快36%。
+
+## 一句话评价
+DAMA通过结构感知适应，在保持准确性的同时显著提升多语言ASR的效率和可扩展性，为低资源语言应用提供了有效解决方案。
+
+---
+
+## 27. Solving Room Impulse Response Inverse Problems Using Flow Matching with Analytic Wiener Denoiser
+
+**作者**: Kyung Yun Lee, Nils Meyer-Kahlen, Vesa Välimäki, Sebastian J. Schlecht
+**链接**: [2602.00652](https://arxiv.org/abs/2602.00652)
+**分类**: Audio Enhancement | **关键词**: Room Impulse Response, Inverse Problems, Flow Matching, Wiener Denoiser, Bayesian Inference
+
+## 核心痛点
+
+房间脉冲响应（RIR）估计作为一类逆问题（如去噪、解卷积），传统方法面临两大挑战：1）监督学习方法需要大量配对训练数据，且泛化能力差，易受训练分布外数据影响；2）经典贝叶斯方法（如最大后验估计）仅提供单点估计，无法捕捉病态逆问题中的后验不确定性，且依赖手工设计的先验（如ℓ₂、ℓ₁正则化），表达能力有限。
+
+## 方法创新
+
+本文提出RIR-Flow，一种免训练的贝叶斯框架，结合流匹配与解析维纳去噪器解决RIR逆问题。核心创新包括：
+1. **解析先验推导**：基于RIR的统计结构（建模为方差指数衰减的高斯过程），推导出闭式最小均方误差（MMSE）维纳去噪器，无需数据驱动的先验，提供可解释的解析先验。
+2. **流匹配集成**：将该解析去噪器作为先验集成到现有流基逆求解器（如FLOWER框架）中，通过引导后验采样解决逆问题，实现训练免指导。
+3. **扩展非线性与非高斯问题**：通过局部高斯近似引导后验，将方法扩展到非线性、非高斯逆问题（如去削波），保持高效推理。
+4. **统一框架应用**：覆盖去噪、ℓ₂和鲁棒解卷积、修复、去削波等多种RIR逆问题，实验显示在低信噪比下性能稳定提升。
+
+## 实验结果
+
+在真实RIR数据上的实验表明：
+- 相比基线方法（如监督学习、经典正则化方法），RIR-Flow在多种逆问题中实现更稳定、改进的重建效果。
+- 在低信噪比条件下表现鲁棒，凸显了经典RIR模型与现代流基生成推理结合的有效性。
+- 通过局部高斯近似，方法在非线性、非高斯设置中仍保持实用性。
+
+## 一句话评价
+
+RIR-Flow通过解析先验与流匹配的巧妙结合，为RIR逆问题提供了一个免训练、可扩展且性能优越的贝叶斯解决方案，有效弥合了经典模型与生成式AI的鸿沟。
+
+---
+
+## 28. High-Fidelity Generative Audio Compression at 0.275kbps
+
+**作者**: Hao Ma, Ruihao Jing, Shansong Liu, Cheng Gong, Chi Zhang, Xiao-Lei Zhang, Xuelong Li
+**链接**: [2602.00648](https://arxiv.org/abs/2602.00648)
+**分类**: Audio Compression | **关键词**: Generative Audio Compression, AI Flow, Law of Information Capacity
+
+## 核心痛点
+传统音频压缩方法（如基于信号处理的传统方法）和现代神经编解码器（如SoundStream、EnCodec、DAC等）主要设计用于波形重建，在超低比特率（如低于1kbps）下性能急剧下降，导致严重的声学伪影和语义失真，无法满足低带宽通信和生成式音频-语言建模等应用需求。
+
+## 方法创新
+论文提出**生成式音频压缩（Generative Audio Compression, GAC）**，这是一种从信号保真度转向任务导向有效性的范式转变。GAC基于**AI Flow框架**和**信息容量定律（Law of Information Capacity）**，核心思想是“更多计算，更少带宽”。方法分为两个阶段：
+1. **阶段1（速率最小化）**：在发送端通过语义理解提取紧凑的语义表示，使用信息瓶颈原则过滤比特级冗余，确保语义对齐。
+2. **阶段2（信息恢复）**：在接收端利用大规模生成模型（1.8B参数）通过生成合成恢复高保真音频，使用整流流匹配解码器重建细节。
+
+## 实验结果
+- 在32kHz通用音频（包括语音、音乐和其他声音）上，GAC在**0.275kbps**的比特率下实现高保真重建。
+- 即使在**0.175kbps**下，仍保持强可理解的音频传输能力，压缩比约**3000倍**。
+- 如图1所示，在速率-质量比较中，GAC（1.8B参数）在低于1kbps的比特率下持续优于基线方法（如EnCodec、DAC、SemantiCodec等），在感知质量和语义一致性方面表现突出。
+
+## 一句话评价
+GAC通过将信息负担从通信信道转移到计算，实现了超低比特率下的高保真音频压缩，是生成式智能传输在听觉领域的创新应用。
+
+---
+
+## 29. QuietPrint: Protecting 3D Printers Against Acoustic Side-Channel Attacks
+
+**作者**: Seyed Ali Ghazi Asgar, Narasimha Reddy
+**链接**: [2602.02198](https://arxiv.org/abs/2602.02198)
+**分类**: Side-channel Analysis and Countermeasures | **关键词**: Side-channel Attack, Security of Additive Manufacturing, 3D Printing Security, Acoustic Side Channel Attack, Acoustic Defense
+
+## 核心痛点
+3D打印市场快速增长，预计2025年收入达150亿美元，但面临日益增多的网络安全威胁，特别是知识产权（IP）盗窃。攻击者可通过侧信道攻击（如声学侧信道）窃取设计文件，现有防御方法（如添加扬声器）成本高且不实用。
+
+## 方法创新
+本文提出QuietPrint，一种无需额外硬件的保护方法，通过最小化修改G-code来混淆声学信息，防止攻击者从录音中重建打印模型。创新点包括：分析3D打印机声源（如步进电机和冷却风扇），评估各声源对重建的贡献，并提出防御机制。
+
+## 实验结果
+实验使用Elegoo Neptune 3 FDM 3D打印机和Microsoft Surface Pro 7+内置麦克风进行数据采集。分析显示，仅通过风扇噪声的能量特征即可线性预测喷嘴位置（如从X=0 cm到18 cm的移动），攻击者可利用简单插值线准确推断位置。在CoreXY打印机中，攻击者可能使用两个录音设备确定性地重建喷嘴在X和Y轴的位置。
+
+## 一句话评价
+QuietPrint提供了一种低成本、无需硬件的声学侧信道防御方案，有效应对3D打印中的IP盗窃风险，具有实际应用潜力。
+
+---
+
+## 30. Attention-weighted Centered Kernel Alignment for Knowledge Distillation in Large Audio-Language Models Applied to Speech Emotion Recognition
+
+**作者**: Qingran Yang, Botao Zhao, Zuheng Kang, Xue Li, Yayun He, Chuhang Liu, Xulong Zhang, Xiaoyang Qu, Junqing Peng, Jianzong Wang
+**链接**: [2602.01547](https://arxiv.org/abs/2602.01547)
+**分类**: Speech Emotion Recognition | **关键词**: Large Audio-Language Models, Speech Emotion Recognition, Knowledge Distillation, Attention-weighted Centered Kernel Alignment
+
+## 核心痛点
+
+1. **大模型部署困难**：大型音频-语言模型（LALMs）如Qwen2-Audio（8.4B参数）在语音情感识别（SER）中表现出色，但参数量大导致在资源受限环境中部署成本高。
+2. **现有知识蒸馏方法不足**：现有知识蒸馏（KD）方法主要针对文本模态或视觉任务，缺乏专门针对LALMs的蒸馏研究，且存在以下问题：
+   - 难以处理音频的时序重要性（时间步长依赖）。
+   - 忽略跨模态投影模块（Projector）的蒸馏，或面临特征维度不匹配的挑战。
+
+## 方法创新
+
+提出PL-Distill框架，包含两个核心组件：
+1. **投影层蒸馏（PDist）**：引入注意力加权中心核对齐（AwCKA），基于教师模型自注意力分数动态加权音频嵌入，突出情感关键时间步，并解决特征维度不匹配问题。
+2. **逻辑层蒸馏（LDist）**：最小化教师和学生模型在音频和文本模态输出逻辑之间的KL散度，确保跨模态一致性。
+
+**学生模型架构**：基于Qwen2-Audio教师模型（8.4B参数），压缩为1.1B参数学生模型（约13%大小），使用相同音频编码器（Whisper large v3）和轻量级LLM（Qwen2-0.5B）。
+
+## 实验结果
+
+- **压缩效果**：将8.4B参数教师模型压缩至1.1B参数学生模型，参数量减少87%。
+- **性能表现**：在IEMOCAP、RAVDESS和SAVEE三个权威SER数据集上，学生模型在所有指标上均优于教师模型、当前最先进的预训练模型及其他KD基线方法。
+- **贡献总结**：填补LALM知识蒸馏研究空白，显著降低部署成本，并通过AwCKA提升蒸馏效果。
+
+## 一句话评价
+
+PL-Distill通过创新的注意力加权中心核对齐和双层级蒸馏策略，有效解决了大型音频-语言模型在资源受限环境中的部署难题，实现了高性能压缩，为语音情感识别的实际应用提供了可行方案。
+
+---
+
+## 31. Causally Disentangled Contrastive Learning for Multilingual Speaker Embeddings
+
+**作者**: Mariëtte Olijslager, Seyed Sahand Mohammadi Ziabari, Ali Mohammed Mansoor Alsahag
+**链接**: [2602.01363](https://arxiv.org/abs/2602.01363)
+**分类**: Speaker Verification | **关键词**: Speaker verification, Self-supervised learning, Contrastive learning, Demographic leakage, Adversarial debiasing
+
+## 核心痛点
+
+论文指出，自监督说话人嵌入（如SimCLR训练的嵌入）在说话人验证系统中广泛使用，但存在严重的人口统计信息泄露问题，包括性别、年龄和口音等敏感属性。这种泄露会引发公平性、隐私和伦理合规风险，可能导致跨人口统计群体的系统性偏见，或使攻击者能从看似匿名的嵌入中推断出受保护属性。
+
+## 方法创新
+
+论文提出并比较了两种去偏策略：
+1. **对抗性去偏**：通过梯度反转层进行对抗训练，抑制嵌入中的人口统计信息。
+2. **因果瓶颈架构**：在表示管道末端引入因果瓶颈层，明确分离人口统计信息和残差信息，将人口统计属性建模为因果上游因素，限制其对学习表示的影响。
+
+## 实验结果
+
+- **基线嵌入分析**：性别信息在基线嵌入中强烈且线性编码（线性探针准确率超过99.8%），而年龄和口音信息较弱且主要非线性表示。
+- **对抗性去偏效果**：能减少性别泄露，但对年龄和口音影响有限，且与验证准确性存在明显权衡。
+- **因果瓶颈效果**：进一步抑制人口统计信息（尤其在残差表示中），但导致显著的性能下降。
+- **评估指标**：使用线性/非线性探针分类器量化人口统计泄露，使用ROC-AUC和EER评估说话人验证性能。
+
+## 一句话评价
+
+该研究揭示了自监督说话人嵌入中人口统计泄露的根本局限性，并阐明了当前去偏方法中固有的权衡，为公平和负责任的语音技术部署提供了重要见解。
+
+---
+
+## 32. Generative AI in Signal Processing Education: An Audio Foundation Model Based Approach
+
+**作者**: Muhammad Salman Khan, Ahmad Ullah, Siddique Latif, Junaid Qadir
+**链接**: [2602.01249](https://arxiv.org/abs/2602.01249)
+**分类**: Audio Foundation Models in Education | **关键词**: Audio Foundation Models, Generative AI, Signal Processing Education, Multimodal Learning, Personalized Education
+
+## 核心痛点
+传统信号处理（SP）教育依赖静态多媒体工具和预设计内容，缺乏实时交互和个性化学习体验，导致学生难以将抽象概念转化为实践，学习门槛高，参与度低。
+
+## 方法创新
+本文提出SPEduAFM，一种基于音频基础模型（AFMs）的概念框架，将生成式AI（GenAI）集成到SP教育中。AFMs利用大规模预训练和Transformer架构，支持实时音频处理、多模态集成（如音频-文本）和自监督学习，无需大量标注数据。关键创新包括：通过AFMs实现自动讲座转录、交互式演示和包容性学习工具，将传统SP原则与GenAI驱动创新结合，降低编程要求，提升可访问性。
+
+## 实验结果
+论文通过一个案例研究（DSP课程中的交互式听觉演示）展示AFMs如何提高理解和参与度。AFMs在任务如自动语音识别、文本到语音、音频合成和情感识别中表现出色，支持跨任务泛化。应用包括实时转录、多语言处理、情感识别和自适应教学，增强个性化学习和自动化评估。
+
+## 一句话评价
+该论文前瞻性地将音频基础模型引入信号处理教育，通过GenAI技术提升教学互动性和可及性，为工程教育创新提供了实用路线图，但需解决伦理和可解释性等挑战。
+
+---
+
+## 33. TLDiffGAN: A Latent Diffusion-GAN Framework with Temporal Information Fusion for Anomalous Sound Detection
+
+**作者**: Chengyuan Ma, Peng Jia, Hongyue Guo, Wenming Yang
+**链接**: [2602.01060](https://arxiv.org/abs/2602.01060)
+**分类**: Anomalous Sound Detection | **关键词**: Anomalous Sound Detection, Latent Diffusion Model, Generative Adversarial Network, Feature Fusion, Unsupervised learning
+
+## 核心痛点
+
+现有异常声音检测（ASD）生成模型存在以下主要问题：
+1. **特征分布学习不完整**：传统自编码器（AEs）和生成对抗网络（GANs）难以完全捕捉正常声音的复杂特征分布，导致对结构相似的异常声音重建误差不足
+2. **训练不稳定**：GANs存在模式崩溃风险，在复杂声学场景中应用受限
+3. **模态单一**：几乎所有现有模型仅使用梅尔频谱图作为输入，忽略了原始波形中的关键信息
+4. **局部敏感性不足**：现有模型倾向于捕捉全局宏观特征，对局部时频区域的弱瞬态变化不够敏感
+5. **扩散模型的新挑战**：去噪扩散概率模型（DDPMs）可能将异常特征视为噪声并去除，使异常检测复杂化
+
+## 方法创新
+
+提出TLDiffGAN框架，包含以下核心创新：
+
+### 1. 双分支声学建模框架
+- **LDGAN主干**：将潜在扩散模型（LDM）集成到GAN生成器中，通过渐进式去噪过程重建高质量梅尔频谱图
+- **预训练音频编码器分支**：使用自监督学习（SSL）模型（如AST、ATST、BEATs、EAT）直接从原始波形提取深度特征
+- **互补信息融合**：同时利用频谱图和原始波形的声学信息
+
+### 2. TMixup频谱图增强模块
+- **自适应时序混合**：使用注意力机制识别正常数据分布边界区域
+- **多尺度池化**：结合最大池化、平均池化和功率平均池化，通过可训练权重加权求和
+- **局部增强**：对边界区域应用局部Mixup操作，增强模型对细微特征变化的敏感性
+
+### 3. 检测器设计
+- **重建检测器**：基于潜在表示的重建误差计算异常分数
+- **嵌入检测器**：在联合特征空间中使用KNN、LOF、GMM等多种算法检测异常
+- **集成检测**：结合两种检测器的结果
+
+## 实验结果
+
+- **数据集**：DCASE 2020 Challenge Task 2基准数据集
+- **性能表现**：在多个关键指标上显著优于主流生成模型
+- **额外优势**：展现出优异的异常时频定位能力
+
+## 一句话评价
+
+TLDiffGAN通过创新性地融合潜在扩散模型与GAN框架，并整合多模态声学信息，有效解决了异常声音检测中特征学习不完整、训练不稳定和局部敏感性不足等核心问题，在检测性能和时频定位能力上均表现出色。
+
+---
+
+## 34. HierCon: Hierarchical Contrastive Attention for Audio Deepfake Detection
+
+**作者**: Zhili Nicholas Liang, Soyeon Caren Han, Qizhou Wang, Christopher Leckie
+**链接**: [2602.01032](https://arxiv.org/abs/2602.01032)
+**分类**: Audio Deepfake Detection | **关键词**: audio deepfake detection, anti-spoofing, self-supervised learning
+
+## 核心痛点
+音频深度伪造检测面临挑战，因为现代TTS和语音转换系统生成的伪造音频越来越逼真，难以与真实语音区分。现有方法（如Sensitive Layer Selection, SLS）通常独立处理自监督学习模型（如XLS-R）的多层表示，忽略了时间动态和层级依赖关系，导致特征同质化和跨域泛化能力差。
+
+## 方法创新
+论文提出HierCon，一种分层对比注意力框架，用于音频深度伪造检测。主要创新包括：
+1. **分层注意力框架**：通过三个阶段建模依赖关系：
+   - 阶段1：时间注意力，在每个层内对时间帧应用可学习注意力，强调携带合成伪影的帧。
+   - 阶段2：组内注意力，将24个层分为8组（每组3层），在相邻层间建模局部依赖。
+   - 阶段3：组间注意力，跨层组聚合信息，整合不同抽象级别的证据。
+2. **对比正则化**：引入基于边界的对比学习，通过对比损失鼓励域不变嵌入，提高跨域鲁棒性。
+3. **可解释性**：注意力机制提供可视化，揭示哪些时间区域和层组对检测贡献最大。
+
+## 实验结果
+在ASVspoof 2021 DF和In-the-Wild数据集上评估，HierCon实现了最先进的性能：
+- ASVspoof 2021 DF：EER为1.93%，相比独立层加权方法（如XLS-R + SLS的2.09%）相对提升36.6%。
+- In-the-Wild：EER为6.87%，相比XLS-R + SLS的8.87%相对提升22.5%。
+- 消融实验表明，分层注意力和对比学习均对性能提升有贡献，结合使用时效果最佳。
+
+## 一句话评价
+HierCon通过分层建模和对比学习，有效提升了音频深度伪造检测的准确性和跨域泛化能力，为自监督学习在安全领域的应用提供了新思路。
+
+---
+
+## 35. Bias in the Ear of the Listener: Assessing Sensitivity in Audio Language Models Across Linguistic, Demographic, and Positional Variations
+
+**作者**: Sheng-Lun Wei, Yu-Ling Liao, Yen-Hua Chang, Hen-Hsen Huang, Hsin-Hsi Chen
+**链接**: [2602.01030](https://arxiv.org/abs/2602.01030)
+**分类**: Speech-Integrated Large Language Models | **关键词**: speech bias, multilingual MLLMs, fairness evaluation, audio language models, robustness assessment
+
+## 核心痛点
+当前多模态大语言模型（MLLMs）在语音输入场景中存在系统性偏见问题，包括语言、口音、性别和选项顺序等维度。现有研究主要关注文本模态的偏见，而语音技术（如自动语音识别ASR）本身也存在跨人口统计和语言因素的性能差异，导致从文本到语音的转换可能放大现有偏见。
+
+## 方法创新
+1. **构建BIASINEAR数据集**：首个系统研究多语言MLLMs语音偏见的基准，基于Global MMLU Lite扩展，涵盖英语、中文和韩语，平衡性别和口音，包含70.8小时语音和11,200个问题。
+2. **语音可读性重写**：使用GPT OSS 120B将文本问题（特别是含数学表达式、符号的STEM问题）重写为可自然朗读的格式，避免直接TTS转换的歧义。
+3. **多维度评估框架**：通过语言、口音、性别和选项顺序等受控变量生成最多28种配置/问题，系统评估模型鲁棒性。
+4. **四指标评估**：使用准确率、熵、APES和Fleiss' κ四个互补指标全面衡量模型表现。
+
+## 实验结果
+1. **主要发现**：MLLMs对人口统计因素（如性别）相对鲁棒，但对语言和选项顺序高度敏感，表明语音可能放大现有结构偏见。
+2. **架构影响**：模型架构设计和推理策略显著影响跨语言鲁棒性。
+3. **数据集质量**：通过自动WER筛选和人工标注确保TTS输出质量，大多数语音样本被评为“正确”或“可接受”。
+
+## 一句话评价
+该研究首次建立了语音集成LLMs的公平性与鲁棒性统一评估框架，填补了文本与语音评估间的空白，为多语言语音技术的偏见检测提供了重要基准。
+
+---
+
+## 36. A Baseline Multimodal Approach to Emotion Recognition in Conversations
+
+**作者**: Víctor Yeste, Rodrigo Rivas-Arévalo
+**链接**: [2602.00914](https://arxiv.org/abs/2602.00914)
+**分类**: Multimodal Emotion Recognition | **关键词**: Emotion Recognition in Conversations, Multimodal Baseline, SemEval-2024 Task 3, Transformers, Speech Representation Learning
+
+## 核心痛点
+传统情感识别方法主要依赖单模态数据（如文本或音频），难以捕捉人类情感表达中言语和非言语线索之间的微妙互动，例如语调与语义的矛盾或讽刺表达。这限制了系统在动态、上下文依赖的对话场景中的准确性和鲁棒性。
+
+## 方法创新
+本文提出了一种轻量级多模态基线方法，结合了基于Transformer的文本分类器（如BERT变体）和自监督语音表示模型（如wav2vec 2.0），通过简单的后期融合集成策略整合文本和音频模态。该方法旨在提供一个透明、易于复现的参考实现，而非追求最先进性能，特别适用于SemEval-2024 Task 3数据集（基于《Friends》剧集构建）。
+
+## 实验结果
+在有限的训练协议下（如超参数调优和评估受限），实验结果表明多模态融合相比单模态模型（仅文本或仅音频）能提升情感识别的准确性。研究强调了多模态方法在增强情感信号检测可解释性和效果方面的潜力，但结果应视为参考点而非最终基准。
+
+## 一句话评价
+本文提供了一个实用的多模态情感识别基线，通过简单集成文本和音频模型，在轻量级设置下验证了多模态融合的优势，为未来更严格的比较和领域应用奠定了基础。
+
+---
+
+## 37. The TMU System for the XACLE Challenge: Training Large Audio Language Models with CLAP Pseudo-Labels
+
+**作者**: Ayuto Tsutsumi, Kohei Tanaka, Sayaka Shiota
+**链接**: [2602.00604](https://arxiv.org/abs/2602.00604)
+**分类**: Audio-Text Alignment | **关键词**: Audio Language Model, CLAP Pseudo-Labels, XACLE Challenge, Audio-Text Alignment, Weakly Supervised Learning
+
+## 核心痛点
+XACLE挑战赛的目标是构建一个能够自动预测音频与文本对齐分数的模型，以替代人工主观评估。主要难点在于：1）音频-文本对齐任务缺乏大规模标注数据；2）需要模型能够准确理解音频语义内容并与文本描述进行匹配；3）现有方法（如CLAP）在音频-文本对齐任务上性能有限。
+
+## 方法创新
+1. **模型架构**：提出基于大型音频语言模型（LALM）的架构，结合BEATs音频编码器（768维，冻结参数）和Qwen2.5-0.5B LLM，通过3层MLP投影层连接，总参数量594M。
+2. **三阶段训练流程**：
+   - 阶段1：自动音频描述（AAC）预训练，使用AudioCaps和AudioSetCaps数据集（273K样本）训练投影层和LLM。
+   - 阶段2：CLAP伪标签预训练，通过负采样合成低分音频-文本对（扩展至1,064K样本），使用HumanCLAP-M2D生成伪标签，采用ListNet损失函数优化排序关系。
+   - 阶段3：XACLE数据集微调（7.5K样本），应用SpecAugment数据增强，继续使用ListNet损失。
+3. **关键技术**：引入特殊标记（<|AUDIO START|>、<|AUDIO END|>、<|SCORE|>）处理音频输入；使用<|SCORE|>标记位置的特征进行分数回归；通过集成学习（全流程模型与跳过AAC预训练模型的排名平均）提升性能。
+
+## 实验结果
+1. **主要指标**：在XACLE测试集上获得SRCC 0.632，显著超越基线系统（0.334），在挑战赛中排名第三。
+2. **阶段贡献分析**：
+   - 仅阶段3（无预训练）：SRCC 0.574
+   - 阶段1+2（伪标签预训练）：SRCC 0.598（接近教师模型HumanCLAP-M2D的0.602）
+   - 全流程（阶段1+2+3）：SRCC 0.625
+   - 集成模型：SRCC 0.632（最佳结果）
+3. **关键发现**：CLAP伪标签预训练是性能提升的主要驱动力；AAC预训练对最终任务贡献有限，表明生成式预训练与判别式评分任务存在不匹配。
+
+## 一句话评价
+该研究通过创新的三阶段训练流程和LALM架构，有效解决了音频-文本对齐任务中数据稀缺问题，证明了伪标签预训练在音频语言模型中的关键作用，为多模态对齐任务提供了新思路。
+
+---
+
+## 38. Kanade: A Simple Disentangled Tokenizer for Spoken Language Modeling
+
+**作者**: Zhijie Huang, Stephen McIntosh, Daisuke Saito, Nobuaki Minematsu
+**链接**: [2602.00594](https://arxiv.org/abs/2602.00594)
+**分类**: Speech Tokenization | **关键词**: speech tokenizer, disentangled codec, spoken language modeling, prosody preservation, single-layer architecture
+
+## 核心痛点
+
+现有语音分词器存在以下问题：1）自监督学习（SSL）分词器（如k-means聚类）能捕捉语音结构但丢弃了必要的韵律信息；2）神经音频编解码器（NACs）保留过多声学方差，导致下游模型需要学习复杂分布；3）混合编解码器虽结合两者优势，但依赖多层令牌结构，使下游使用复杂化；4）解耦编解码器常需辅助方法（如梯度反转、对比学习）来强制分离，且解耦效果不理想。
+
+## 方法创新
+
+Kanade提出一种单层解耦语音分词器，主要创新点包括：
+- **架构设计**：采用双分支结构，内容分支处理深层SSL特征（与语言内容相关），全局分支处理浅层SSL特征（与说话人特征相关）。
+- **无辅助方法的解耦**：仅通过信息瓶颈实现无监督解耦，无需梯度反转等复杂技术。
+- **量化方式**：使用无码本量化（FSQ），有效将内容量化为单层令牌。
+- **训练策略**：结合SSL特征重建损失（强调语音信息）和梅尔谱图重建损失（强调韵律信息），鼓励内容分支编码最大语言信息。
+- **数据效率**：仅需600小时数据和1.2亿未冻结参数训练。
+
+## 实验结果
+
+- **解耦性能**：在说话人解耦任务（语音转换和判别）上达到最先进水平。
+- **词汇可用性**：在下游自动语音识别（ASR）和文本到语音（TTS）任务中表现优异。
+- **重建质量**：保持与多层编解码器相当的重建质量，并在TTS生成中实现更优的韵律自然度。
+- **纯SLM实验**：性能与SSL令牌竞争。
+- **令牌率**：生成12.5/25 Hz的单流离散令牌，适合自回归模型。
+
+## 一句话评价
+
+Kanade通过简洁的单层架构，有效结合了SSL令牌的语言可用性和NAC令牌的生成质量，无需复杂下游架构，为语音语言建模提供了高效且高性能的分词解决方案。
+
+---
+
+## 39. Dual-View Predictive Diffusion: Lightweight Speech Enhancement via Spectrogram-Image Synergy
+
+**作者**: Ke Xue, Rongfei Fan, Kai Li, Shanping Yu, Puning Zhao, Jianping An
+**链接**: [2602.00568](https://arxiv.org/abs/2602.00568)
+**分类**: Audio Enhancement | **关键词**: Speech Enhancement, Diffusion Models, Lightweight Architecture, Spectrogram Processing, Dual-View Learning
+
+## 核心痛点
+当前基于扩散模型的语音增强方法存在两大问题：1）将语谱图视为普通2D图像进行均匀处理，忽略了音频固有的结构稀疏性，导致频谱表示效率低下；2）计算复杂度极高，限制了实际应用。
+
+## 方法创新
+提出DVPD（Dual-View Predictive Diffusion）模型，通过双视角协同实现轻量级语音增强：
+1. **训练阶段**：
+   - 频率自适应非均匀压缩（FANC）编码器：保留关键低频谐波，修剪高频冗余
+   - 轻量级图像化谱感知（LISA）模块：从视觉角度以最小开销捕获特征
+2. **推理阶段**：
+   - 免训练无损提升（TLB）策略：利用双视角先验提升生成质量，无需额外微调
+3. **架构特点**：并行预测-扩散双分支结构，通过频率感知交互模块实现跨分支协同
+
+## 实验结果
+- 相比SOTA轻量级模型PGUSE：
+  - 参数量减少65%（仅需35%参数）
+  - 推理MACs减少60%（仅需40%计算量）
+- 在多个基准测试中达到SOTA性能
+- 实现了高保真语音质量与极致架构效率的平衡
+
+## 一句话评价
+DVPD通过创新的双视角协同设计，在显著降低计算成本的同时保持了卓越的语音增强性能，为生成式语音增强的效率-质量权衡设立了新基准。
+
+---
+
+## 40. Edit Content, Preserve Acoustics: Imperceptible Text-Based Speech Editing via Self-Consistency Rewards
+
+**作者**: Yong Ren, Jiangyan Yi, Jianhua Tao, Zhengqi Wen, Tao Wang
+**链接**: [2602.00560](https://arxiv.org/abs/2602.00560)
+**分类**: Text-based Speech Editing | **关键词**: text-based speech editing, semantic token, reinforcement learning, self-consistency rewards, Flow Matching
+
+## 核心痛点
+
+传统基于文本的语音编辑方法面临两大核心挑战：
+1. **内容-风格纠缠问题**：现有方法主要在声学空间操作，导致内容修改时不可避免地影响声学风格，引发生成不稳定和边界伪影
+2. **感知不连续性**：编辑区域与原始上下文难以无缝融合，即使声学特征一致，仍可能出现韵律不匹配或语义不连贯
+
+## 方法创新
+
+论文提出“编辑内容，保留声学”原则的框架，包含两大核心组件：
+
+### 1. 结构基础（Structural Foundations）
+- **语义空间编辑**：将编辑操作解耦到离散语义空间，仅修改语言内容和粗略韵律
+- **流匹配解码器**：使用Flow Matching解码器在统一声学流形中重建声学特征
+- **PSM格式化策略**：采用前缀-后缀-中间格式将任务构建为条件令牌填充问题
+
+### 2. 感知对齐（Perceptual Alignment）
+- **自一致性奖励GRPO**：首次使用预训练TTS模型作为隐式批评器，计算编辑令牌的条件似然作为统计一致性代理
+- **复合奖励设计**：
+  - 对数概率自一致性奖励（r_sc）：确保编辑区域保持在自然语音的高概率流形内
+  - 可懂度奖励（r_wer）：基于ASR词错误率强制内容准确性
+  - 门控融合机制：通过有效性约束防止奖励黑客攻击
+
+## 实验结果
+
+- **显著优于基线**：在可懂度、鲁棒性和感知质量方面显著超越最先进的自回归和非自回归基线方法
+- **有效减少伪影**：语义空间编辑相比声学令牌基线显著减少边界伪影
+- **增强全局一致性**：自一致性奖励机制有效提升编辑区域与上下文的融合质量
+
+## 一句话评价
+
+该研究通过创新的解耦架构和基于预训练TTS模型的强化学习对齐机制，为基于文本的语音编辑任务提供了系统性的解决方案，在保持声学一致性的同时实现了高质量的语义修改。
+
+---
+
+## 41. RVCBench: Benchmarking the Robustness of Voice Cloning Across Modern Audio Generation Models
+
+**作者**: Xinting Liao, Ruinan Jin, Hanlin Yu, Deval Pandya, Xiaoxiao Li
+**链接**: [2602.00443](https://arxiv.org/abs/2602.00443)
+**分类**: Voice Cloning | **关键词**: Voice Cloning, Robustness Benchmark, Audio Generation Models, Speech Synthesis, Adversarial Perturbations
+
+## 核心痛点
+现代语音克隆（VC）技术虽然能通过少量参考音频合成与目标说话人高度相似的语音，但在实际部署中面临鲁棒性不足的问题。参考音频噪声、文本提示不完美、下游处理多样性等因素会显著影响性能，而现有研究缺乏对VC鲁棒性的系统性评估，尤其是在真实场景下的输入变化、生成挑战、输出后处理和对抗扰动等方面。
+
+## 方法创新
+本文提出了RVCBench，首个全面评估现代VC系统鲁棒性的基准测试，覆盖整个生成流程。它包括四个鲁棒性维度：输入鲁棒性（如参考音频和文本提示的变化）、生成鲁棒性（如跨语言和长上下文合成）、输出鲁棒性（如后处理压缩和深度伪造检测）以及音频扰动鲁棒性（如被动噪声和主动防御扰动）。RVCBench包含10个任务，涉及225个说话人、14,370条话语和11个代表性VC模型，基于公开数据集构建，支持标准化评估。
+
+## 实验结果
+评估揭示了VC的显著鲁棒性差距：在常见输入变化和后处理下性能急剧下降；长上下文和跨语言场景进一步暴露稳定性限制；被动噪声和主动扰动均影响生成鲁棒性。具体来说，输入变化会破坏内容一致性和保真度，生成瓶颈导致音色、情感和内容保存退化，后处理削弱输出质量，而扰动有效抑制说话人相似性和生成质量。
+
+## 一句话评价
+RVCBench为VC鲁棒性提供了首个系统性基准，揭示了当前模型在实际部署中的关键失败模式，推动了更鲁棒和可部署VC模型的发展。
+
+---
+
+## 42. Multi-Speaker Conversational Audio Deepfake: Taxonomy, Dataset and Pilot Study
+
+**作者**: Alabi Ahmed, Vandana Janeja, Sanjay Purushotham
+**链接**: [2602.00295](https://arxiv.org/abs/2602.00295)
+**分类**: Audio Deepfake Detection | **关键词**: Multi-Speaker Conversational Audio Deepfake, Text-to-Speech, Dataset Creation, Taxonomy, Deepfake Detection
+
+## 核心痛点
+现有音频深度伪造检测研究主要集中于单说话人场景，而多说话人对话环境中的深度伪造（如政治操纵、电信诈骗）已成为一个未充分探索的重大威胁，缺乏专门的数据集和检测方法。
+
+## 方法创新
+1. **提出多说话人对话音频深度伪造的概念分类法**：基于上下文、说话人组成和操纵范围（部分操纵与完全合成）进行分类。
+2. **创建多说话人对话音频深度伪造数据集（MsCADD）**：包含2,830个音频片段，涵盖真实和完全合成的双说话人对话，使用VITS和SoundStorm-based NotebookLM模型生成，模拟自然对话，包括性别和自发性变化。
+3. **基准测试**：在MsCADD上评估了三种基线模型（LFCC-LCNN、RawNet2、Wav2Vec 2.0），报告了F1分数、准确率、真阳性率和真阴性率。
+
+## 实验结果
+基线模型提供了有用的基准，但结果表明，在多变对话动态下可靠检测合成语音方面存在显著差距，突显了多说话人深度伪造检测研究的不足。
+
+## 一句话评价
+该研究填补了多说话人对话音频深度伪造检测的空白，通过分类法和数据集为未来研究奠定了基础，但检测性能仍需提升以应对现实威胁。
+
+---
+
+## 43. VoxServe: Streaming-Centric Serving System for Speech Language Models
+
+**作者**: Keisuke Kamahori, Wei-Tzu Lee, Atindra Jha, Rohan Kadekodi, Stephanie Wang, Arvind Krishnamurthy, Baris Kasikci
+**链接**: [2602.00269](https://arxiv.org/abs/2602.00269)
+**分类**: Speech Language Model Serving Systems | **关键词**: Speech Language Models, Streaming Serving, Model Serving Systems, Audio Tokenization, Inference Optimization
+
+## 核心痛点
+1. **架构多样性挑战**：现代语音语言模型（SpeechLMs）结合LLM骨干网络与音频特定模块（如音频去令牌化器），形成多阶段推理流水线，具有异构计算、内存和I/O特性。
+2. **流式服务需求**：流式应用需要低延迟（Time-To-First-Audio, TTFA）和流式可行性（确保音频块连续播放不中断），现有系统难以满足。
+3. **系统碎片化**：当前部署依赖碎片化、定制化的推理栈，缺乏统一框架管理整个流水线，导致性能次优化且切换模型家族成本高。
+
+## 方法创新
+1. **模型执行抽象**：设计解耦模型架构与系统级优化的抽象接口，支持多样SpeechLM架构（如多码本、连续特征、深度LLM等）。
+2. **流式感知调度算法**：针对流式性能指标（TTFA和流式可行性）优化的调度策略。
+3. **异步推理流水线**：减少开销，提高端到端效率。
+4. **统一优化集成**：在单一抽象下统一批处理、分块去令牌化、缓存管理和CUDA图等优化技术。
+
+## 实验结果
+1. **性能提升**：在三个有现有服务基线的模型上，VOXSERVE在相似延迟下实现10-20倍更高的请求吞吐量。
+2. **流式可行性**：在保持高流式可行性的同时显著提升性能。
+3. **模型支持**：实现了对7种现代SpeechLM的支持，涵盖多样架构。
+4. **灵活性**：可适应分布式推理和其他应用场景（如吞吐量导向推理）。
+
+## 一句话评价
+VOXSERVE通过创新的模型抽象和流式优化，解决了SpeechLM服务中的架构多样性和流式性能挑战，为高效语音系统开发提供了统一平台。
+
+---
+
+## 44. LPIPS-AttnWav2Lip: Generic Audio-Driven lip synchronization for Talking Head Generation in the Wild
+
+**作者**: Zhipeng Chen, Xinheng Wang, Lun Xie, Haijie Yuan, Hang Pan
+**链接**: [2602.00189](https://arxiv.org/abs/2602.00189)
+**分类**: Audio-driven Generation | **关键词**: Audio-driven Generation, lip synthesis, LPIPS Loss, Multimodal Fusion, Talking Head Generation
+
+## 核心痛点
+论文指出，音频驱动说话头生成的主要挑战是实现唇部与音频的视听一致性（唇同步）。现有方法如Wav2Lip和AttnWav2Lip在生成高频细节时存在困难，因为音频和视觉特征的简单拼接无法学习音频内容信息与嘴部纹理信息之间的深层关联，且音频信息在解码器深度增加时逐渐减弱，导致音频编码器失效问题。
+
+## 方法创新
+论文提出LPIPS-AttnWav2Lip方法，包含三个主要创新：
+1. **生成器设计**：采用基于残差结构的卷积块注意力模块（CBAM），增强对唇部区域信息的编码和解码关注，抑制无关信息影响。使用U-Net架构但减少编码器和解码器层数，以减轻音频信息影响减弱问题并降低训练难度。
+2. **语义对齐模块**：引入基于双分支结构的FFC层扩展网络感受野，获取视觉特征图的局部和全局上下文信息；使用自适应实例归一化（AdaIN）将视觉特征的统计信息与音频潜在向量对齐，增强唇部区域的音频驱动，不增加计算成本。
+3. **损失函数**：用LPIPS损失替代对抗损失，模拟人类对图像质量的判断，减少训练过程中的不稳定性和梯度消失/爆炸问题，为唇同步提供更好的训练环境。
+
+## 实验结果
+论文通过主观和客观评估验证了方法的有效性：
+- 在唇同步准确性方面，使用LSE-C和LSE-D等指标进行评估。
+- 在视觉质量方面，使用FID等指标进行评估。
+- 结果表明，该方法在唇同步准确性和视觉质量上表现出色。
+
+## 一句话评价
+LPIPS-AttnWav2Lip通过引入语义对齐模块和LPIPS损失，有效解决了音频驱动说话头生成中的唇同步和图像质量问题，为任意说话者提供了通用的解决方案。
+
+---
+
+## 45. Beyond Omnidirectional: Neural Ambisonics Encoding for Arbitrary Microphone Directivity Patterns using Cross-Attention
+
+**作者**: Mikko Heikkinen, Archontis Politis, Konstantinos Drossos, Tuomas Virtanen
+**链接**: [2601.23196](https://arxiv.org/abs/2601.23196)
+**分类**: Spatial Audio Processing | **关键词**: Ambisonics, Microphone Array, Cross-Attention, Array Transfer Functions, Spatial Audio Encoding
+
+## 核心痛点
+传统Ambisonics编码方法（如基于最小二乘的静态滤波器矩阵）在处理不规则麦克风阵列时存在局限性：低频能量损失或噪声放大、高频空间混叠导致的球谐模式失真。现有深度学习方法通常需要为每种阵列几何结构重新训练，缺乏泛化能力；而基于几何元数据的方法（如Gen-A）无法捕捉复杂的阵列传输函数（ATFs），如设备散射效应。
+
+## 方法创新
+提出一种基于交叉注意力机制的深度神经网络模型，用于将任意麦克风阵列信号编码为Ambisonics格式。关键创新包括：
+1. **输入扩展**：同时处理音频信号（X）和复数方向性ATFs（H），取代仅依赖几何元数据的方法，能更准确表征真实阵列特性。
+2. **双编码器架构**：使用独立的信号编码器（Encsig）和方向性编码器（Encdir），分别提取特征。
+3. **交叉注意力融合**：通过多头注意力机制将信号特征与方向性特征动态结合，生成与阵列无关的潜在表示（Z_Attn），再解码为时频依赖的混合矩阵E。
+4. **泛化能力**：支持固定麦克风数量但任意ATFs（包括位置、指向性模式和设备散射）的未见阵列，无需重新训练。
+
+## 实验结果
+在模拟数据上评估两个场景：
+1. **移动电话阵列（复杂散射）**：所提方法在尺度不变信噪比（SI-SDR）上优于所有基线（静态编码、参数化DSP方法、Gen-A神经网络），并在所有Ambisonics指标上超越静态编码器。
+2. **自由场条件**：达到最佳SI-SDR，与现有神经方法性能相当，同时优于静态编码器。
+分析表明，注意力权重有效利用了方向性元数据进行空间编码。
+
+## 一句话评价
+该研究通过结合阵列传输函数与交叉注意力机制，实现了对任意麦克风阵列的高效、泛化Ambisonics编码，显著提升了复杂散射环境下的空间音频质量。
+
+---
+
+## 46. Layer-Aware Early Fusion of Acoustic and Linguistic Embeddings for Cognitive Status Classification
+
+**作者**: Krystof Novotny, Laureano Moro-Velázquez, Jiri Mekyska
+**链接**: [2601.23004](https://arxiv.org/abs/2601.23004)
+**分类**: Speech Processing for Healthcare | **关键词**: Cognitive Status Classification, Early Fusion, Multimodal Embeddings, Layer Selection, Alzheimer's Detection
+
+## 核心痛点
+- 认知衰退（如阿尔茨海默病）在语音中表现为声学和语言模式的复杂变化，单一模态模型无法全面捕捉这些特征，导致分类性能受限。
+- 现有预训练模型（如wav2vec 2.0、Whisper、DistilBERT、RoBERTa）在认知状态分类中应用广泛，但模型可解释性差，难以理解不同模态如何协同贡献于决策。
+- 早期融合（EF）和晚期融合（LF）方法在结合声学和语言嵌入时效果不一，缺乏对层深度影响的系统研究。
+
+## 方法创新
+- 提出层感知早期融合方法，通过帧级对齐将声学嵌入（从wav2vec 2.0或Whisper的不同编码器层提取）与语言嵌入（从DistilBERT或RoBERTa提取）结合，生成多模态张量用于分类。
+- 引入时间感知变体（TA-和TA-PAD-），在语言编码器中融入词级时间戳和停顿信息，以增强时间结构建模。
+- 使用基于Transformer的分类器进行超参数优化和评估，通过10次重复实验确保结果可靠性，并比较EF、LF及单模态模型的性能。
+
+## 实验结果
+- 数据集：基于DementiaBank的1,629名说话者录音（认知正常CN、轻度认知障碍MCI、阿尔茨海默病及相关痴呆ADRD）。
+- 最佳性能：EF（Whisper + RoBERTa，第9层）达到最高F1分数0.633；LF（Whisper + DistilBERT，第10层）达到最低对数损失0.678。
+- 关键发现：性能峰值集中在编码器中层（约8-10层），声学模型始终优于纯文本模型；EF在声学嵌入处于纯声学状态时提升判别力，而LF改善概率校准。
+- 时间感知变体未显著提升性能，表明基本语言表示已足够。
+
+## 一句话评价
+本研究通过层感知早期融合方法，有效结合声学和语言嵌入，提升了认知状态分类性能，并揭示了中层编码器层在多模态协同中的关键作用，为临床语音分析提供了可解释的见解。
+
+---
+
+## 47. EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis
+
+**作者**: Li Zhou, Hao Jiang, Junjie Li, Tianrui Wang, Haizhou Li
+**链接**: [2601.22873](https://arxiv.org/abs/2601.22873)
+**分类**: Text-to-Speech | **关键词**: Activation steering, emotion-aware TTS, speech synthesis
+
+## 核心痛点
+现有情感感知TTS系统（包括基于LLM的设计）通常依赖固定情感嵌入的缩放或外部引导，限制了其建模情感特定潜在特征的能力，导致情感表达的精确性和可控性不足。
+
+## 方法创新
+提出EmoShift框架，核心是EmoSteer层，通过学习输出嵌入空间中每个目标情感的转向向量来捕捉其潜在偏移，实现精确、一致的情感控制。该方法仅需1000万可训练参数（不到全微调的1/30），具有轻量级、可解释、即插即用的特点，支持通过调整增益因子α实现情感强度的细粒度控制。
+
+## 实验结果
+- 在ESD数据集上，EmoShift在客观和主观评估中均优于零样本和全微调基线
+- 在保持自然度和说话人相似性的同时，显著提升了情感表达能力
+- 情感分类准确率在多个情感类别上均有提升，整体情感生成质量达到75.94（最佳配置）
+- 仅需1000万参数，远少于全微调系统的311M参数
+
+## 一句话评价
+EmoShift通过轻量级激活转向机制，在保持TTS系统核心架构不变的情况下，实现了更精确、可控的情感表达，为情感感知语音合成提供了高效解决方案。
+
+---
+
+## 48. CALM: Joint Contextual Acoustic-Linguistic Modeling for Personalization of Multi-Speaker ASR
+
+**作者**: Muhammad Shakeel, Yosuke Fukumoto, Chikara Maeda, Chyi-Jiunn Lin, Shinji Watanabe
+**链接**: [2601.22792](https://arxiv.org/abs/2601.22792)
+**分类**: Speech Recognition | **关键词**: multi-speaker ASR, contextual biasing, target-speaker extraction, dynamic vocabulary, joint acoustic-linguistic modeling
+
+## 核心痛点
+多说话人自动语音识别（ASR）在重叠语音和会话特定词汇场景下面临双重挑战：1）声学层面——目标说话人语音在重叠区域受到干扰，导致归属错误；2）语言层面——对领域特定词汇（如专有名词、术语）适应性不足，训练数据中稀疏或未见词汇导致识别错误。
+
+## 方法创新
+提出CALM框架，联合上下文声学-语言建模，实现端到端的多说话人ASR个性化。核心创新包括：
+1. **声学建模**：使用ECAPA-TDNN提取说话人嵌入，通过FiLM调制Conformer编码器的中间和最终隐藏状态，实现目标说话人条件化。
+2. **语言建模**：采用基于动态词汇的上下文偏置，使用Transformer编码偏置列表，构建动态词汇表，通过加权softmax控制偏置权重，避免过/欠偏置。
+3. **联合优化**：结合CTC、注意力、interCTC和VAD多任务损失，实现声学与语言信息的深度融合。
+
+## 实验结果
+在多个数据集上验证有效性：
+- **LibriSpeech2Mix**：B-WER从12.7降至4.7（A4方法，N=100×2）
+- **CSJMix2**：B-CER从16.6降至8.4（eval3）
+- **LibriSpeech3Mix**：在N=100×3时，WER从9.2降至8.4，B-WER从17.0降至6.9
+- **AMI语料库**：在IHM-mix条件下验证标准化语音混合性能
+实验表明，CALM在保持低U-WER/U-CER的同时，显著提升B-WER/B-CER，实现跨语言的稳健性能。
+
+## 一句话评价
+CALM通过端到端的声学-语言联合建模，有效解决了多说话人ASR中重叠语音和领域词汇的双重挑战，为个性化语音识别提供了可扩展的解决方案。
+
+---
+
+## 49. Streaming Speech Recognition with Decoder-Only Large Language Models and Latency Optimization
+
+**作者**: Genshun Wan, Wenhui Zhang, Jing-Xuan Zhang, Shifu Xiong, Jianqing Gao, Zhongfu Ye
+**链接**: [2601.22779](https://arxiv.org/abs/2601.22779)
+**分类**: Speech Recognition | **关键词**: Streaming ASR, Large Language Models, Latency Optimization
+
+## 核心痛点
+论文指出，尽管解码器专用大型语言模型（LLMs）在自动语音识别（ASR）中展现出潜力，但实现流式识别仍面临挑战。现有方法常依赖CTC或混合模型进行强制对齐，导致级联设计复杂，且固定音频块生成令牌的方法难以自适应最小化延迟。
+
+## 方法创新
+提出一种流式LLM-ASR方法，核心创新包括：
+1. **读/写策略网络**：基于单调分块注意力（MoChA），动态分割语音嵌入，实现音频与文本的同步处理。
+2. **最小延迟训练目标**：引入minLT损失，指导策略网络优化分割边界，减少延迟。
+3. **联合训练策略**：流式与非流式ASR模型共享参数，简化训练流程并降低开发成本。
+4. **端到端优化**：使用低秩适应（LoRA）联合训练语音编码器、适配器、策略网络和LLM。
+
+## 实验结果
+在AISHELL-1和AISHELL-2普通话基准测试中，方法优于现有流式ASR基线：
+- AISHELL-1：字符错误率（CER）为5.1%。
+- AISHELL-2：CER为5.5%。
+延迟优化使平均令牌生成延迟减少62.5%，对识别精度影响可忽略。
+
+## 一句话评价
+该方法通过动态分割和延迟优化，有效解决了LLM在流式ASR中的挑战，在保持高精度的同时显著降低延迟，具有实用价值。
+
+---
+
+## 50. Class-Aware Permutation-Invariant Signal-to-Distortion Ratio for Semantic Segmentation of Sound Scene with Same-Class Sources
+
+**作者**: Binh Thien Nguyen, Masahiro Yasuda, Daiki Takeuchi, Daisuke Niizumi, Noboru Harada
+**链接**: [2601.22504](https://arxiv.org/abs/2601.22504)
+**分类**: Audio Source Separation | **关键词**: Semantic Segmentation, Permutation-Invariant Training, Signal-to-Distortion Ratio
+
+## 核心痛点
+论文针对DCASE 2025挑战赛任务4（S5）中，现实音频混合物常包含同类别声源（如多人同时说话）的问题。现有系统（如基线ResUNetK）在标签查询源分离（LQSS）中，因重复标签导致输出与参考源对齐模糊，影响训练和评估。官方评估指标CA-SDRi在重复标签下失效，限制了系统在真实场景中的应用。
+
+## 方法创新
+1. **音频标记模型改进**：将M2D AT模型从多热向量输出改为多单热向量输出，支持重复标签预测，并利用多通道输入增强空间信息处理。
+2. **源分离模型损失函数**：提出类感知排列不变SDR（CA-PI-SDR）损失函数，在训练中仅允许同类别源间排列，以优化LQSS模型处理重复标签查询。
+3. **评估指标设计**：引入类感知排列不变SDRi（CA-PI-SDRi）指标，通过排列不变性处理重复标签，统一评估有无同类别源的混合物，替代原有CA-SDRi。
+
+## 实验结果
+实验在DCASE25T4基线系统上验证，扩展标签预测模型以支持同类别标签。结果表明，所提方法能有效处理同类别源，新指标在有无同类别源的混合物上均表现稳健，提升了S5系统在真实场景中的性能。
+
+## 一句话评价
+该研究通过创新损失函数和评估指标，解决了音频语义分割中同类别源处理的难题，推动了沉浸式通信中声音场景分析技术的实用化。
+
+---
+
+## 51. Optimizing Domain-Adaptive Self-Supervised Learning for Clinical Voice-Based Disease Classification
+
+**作者**: Weixin Liu, Bowen Qu, Matthew Pontell, Maria Powell, Bradley Malin, Zhijun Yin
+**链接**: [2601.22319](https://arxiv.org/abs/2601.22319)
+**分类**: Computational Paralinguistics / Medical Audio Analysis | **关键词**: Self-supervised learning, Masked autoencoder, Audio spectrogram transformer, Domain adaptation, Voice-based health analysis
+
+## 核心痛点
+1. **数据稀缺性**：医疗语音数据获取困难，受限于患者隐私法规、临床验证成本高、专家标注需求
+2. **领域不匹配**：基于通用音频（如AudioSet）预训练的模型无法捕捉临床语音中细微的病理特征（如嗓音震颤、嘶哑声）
+3. **数据复杂性**：患者常存在共病情况，需要多标签分类能力
+
+## 方法创新
+1. **领域自适应自监督学习（SSL）框架**：采用Masked Autoencoder（MAE）在病理语音数据上进行预训练，减少对标注数据的依赖
+2. **三组件系统优化**：
+   - **重建损失函数**：比较MA-Error（L1损失）与MSE（L2损失），发现MA-Error对异常值更鲁棒
+   - **输入归一化策略**：对比逐块归一化与全局归一化，逐块归一化能分离幅度信息与结构信息
+   - **掩码策略**：提出内容感知掩码（基于块方差计算显著性），采用70%高显著性区域+30%随机区域的混合策略
+3. **模型架构**：基于Audio Spectrogram Transformer（AST），将log-mel频谱图处理为图像块序列
+4. **数据融合**：下游任务中融合SSL提取的深度特征与静态声学特征（如jitter、shimmer）
+
+## 实验设置与结果
+- **数据集**：Bridge2AI-Voice数据集（442名参与者，16,738条录音），涵盖四类疾病：嗓音障碍、神经退行性疾病、情绪/精神障碍、呼吸系统疾病
+- **评估指标**：Macro F1分数（多标签分类）
+- **关键结果**：
+  - 优化配置（MA-Error损失 + 逐块归一化 + 内容感知掩码）达到Macro F1 0.688±0.009
+  - 优于通用音频预训练的SSL基线（Macro F1 0.663±0.011）
+  - 内容感知掩码通过关注信息丰富区域提升性能，MA-Error损失提高鲁棒性
+
+## 一句话评价
+该研究通过系统优化MAE框架的三个关键组件，显著提升了领域自适应SSL在临床语音疾病分类中的性能，为数据受限的医疗音频应用提供了有效的设计参考。
+
+---
+
+## 52. Sylber 2.0: A Universal Syllable Embedding
+
+**作者**: Cheol Jun Cho, Nicholas Lee, Alan W Black, Gopala K. Anumanchipalli
+**链接**: [2601.22306](https://arxiv.org/abs/2601.22306)
+**分类**: Speech Representation Learning | **关键词**: syllable embedding, speech tokenization, self-supervised learning, multilingual speech, low-frequency coding
+
+## 核心痛点
+
+现有语音建模方法面临两个主要问题：1）语音标记频率过高（通常12.5-50Hz），导致建模效率低下；2）现有的音节级编码方法（如Sylber初代）仅限于英语朗读语音，缺乏通用性，且丢失了大量声学细节（如说话人身份）。
+
+## 方法创新
+
+Sylber 2.0提出了一种通用的音节嵌入框架，主要创新包括：
+1. **多语言音节学习**：扩展了自监督学习框架，支持从多种语言和表达风格中学习音节结构
+2. **边界检测器**：引入并行化音节边界检测，提高分割效率
+3. **辅助声学编码器**：专门编码音节标记中的声学细节，弥补纯语言内容的信息缺失
+4. **连续嵌入空间**：采用连续嵌入而非离散量化，避免多码本复杂性，特别适合多语言场景
+5. **轻量级声码器**：使用Siuzdak（2024）声码器从压缩嵌入合成24kHz原始波形
+
+## 实验结果
+
+1. **标记频率**：在102种语言（FLEURS-R数据集）上平均标记频率为4.8Hz（范围3.2-6.4Hz），是语音编码中最低的
+2. **重建质量**：接近完美重建，缩小了与高频标记的性能差距，大幅超越原始Sylber
+3. **TTS性能**：仅用7200万参数实现零样本多说话人TTS，性能与SOTA模型相当
+4. **低资源ASR**：比先前语音编码框架提供更有效的特征
+5. **资源需求**：可在单张24GB显存GPU上完成训练
+
+## 一句话评价
+
+Sylber 2.0通过创新的音节级编码框架，在保持极低标记频率（~5Hz）的同时实现了多语言通用性和高质量重建，为高效语音建模提供了新的基础抽象。
+
+---
+
+## 53. Brain-Informed Speech Separation for Cochlear Implants
+
+**作者**: Tom Gajecki, Jonas Althoff, Waldo Nogueira
+**链接**: [2601.22260](https://arxiv.org/abs/2601.22260)
+**分类**: Audio Enhancement | **关键词**: Cochlear Implants, Brain-Computer Interface, Speech Separation, EEG, Curriculum Learning
+
+## 核心痛点
+
+1. **鸡尾酒会问题**：人工耳蜗（CI）用户在多人同时说话的场景中，语音识别能力显著下降。
+2. **认知状态利用不足**：传统CI处理策略（如ACE）仅映射声学能量到电刺激模式，未利用用户的认知状态或选择性注意力。
+3. **标签置换模糊性**：仅基于音频的分离器在输出多个说话人时存在标签置换问题，需要额外选择机制。
+
+## 方法创新
+
+1. **脑信息融合模型**：提出轻量级融合层，将音频混合信号与EEG衍生的注意力线索结合，生成单一受关注说话人的电刺激图（electrodogram）。
+2. **混合课程学习策略**：在训练中控制注意力线索的质量，通过注入噪声模拟真实EEG信号的退化，提高模型对线索质量波动的鲁棒性。
+3. **端到端处理**：模型直接生成适用于CI刺激的电刺激图，避免波形域到电刺激图的转换损失。
+
+## 实验结果
+
+1. **性能提升**：在多人说话条件下，脑信息模型比仅音频基线（DeepACE）获得更高的信干比改善（SIRi）。
+2. **模型紧凑性**：脑信息模型参数略少（约167k vs. 171k），保持2ms算法延迟，适合硬件受限部署。
+3. **鲁棒性验证**：混合课程学习策略在EEG-语音相关性中等时仍能提供稳定增益，避免对理想线索的过拟合。
+
+## 一句话评价
+
+该研究通过融合EEG注意力线索与音频处理，为人工耳蜗在复杂听觉环境中的认知自适应处理提供了紧凑且鲁棒的解决方案，显著提升了多人说话场景下的语音分离性能。
+
+---
+
+## 54. Rethinking Speech Representation Aggregation in Speech Enhancement: A Phonetic Mutual Information Perspective
+
+**作者**: Seungu Han, Sungho Lee, Kyogu Lee
+**链接**: [2601.22480](https://arxiv.org/abs/2601.22480)
+**分类**: Audio Enhancement | **关键词**: Speech Enhancement, Self-Supervised Learning, Mutual Information, Noise Robustness, Phonetic Information
+
+## 核心痛点
+
+1. **SSL模型缺乏噪声鲁棒性**：当前语音增强（SE）模型广泛使用自监督学习（SSL）表示（如HuBERT、WavLM、wav2vec 2），但这些模型通常在干净数据上训练，未考虑噪声环境，导致在噪声语音中语义信息可能被破坏。
+2. **聚合模块的语义信息损失**：SE中常用的轻量级聚合模块（如加权求和）通常与SE模型联合训练，仅基于声学目标（如频谱损失）优化，可能优先保留声学细节而忽略语义信息，违背了使用SSL表示的初衷。
+3. **动态噪声环境下的信息分布变化**：研究发现，SSL表示中语音信息（如音素）的层间分布随信噪比（SNR）变化，而固定聚合权重无法适应这种动态性。
+
+## 方法创新
+
+1. **信息论分析框架**：首次从互信息（MI）角度量化SSL表示在噪声条件下的鲁棒性，测量噪声SSL特征与音素标签之间的MI下界，分析层间信息分布。发现上层（如9-11层）即使在噪声下仍保留更多语音信息，但峰值信息量随噪声增加而降低。
+2. **解耦的语音聚合层**：提出一种两阶段训练框架：
+   - **预训练阶段**：聚合模块（如加权求和WS或动态加权求和DWS）独立训练，以最大化输出与音素标签的MI，专注于保留语音内容。
+   - **冻结应用阶段**：优化后的聚合模块被冻结，作为SE模型的输入条件，SE模型仅基于声学目标训练。
+3. **动态聚合机制**：引入动态加权求和（DWS），使用自注意力机制根据时间步动态调整层间权重，适应SNR变化，同时通过可学习偏置保留全局层重要性先验。
+
+## 实验结果
+
+- **MI分析结果**：在HuBERT、WavLM、wav2vec 2模型上验证，上层层在噪声下语音信息更集中，但信息量随SNR降低而减少。
+- **SE性能提升**：在VoiceBank-DEMAND数据集上实验，使用预训练的语音聚合层（WS或DWS）相比联合优化基线，显著降低了词错误率（WER），证明了解耦方法在保留语音内容上的优势。例如，语音优化的WS和DWS在WER上优于声学优化版本。
+- **声学质量保持**：在SI-SDR、STOI、PESQ等声学指标上表现与基线相当或略有提升，表明方法不损害增强语音的声学质量。
+
+## 一句话评价
+
+该论文通过信息论分析揭示SSL表示在噪声下的语义信息损失问题，并提出解耦的语音聚合层，有效提升了语音增强模型的语音内容保留能力，为SE领域提供了新的语义对齐视角。
+
+---
+
+## 55. An Effective Energy Mask-based Adversarial Evasion Attacks against Misclassification in Speaker Recognition Systems
+
+**作者**: Chanwoo Park, Chanwoo Kim
+**链接**: [2601.22390](https://arxiv.org/abs/2601.22390)
+**分类**: Speaker Recognition | **关键词**: Energy Masking, Adversarial Attacks, Speaker Recognition System
+
+## 核心痛点
+论文指出，语音欺骗攻击、说话人验证漏洞和恶意语音数据操纵已成为人工智能和机器学习系统中的关键安全威胁。随着深度学习技术在语音合成和深度伪造方面的快速发展，语音安全系统面临前所未有的挑战，特别是在缺乏法律框架的情况下，声音数据的滥用问题日益突出。
+
+## 方法创新
+论文提出了一种新颖的掩蔽能量扰动（MEP）方法，用于对抗说话人识别系统中的误分类。该方法基于能量掩蔽，在频域中对原始语音数据的小能量区域应用掩蔽，然后生成对抗性扰动，针对人类听觉模型不易察觉的区域。MEP 方法包括基本 MEP 攻击和迭代 MEP（I-MEP）攻击，通过梯度下降优化扰动，同时使用掩蔽特征来限制扰动范围，以保持音频质量。
+
+## 实验结果
+实验在 LibriSpeech 数据集上进行，使用了 ResNetSE34-L、ResNetSE34-V 和 ECAPA-TDNN 等说话人识别模型。结果表明，MEP 和 I-MEP 方法在音频质量（通过 PESQ 和 SNR 评估）和逃避效果（通过 EER 评估）方面均优于传统对抗攻击方法（如 FGSM、I-FGSM、MI-FGSM、PGD）。例如，I-MEP 在 PESQ 得分上达到 3.7657-3.7709，SNR 达到 38.07-38.14 dB，显示出最小的感知失真和最高的信号质量。在 EER 方面，MEP 和 I-MEP 能有效提高错误率，表明其对抗攻击的有效性。
+
+## 一句话评价
+该研究通过创新的能量掩蔽方法，在保持语音质量的同时有效提升了对抗攻击的成功率，为说话人识别系统的安全防护提供了新思路。
+
+---
+
+## 56. PersonaCite: VoC-Grounded Interviewable Agentic Synthetic AI Personas for Verifiable User and Design Research
+
+**作者**: Mario Truss
+**链接**: [2601.22288](https://arxiv.org/abs/2601.22288)
+**分类**: Human-Computer Interaction (HCI) / AI in Design and User Research | **关键词**: AI personas, synthetic users, agentic systems, data grounding, hallucination mitigation
+
+## 核心痛点
+论文指出，基于LLM和代理的合成AI人物角色在设计和产品决策中应用日益广泛，但现有方法（如基于提示的角色扮演）常产生有说服力但不可验证的响应，缺乏证据基础，导致幻觉、不一致性和透明度不足，这增加了决策风险，尤其是在早期设计或战略背景下。
+
+## 方法创新
+论文提出PersonaCite系统，通过检索增强的交互将AI人物角色重构为证据受限的研究工具。关键创新包括：
+1. **实时证据检索**：在每次对话轮次中检索实际的VoC（客户之声）数据。
+2. **响应约束**：将LLM响应限制在检索到的证据范围内。
+3. **明确弃权**：当证据不足时，系统明确承认知识缺口，避免生成推测性响应。
+4. **源属性**：提供响应级别的来源归属，增强可验证性和可追溯性。
+系统采用代理架构，使用Python、AI.SDK和Next.js实现，并利用Gemini和GPT-4O进行对话处理。
+
+## 实验结果
+通过半结构化访谈和部署研究，涉及14名行业专家（来自UX研究、产品管理、设计和AI战略），初步发现包括：
+- **感知益处**：反应模拟被视作设计加速器，支持早期探索、快速迭代和利益相关者对齐，特别是在用户访问受限时。
+- **有效性关注**：专家强调透明度、可追溯性和信任的重要性，关注LLM幻觉和数据质量。
+- **设计张力**：系统作为直接用户参与的补充工具，而非替代品，无法完全捕捉真实用户的细微洞察。
+- **关键特性认可**：源属性和明确知识缺口承认受到参与者高度评价。
+
+## 一句话评价
+PersonaCite通过检索增强的交互和证据约束，将AI人物角色从说服性模拟转向可验证的研究工具，有效缓解幻觉问题，提升设计工作流程中的透明度和信任，但需注意其作为补充而非替代用户研究的定位。
+
+---
+
+## 57. Proliferating series by Jean Barraqué: a study and classification in mathematical terms
+
+**作者**: Isabel Tardón, Pablo Martín-Santamaría
+**链接**: [2601.22176](https://arxiv.org/abs/2601.22176)
+**分类**: Music Theory and Mathematical Musicology | **关键词**: Proliferating series, Jean Barraqué, serialism, permutations, group theory
+
+## 核心痛点
+传统十二音序列主义（classic serialism）在序列构建中主要关注音符之间的音程关系，导致音程变化有限，限制了作曲家在序列方法中的创新可能性。作曲家需要新的方法来扩展序列材料的多样性和结构复杂性。
+
+## 方法创新
+本文提出基于Jean Barraqué的增殖序列（proliferating series）方法，通过数学群论分析序列的结构特性。关键创新在于：
+1. **序列构建方式**：选择两个传统十二音序列，提取从第一个序列到第二个序列的音符排列变换（即置换），并重复应用此置换生成新序列（增殖）。
+2. **置换表示**：将置换表示为不相交循环的乘积，置换的阶（即生成的序列数量）等于循环长度的最小公倍数。
+3. **与传统序列变换结合**：研究从原始序列通过传统变换（如转位、逆行、倒影、逆行倒影）得到的序列作为增殖起点，分析其增殖行为和结构。
+4. **泛化应用**：将方法扩展到微音阶（micro-tonal scales）和其他音乐参数（如节奏），使用模n运算替代模12，适用于任意音高划分。
+
+## 实验结果
+- 通过Python脚本（附录A）进行实证分析，验证了增殖序列的数学规律。
+- 使用已知作曲家的序列（如Webern的作品）作为示例，展示了增殖过程如何生成新素材。
+- 分析了置换的结构（如循环长度组合）和可能的增殖数量，为作曲家提供了预测和控制序列生成的方法。
+
+## 一句话评价
+本文通过数学群论系统化地分析了Barraqué的增殖序列，为序列主义作曲提供了新的理论工具和创作可能性，促进了音乐与数学的跨学科融合。
+
+---
+
+## 58. Attention Isn't All You Need for Emotion Recognition:Domain Features Outperform Transformers on the EAV Dataset
+
+**作者**: Anmol Guragain
+**链接**: [2601.22161](https://arxiv.org/abs/2601.22161)
+**分类**: Affective Computing / Multimodal Emotion Recognition | **关键词**: Emotion Recognition, Multimodal Learning, Small Datasets, Attention Mechanisms, Domain Features
+
+## 核心痛点
+论文针对小规模数据集（如EA V数据集，仅42名参与者，约280个训练样本/受试者）上的多模态情感识别问题，探讨复杂注意力机制是否有效。核心痛点是：在小数据场景下，复杂模型（如Transformer）容易过拟合，破坏预训练特征，导致性能下降。
+
+## 方法创新
+论文系统评估了三类模型：
+1. **M1（基线Transformer）**：包括EEG Transformer、Audio Spectrogram Transformer（AST）和Vision Transformer（ViT），使用预训练架构。
+2. **M2（因子化注意力机制）**：针对各模态结构定制，如EEG的三流Transformer（空间、时间、不对称注意力）、音频的时频双注意力、视频的因子化时空注意力，旨在提升性能但引入复杂性。
+3. **M3（CNN改进）**：通过简单领域特征工程优化基线CNN，如音频添加delta MFCCs、EEG使用频域特征（如带功率和微分熵），强调领域知识和实现细节。
+
+## 实验结果
+- **M2模型表现不佳**：因子化注意力机制在小数据集上一致表现差，比基线低5-13个百分点，归因于过拟合和预训练特征破坏。
+- **M3模型效果显著**：简单领域修改提升性能：音频CNN添加delta MFCCs使准确率从61.9%提升至65.56%（+3.66pp）；EEG频域特征达到67.62%（比论文基线高+7.62pp）；视觉Transformer基线通过领域特定预训练达到75.30%，超过论文ViViT结果（74.5%），视觉delta特征提升至72.68%（+1.28pp）。
+- **关键发现**：对于小规模情感识别，领域知识和适当实现优于架构复杂性，复杂注意力机制在小数据集上无效。
+
+## 一句话评价
+该研究通过实证表明，在小数据多模态情感识别中，简单领域特征工程比复杂注意力机制更有效，为资源有限场景提供了实用指导。
+
+---
+
