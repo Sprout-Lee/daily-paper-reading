@@ -250,7 +250,8 @@ def generate_archive_html(all_papers):
             </h2>
             <div class="paper-meta">
                 <span class="tag category-tag">{p['category']}</span>
-                <strong>ID:</strong> <span class="tag">{p['id']}</span><br>
+                <strong>ID:</strong> <span class="tag">{p['id']}</span>
+                <a href="pdfs/{p['id']}.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
                 <strong>Authors:</strong> {p['authors']}<br>
                 <div style="margin-top:5px">{keywords_html}</div>
             </div>
