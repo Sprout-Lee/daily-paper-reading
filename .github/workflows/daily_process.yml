@@ -4,7 +4,7 @@ name: Daily Arxiv Bot
 on:
   schedule:
     # 每天 UTC 时间 0点 (北京时间 8点) 运行
-    - cron: '0 0 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch: # 允许手动点按钮触发
 
 permissions:
@@ -71,5 +71,6 @@ jobs:
           
           # 推送
           git push origin HEAD:main
+
 
 
