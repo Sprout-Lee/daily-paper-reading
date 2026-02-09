@@ -82,1103 +82,184 @@
     <div class="header">
         <h1>Arxiv Daily Deep Report</h1>
         <div class="meta">
-            日期: 2026-02-06 | 来源: eess.AS | 新增论文: 73 篇
+            日期: 2026-02-06 | 来源: eess.AS | 新增论文: 6 篇
         </div>
     </div>
     
     
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.04796" target="_blank">LALM-as-a-Judge: Benchmarking Large Audio-Language Models for Safety Evaluation in Multi-Turn Spoken Dialogues</a>
+                <a href="https://arxiv.org/abs/2602.05770" target="_blank">Zero-Shot TTS With Enhanced Audio Prompts: Bsc Submission For The 2026 Wildspoof Challenge TTS Track</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.04796</span><br>
-                <strong>Authors:</strong> Amir Ivry, Shinji Watanabe<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2602.05770</span><br>
+                <strong>Authors:</strong> Jose Giraldo, Alex Peiró-Lilja, Rodolfo Zevallos, Cristina España-Bonet<br>
+                <div style="margin-top:5px"><span class="tag">zero-shot TTS</span><span class="tag">audio enhancement</span><span class="tag">non-autoregressive models</span><span class="tag">wildspoof challenge</span><span class="tag">speech synthesis</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<p>论文针对在野外（in-the-wild）语音数据上训练文本转语音（TTS）系统的挑战，包括环境噪声和声学条件导致的转录错误、以及自发语音中韵律和说话风格的多样性（如犹豫、填充词和可变节奏）使时长建模更加困难。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>语音增强</strong>：使用Sidon模型进行多阶段增强管道，显著优于标准Demucs，提高信号质量。</li>
+<li><strong>非自回归架构</strong>：采用StyleTTS2和F5-TTS模型，结合灵活的时长建模，以改善韵律自然度。</li>
+<li><strong>微调策略</strong>：在增强后的TITW-Easy数据集上微调预训练模型，而非从头训练，以提升鲁棒性。</li>
+<li><strong>推理参数分析</strong>：系统分析参考提示（音频提示）的质量和长度对零样本合成性能的影响，优化音频质量和可懂度。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>音频质量</strong>：使用增强音频提示后，F5-TTS和StyleTTS2在UTMOS和DNSMOS指标上均有提升，最高达到4.21 UTMOS和3.47 DNSMOS。</li>
+<li><strong>可懂度</strong>：增强参考音频降低了词错误率（WER），尤其在StyleTTS2中效果更明显。</li>
+<li><strong>说话人相似性</strong>：提示长度与说话人相似性直接相关，长提示（平均7.7秒）优于短提示（平均5.5秒），但增强可能轻微降低相似性分数。</li>
+<li><strong>模型比较</strong>：F5-TTS在可懂度和说话人相似性方面表现更稳定，而StyleTTS2在音频质量提升上更显著。从头训练的小型F5-TTS变体性能较差，确认了从大规模语音预训练中迁移学习的价值。</li>
+<li><strong>最终选择</strong>：为WildSpoof挑战赛提交了使用增强参考提示的F5-TTS样本，因其在可懂度、音频质量和说话人相似性方面综合表现最佳。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究通过结合语音增强、非自回归架构和系统提示分析，有效提升了零样本TTS在野外语音数据上的性能，为现实语音生成提供了实用解决方案。</p>
             </div>
         </div>
         
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.04307" target="_blank">Universal Robust Speech Adaptation for Cross-Domain Speech Recognition and Enhancement</a>
+                <a href="https://arxiv.org/abs/2602.05443" target="_blank">Wave-Trainer-Fit: Neural Vocoder with Trainable Prior and Fixed-Point Iteration towards High-Quality Speech Generation from SSL features</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.04307</span><br>
-                <strong>Authors:</strong> Chien-Chun Wang, Hung-Shin Lee, Hsin-Min Wang, Berlin Chen<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Speech Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2602.05443</span><br>
+                <strong>Authors:</strong> Hien Ohnaka, Yuma Shirahata, Masaya Kawamura<br>
+                <div style="margin-top:5px"><span class="tag">Neural Vocoder</span><span class="tag">Self-Supervised Learning</span><span class="tag">Variational Autoencoder</span><span class="tag">Speech Synthesis</span><span class="tag">Waveform Generation</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<p>传统WaveFit声码器在使用自监督学习（SSL）特征时面临两个主要问题：1）无法利用信号处理知识进行手工噪声采样，只能从高斯噪声开始推理；2）无法利用梅尔频谱图的能量信息进行增益调整，需要模型隐式学习能量预测。</p>
+<h2>方法创新</h2>
+<p>WaveTrainerFit在WaveFit基础上引入两个关键改进：
+1. <strong>可训练先验</strong>：通过变分自编码器（VAE）学习目标语音的先验分布，使推理可以从接近目标语音的噪声开始，而非高斯噪声
+2. <strong>参考感知增益调整</strong>：对可训练先验施加约束以匹配语音能量，使声码器无需隐式学习能量预测任务</p>
+<h2>实验结果</h2>
+<ol>
+<li><strong>质量提升</strong>：相比WaveFit，WaveTrainerFit能以更少的推理步骤生成更自然的波形</li>
+<li><strong>说话人相似度</strong>：主观评估显示在说话人相似度方面优于基线方法</li>
+<li><strong>鲁棒性</strong>：对SSL特征提取深度具有鲁棒性，即使深层SSL特征（包含有限声学信息）也能生成自然波形</li>
+<li><strong>效率</strong>：减少了波形建模的复杂性，实现高质量波形生成</li>
+</ol>
+<h2>一句话评价</h2>
+<p>WaveTrainerFit通过引入可训练先验和参考感知增益调整，有效解决了SSL特征声码化中的噪声采样和能量预测问题，在保持高质量输出的同时显著提升了推理效率。</p>
             </div>
         </div>
         
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03891" target="_blank">Sounding Highlights: Dual-Pathway Audio Encoders for Audio-Visual Video Highlight Detection</a>
+                <a href="https://arxiv.org/abs/2602.05236" target="_blank">Exterior sound field estimation based on physics-constrained kernel</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03891</span><br>
-                <strong>Authors:</strong> Seohyun Joo, Yoori Oh<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Acoustic Signal Processing</span>
+                <strong>ID:</strong> <span class="tag">2602.05236</span><br>
+                <strong>Authors:</strong> Juliano G. C. Ribeiro, Ryo Matsuda, Jorge Trevino<br>
+                <div style="margin-top:5px"><span class="tag">Physics-informed machine learning</span><span class="tag">Sound field interpolation</span><span class="tag">Gaussian process regression</span><span class="tag">Exterior sound field problem</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<p>外部声场插值是一个具有挑战性的问题，传统方法通常需要特定的麦克风阵列配置和先验的源条件知识。现有方法如球面波函数展开（SWF）对正则化和麦克风分布敏感，而点神经元网络（PNN）等数据驱动方法在训练时可能因声压在源位置发散而困难。</p>
+<h2>方法创新</h2>
+<p>本文提出了一种基于高斯过程回归（GPR）的插值方法，使用具有可训练内积公式的点源再生核来拟合外部声场。该方法的核心创新包括：
+1. <strong>物理约束核设计</strong>：基于非齐次亥姆霍兹方程的外部波函数解定义再生核希尔伯特空间（RKHS），确保满足物理约束。
+2. <strong>参数化加权内积</strong>：引入径向权重函数（如指数衰减形式），自动衰减高阶谐波分量，参数α和β可从数据中优化。
+3. <strong>灵活性与通用性</strong>：不限制麦克风分布，允许任意麦克风阵列配置，通过核岭回归（KRR）进行系数估计。</p>
+<h2>实验结果</h2>
+<p>在数值模拟中，将所提方法（Proposed）与球面波函数展开（SWF）和点神经元网络（PNN）进行比较：
+- <strong>性能指标</strong>：在100 Hz至2.5 kHz频率范围内，所提方法平均降低插值误差约2 dB（归一化均方误差，NMSE）。
+- <strong>阵列鲁棒性</strong>：在球形t-design阵列和随机分布阵列上均表现一致，优于对比方法。
+- <strong>重建质量</strong>：在目标区域内更一致地重建真实声场，归一化平方误差（NSE）分布更优。</p>
+<h2>一句话评价</h2>
+<p>该研究通过物理约束核与数据驱动优化相结合，为外部声场插值提供了一种灵活且高性能的解决方案，显著提升了插值精度和阵列鲁棒性。</p>
             </div>
         </div>
         
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03868" target="_blank">Benchmarking Automatic Speech Recognition for Indian Languages in Agricultural Contexts</a>
+                <a href="https://arxiv.org/abs/2602.05207" target="_blank">ARCHI-TTS: A flow-matching-based Text-to-Speech Model with Self-supervised Semantic Aligner and Accelerated Inference</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03868</span><br>
-                <strong>Authors:</strong> Chandrashekar M S, Vineet Singh, Lakshmi Pedapudi<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2602.05207</span><br>
+                <strong>Authors:</strong> Chunyat Wu, Jiajun Deng, Zhengxi Liu, Zheqi Dai, Haolin He, Qiuqiang Kong<br>
+                <div style="margin-top:5px"><span class="tag">flow matching</span><span class="tag">semantic aligner</span><span class="tag">non-autoregressive TTS</span><span class="tag">accelerated inference</span><span class="tag">zero-shot synthesis</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<ol>
+<li><strong>文本-语音对齐困难</strong>：现有非自回归TTS模型在文本与音频的时序和语义对齐方面存在挑战，影响合成质量。</li>
+<li><strong>推理计算成本高</strong>：基于扩散的迭代去噪过程需要大量计算，导致推理效率低下。</li>
+</ol>
+<h2>方法创新</h2>
+<ol>
+<li><strong>自监督语义对齐器</strong>：采用Transformer架构，通过掩码序列和文本特征交互，动态生成与语音长度匹配的语义表示，无需显式时长预测。</li>
+<li><strong>加速推理策略</strong>：分离的条件编码器-速度解码器架构，允许在去噪步骤间复用编码器特征，显著减少计算量。</li>
+<li><strong>辅助CTC损失</strong>：在条件编码器上应用CTC损失，增强语义理解和对齐。</li>
+<li><strong>压缩语音潜在表示</strong>：使用VAE将音频压缩为低令牌率（12.5Hz）潜在表示，替代高冗余的梅尔频谱。</li>
+</ol>
+<h2>实验结果</h2>
+<ol>
+<li><strong>性能指标</strong>：在LibriSpeech-PC test-clean上WER为1.98%，在SeedTTS test-en/test-zh上分别为1.47%/1.42%。</li>
+<li><strong>效率优势</strong>：训练仅需8块RTX5090 GPU运行4天，数据量远少于典型系统，支持训练免费推理加速。</li>
+<li><strong>主观质量</strong>：在自然度、说话人相似度和质量方面的MOS评分与工业级TTS系统竞争。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>ARCHI-TTS通过创新的对齐器和高效推理设计，在保持高质量零样本语音合成的同时，显著提升了计算效率，为实用化部署提供了新思路。</p>
             </div>
         </div>
         
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.04776" target="_blank">Speaker-Aware Simulation Improves Conversational Speech Recognition</a>
+                <a href="https://arxiv.org/abs/2602.05670" target="_blank">HyperPotter: Spell the Charm of High-Order Interactions in Audio Deepfake Detection</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.04776</span><br>
-                <strong>Authors:</strong> Máté Gedeon, Péter Mihajlik<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Audio Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2602.05670</span><br>
+                <strong>Authors:</strong> Qing Wen, Haohao Li, Zhongjie Ba, Peng Cheng, Miao He, Li Lu, Kui Ren<br>
+                <div style="margin-top:5px"><span class="tag">Hypergraph</span><span class="tag">High-Order Interactions</span><span class="tag">Audio Deepfake Detection</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<p>音频深度伪造检测（ADD）现有方法主要依赖局部或成对特征交互，忽略了高阶交互（HOIs），导致难以捕捉合成音频中跨多个声学维度的协同伪影，限制了检测的泛化能力。</p>
+<h2>方法创新</h2>
+<p>提出HyperPotter，一种基于超图的框架，通过聚类超边和类感知原型初始化，显式建模高阶协同交互。关键组件包括：关系伪影放大模块和原型导向的超边初始化机制，以增强信息性协同伪影并高效构建关系。</p>
+<h2>实验结果</h2>
+<p>在11个数据集上平均相对增益22.15%，在4个跨域数据集上超越最先进方法13.96%，展示了在多样化攻击和说话者条件下的优越泛化性能。</p>
+<h2>一句话评价</h2>
+<p>该研究首次从信息论角度探讨音频深度伪造检测中的高阶效应，通过超图建模协同依赖，为提升检测泛化性提供了有效路径。</p>
             </div>
         </div>
         
         <div class="paper-card">
             <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.04217" target="_blank">Frontend Token Enhancement for Token-Based Speech Recognition</a>
+                <a href="https://arxiv.org/abs/2602.05034" target="_blank">Phase-Only Positioning in Distributed MIMO Under Phase Impairments: AP Selection Using Deep Learning</a>
             </h2>
             <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.04217</span><br>
-                <strong>Authors:</strong> Takanori Ashihara, Shota Horiguchi, Kohei Matsuura, Tsubasa Ochiai, Marc Delcroix<br>
-                <div style="margin-top:5px"></div>
+                <span class="tag category-tag">Wireless Positioning, Distributed MIMO, Deep Learning in Communications</span>
+                <strong>ID:</strong> <span class="tag">2602.05034</span><br>
+                <strong>Authors:</strong> Fatih Ayten, Musa Furkan Keskin, Akshay Jain, Mehmet C. Ilter, Ossi Kaltiokallio, Jukka Talvitie, Elena Simona Lohan, Mikko Valkama<br>
+                <div style="margin-top:5px"><span class="tag">Carrier phase positioning</span><span class="tag">Distributed MIMO</span><span class="tag">Deep learning</span><span class="tag">AP selection</span><span class="tag">Phase synchronization errors</span></div>
             </div>
             <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03892" target="_blank">Audit After Segmentation: Reference-Free Mask Quality Assessment for Language-Referred Audio-Visual Segmentation</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03892</span><br>
-                <strong>Authors:</strong> Jinxing Zhou, Yanghao Zhou, Yaoting Wang, Zongyan Han, Jiaqi Ma, Henghui Ding, Rao Muhammad Anwer, Hisham Cholakkal<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03873" target="_blank">Decoding Ambiguous Emotions with Test-Time Scaling in Audio-Language Models</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03873</span><br>
-                <strong>Authors:</strong> Hong Jia, Weibin Li, Jingyao Wu, Xiaofeng Yu, Yan Gao, Jintao Cheng, Xiaoyu Tang, Feng Xia, Ting Dang<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03762" target="_blank">Conditional Flow Matching for Visually-Guided Acoustic Highlighting</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03762</span><br>
-                <strong>Authors:</strong> Hugo Malard, Gael Le Lan, Daniel Wong, David Lou Alon, Yi-Chiao Wu, Sanjeel Parekh<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03398" target="_blank">A Unified SVD-Modal Solution for Sparse Sound Field Reconstruction with Hybrid Spherical-Linear Microphone Arrays</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03398</span><br>
-                <strong>Authors:</strong> Shunxi Xu, Thushara Abhayapala, Craig T. Jin<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.03245" target="_blank">Mići Princ -- A Little Boy Teaching Speech Technologies the Chakavian Dialect</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.03245</span><br>
-                <strong>Authors:</strong> Nikola Ljubešić, Peter Rupnik, Tea Perinčić<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.02980" target="_blank">WST-X Series: Wavelet Scattering Transform for Interpretable Speech Deepfake Detection</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.02980</span><br>
-                <strong>Authors:</strong> Xi Xuan, Davide Carbone, Ruchi Pandey, Wenxin Zhang, Tomi H. Kinnunen<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.02734" target="_blank">WAXAL: A Large-Scale Multilingual African Language Speech Corpus</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.02734</span><br>
-                <strong>Authors:</strong> Abdoulaye Diack, Perry Nelson, Kwaku Agbesi, Angela Nakalembe, MohamedElfatih MohamedKhair, Vusumuzi Dube, Tavonga Siyavora, Subhashini Venugopalan, Jason Hickey, Uche Okonkwo, Abhishek Bapna, Isaac Wiafe, Raynard Dodzi Helegah, Elikem Doe Atsakpo, Charles Nutrokpor, Fiifi Baffoe Payin Winful, Kafui Kwashie Solaga, Jamal-Deen Abdulai, Akon Obu Ekpezu, Audace Niyonkuru, Samuel Rutunda, Boris Ishimwe, Michael Melese, Engineer Bainomugisha, Joyce Nakatumba-Nabende, Andrew Katumba, Claire Babirye, Jonathan Mukiibi, Vincent Kimani, Samuel Kibacia, James Maina, Fridah Emmah, Ahmed Ibrahim Shekarau, Ibrahim Shehu Adamu, Yusuf Abdullahi, Howard Lakougna, Bob MacDonald, Hadar Shemtov, Aisha Walcott-Bryant, Moustapha Cisse, Avinatan Hassidim, Jeff Dean, Yossi Matias<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.02725" target="_blank">Automated Dysphagia Screening Using Noninvasive Neck Acoustic Sensing</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.02725</span><br>
-                <strong>Authors:</strong> Jade Chng, Rong Xing, Yunfei Luo, Kristen Linnemeyer-Risser, Tauhidur Rahman, Andrew Yousef, Philip A Weissbrod<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01861" target="_blank">RIR-Former: Coordinate-Guided Transformer for Continuous Reconstruction of Room Impulse Responses</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01861</span><br>
-                <strong>Authors:</strong> Shaoheng Xu, Chunyi Sun, Jihui Zhang, Prasanga N. Samarasinghe, Thushara D. Abhayapala<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01758" target="_blank">Short-wave admittance correction for a time-domain cochlear transmission line model</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01758</span><br>
-                <strong>Authors:</strong> François Deloche, Morgan Thienpont, Sarah Verhulst<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01722" target="_blank">Joint Optimization of ASV and CM tasks: BTUEF Team's Submission for WildSpoof Challenge</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01722</span><br>
-                <strong>Authors:</strong> Oguzhan Kurnaz, Jagabandhu Mishra, Tomi Kinnunen, Cemal Hanilci<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01634" target="_blank">HuPER: A Human-Inspired Framework for Phonetic Perception</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01634</span><br>
-                <strong>Authors:</strong> Chenxu Guo, Jiachen Lian, Yisi Liu, Baihe Huang, Shriyaa Narayanan, Cheol Jun Cho, Gopala Anumanchipalli<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01394" target="_blank">SSNAPS: Audio-Visual Separation of Speech and Background Noise with Diffusion Inverse Sampling</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01394</span><br>
-                <strong>Authors:</strong> Yochai Yemini, Yoav Ellinson, Rami Ben-Ari, Sharon Gannot, Ethan Fetaya<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01008" target="_blank">Adapting Where It Matters: Depth-Aware Adaptation for Efficient Multilingual Speech Recognition in Low-Resource Languages</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01008</span><br>
-                <strong>Authors:</strong> Yang Xiao, Eun-Jung Holden, Ting Dang<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00652" target="_blank">Solving Room Impulse Response Inverse Problems Using Flow Matching with Analytic Wiener Denoiser</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00652</span><br>
-                <strong>Authors:</strong> Kyung Yun Lee, Nils Meyer-Kahlen, Vesa Välimäki, Sebastian J. Schlecht<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00648" target="_blank">High-Fidelity Generative Audio Compression at 0.275kbps</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00648</span><br>
-                <strong>Authors:</strong> Hao Ma, Ruihao Jing, Shansong Liu, Cheng Gong, Chi Zhang, Xiao-Lei Zhang, Xuelong Li<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.02198" target="_blank">QuietPrint: Protecting 3D Printers Against Acoustic Side-Channel Attacks</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.02198</span><br>
-                <strong>Authors:</strong> Seyed Ali Ghazi Asgar, Narasimha Reddy<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01547" target="_blank">Attention-weighted Centered Kernel Alignment for Knowledge Distillation in Large Audio-Language Models Applied to Speech Emotion Recognition</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01547</span><br>
-                <strong>Authors:</strong> Qingran Yang, Botao Zhao, Zuheng Kang, Xue Li, Yayun He, Chuhang Liu, Xulong Zhang, Xiaoyang Qu, Junqing Peng, Jianzong Wang<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01363" target="_blank">Causally Disentangled Contrastive Learning for Multilingual Speaker Embeddings</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01363</span><br>
-                <strong>Authors:</strong> Mariëtte Olijslager, Seyed Sahand Mohammadi Ziabari, Ali Mohammed Mansoor Alsahag<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01249" target="_blank">Generative AI in Signal Processing Education: An Audio Foundation Model Based Approach</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01249</span><br>
-                <strong>Authors:</strong> Muhammad Salman Khan, Ahmad Ullah, Siddique Latif, Junaid Qadir<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01060" target="_blank">TLDiffGAN: A Latent Diffusion-GAN Framework with Temporal Information Fusion for Anomalous Sound Detection</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01060</span><br>
-                <strong>Authors:</strong> Chengyuan Ma, Peng Jia, Hongyue Guo, Wenming Yang<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01032" target="_blank">HierCon: Hierarchical Contrastive Attention for Audio Deepfake Detection</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01032</span><br>
-                <strong>Authors:</strong> Zhili Nicholas Liang, Soyeon Caren Han, Qizhou Wang, Christopher Leckie<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.01030" target="_blank">Bias in the Ear of the Listener: Assessing Sensitivity in Audio Language Models Across Linguistic, Demographic, and Positional Variations</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.01030</span><br>
-                <strong>Authors:</strong> Sheng-Lun Wei, Yu-Ling Liao, Yen-Hua Chang, Hen-Hsen Huang, Hsin-Hsi Chen<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00914" target="_blank">A Baseline Multimodal Approach to Emotion Recognition in Conversations</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00914</span><br>
-                <strong>Authors:</strong> Víctor Yeste, Rodrigo Rivas-Arévalo<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00604" target="_blank">The TMU System for the XACLE Challenge: Training Large Audio Language Models with CLAP Pseudo-Labels</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00604</span><br>
-                <strong>Authors:</strong> Ayuto Tsutsumi, Kohei Tanaka, Sayaka Shiota<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00594" target="_blank">Kanade: A Simple Disentangled Tokenizer for Spoken Language Modeling</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00594</span><br>
-                <strong>Authors:</strong> Zhijie Huang, Stephen McIntosh, Daisuke Saito, Nobuaki Minematsu<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00568" target="_blank">Dual-View Predictive Diffusion: Lightweight Speech Enhancement via Spectrogram-Image Synergy</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00568</span><br>
-                <strong>Authors:</strong> Ke Xue, Rongfei Fan, Kai Li, Shanping Yu, Puning Zhao, Jianping An<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00560" target="_blank">Edit Content, Preserve Acoustics: Imperceptible Text-Based Speech Editing via Self-Consistency Rewards</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00560</span><br>
-                <strong>Authors:</strong> Yong Ren, Jiangyan Yi, Jianhua Tao, Zhengqi Wen, Tao Wang<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00443" target="_blank">RVCBench: Benchmarking the Robustness of Voice Cloning Across Modern Audio Generation Models</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00443</span><br>
-                <strong>Authors:</strong> Xinting Liao, Ruinan Jin, Hanlin Yu, Deval Pandya, Xiaoxiao Li<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00295" target="_blank">Multi-Speaker Conversational Audio Deepfake: Taxonomy, Dataset and Pilot Study</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00295</span><br>
-                <strong>Authors:</strong> Alabi Ahmed, Vandana Janeja, Sanjay Purushotham<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00269" target="_blank">VoxServe: Streaming-Centric Serving System for Speech Language Models</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00269</span><br>
-                <strong>Authors:</strong> Keisuke Kamahori, Wei-Tzu Lee, Atindra Jha, Rohan Kadekodi, Stephanie Wang, Arvind Krishnamurthy, Baris Kasikci<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2602.00189" target="_blank">LPIPS-AttnWav2Lip: Generic Audio-Driven lip synchronization for Talking Head Generation in the Wild</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2602.00189</span><br>
-                <strong>Authors:</strong> Zhipeng Chen, Xinheng Wang, Lun Xie, Haijie Yuan, Hang Pan<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.23196" target="_blank">Beyond Omnidirectional: Neural Ambisonics Encoding for Arbitrary Microphone Directivity Patterns using Cross-Attention</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.23196</span><br>
-                <strong>Authors:</strong> Mikko Heikkinen, Archontis Politis, Konstantinos Drossos, Tuomas Virtanen<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.23004" target="_blank">Layer-Aware Early Fusion of Acoustic and Linguistic Embeddings for Cognitive Status Classification</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.23004</span><br>
-                <strong>Authors:</strong> Krystof Novotny, Laureano Moro-Velázquez, Jiri Mekyska<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22873" target="_blank">EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22873</span><br>
-                <strong>Authors:</strong> Li Zhou, Hao Jiang, Junjie Li, Tianrui Wang, Haizhou Li<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22792" target="_blank">CALM: Joint Contextual Acoustic-Linguistic Modeling for Personalization of Multi-Speaker ASR</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22792</span><br>
-                <strong>Authors:</strong> Muhammad Shakeel, Yosuke Fukumoto, Chikara Maeda, Chyi-Jiunn Lin, Shinji Watanabe<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22779" target="_blank">Streaming Speech Recognition with Decoder-Only Large Language Models and Latency Optimization</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22779</span><br>
-                <strong>Authors:</strong> Genshun Wan, Wenhui Zhang, Jing-Xuan Zhang, Shifu Xiong, Jianqing Gao, Zhongfu Ye<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22504" target="_blank">Class-Aware Permutation-Invariant Signal-to-Distortion Ratio for Semantic Segmentation of Sound Scene with Same-Class Sources</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22504</span><br>
-                <strong>Authors:</strong> Binh Thien Nguyen, Masahiro Yasuda, Daiki Takeuchi, Daisuke Niizumi, Noboru Harada<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22319" target="_blank">Optimizing Domain-Adaptive Self-Supervised Learning for Clinical Voice-Based Disease Classification</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22319</span><br>
-                <strong>Authors:</strong> Weixin Liu, Bowen Qu, Matthew Pontell, Maria Powell, Bradley Malin, Zhijun Yin<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22306" target="_blank">Sylber 2.0: A Universal Syllable Embedding</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22306</span><br>
-                <strong>Authors:</strong> Cheol Jun Cho, Nicholas Lee, Alan W Black, Gopala K. Anumanchipalli<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22260" target="_blank">Brain-Informed Speech Separation for Cochlear Implants</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22260</span><br>
-                <strong>Authors:</strong> Tom Gajecki, Jonas Althoff, Waldo Nogueira<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22480" target="_blank">Rethinking Speech Representation Aggregation in Speech Enhancement: A Phonetic Mutual Information Perspective</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22480</span><br>
-                <strong>Authors:</strong> Seungu Han, Sungho Lee, Kyogu Lee<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22390" target="_blank">An Effective Energy Mask-based Adversarial Evasion Attacks against Misclassification in Speaker Recognition Systems</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22390</span><br>
-                <strong>Authors:</strong> Chanwoo Park, Chanwoo Kim<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22288" target="_blank">PersonaCite: VoC-Grounded Interviewable Agentic Synthetic AI Personas for Verifiable User and Design Research</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22288</span><br>
-                <strong>Authors:</strong> Mario Truss<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22176" target="_blank">Proliferating series by Jean Barraqué: a study and classification in mathematical terms</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22176</span><br>
-                <strong>Authors:</strong> Isabel Tardón, Pablo Martín-Santamaría<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.22161" target="_blank">Attention Isn't All You Need for Emotion Recognition:Domain Features Outperform Transformers on the EAV Dataset</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.22161</span><br>
-                <strong>Authors:</strong> Anmol Guragain<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21960" target="_blank">TidyVoice 2026 Challenge Evaluation Plan</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21960</span><br>
-                <strong>Authors:</strong> Aref Farhadipour, Jan Marquenie, Srikanth Madikeri, Teodora Vukovic, Volker Dellwo, Kathy Reid, Francis M. Tyers, Ingo Siegert, Eleanor Chodroff<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21940" target="_blank">DisContSE: Single-Step Diffusion Speech Enhancement Based on Joint Discrete and Continuous Embeddings</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21940</span><br>
-                <strong>Authors:</strong> Yihui Fu, Tim Fingscheidt<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21886" target="_blank">Speech Quality-Based Localization of Low-Quality Speech and Text-to-Speech Synthesis Artefacts</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21886</span><br>
-                <strong>Authors:</strong> Michael Kuhlmann, Alexander Werning, Thilo von Neumann, Reinhold Haeb-Umbach<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21612" target="_blank">Representation-Regularized Convolutional Audio Transformer for Audio Understanding</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21612</span><br>
-                <strong>Authors:</strong> Bing Han, Chushu Zhou, Yifan Yang, Wei Wang, Chenda Li, Wangyou Zhang, Yanmin Qian<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21402" target="_blank">SemanticAudio: Audio Generation and Editing in Semantic Space</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21402</span><br>
-                <strong>Authors:</strong> Zheqi Dai, Guangyan Zhang, Haolin He, Xiquan Li, Jingyu Li, Chunyat Wu, Yiwen Guo, Qiuqiang Kong<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21347" target="_blank">Towards Robust Dysarthric Speech Recognition: LLM-Agent Post-ASR Correction Beyond WER</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21347</span><br>
-                <strong>Authors:</strong> Xiuwen Zheng, Sixun Dong, Bornali Phukon, Mark Hasegawa-Johnson, Chang D. Yoo<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21114" target="_blank">DNN-Based Online Source Counting Based on Spatial Generalized Magnitude Squared Coherence</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21114</span><br>
-                <strong>Authors:</strong> Henri Gode, Simon Doclo<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21110" target="_blank">Unseen but not Unknown: Using Dataset Concealment to Robustly Evaluate Speech Quality Estimation Models</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21110</span><br>
-                <strong>Authors:</strong> Jaden Pieper, Stephen D. Voran<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20898" target="_blank">Reducing Prompt Sensitivity in LLM-based Speech Recognition Through Learnable Projection</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20898</span><br>
-                <strong>Authors:</strong> Sergio Burdisso, Esaú Villatoro-Tello, Shashi Kumar, Srikanth Madikeri, Andrés Carofilis, Pradeep Rangappa, Manjunath K E, Kadri Hacioglu, Petr Motlicek, Andreas Stolcke<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21337" target="_blank">Qwen3-ASR Technical Report</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21337</span><br>
-                <strong>Authors:</strong> Xian Shi, Xiong Wang, Zhifang Guo, Yongqi Wang, Pei Zhang, Xinyu Zhang, Zishan Guo, Hongkun Hao, Yu Xi, Baosong Yang, Jin Xu, Jingren Zhou, Junyang Lin<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21264" target="_blank">Evaluating Spatialized Auditory Cues for Rapid Attention Capture in XR</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21264</span><br>
-                <strong>Authors:</strong> Yoonsang Kim, Swapnil Dey, Arie Kaufman<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21260" target="_blank">Music Plagiarism Detection: Problem Formulation and a Segment-based Solution</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21260</span><br>
-                <strong>Authors:</strong> Seonghyeon Go, Yumin Kim<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21205" target="_blank">Multilingual Dysarthric Speech Assessment Using Universal Phone Recognition and Language-Specific Phonemic Contrast Modeling</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21205</span><br>
-                <strong>Authors:</strong> Eunjung Yeo, Julie M. Liss, Visar Berisha, David R. Mortensen<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21124" target="_blank">PhaseCoder: Microphone Geometry-Agnostic Spatial Audio Understanding for Multimodal LLMs</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21124</span><br>
-                <strong>Authors:</strong> Artem Dementyev, Wazeer Zulfikar, Sinan Hersek, Pascal Getreuer, Anurag Kumar, Vivek Kumar<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.21084" target="_blank">Position-invariant Fine-tuning of Speech Enhancement Models with Self-supervised Speech Representations</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.21084</span><br>
-                <strong>Authors:</strong> Amit Meghanani, Thomas Hain<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20992" target="_blank">asr_eval: Algorithms and tools for multi-reference and streaming speech recognition evaluation</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20992</span><br>
-                <strong>Authors:</strong> Oleg Sedukhin, Andrey Kostin<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20900" target="_blank">Text-only adaptation in LLM-based ASR through text denoising</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20900</span><br>
-                <strong>Authors:</strong> Sergio Burdisso, Esaú Villatoro-Tello, Andrés Carofilis, Shashi Kumar, Kadri Hacioglu, Srikanth Madikeri, Pradeep Rangappa, Manjunath K E, Petr Motlicek, Shankar Venkatesan, Andreas Stolcke<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20896" target="_blank">A Study of Data Selection Strategies for Pre-training Self-Supervised Speech Models</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20896</span><br>
-                <strong>Authors:</strong> Ryan Whetten, Titouan Parcollet, Marco Dinarelli, Yannick Estève<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20890" target="_blank">SW-ASR: A Context-Aware Hybrid ASR Pipeline for Robust Single Word Speech Recognition</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20890</span><br>
-                <strong>Authors:</strong> Manali Sharma (1), Riya Naik (1), Buvaneshwari G (1) ((1) Tetranetics Private Limited)<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20883" target="_blank">VoxMorph: Scalable Zero-shot Voice Identity Morphing via Disentangled Embeddings</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20883</span><br>
-                <strong>Authors:</strong> Bharath Krishnamurthy, Ajita Rattani<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
-            </div>
-        </div>
-        
-        <div class="paper-card">
-            <h2 class="paper-title">
-                <a href="https://arxiv.org/abs/2601.20867" target="_blank">Generalizable Prompt Tuning for Audio-Language Models via Semantic Expansion</a>
-            </h2>
-            <div class="paper-meta">
-                <span class="tag category-tag">Error</span>
-                <strong>ID:</strong> <span class="tag">2601.20867</span><br>
-                <strong>Authors:</strong> Jaehyuk Jang, Wonjun Lee, Kangwook Ko, Changick Kim<br>
-                <div style="margin-top:5px"></div>
-            </div>
-            <div class="summary-section">
-                <p>总结生成失败: Connection error.</p>
+                <h2>核心痛点</h2>
+<p>论文针对分布式多输入多输出（D-MIMO）网络中的载波相位定位（CPP）问题，指出现有研究对相位同步误差的影响探索不足。这些误差会显著降低定位精度，而实际应用中还需满足低延迟要求，因此需要降低模型复杂度。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>超椭圆交点方法</strong>：在存在相位同步误差的情况下，通过训练反映此类损伤的数据，实现高精度定位。</li>
+<li><strong>基于深度学习的AP选择框架</strong>：提出一种深度学习（DL）方法，用于选择分布式天线点（AP），以在相位同步误差下确保高精度定位。该方法结合测量特征（如差分相位测量和信噪比）和几何特征（如AP间距离和角度），使用多层感知机（MLP）神经网络预测每个模糊度对的定位误差，从而选择最优AP对。</li>
+<li><strong>系统架构</strong>：引入分布式位置管理功能（DLMF），将部分定位任务移至用户设备（UE）附近，减少延迟并提高精度。</li>
+</ol>
+<h2>实验结果</h2>
+<ol>
+<li><strong>定位精度提升</strong>：在模拟的D-MIMO网络拓扑中（9个AP，100平方米区域），与现有方法相比，提出的框架提高了定位精度。</li>
+<li><strong>推理复杂度降低</strong>：通过仅估计两个模糊度（而非全部），并结合AP选择模型，整体推理复杂度降低了约19.7%（从约1.262×10^6 FLOPs降至约1.014×10^6 FLOPs）。</li>
+<li><strong>训练细节</strong>：差分模糊度估计器使用70万个训练样本，AP选择网络使用20万个训练样本，均能有效处理相位扰动。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>该论文通过深度学习优化AP选择，有效解决了D-MIMO中相位同步误差导致的定位精度下降问题，同时降低了计算复杂度，为6G部署提供了实用解决方案。</p>
             </div>
         </div>
         
