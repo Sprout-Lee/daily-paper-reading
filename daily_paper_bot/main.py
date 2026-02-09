@@ -10,6 +10,7 @@ import markdown
 from openai import OpenAI
 from datetime import datetime
 from dotenv import load_dotenv
+import merge_reports # 导入合并脚本
 
 # 加载环境变量
 load_dotenv()
@@ -17,8 +18,11 @@ load_dotenv()
 # 配置
 ARXIV_URL = "https://arxiv.org/list/eess.AS/recent"
 OUTPUT_DIR = "reports"
-PDF_DIR = "pdfs"  # 临时存放 PDF 的目录
-HISTORY_FILE = "processed_ids.txt"  # 记录已处理论文 ID 的文件
+PDF_DIR = "pdfs"
+# 获取当前脚本所在目录的绝对路径
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# 确保 ID 文件始终在 daily_paper_bot 目录下，而不是运行目录
+HISTORY_FILE = os.path.join(BASE_DIR, "processed_ids.txt")
 MAX_TEXT_LENGTH = 15000  # 限制传给 LLM 的字符数（防止 token 溢出，约 3-5k tokens）
 
 # 如果使用其他模型（如 DeepSeek, Kimi），请修改 BASE_URL 和 API_KEY
@@ -26,7 +30,9 @@ LLM_CLIENT = OpenAI(
     api_key=os.getenv("LLM_API_KEY"),
     base_url=os.getenv("LLM_BASE_URL", "https://api.openai.com/v1")
 )
-LLM_MODEL = os.getenv("LLM_MODEL", "gpt-3.5-turbo")
+# 优先使用环境变量，默认为 reasoner
+# LLM_MODEL = os.getenv("LLM_MODEL", "deepseek-reasoner")
+LLM_MODEL = os.getenv("LLM_MODEL", "deepseek-chat")
 
 def normalize_id(paper_id):
     """
@@ -387,7 +393,8 @@ def generate_report(processed_papers):
             </h2>
             <div class="paper-meta">
                 <span class="tag category-tag">{category}</span>
-                <strong>ID:</strong> <span class="tag">{p['id']}</span><br>
+                <strong>ID:</strong> <span class="tag">{p['id']}</span>
+                <a href="pdfs/{p['id']}.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
                 <strong>Authors:</strong> {p['authors']}<br>
                 <div style="margin-top:5px">{keywords_html}</div>
             </div>
@@ -454,6 +461,13 @@ def main():
         # 实时更新报告
         print(f"实时更新报告... (当前已处理 {len(processed_papers)} 篇)")
         generate_report(processed_papers)
+        
+        # --- 新增：实时更新总首页 ---
+        try:
+            print("实时更新总归档页面...")
+            merge_reports.main() 
+        except Exception as e:
+            print(f"归档更新失败: {e}")
         
     print("所有任务处理完成。")
 
