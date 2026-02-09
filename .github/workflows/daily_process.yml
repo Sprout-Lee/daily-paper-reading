@@ -31,7 +31,7 @@ jobs:
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
-          LLM_MODEL: "deepseek-chat"
+          LLM_MODEL: "deepseek-reasoner"
         run: |
           # 确保历史记录文件存在，防止首次运行报错
           touch daily_paper_bot/processed_ids.txt
@@ -42,15 +42,26 @@ jobs:
           python daily_paper_bot/merge_reports.py
 
       - name: Commit and Push changes
+        if: always()  # 关键：即使脚本中途报错退出，也要提交已生成的内容
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 强制添加所有变动的文件（忽略不存在的文件报错）
+          # 调试：查看当前文件状态
+          echo "=== Git Status Before Add ==="
+          git status
+          ls -l daily_paper_bot/
+          
+          # 强制添加，如果文件被 gitignore 忽略则强制包含 (-f)
+          git add -f daily_paper_bot/processed_ids.txt || true
+          
           git add reports/ || true
           git add pdfs/ || true
-          git add daily_paper_bot/*.txt || true
           git add public/ || true
+          git add index.html || true
+          
+          echo "=== Git Status After Add ==="
+          git status
           
           # 提交（如果没东西提交就跳过）
           git commit -m "🤖 Auto update: New papers & Website build" || echo "No changes to commit"
