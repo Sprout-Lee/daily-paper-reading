@@ -1,255 +1,191 @@
 # Arxiv Daily Deep Report - 2026-02-10
 
 **来源**: https://arxiv.org/list/eess.AS/recent
-**篇数**: 10
+**篇数**: 8
 ---
 
-## 1. The Combination of Several Decorrelation Methods to Improve Acoustic Feedback Cancellation
-
-**作者**: Klaus Linhard, Philipp Bulling
-**链接**: [2602.06921](https://arxiv.org/abs/2602.06921)
-**分类**: Audio Enhancement | **关键词**: Acoustic Feedback Cancellation, Decorrelation Methods, Kalman Filter, Bias Reduction, Convergence Speed
-
-## 核心痛点
-
-这篇论文针对声学反馈消除系统面临的挑战，特别是在如车内乘客通信等应用场景中。主要痛点包括：
-1. **偏置（Bias）问题**：在最小均方误差准则下，估计的脉冲响应存在偏置，导致语音信号的部分分量被错误抵消，尤其是周期性的浊音部分，影响语音质量。
-2. **收敛速度慢**：输入信号的自相关矩阵特征值分散导致传统算法（如时域LMS）收敛缓慢，尤其在有色信号（如语音）中表现更差。
-
-## 方法创新
-
-论文在基线系统（基于频域卡尔曼滤波器，集成于多延迟频域最小均方误差结构）基础上，提出了多种去相关方法的组合：
-1. **可变时间延迟线（Vibrato）**：通过调制延迟时间，实现信号去相关，参数包括最大延迟（约1-2毫秒）和调制频率（约1-2 Hz）。
-2. **非线性失真补偿**：引入如半波整流、有符号平方等非线性函数，以减少信号间相关性并改善偏置。
-3. **预测方法**：使用预测器对输入信号进行预白化，以提高收敛速度，并适应多延迟结构。
-4. **简化混响模型**：作为额外去相关手段。
-关键创新在于综合应用这些方法，而非仅依赖单一扩展，从而提升整体系统鲁棒性和性能。
-
-## 实验结果
-
-评估基于公开数据集和客观指标：
-1. **性能指标**：使用系统距离（衡量脉冲响应估计误差）和PESQ（客观语音质量评估，模拟1-5分的平均意见得分）。
-2. **实验设置**：循环增益g设为0、6、12、30 dB，参数如块大小N=512、半重叠、卡尔曼滤波器参数固定。
-3. **结果**：
-   - 每个扩展方法都独立贡献性能改进（如减少偏置、加速收敛）。
-   - 组合所有扩展后，系统性能显著优于基线，尤其在高压增益（如g=30 dB）下提升稳定性和收敛性。
-   - 在30 dB增益下，可变时间延迟线有效防止系统崩溃，并改善收敛曲线。
-4. **额外评估**：基于语音数据库，使用硬限幅器计算溢出百分比，以衡量系统稳定性。
-
-## 一句话评价
-
-这篇论文通过系统性结合多种去相关方法，为声学反馈消除领域提供了一个高效且鲁棒的解决方案，显著提升了语音质量和系统适应性，具有重要应用潜力。
-
----
-
-## 2. Automatic Detection and Analysis of Singing Mistakes for Music Pedagogy
-
-**作者**: Sumit Kumar, Suraj Jaiswal, Parampreet Singh, Vipul Arora
-**链接**: [2602.06917](https://arxiv.org/abs/2602.06917)
-**分类**: Music Information Retrieval | **关键词**: singing mistake detection, music pedagogy, deep learning, Indian Art Music, audio event detection
-
-### 核心痛点
-- 印度艺术音乐（IAM）教学依赖于教师-学习者传统，缺乏实时反馈，导致学习者在独立练习中固化了错误，如音高、节奏和发音偏差。
-- 现有自动化评估系统主要提供整体评分，而非详细错误检测，特别是在IAM领域，限制了技术增强音乐教育的应用。
-
-### 方法创新
-- 引入了M3数据集，包含同步教师-学习者录音，带有频率、振幅、发音和节奏错误的注释，专为IAM声乐教学设计。
-- 提出了自动错误检测框架，包括基于规则的方法和基于深度学习的模型（CNN、CRNN、TCN），将任务制定为音频事件检测问题。
-- 开发了新的评估方法，用于比较错误检测系统的效能，并支持系统性错误分析。
-
-### 实验结果
-- 实验表明，基于深度学习的方法在错误检测上优于基于规则的方法，提供更精确的反馈。
-- 系统性错误分析和跨教师研究揭示了音乐教学法的见解，如错误分布和教学模式，可用于改进教学工具。
-- 代码、数据集和预训练模型已公开可用，促进了进一步研究和应用。
-
-### 一句话评价
-这篇论文为音乐教学法中的自动错误检测提供了创新框架和新数据集，特别是在印度艺术音乐领域，推动了技术增强音乐教育的发展。
-
----
-
-## 3. B-GRPO: Unsupervised Speech Emotion Recognition based on Batched-Group Relative Policy Optimization
-
-**作者**: Yingying Gao, Shilei Zhang, Runyan Yang, Zihao Cui, Junlan Feng
-**链接**: [2602.06290](https://arxiv.org/abs/2602.06290)
-**分类**: Speech Emotion Recognition | **关键词**: Speech Emotion Recognition, Unsupervised Learning, Reinforcement Learning, B-GRPO, Self-reward
-
-### 核心痛点
-语音情感识别（SER）面临数据稀疏性和标注偏差的挑战，尤其是获取自然、自发的语音情感标注耗时且存在个体感知偏差。无监督学习可缓解此问题，但强化学习（RL）在SER中的应用存在困难：SER是分类问题，缺乏累积奖励机制；标准GRPO算法需要为同一输入生成多个候选响应以计算相对优势，而SER预测固定，无法直接应用。
-
-### 方法创新
-提出B-GRPO（Batched-Group Relative Policy Optimization），修改GRPO以适应SER分类问题。核心创新包括：将训练批次中的样本视为组，使用组内平均奖励作为基线计算优势函数，替代传统值函数近似；将样本选择过程建模为长期RL策略，动作决定是否使用样本更新模型。引入自奖励函数（基于预测的似然概率，如r1和r2）和教师奖励函数（如r3-r5），以鼓励模型产生高置信度输出，无需人工标注。优势函数优化为排除负值部分（公式6），使用GRPO损失（公式7-8）进行策略更新。
-
-### 实验结果
-在五个多语言数据集（IEMOCAP、CASIA、CAFE、MELD、M3ED）上实验，B-GRPO相比无RL的基线平均提高F1分数19.8%（具体从2.2%到48.0%不等），优于无监督方法DINO（平均提高10.3%）。自奖励函数（基于SenseVoice特征提取器）表现最优，教师奖励函数虽有个别数据集优势但整体不及。实验还表明B-GRPO能接近或超越使用更多监督数据的性能。
-
-### 一句话评价
-B-GRPO是一种有效的无监督语音情感识别方法，通过强化学习优化样本选择，显著提升模型性能，为解决数据标注瓶颈提供了新思路。
-
----
-
-## 4. From Hallucination to Articulation: Language Model-Driven Losses for Ultra Low-Bitrate Neural Speech Coding
-
-**作者**: Jayeon Yi, Minje Kim
-**链接**: [2602.06213](https://arxiv.org/abs/2602.06213)
-**分类**: Speech Codec | **关键词**: Speech codec, language model, loss function, phoneme hallucination, ultra low-bitrate, neural coding
-
-# 核心痛点
-
-在超低比特率（如 <0.4 kbps）神经语音编码中，生成解码器常产生“音素幻觉”（PH），即从过度压缩的令牌中合成错误但听起来清晰的音素，导致语义信息丢失，影响语音的语义准确性。
-
-# 方法创新
-
-论文提出语言模型驱动的损失（LM 损失），利用预训练的语言模型来增强语义信息提取。具体包括两种方法：1) 当真实转录本不可用时，使用修改的 Whisper 自动语音识别（ASR）模型比较解码语音与输入语音的 ASR 推断转录本；2) 使用定时文本正则化器（TTR）比较解码语音的 WavLM 表示与真实转录本的 BERT 表示。这些损失无需架构修改或额外微调，可应用于任何输出语音的模型。
-
-# 实验结果
-
-通过主观（如 MUSHRA-like 测试和可懂度测试）和客观（如词错误率 WER）评估，LM 损失在抑制 PH 方面比语义蒸馏（SD）目标更有效，显著提升人类感知的语义 adherence，同时保持整体输出质量。实验基于一个参考编解码器进行，该编解码器采用三阶段训练方案。
-
-# 一句话评价
-
-该方法为超低比特率神经语音编码提供了创新的语义增强损失函数，有效缓解音素幻觉问题，提升编码的语义准确性。
-
----
-
-## 5. STACodec: Semantic Token Assignment for Balancing Acoustic Fidelity and Semantic Information in Audio Codecs
-
-**作者**: Kaiyuan Zhang, Mohan Shi, Eray Eren, Natarajan Balaji Shankar, Zilai Wang, Abeer Alwan
-**链接**: [2602.06180](https://arxiv.org/abs/2602.06180)
-**分类**: Audio Codecs | **关键词**: Speech Tokenization, Neural Audio Codecs, Semantic Distillation
-
-## 核心痛点
-传统神经音频编解码器在压缩音频时能很好地保留声学细节，但缺乏语义信息，限制了其在语言建模和语义相关任务中的应用。而现有混合编解码器试图通过蒸馏等方法融入语义信息，但往往以牺牲重建性能为代价，难以同时平衡声学保真度和语义能力。
-
-## 方法创新
-STACodec 提出语义令牌分配（STA）方法，将自监督学习（SSL）模型生成的语义令牌直接分配到残差向量量化（RVQ）的第一层（RVQ-1），确保语义对齐的同时保持码本嵌入空间的灵活性以保留声学信息。此外，引入语义预蒸馏（SPD）模块，在推理时预测语义令牌分配给 RVQ-1，减少对 SSL 令牌器的依赖并提高效率。
-
-## 实验结果
-在 LibriSpeech 数据集上的实验表明，STACodec 在音频重建质量（如 PESQ 从 2.79 提升到 3.61，ViSQOL 从 4.30 提升到 4.50）和下游语义任务（如 ASR 的 WER 从 11.30% 降低到 10.94%，意图分类准确率从 66.49% 提升到 70.81%）上均优于 SpeechTokenizer、X-Codec、PAST 和 HASRD 等基线方法。
-
-## 一句话评价
-STACodec 通过创新的 STA 和 SPD 设计，有效地平衡了声学保真度和语义信息，为音频 tokenization 和编解码领域提供了高效且性能优越的解决方案。
-
----
-
-## 6. Reciprocal Latent Fields for Precomputed Sound Propagation
-
-**作者**: Hugo Seuté, Pranai Vasudev, Etienne Richan, Louis-Xavier Buffoni
-**链接**: [2602.06937](https://arxiv.org/abs/2602.06937)
-**分类**: Audio Rendering | **关键词**: Reciprocal Latent Fields, Precomputed Sound Propagation, Acoustic Modeling, Wave Coding, Memory Efficiency
-
-# 论文总结：Reciprocal Latent Fields for Precomputed Sound Propagation
-
-## 核心痛点
-- **计算成本高**：物理准确的波模拟（如基于有限差分时域FDTD的方法）计算昂贵，不适合实时应用（如视频游戏）。
-- **内存占用大**：现有波编码方法预计算声学参数（如冲动响应），但在大型环境中，参数数量随源-接收器对增多而激增，导致内存占用难以管理。
-- **现有方法局限性**：几何方法（如射线追踪）忽略相位相干性和衍射；房间和门户系统需要手动标注，不适用于户外或混合环境。
-
-## 方法创新
-- **Reciprocal Latent Fields (RLF)**：提出一种内存高效框架，通过可训练的潜在嵌入网格编码声学参数，使用对称函数解码器预测参数值，确保声学互易性（即源-接收器互换性）。
-- **Riemannian解码器架构**：引入局部度量张量扭曲空间，提高复杂场景中声学现象的重建准确性，计算开销可忽略。
-- **扩展应用**：将RLF扩展到完整声学参数集，包括非度量量（如能量水平和衰变时间），支持实时声音渲染。
-
-## 实验结果
-- **内存效率**：RLF减少波编码数据内存占用数个数量级，同时保持复制质量。
-- **主观测试**：通过MUSHRA类主观听力测试，显示RLF渲染的声音在感知上与真实模拟无法区分。
-- **基准研究**：比较不同解码器设计和嵌入维度，证明Riemannian解码器优于简单基线。
-
-## 一句话评价
-RLF是一种创新的内存压缩方法，通过潜在场学习和互易性设计，使预计算声音传播更高效，适用于实时虚拟环境应用。
-
----
-
-## 7. AI-Generated Music Detection in Broadcast Monitoring
-
-**作者**: David Lopez-Ayala, Asier Cabello, Pablo Zinemanas, Emilio Molina, Martin Rocamora
-**链接**: [2602.06823](https://arxiv.org/abs/2602.06823)
-**分类**: AI-Generated Music Detection | **关键词**: AI-Generated Music Detection, Broadcast Monitoring, Dataset
-
-# 总结
-
-## 核心痛点
-现有 AI 生成音乐检测方法主要在流媒体场景中开发和验证，但在广播监控中失效，因为广播音频包含短音乐片段（常仅几秒）和语音掩码（音乐作为背景信号），导致低信噪比（SNR）和复杂混合，现有检测器在这些条件下性能大幅下降。
-
-## 方法创新
-引入 AI-OpenBMAT 数据集，这是首个专为广播场景设计的 AI 生成音乐检测数据集。数据集包含 3,294 个一分钟音频片段（总计 54.9 小时），模拟真实电视音频的持续时间和响度关系，通过将人类制作的制作音乐与 Suno v3.5 生成的风格匹配续写配对，并结合语音音频混合而成。此外，评估了 CNN 基线和最先进的 SpectTTTra 模型，以测试 SNR 和持续时间的鲁棒性。
-
-## 实验结果
-在三个实验中：SNR 鲁棒性（模拟语音掩码）、持续时间鲁棒性（短时长输入）和全广播场景，所有模型在流媒体场景中表现出色，但在广播条件下性能显著恶化。例如，当音乐为背景或持续时间短时，F1 分数下降至 60% 以下，突显了语音掩码和短音乐长度作为关键挑战。
-
-## 一句话评价
-该论文通过创新数据集和系统实验，揭示了 AI 音乐检测在广播监控中的局限性，并为工业应用提供了重要基准。
-
----
-
-## 8. Reading Between the Waves: Robust Topic Segmentation Using Inter-Sentence Audio Features
-
-**作者**: Steffen Freisinger, Philipp Seeberger, Tobias Bocklet, Korbinian Riedhammer
-**链接**: [2602.06647](https://arxiv.org/abs/2602.06647)
-**分类**: Speech-based Topic Segmentation | **关键词**: topic segmentation, audio features, multimodal
-
-# 论文总结：Reading Between the Waves: Robust Topic Segmentation Using Inter-Sentence Audio Features
-
-## 核心痛点
-当前主题分割方法主要关注书面文本，未充分利用口语内容（如在线视频和播客）中的音频模态。这些口语转录往往非正式、有语法错误，并容易受自动语音识别（ASR）噪声影响，限制了分割性能。
-
-## 方法创新
-本文提出了一种多模态方法MultiSeg，通过微调文本编码器（如MiniLM）和Siamese音频编码器（如wav2vec 2.0），专门捕捉句子边界处的声学线索。创新点包括：使用短音频窗口聚焦句子边界的声学特征（如韵律变化），采用Siamese网络设计以共享权重和并行处理，并通过端到端训练对齐音频编码器到分割任务。
-
-## 实验结果
-在YTSEG数据集（YouTube视频）上，MultiSeg在F1分数上显著优于仅文本基线（如Cross-segment BERT和MiniSeg）和多模态基线（如L3-Net），具体提升在F1上达到约5.37点。模型对ASR噪声更鲁棒，并在葡萄牙语、德语和英语等额外数据集上表现出良好的泛化能力。实验表明，音频特征的集成比单纯扩大模型规模更有效。
-
-## 一句话评价
-这项研究创新地整合音频特征到主题分割中，通过边界聚焦的方法提升了分割的鲁棒性和性能，为多模态内容处理提供了新思路。
-
----
-
-## 9. Scaling Speech Tokenizers with Diffusion Autoencoders
-
-**作者**: Yuancheng Wang, Zhenyu Tang, Yun Wang, Arthur Hinsvark, Yingru Liu, Yinghao Li, Kainan Peng, Junyi Ao, Mingbo Ma, Mike Seltzer, Qing He, Xubo Liu
-**链接**: [2602.06602](https://arxiv.org/abs/2602.06602)
-**分类**: Speech Tokenization for Language Models | **关键词**: speech tokenizers, diffusion autoencoders, semantic regularization, low bit-rate, CTC loss, speech language models
+## 1. Input-Adaptive Spectral Feature Compression by Sequence Modeling for Source Separation
+
+**作者**: Kohei Saijo, Yoshiaki Bando
+**链接**: [2602.08671](https://arxiv.org/abs/2602.08671)
+**分类**: Audio Source Separation | **关键词**: Audio Source Separation, Spectral Feature Compression, Sequence Modeling
 
 # 详细总结
 
 ## 核心痛点
-现有语音分词器面临两大挑战：1) 平衡语义理解（用于下游任务如语音识别）与声学重建（用于高质量语音生成）的权衡；2) 实现低比特率和低令牌率以支持可扩展的语音语言模型。传统方法在低令牌率下因向量量化导致不确定性崩溃，优先低级别信号细节，牺牲语义结构，从而影响理解和生成性能。
+- 现有TF-domain dual-path模型广泛使用的band-split (BS)模块存在两个主要限制：1) **非输入自适应**：编码和解码过程不依赖输入，无法利用输入相关的频率模式；2) **参数数量大**：每个子带需要专用编码器和解码器模块，导致模型参数量增加，计算效率低。
 
 ## 方法创新
-论文提出Speech Diffusion Tokenizer (SiTok)，一种基于扩散自编码器的语音分词器。关键创新包括：
-- **扩散自编码器架构**：使用mel-spectrograms作为输入和目标，通过扩散模型学习反转噪声过程，实现高保真重建，避免对抗训练的不稳定性。
-- **语义正则化**：引入辅助CTC解码器和CTC损失，直接监督量化潜在空间，鼓励离散令牌保留语义丰富和语言结构，提升理解和生成能力。
-- **高效解码**：探索捷径微调和轻量扩散头技术，显著减少扩散推理步骤（如2-4步），同时保持高质量重建。
-- **规模化训练**：模型扩展到1.6B参数，在2百万小时语音数据上训练，支持极端压缩设置。
+- 提出了**Spectral Feature Compression (SFC)**，一种输入自适应的频率特征压缩方法。SFC使用单一序列建模模块（基于cross-attention或Mamba变体）压缩输入，通过K个查询将频率信息压缩为子带特征。引入了从BS模块启发的**归纳偏置**（如设计位置偏置或查询插入策略），以有效捕捉频率模式，同时保持参数高效和输入自适应。
 
 ## 实验结果
-SiTok在多项任务上表现优异：
-- 在极端压缩设置下（令牌率12.5 Hz，比特率200 bits-per-second），优于强基线。
-- 在语音重建、情感识别、关键词识别、说话人验证和自动语音识别等理解任务中取得好成绩。
-- 支持高质量语音生成，如合成任务，在同一低令牌率设置下实现高保真输出。
-- 消融研究验证了代码本大小、维度和残差向量量化等设计选择的有效性。
+- 在音乐源分离（MSS）和电影音频源分离（CASS）任务上进行了实验评估。SFC模块在不同分离器大小和压缩比下 consistently 优于BS模块，性能提升显著。分析显示SFC能自适应地捕获输入中的频率模式，并通过注意力可视化验证了其输入适应性。
 
 ## 一句话评价
-SiTok通过结合扩散模型和语义监督，创新地解决了语音分词器的核心瓶颈，为语音语言模型的缩放和统一理解与生成提供了高效且语义丰富的表示基础。
+- SFC通过结合序列建模和归纳偏置，在减少参数的同时提高了音频源分离性能，为高频音频处理任务提供了一种高效且有效的解决方案。
 
 ---
 
-## 10. Misophonia Trigger Sound Detection on Synthetic Soundscapes Using a Hybrid Model with a Frozen Pre-Trained CNN and a Time-Series Module
+## 2. Physics-Guided Variational Model for Unsupervised Sound Source Tracking
 
-**作者**: Kurumi Sashida, Gouhei Tanaka
-**链接**: [2602.06271](https://arxiv.org/abs/2602.06271)
-**分类**: Sound Event Detection | **关键词**: sound event detection, echo state networks, personalization
+**作者**: Luan Vinícius Fiorio, Ivana Nikoloska, Bruno Defraene, Alex Young, Johan David, Ronald M. Aarts
+**链接**: [2602.08484](https://arxiv.org/abs/2602.08484)
+**分类**: Sound Source Tracking | **关键词**: Variational encoder, Unsupervised learning, Sound source tracking, Physics-guided
+
+### Core Pain Points
+Existing methods for sound source tracking face significant challenges: classical array-processing algorithms (e.g., MUSIC, ESPRIT, SRP) require grid searches, precise calibration, and are sensitive to initialization. Supervised learning approaches (e.g., Cross3D, Neural-SRP) rely on costly ground truth position labels, which are difficult to obtain and hinder on-device training. Prior unsupervised methods are either not fully unsupervised, rely on multi-modal data, or suffer from high computational complexity and parameter counts, making them impractical for audio devices.
+
+### Method Innovation
+The paper proposes a physics-guided variational model for unsupervised sound source tracking. It utilizes a variational autoencoder structure with a physics-based decoder. Key innovations include:
+- A variational encoder processes GCC-PHAT features and microphone array geometry to output parameters of a von Mises-Fisher distribution in latent space.
+- A physics-based decoder injects spatial information via backpropagation, enabling unsupervised estimation of source directions without labeled data.
+- The model is designed for single-source tracking but includes a theoretical extension to multi-source scenarios.
+
+### Experimental Results
+Experiments on real-world data demonstrate that the proposed method:
+- Achieves performance comparable to state-of-the-art supervised models (e.g., Cross3D, Neural-SRP).
+- Offers computational complexity similar to supervised approaches, making it feasible for practical applications.
+- Exhibits robustness to altered microphone array geometries and corrupted microphone position metadata during testing.
+- Generalizes well across different experimental setups, with results discussed in three main experiments.
+
+### One-Sentence Evaluation
+This paper introduces an efficient and robust unsupervised method for sound source tracking that bridges the gap between classical and supervised approaches, offering practical potential for real-world audio systems.
+
+---
+
+## 3. Cross-Modal Bottleneck Fusion For Noise Robust Audio-Visual Speech Recognition
+
+**作者**: Seaone Ok, Min Jun Choi, Eungbeom Kim, Seungu Han, Kyogu Lee
+**链接**: [2602.08293](https://arxiv.org/abs/2602.08293)
+**分类**: Speech Recognition | **关键词**: Audio-Visual Speech Recognition, Bottleneck Fusion, Noise Robustness
 
 # 核心痛点
-Misophonia 是一种疾病，患者对特定日常声音（如进食、呼吸、打字等触发声音）产生强烈负面情绪反应，严重影响生活质量。当前研究面临真实世界标注数据稀缺、声音事件检测（SED）在连续音频中定位触发声音的挑战，缺乏轻量级个性化检测方案。
+
+传统自动语音识别（ASR）在噪声环境下性能严重下降，音频-视觉语音识别（AVSR）通过融合音频和视觉模态来提高鲁棒性，但现有融合机制往往次优、计算成本高，且跨模态交互不充分。
 
 # 方法创新
-采用合成声音景观（synthetic soundscapes）生成强标注数据，解决数据不足问题；提出混合模型，结合冻结预训练的 CNN 主干（frame-wise MobileNetV3）和可训练的时间序列模块（包括 GRU、LSTM、ESN 及其双向变体），实现帧级多标签声音事件检测，旨在轻量化和支持个性化应用。
+
+提出 CoBRA（Cross-modal Bottleneck for Robust AVSR），一种基于瓶颈的融合框架。在 Conformer 编码器上引入一组可学习的瓶颈令牌，通过调节信息流实现跨模态交换，避免直接注意力计算以减少开销。探索了 sequential 和 mean fusion 策略，并强调融合深度是关键因素，以 mid-level 融合效果最佳。
 
 # 实验结果
-在多类触发 SED 任务中，双向时间建模（如 BiGRU）显著提升检测性能，BiGRU 达到最佳整体准确度；Bidirectional ESN (BiESN) 在参数效率方面表现优异，few-shot 个性化任务（如进食声检测）中 BiESN 展现出稳健和稳定性能。
+
+在 LRS2 和 LRS3 数据集上评估，CoBRA 在干净条件下达到词错误率（WER）1.6%（LRS3）和 2.8%（LRS2）。在噪声条件下，相比基线 CM-seq2seq，最大改进达 7.42% WER，在低信噪比（-7.5 dB）下对 babble 噪声相对改进 40.0%。模型使用仅 664 小时训练数据，表现竞争性，优于可比基线，展示了数据效率和噪声鲁棒性。
 
 # 一句话评价
-该研究通过创新数据合成和轻量级混合模型，有效应对 misophonia 触发声音检测的数据和计算资源限制，为辅助技术提供了实用且可扩展的解决方案。
+
+CoBRA 是一种高效、噪声鲁棒的 AVSR 方法，通过瓶颈融合平衡了计算成本和性能，为噪声环境下的语音识别提供了创新解决方案。
+
+---
+
+## 4. Detect, Attend and Extract: Keyword Guided Target Speaker Extraction
+
+**作者**: Haoyu Li, Yu Xi, Yidi Jiang, Shuai Wang, Kate Knill, Mark Gales, Haizhou Li, Kai Yu
+**链接**: [2602.07977](https://arxiv.org/abs/2602.07977)
+**分类**: Audio Enhancement | **关键词**: Target Speaker Extraction, Keyword-guided, DAE-TSE, Speech Separation, Cocktail Party Problem
+
+# 详细总结
+
+## 核心痛点
+传统目标说话人提取系统主要依赖预注册的干净语音作为线索来识别目标说话人，但在许多现实场景（如临时会议或语音助手交互）中，这种线索不可用，限制了现有方法的适用性。
+
+## 方法创新
+提出DAE-TSE框架，首次使用关键词（部分转录）作为线索来指定目标说话人。它采用Detect-Attend-Extract范式：通过关键词引导的线索编码器（KCE）检测关键词存在并生成说话人嵌入，KCE结合自动语音识别和说话人验证的联合训练；然后使用Band-Split RNN作为语音提取骨干，从混合语音中提取目标语音。
+
+## 实验结果
+实验表明，DAE-TSE在仅使用28.4%完整转录的情况下，优于依赖干净注册语音的标准TSE系统，并提供约100毫秒的关键词定位误差。
+
+## 一句话评价
+该工作创新性地利用部分转录作为TSE的线索，为现实场景提供了灵活实用的解决方案。
+
+---
+
+## 5. SoulX-Singer: Towards High-Quality Zero-Shot Singing Voice Synthesis
+
+**作者**: Jiale Qian, Hao Meng, Tian Zheng, Pengcheng Zhu, Haopeng Lin, Yuhang Dai, Hanke Xie, Wenxiao Cao, Ruixuan Shang, Jun Wu, Hongmei Liu, Hanlin Wen, Jian Zhao, Zhonglin Jiang, Yong Chen, Shunshun Yin, Ming Tao, Jianguo Wei, Lei Xie, Xinsheng Wang
+**链接**: [2602.07803](https://arxiv.org/abs/2602.07803)
+**分类**: Singing Voice Synthesis | **关键词**: zero-shot synthesis, flow matching, large-scale dataset
+
+# Summary of SoulX-Singer Paper
+
+## Core Pain Points
+- Existing open-source singing voice synthesis (SVS) systems struggle with robustness and zero-shot generalization to unseen singers.
+- Early systems like DiffSinger lacked generalization due to small-scale datasets, while recent methods (e.g., StyleSinger, TCSinger) had limited data (few hundred hours), hindering practical deployment.
+- Recent advances (e.g., Vevo2, YingMusic-Singer) rely on melody extraction and lack note-level duration control, causing temporal misalignment and limiting use in music production workflows.
+
+## Method Innovations
+- Introduces SoulX-Singer, a high-quality zero-shot SVS model supporting both score-based (MIDI) and melody-based inputs within a unified framework.
+- Constructs a large-scale multilingual singing dataset of over 42,000 hours (Mandarin Chinese, English, Cantonese), significantly enhancing generalization.
+- Uses a non-autoregressive flow matching model based on Diffusion Transformer (DiT) for efficient synthesis, with a Singing Content Encoder for multimodal feature integration.
+- Develops a data processing pipeline for vocal extraction, lyric transcription, and note transcription, and introduces SoulX-Singer-Eval benchmark for standardized zero-shot evaluation.
+
+## Experimental Results
+- SoulX-Singer achieves state-of-the-art synthesis quality across multiple languages under diverse musical conditions, as shown in comparative figures against methods like Score-controlled SVS, StyleSinger, TCSinger, and Melody-controlled SVS, YingMusic-Singer, Vevosing.
+- The model supports high-fidelity timbre cloning, style transfer, and flexible editing, validated on the dedicated benchmark with 50 unseen singers.
+
+## One-Sentence Evaluation
+SoulX-Singer is a groundbreaking zero-shot singing voice synthesis system that combines large-scale data, dual-input control, and advanced modeling to deliver high-quality, flexible, and practical synthesis for real-world applications.
+
+---
+
+## 6. Rho-Perfect: Correlation Ceiling For Subjective Evaluation Datasets
+
+**作者**: Fredrik Cumlin
+**链接**: [2602.08552](https://arxiv.org/abs/2602.08552)
+**分类**: Subjective Assessment and Reliability in Machine Learning | **关键词**: subjective evaluation, correlation ceiling, reliability measure
+
+# 论文总结
+
+## 核心痛点
+主观评分含有固有噪声，限制了模型与人类相关性，但现有可靠性度量如Pearson's correlation ratio、ICC（Intraclass Correlation）、Cronbach's alpha在异方差噪声场景下存在局限性（如假设同方差噪声或难以解释模型性能），导致模型性能评估可能误导，无法区分模型限制与数据质量问题。
+
+## 方法创新
+提出ρ-Perfect，一个实用估计方法，用于量化主观评价数据集最高可达相关性上限。它基于完美预测器（定义为条件期望E[Y|X]）与平均评分的Pearson相关系数，通过方差分解在异方差噪声下计算，仅需单个评估的评分分布（无需重复评估）。ρ-Perfect平方近似于两个独立主观评估间的测试-重测相关性，提供了理论验证和实证支持。
+
+## 实验结果
+在多个数据集（BVCC、MovieLens、SOMOS、MERP）上验证，使用分裂评分方法（Split-Raters和Split-Ratings）模拟重复评估。结果显示ρ-Perfect平方与实测相关性匹配（如BVCC中ρ-Perfect²≈0.800 vs. Corr≈0.801），有效估计了可靠性上限。比较现有度量时，ρ-Perfect更适应不平衡数据集（如MovieLens），而ICC(2, k)可能高估可靠性。实验证实ρ-Perfect能区分模型性能限制与数据质量不佳情况。
+
+## 一句话评价
+ρ-Perfect为AI模型在主观评估数据集上的性能提供了可靠的量化上界，通过量化评分噪声，有助于更准确地评估模型并区分其局限性与数据固有噪声。
+
+---
+
+## 7. SNC: A Stem-Native Codec for Efficient Lossless Audio Storage with Adaptive Playback Capabilities
+
+**作者**: Shaad Sufi
+**链接**: [2602.08148](https://arxiv.org/abs/2602.08148)
+**分类**: Audio Compression and Storage | **关键词**: audio compression, stem separation, adaptive playback
+
+### Core Pain Points
+Current audio formats face fundamental trade-offs: lossless formats like FLAC preserve quality but lack adaptability for different playback environments, lossy formats reduce file size at the cost of fidelity and do not support stem-level access, and spatial audio formats like Dolby Atmos increase file size and licensing barriers. These limitations stem from storing audio as a fixed mix rather than composable elements.
+
+### Method Innovation
+The paper introduces the Stem-Native Codec (SNC), a novel audio container format that stores music as independently encoded stems (e.g., vocals, drums, bass) plus a low-energy mastering residual. Key innovations include: exploiting lower information entropy in separated stems for efficient compression, using Opus VBR encoding within a Matroska container, and incorporating metadata for spatial positioning and adaptive playback rules. This architecture enables bit-accurate reconstruction while reducing file size and supporting adaptive features like context-aware playback and user-controlled remixing.
+
+### Experimental Results
+SNC was validated on a 2:18 test track, achieving a 38.2% reduction in file size compared to FLAC (7.76 MB vs. 12.55 MB) while maintaining perceptual transparency (STOI = 0.996). The mastering residual had an RMS level of -29.97 dB, capturing only 6.4% of the original energy, and objective metrics like Spectral Convergence (0.0402) and SNR (24.86 dB) confirmed high fidelity. The stems-plus-residual approach successfully decouples compression efficiency from feature richness.
+
+### One-Sentence Evaluation
+SNC offers a stem-native audio codec that effectively addresses the trade-off between file size and functionality, enabling efficient lossless storage and adaptive playback capabilities for next-generation audio systems.
+
+---
+
+## 8. MENASpeechBank: A Reference Voice Bank with Persona-Conditioned Multi-Turn Conversations for AudioLLMs
+
+**作者**: Zien Sheikh Ali, Hunzalah Hassan Bhatti, Rabindra Nath Nandi, Shammur Absar Chowdhury, Firoj Alam
+**链接**: [2602.07036](https://arxiv.org/abs/2602.07036)
+**分类**: Audio Large Language Models | **关键词**: MENASpeechBank, AudioLLMs, persona-conditioned conversations, synthetic speech data, dialect diversity
+
+## 核心痛点
+Audio大型语言模型（AudioLLMs）的发展受限于缺乏多样化、对话式和指令对齐的语音-文本数据，特别是在中东和北非（MENA）地区，方言多样性高，真实多说话者录音收集成本高且缓慢，这限制了模型在人物基础和方言覆盖方面的进步。
+
+## 方法创新
+引入MENASpeechBank，一个参考语音库，包含约18K高质量语音从124个说话者，覆盖英语、现代标准阿拉伯语和地区阿拉伯语变体。开发了一个可控合成数据管道，包括：构建基于世界价值观调查的人物档案、定义约5K对话场景分类、通过语义相似度匹配人物和场景、使用LLM生成约417K角色扮演对话（用户作为人物，助手作为帮助代理），并合成用户回合以通过参考语音保留说话者身份和多样性。
+
+## 实验结果
+论文提到评估了合成和人类录制的对话，并提供分析，但具体实验结果未在截取片段中详细展示。摘要中指出实验旨在评估合成数据对AudioLLM性能的影响，包括对话场景和口语问答任务。
+
+## 一句话评价
+这是一项数据为中心的研究，为AudioLLMs提供了关键的语音资源和端到端合成数据管道，有望推动模型在多样化和个性化语音交互中的应用。
 
 ---
 
