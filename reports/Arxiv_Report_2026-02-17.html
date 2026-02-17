@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-02-17</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-02-17 | 来源: eess.AS | 新增论文: 13 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14785" target="_blank">SA-SSL-MOS: Self-supervised Learning MOS Prediction with Spectral Augmentation for Generalized Multi-Rate Speech Assessment</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Quality Assessment</span>
+                <strong>ID:</strong> <span class="tag">2602.14785</span>
+                <a href="pdfs/2602.14785.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Fengyuan Cao, Xinyu Liang, Fredrik Cumlin, Victor Ungureanu, Chandan K. A. Reddy, Christian Schuldt, Saikat Chatterjee<br>
+                <div style="margin-top:5px"><span class="tag">Speech Quality Assessment</span><span class="tag">Self-Supervised Learning</span><span class="tag">Spectral Augmentation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>Core Pain Points</h2>
+<ul>
+<li>Designing speech quality assessment (SQA) systems for multi-rate speech (16-48 kHz) is challenging due to limited availability of MOS-labeled multi-rate datasets.</li>
+<li>Self-supervised learning (SSL) models are typically pre-trained on 16 kHz speech, discarding high-frequency information crucial for high-fidelity recordings, which negatively impacts SQA performance.</li>
+<li>Other issues include scarcity of multi-rate data and range-equalizing bias that complicates cross-dataset learning.</li>
+</ul>
+<h2>Method Innovations</h2>
+<ul>
+<li>Proposed SA-SSL-MOS: a spectral-augmented SSL-based model for non-intrusive MOS prediction. It uses a parallel-branch architecture: one branch processes 16 kHz SSL features (using Wav2Vec2), and another branch processes upsampled 48 kHz spectrogram features to retain high-frequency information.</li>
+<li>Introduced a two-step training scheme: pre-training on a large 48 kHz dataset (e.g., NISQA) followed by fine-tuning on a limited multi-rate dataset (e.g., AudioMOS).</li>
+<li>Employed Gaussian negative log-likelihood (GNLL) loss for posterior modeling, providing uncertainty estimates in predictions.</li>
+</ul>
+<h2>Experimental Results</h2>
+<ul>
+<li>Experimental results demonstrate that incorporating high-frequency information significantly improves objective speech quality prediction accuracy.</li>
+<li>The two-step training strategy substantially enhances generalization to unseen, out-of-distribution datasets, as evaluated on diverse external datasets like Tencent and TCD-VoIP.</li>
+<li>Metrics such as MSE, LCC, and SRCC were used to validate performance improvements over baselines like SSL-Layer-MOS.</li>
+</ul>
+<h2>One-Sentence Evaluation</h2>
+<p>This paper effectively addresses high-frequency information loss in multi-rate speech quality assessment by proposing a spectral-augmented SSL model with two-step training, leading to improved accuracy and generalization.</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14686" target="_blank">Disentangling Pitch and Creak for Speaker Identity Preservation in Speech Synthesis</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2602.14686</span>
+                <a href="pdfs/2602.14686.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Frederik Rautenberg, Jana Wiechmann, Petra Wagner, Reinhold Haeb-Umbach<br>
+                <div style="margin-top:5px"><span class="tag">Pitch</span><span class="tag">Creak</span><span class="tag">Speaker Identity Preservation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>在语音合成中，修改嗓音质量特征如creak（吱吱声）时，由于creak与pitch（音高）之间的相关性（称为“inter-speaker” correlation），会导致pitch改变，从而影响说话人身份的保持。现有数据集（如LibriTTS-R）中，creak概率与pitch负相关，使得修改creak时pitch也随之变化，降低了说话人验证性能。</p>
+<h2>方法创新</h2>
+<p>本研究提出一种数据集适应方法来disentangle pitch和creak。具体方法包括：1) 使用LibriTTS-R数据集，通过音高移位（pitch shifting）将utterances的音高调整到性别平均音高，并添加随机噪声，以打破creak与pitch之间的相关性；2) 训练一个基于条件连续标准化流（CCNF）的说话人操纵块，集成到Text-to-Speech（TTS）系统（如YourTTS）中，用于全局修改creak概率，同时保持其他声学特征对齐。</p>
+<h2>实验结果</h2>
+<p>实验表明：1) 在适应后的数据集上，creak与pitch之间的相关性显著降低（如Table 1所示，男性speaker的相关系数从-0.7降至0.0）；2) 说话人验证性能在多种creak操纵强度下得到显著改善；3) 声学特征分析（如H1-H2、HNR、CPP）显示，creak修改后，这些特征与预期一致，表明方法有效保持了声学相关性。</p>
+<h2>一句话评价</h2>
+<p>该研究通过创新的数据集适应和CCNF-based操纵，成功解决了在语音合成中disentangle pitch和creak的挑战，显著提升了说话人身份保持，对语音教学、语音识别和说话人验证应用具有重要价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14671" target="_blank">Data Augmentation for Pathological Speech Enhancement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2602.14671</span>
+                <a href="pdfs/2602.14671.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mingchi Hou, Enno Hermann, Ina Kodrasi<br>
+                <div style="margin-top:5px"><span class="tag">speech enhancement</span><span class="tag">pathological speech</span><span class="tag">data augmentation</span><span class="tag">noise augmentation</span><span class="tag">SpecMix</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>病理性语音增强（Speech Enhancement, SE）面临数据稀缺和声学特性异常的挑战。现有的SE模型在神经典型语音上表现良好，但对病理性语音性能显著下降，因为病理性语音数据集小、噪声多，且声学特性如音高和语速异常，导致模型泛化能力差。</p>
+<h3>方法创新</h3>
+<p>本文系统研究数据增强（DA）策略以提升病理性SE性能。评估三种DA类别：transformative增强（包括音高变换、时间拉伸和SpecMix）、generative增强（使用YourTTS和XTTS合成语音）、以及噪声增强。在两种最先进的SE模型上测试：predictive复杂谱回归（CR）模型和generative薛定谔桥（SB）模型，并在西班牙PC-GITA数据集上进行实验。</p>
+<h3>实验结果</h3>
+<p>实验结果显示，噪声增强在所有策略中表现最一致且效果最显著，能大幅提升SE性能。transformative增强（特别是SpecMix）提供中等改进，而generative增强效果有限，在高增强比例时甚至可能损害性能。DA的效果因SE模型而异，对predictive CR模型更有益。尽管DA改善了病理性SE，但病理性与神经典型语音之间的性能差距依然存在。</p>
+<h3>一句话评价</h3>
+<p>本研究为病理性语音增强提供了数据增强策略的系统评估，强调了噪声增强的有效性，但指出需要针对病理性语音的更有针对性DA策略以缩小性能差距。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14612" target="_blank">LongAudio-RAG: Event-Grounded Question Answering over Multi-Hour Long Audio</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Question Answering</span>
+                <strong>ID:</strong> <span class="tag">2602.14612</span>
+                <a href="pdfs/2602.14612.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Naveen Vakada, Kartik Hegde, Arvind Krishna Sridhar, Yinyi Guo, Erik Visser<br>
+                <div style="margin-top:5px"><span class="tag">Long Audio</span><span class="tag">Question Answering</span><span class="tag">Retrieval-Augmented Generation</span><span class="tag">Event Detection</span><span class="tag">SQL Database</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>长音频（如多小时的录音）在工业和个人设置中越来越常见，但手动审查不切实际。现有音频语言模型在长音频问答（QA）中面临重大挑战，包括上下文长度限制、自然语言时间表达的高变异性（如12小时与24小时格式、相对短语），以及开放生成中的幻觉问题，导致难以进行精确时间推理和可靠回答。</p>
+<h3>方法创新</h3>
+<p>论文提出LongAudio-RAG (LA-RAG)，一个混合框架，用于多小时长音频的问答。核心创新包括：首先，通过音频接地模型（AGM）将长音频转换为带时间戳的声学事件记录（包括事件名称、起止时间、置信度等），存储在SQL数据库中；其次，在推理时，系统解析时间参考、分类意图（如检测、计数、总结）、检索相关事件，并仅基于这些约束证据使用大型语言模型（LLM）生成答案。此外，系统部署在混合边缘-云环境中，音频检测在IoT设备上运行以减少带宽，LLM在GPU服务器上运行以增强语言推理，实现低延迟和高可扩展性。</p>
+<h3>实验结果</h3>
+<p>在合成的长音频基准上（包括Home-IoT和Industrial-IoT数据集），LA-RAG相比基线方法显著提高准确性。例如，在检测任务中，LA-RAG达到约90%的准确率，在计数和总结任务中也优于原始RAG或文本到SQL方法。同时，系统延迟较低（约0.5秒），展示了高效性和实用性。详细结果见论文中的Table 1。</p>
+<h3>一句话评价</h3>
+<p>该工作为解决长音频QA问题提供了一个创新且实用的混合方法，结合事件级检测和LLM推理，有效减少幻觉并支持精确时间推理，具有实际部署价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14584" target="_blank">CLAP-Based Automatic Word Naming Recognition in Post-Stroke Aphasia</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.14584</span>
+                <a href="pdfs/2602.14584.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yacouba Kaloga, Marina Laganaro, Ina Kodrasi<br>
+                <div style="margin-top:5px"><span class="tag">aphasia</span><span class="tag">contrastive learning</span><span class="tag">CLAP</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>传统自动词命名识别系统难以准确识别中风后失语症患者的语音，因为患者常伴有发音不流利、错误和语言障碍，导致自动化评估不可靠，限制了临床应用的效率。</p>
+<h3>方法创新</h3>
+<p>提出基于对比语言-音频预训练（CLAP）的方法，将词命名识别重构为音频-文本匹配问题。使用预训练的wav2vec2模型作为音频编码器和DistilRoBERTa-base作为文本编码器，通过对比学习在共享嵌入空间中映射音频和文本，从而提高对发音变异、不流利和重叠语音的鲁棒性，无需针对每个新单词重新训练。</p>
+<h3>实验结果</h3>
+<p>在两个法国中风后失语症患者的语音数据集上评估，该方法达到高达90%的准确率，显著优于基于分类和自动语音识别（ASR）的基线方法，展示了在具有挑战性的录音中的有效性。</p>
+<h3>一句话评价</h3>
+<p>该研究创新地应用CLAP框架解决失语症语音识别难题，为临床自动化评估和辅助技术提供了高效且可扩展的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13761" target="_blank">ELEAT-SAGA: Early & Late Integration with Evading Alternating Training for Spoof-Robust Speaker Verification</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2602.13761</span>
+                <a href="pdfs/2602.13761.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Amro Asali, Yehuda Ben-Shimol, Itshak Lapidot<br>
+                <div style="margin-top:5px"><span class="tag">Spoof-Robust Speaker Verification</span><span class="tag">Score-Aware Gated Attention</span><span class="tag">Alternating Training</span><span class="tag">ECAPA-TDNN</span><span class="tag">AASIST</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前自动说话人验证（ASV）系统在面对零努力冒名攻击和欺骗攻击（如语音转换VC和文本到语音TTS）时性能下降，需要集成ASV和反欺骗（CM）子系统以提高鲁棒性，但现有集成方法在单独任务评估时可能性能退化。</p>
+<h2>方法创新</h2>
+<p>提出ELEAT-SAGA架构，核心是Score-Aware Gated Attention（SAGA），通过CM分数动态调制说话人嵌入。探索早期集成（S1）、晚期集成（S2）和完全集成策略，并引入交替训练：Alternating Training for Multi-Module（ATMM）和其改进变体Evading Alternating Training（EAT）。使用预训练的ECAPA-TDNN提取说话人嵌入，AASIST提取CM分数或嵌入。</p>
+<h2>实验结果</h2>
+<p>在ASVspoof 2019 Logical Access和Spoofceleb数据集上评估，SASV-EER为1.22%，minimum a-DCF为0.0304，显著优于基线方法。结果表明，分数感知注意力机制和交替训练策略有效增强SASV系统的鲁棒性。</p>
+<h2>一句话评价</h2>
+<p>该工作通过创新的动态调制机制和优化训练策略，为欺骗鲁棒说话人验证提供了高效解决方案，提升了系统在真实场景中的可靠性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.14291" target="_blank">Bengali-Loop: Community Benchmarks for Long-Form Bangla ASR and Speaker Diarization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition and Diarization</span>
+                <strong>ID:</strong> <span class="tag">2602.14291</span>
+                <a href="pdfs/2602.14291.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> H.M. Shadman Tabib, Istiak Ahmmed Rifti, Abdullah Muhammed Amimul Ehsan, Somik Dasgupta, Md Zim Mim Siddiqee Sowdha, Abrar Jahin Sarker, Md. Rafiul Islam Nijamy, Tanvir Hossain, Mst. Metaly Khatun, Munzer Mahmood, Rakesh Debnath, Gourab Biswas, Asif Karim, Wahid Al Azad Navid, Masnoon Muztahid, Fuad Ahmed Udoy, Shahad Shahriar Rahman, Md. Tashdiqur Rahman Shifat, Most. Sonia Khatun, Mushfiqur Rahman, Md. Miraj Hasan, Anik Saha, Mohammad Ninad Mahmud Nobo, Soumik Bhattacharjee, Tusher Bhomik, Ahmmad Nur Swapnil, Shahriar Kabir<br>
+                <div style="margin-top:5px"><span class="tag">Bengali</span><span class="tag">long-form ASR</span><span class="tag">speaker diarization</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>Bengali (Bangla) 是一种全球广泛使用的语言，但在开放语音技术中资源严重不足，特别是在长时自动语音识别（ASR）和说话人日志（diarization）方面。现有的大部分孟加拉语语料库集中于短时、单说话人的话语（如朗读语音），无法有效处理长录音中的挑战，包括多话题、多变声学环境、多说话人对话以及时间上的错误累积。说话人日志资源尤其稀缺，缺乏与英语等语言的类似基准（如 AMI、DIHARD）的可比性。</p>
+<h2>方法创新</h2>
+<p>论文提出了 Bengali-Loop，两个社区基准来弥补这一差距：
+1. <strong>长时ASR语料库</strong>：包含 191 个录音（总计 158.6 小时，792k 单词），来自 11 个 YouTube 频道，通过可重复的字幕提取管道和人工循环转录验证收集，确保了高质量参考转录。
+2. <strong>说话人日志语料库</strong>：包含 24 个录音（总计 22 小时，5,744 个标注段），具有完全手动标注的说话人转换标签，采用 CSV 格式（开始时间、结束时间、说话人 ID），并定义了单标签重叠策略以简化标注和评分。
+   此外，提供了标准化的评估协议（WER/CER 用于 ASR，DER 用于 diarization）、详细的标注规则和数据格式，以支持可重复的基准测试和未来模型开发。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>ASR 基线结果</strong>：在测试集上，Tugstugi 模型达到 34.07% 的词错误率（WER）和 16.44% 的字符错误率（CER），而 Hishab TITU-BN 模型达到 50.67% WER 和 21.99% CER，展示了长时 ASR 任务的挑战性。</li>
+<li><strong>说话人日志基线结果</strong>：pyannote.audio 模型在测试集上达到 40.08% 的 diarization 错误率（DER），而轻量级管道（如 WebRTC VAD + ECAPA + Clustering 和 Silero VAD + ECAPA + Clustering）分别达到 73.71% 和 61.50% DER，突出了基准的难度和孟加拉语特定模型的开发需求。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这篇论文为孟加拉语长语音技术提供了全面的社区基准和标准化的评估框架，有效填补了资源不足的空白，并促进了可重复研究和未来模型创新，对低资源语音技术领域具有重要贡献。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13834" target="_blank">Learning Vocal-Tract Area and Radiation with a Physics-Informed Webster Model</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Singing-Voice Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2602.13834</span>
+                <a href="pdfs/2602.13834.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Minhui Lu, Joshua D. Reiss<br>
+                <div style="margin-top:5px"><span class="tag">Vocal-tract acoustics</span><span class="tag">PINNs</span><span class="tag">Webster equation</span><span class="tag">Differentiable DSP</span><span class="tag">Singing-Voice Synthesis</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文关键信息总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现代歌唱语音合成（SVS）后端常用神经声码器或端到端生成器，参数纠缠严重，导致控制能力有限，需要大量数据和重新训练。</li>
+<li>物理模型如Webster方程提供可解释的声带面积和辐射控制，但从音频中校准这些参数具有挑战性且依赖于特定求解器。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出一个物理信息化的Webster模型，使用物理信息神经网络（PINNs）从单通道音频中联合估计声带面积函数A(x)和辐射系数ζ。</li>
+<li>训练过程结合部分微分方程/边界条件（PDE/BC）残差、音频损失和轻量级DDSP路径（仅用于稳定学习），推理时完全基于物理，无需参考数据。</li>
+<li>引入独立有限差分时间域（FDTD）Webster求解器进行后渲染评估，以减少逆问题风险，验证参数的物理可转移性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在持续元音（/a/, /i/, /u/）上，后渲染参数能竞争性地复现频谱包络，与紧凑DDSP基线相比表现稳定。</li>
+<li>系统在离散化变化、中等源变化和约10%音高偏移下保持鲁棒性。</li>
+<li>波形比参考更breathier，表明需要改进周期性建模和声门先验。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这项研究为歌唱语音合成提供了一种物理信息化的参数估计方法，增强了可解释性和控制能力，但周期性建模仍需改进。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13787" target="_blank">Enhancing spatial hearing with cochlear implants: exploring the role of AI, multimodal interaction and perceptual training</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2602.13787</span>
+                <a href="pdfs/2602.13787.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Lorenzo Picinali, Robert Baumgartner, Valerie Gaveau, Antonino Greco, Stefanie Liebe, Paul Oomen, Christoph Braun<br>
+                <div style="margin-top:5px"><span class="tag">Cochlear Implants</span><span class="tag">Spatial Hearing</span><span class="tag">Artificial Intelligence</span><span class="tag">Multimodal Interaction</span><span class="tag">Perceptual Training</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>空间听力在耳蜗植入（CI）用户中被长期忽视，导致在复杂声学环境（如鸡尾酒会效应）中听力困难，影响空间定向、注意力和生活质量。</li>
+<li>原因包括：CI电信号与自然生理信号差异（如时间动态和频率分辨率不同）、双耳CIs处理不协调（独立操作导致未同步的听觉流）、康复训练不足（缺乏系统化空间听力训练）、以及脑神经可塑性变化（长期失聪可能损害空间信息处理能力）。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出多学科研究框架，整合医生、心理学家和工程师，结合AI、机器学习和多模态交互。</li>
+<li>技术优化：改善CI技术，如引入延迟以调整双耳时间差（ITD）、使用自适应滤波器（AF）实时个性化刺激、同步双耳CIs以维持ITDs和强度差（ILDs）。</li>
+<li>康复训练：实施多感官训练（听觉-触觉和听觉-视觉刺激）、主动探索声景（通过头身运动）、基于虚拟现实（VR）和增强现实（AR）的培训环境，以促进听觉重映射和脑可塑性。</li>
+<li>神经生理学方法：使用脑电图（EEG）记录事件相关电位（ERPs）和振荡活动，研究大脑处理空间声音的机制。</li>
+<li>计算模型：开发深度神经网络（DNNs）和循环神经网络（RNNs），模拟CI用户的空间听力，结合生物物理CI模型，识别损伤机制并优化训练。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>论文为提案性质，无具体实验结果报告。计划通过CherISH项目进行研究和评估，包括心理物理学测量（如声音定位任务）、EEG数据分析、训练效果评估（使用标准化问卷），以及机器学习预测训练成功。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一个综合性的多学科提案，旨在利用AI和先进技术改善耳蜗植入者的空间听力，具有潜在的科研创新和临床应用价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13596" target="_blank">BreathNet: Generalizable Audio Deepfake Detection via Breath-Cue-Guided Feature Refinement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2602.13596</span>
+                <a href="pdfs/2602.13596.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhe Ye, Xiangui Kang, Jiayi He, Chengxin Chen, Wei Zhu, Kai Wu, Yin Yang, Jiwu Huang<br>
+                <div style="margin-top:5px"><span class="tag">Audio Deepfake Detection</span><span class="tag">BreathNet</span><span class="tag">BreathFiLM</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<ul>
+<li>现有音频深假检测方法主要依赖XLS-R等自监督特征，但泛化能力有限，部分原因是忽视了细粒度信息如生理线索（如呼吸声）和频域特征（如声码器或压缩伪影引入的线索）。</li>
+<li>缺乏有效的特征细化机制，导致真实和深假样本在特征空间中分离不足，影响检测性能。</li>
+</ul>
+<h1>方法创新</h1>
+<ul>
+<li>提出BreathNet框架，集成了呼吸线索引导的特征细化：</li>
+<li><strong>BreathFiLM</strong>：特征级线性调制机制，基于呼吸声选择性放大时间表示，并引导XLS-R特征提取器学习呼吸相关线索。</li>
+<li><strong>频率前端融合</strong>：提取谱特征，与时间特征融合，提供互补频域信息。</li>
+<li><strong>特征损失组</strong>：包括Positive-only Supervised Contrastive Loss (PSCL)、center loss和contrast loss，共同提升判别能力，增强类内紧凑性和类间分离性。</li>
+<li>采用双分支架构，结合时间分支（XLS-R提取器）和频率分支，通过交叉注意力融合特征。</li>
+</ul>
+<h1>实验结果</h1>
+<ul>
+<li>在五个基准数据集上进行了广泛实验：ASVspoof 2019 LA、ASVspoof 2021 LA、ASVspoof 2021 DF、In-the-Wild (ITW)和ASVspoof5。</li>
+<li>实现了state-of-the-art性能：在ITW数据集上达到4.70% EER，在ASVspoof5上达到4.94% EER；在ASVspoof 2019 LA训练集上，平均EER为1.99% across four related eval benchmarks。</li>
+<li>消融研究证实了各模块的独立贡献。</li>
+</ul>
+<h1>一句话评价</h1>
+<p>BreathNet通过集成呼吸线索、特征融合和损失优化，显著提高了音频深假检测的泛化能力和准确性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13532" target="_blank">Fast Swap-Based Element Selection for Multiplication-Free Dimension Reduction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Dimension Reduction</span>
+                <strong>ID:</strong> <span class="tag">2602.13532</span>
+                <a href="pdfs/2602.13532.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nobutaka Ono<br>
+                <div style="margin-top:5px"><span class="tag">dimension reduction</span><span class="tag">machine learning</span><span class="tag">element selection</span><span class="tag">subset selection</span><span class="tag">multiplication-free</span><span class="tag">computational cost</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>维度缩减是机器学习中用于减少计算成本、缓解过拟合并加速训练和推断的基础技术。传统方法如主成分分析（PCA）依赖于矩阵乘法，这在资源受限设备（如助听器和嵌入式系统）上可能成为计算瓶颈。元素选择作为一种无乘法的维度缩减方法，消除了乘法成本，但关键挑战在于高效选择最优元素子集。</p>
+<h2>方法创新</h2>
+<p>本文提出一种快速交换基元素选择算法，用于无乘法维度缩减。方法通过选择输入元素的子集实现维度缩减，仅涉及内存访问而无标量乘法。创新点包括：
+- 将元素选择建模为离散优化问题，最小化从选定元素到目标向量（如分类标签或输入本身）的线性回归均方误差。
+- 使用矩阵反演引理推导快速评估公式，将每次候选交换的主要计算简化为小2×2矩阵的反演，显著降低计算复杂度。
+- 采用交换基局部搜索策略，迭代应用目标函数提升的交换，直至收敛到局部最优。</p>
+<h2>实验结果</h2>
+<p>在MNIST手写数字数据集上实验，将784维图像向量降至100维：
+- 加速算法比朴素实现快200倍以上（计算时间从约1800秒减少到8秒）。
+- 与PCA相比，提议方法的归一化重建损失为0.1367，高于PCA的0.0856，但计算成本显著降低。
+- 可视化显示所选元素更分散，考虑了像素间相关性，优于仅基于高方差的选择。
+- 图像重建结果表明，方法在保持可接受重建质量的同时，避免了乘法操作。</p>
+<h2>一句话评价</h2>
+<p>该研究提出了一种高效的无乘法维度缩减方法，特别适用于资源受限的机器学习系统，在计算效率和准确性之间实现了有效平衡。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13263" target="_blank">Multimodal Consistency-Guided Reference-Free Data Selection for ASR Accent Adaptation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.13263</span>
+                <a href="pdfs/2602.13263.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ligong Lei, Wenwen Lu, Xudong Pang, Zaokere Kadeer, Aishan Wumaier<br>
+                <div style="margin-top:5px"><span class="tag">Data selection</span><span class="tag">Speech recognition</span><span class="tag">Accent adaptation</span><span class="tag">Multimodal consistency</span><span class="tag">Word error rate prediction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>自动语音识别（ASR）系统在口音语音上性能显著下降，主要原因是声学-音素和韵律的偏移导致与训练数据不匹配。现有的伪标签选择方法（如基于语言模型困惑度过滤）以文本为中心，可能偏好流畅但与声学不匹配的假设，从而在微调时放大错误，且带标签的口音适应成本高昂。</p>
+<h2>方法创新</h2>
+<p>论文提出一种多模态一致性引导、无参考的数据选择管道，用于ASR口音适应的无监督场景。关键创新包括：
+1. <strong>目标感知预选择</strong>：基于子模互信息（FLMI）进行查询相关的预选择，提高相关性并减少计算负担。
+2. <strong>扰动解码</strong>：为每个话语生成多个伪转录（通过模型参数和输入扰动），以增加多样性。
+3. <strong>多模态一致性评分</strong>：使用两个无参考信号评估每个假设的质量：
+   - 在共享嵌入空间（使用冻结的SONAR编码器）中的语音-文本对齐。
+   - 预测的词错误率（WER），通过轻量级MLP基于语音和文本嵌入预测。
+4. <strong>选择规则</strong>：基于百分位的简单选择规则，保留可靠的伪标签用于微调，同时丢弃噪声话语。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>在领域内设置</strong>：从30k个话语的池中选择约1.5k个话语，实现10.91%的WER，接近使用30k监督标签的10.45%。</li>
+<li><strong>在跨域设置</strong>：面对不匹配的候选池，一致性过滤的子集避免了伪标签在强口音偏移下的性能退化。匹配小时实验在更强的ASR骨干网络上进一步确认了相对于随机采样和近期基线方法的增益。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该方法通过整合多模态一致性信号，为ASR口音适应提供了一种高效、无监督的数据选择框架，显著提升了伪标签质量并减少了依赖监督数据的需求。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.13259" target="_blank">Learning Physiology-Informed Vocal Spectrotemporal Representations for Speech Emotion Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.13259</span>
+                <a href="pdfs/2602.13259.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xu Zhang, Longbing Cao, Runze Yang, Zhangkai Wu<br>
+                <div style="margin-top:5px"><span class="tag">Speech Emotion Recognition</span><span class="tag">Physiology-Informed Vocal Representation</span><span class="tag">Quaternion Neural Networks</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有语音情感识别（SER）模型，特别是基于自监督学习（SSL）的深度模型，缺乏可解释性，主要依赖振幅（amplitude）特征而忽略相位（phase）信息，未建模振幅与相位之间的生理耦合。</li>
+<li>这些模型通常基于大型数据集训练，但未能充分捕捉语音产生的生理机制，如声带源（glottal source）和声道滤波器（vocal tract filter）的交互，限制了性能提升和跨语言泛化能力。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出PhysioSER框架，一种生理学指导的声谱时域表示学习方法，包含两个并行工作流：基于冻结SSL骨干的潜在表示分支，以及基于声音解剖和生理学（VAP）的声学特征表示分支。</li>
+<li>VAP分支将语音信号分解为四重特征（log-spectral magnitude M, time derivative ρ, instantaneous frequency f_inst, group delay τ_g），嵌入到四元数域，并使用哈密顿结构的四元数卷积（Quaternion Spectrotemporal Encoder, QSE）建模它们的耦合动态。</li>
+<li>引入对比投影和对齐（CPA）框架对齐两个工作流的 utterance-level 特征，并通过浅注意力融合头进行分类，以利用特征的互补性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在14个数据集、10种语言、6个SSL骨干模型上进行广泛评估，PhysioSER 一致提高了加权准确率（WA）、非加权准确率（UA）和macro-F1。</li>
+<li>具体示例：在CREMA-D数据集上，使用冻结的WavLM骨干，WA从69.69%提升至75.20%。</li>
+<li>仅训练2%的骨干参数即可超越完全微调的WavLM模型，表明高效性；性能提升在弱骨干和非英语数据集上更显著，证实了其鲁棒性和语言无关性。</li>
+<li>部署在人类机器人平台（如Ameca）上验证了实际应用效果，支持实时情感识别。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>PhysioSER通过整合生理学指导的特征表示和四元数建模，有效解决了SER中可解释性不足和振幅-相位耦合缺失的问题，显著提升了识别性能和跨语言泛化能力。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
