@@ -99,11 +99,409 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 310 篇论文 | 涵盖 19 天的数据
+            共收录 325 篇论文 | 涵盖 20 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-03-02</h2>
+    <h2 class="date-divider">📅 2026-03-03</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.02030" target="_blank">TCG CREST System Description for the DISPLACE-M Challenge</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Diarization</span>
+                <strong>ID:</strong> <span class="tag">2603.02030</span>
+                <a href="pdfs/2603.02030.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nikhil Raghav, Md Sahidullah<br>
+                <div style="margin-top:5px"><span class="tag">speaker diarization</span><span class="tag">DISPLACE-M</span><span class="tag">voice activity detection</span><span class="tag">clustering</span><span class="tag">spectral clustering</span><span class="tag">ECAPA-TDNN</span><span class="tag">WavLM</span><span class="tag">Diarizen</span><span class="tag">SpeechBrain</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>DISPLACE-M挑战专注于嘈杂农村医疗场景中的自然医疗对话说话人日记化（Speaker Diarization），面临语音重叠、背景噪音、方言变异、自发对话和环境噪音等独特挑战，数据集包含开发集和评估集，具有低重叠、高信噪比和活跃对话转接等特点，但变异性可能影响系统性能。</p>
+<h2>方法创新</h2>
+<p>研究比较了两种说话人日记化框架：一是基于SpeechBrain的模块化管道，使用ECAPA-TDNN嵌入提取，结合不同VAD方法（如Silero和Pyannote）和聚类算法；二是基于预训练WavLM的混合端到端系统Diarizen，集成Conformer块和线性分类器，探索了多种聚类技术，包括AHC、VBx、k-means和SC变体（SC-fixed、SC-adapt、SC-pNA、SC-MK），并应用中间滤波进行后处理。创新点包括评估VAD影响和先进聚类方法在端到端系统中的应用。</p>
+<h2>实验结果</h2>
+<p>实验结果表明，Diarizen系统相比SpeechBrain基线在说话人日记化错误率（DER）上约有39%的相对改进。最佳提交系统使用Diarizen基线结合AHC和较大上下文窗口（29帧）的中间滤波，在开发集和评估集上的DER分别为10.37%和9.21%，在Phase I中排名第六（共11支队伍）。其他聚类变体（如SC-adapt和SC-MK）表现接近AHC，但未显著超越。</p>
+<h2>一句话评价</h2>
+<p>该研究通过系统评估模块化和端到端框架，证明了Diarizen在复杂音频条件下对说话人日记化的有效性，为医疗对话处理提供了实用技术方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01565" target="_blank">Investigating Group Relative Policy Optimization for Diffusion Transformer based Text-to-Audio Generation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Audio</span>
+                <strong>ID:</strong> <span class="tag">2603.01565</span>
+                <a href="pdfs/2603.01565.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Gu, Yanqing Liu, Chen Yang, Sheng Zhao<br>
+                <div style="margin-top:5px"><span class="tag">Group Relative Policy Optimization</span><span class="tag">Diffusion Transformer</span><span class="tag">Text-to-Audio Generation</span><span class="tag">Reinforcement Learning</span><span class="tag">LLM Data Augmentation</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有文本到音频（T2A）生成方法在处理复杂文本提示（尤其是涉及复杂音频效果的提示）和实现精确文本-音频对齐方面面临挑战。数据质量不足和建模方法缺陷导致事件遗漏、幻觉或对齐错误。</p>
+<h3>方法创新</h3>
+<p>论文提出结合大型语言模型（LLM）数据增强和强化学习（GRPO）的方法。首先，使用 LLM 生成高质量、详细的音频描述以改善文本-音频语义对齐。然后，应用 Group Relative Policy Optimization（GRPO）微调基于 Diffusion Transformer（DiT）的 T2A 模型，并通过多种奖励函数（如 CLAP、KL、FAD）优化。</p>
+<h3>实验结果</h3>
+<p>实验结果表明，基于 GRPO 的微调显著提高了合成保真度和提示遵循度，奖励函数设计对音频质量有重要影响。</p>
+<h3>一句话评价</h3>
+<p>该方法通过数据增强和强化学习的结合，有效提升了 T2A 生成的准确性和可控性，为 RL 在音频合成中的应用提供了新思路。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01502" target="_blank">Anatomy of the Modality Gap: Dissecting the Internal States of End-to-End Speech LLMs</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-Language Understanding</span>
+                <strong>ID:</strong> <span class="tag">2603.01502</span>
+                <a href="pdfs/2603.01502.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ming-Hao Hsu, Xueyao Zhang, Xiaohai Tian, Jun Zhang, Zhizheng Wu<br>
+                <div style="margin-top:5px"><span class="tag">Modality Gap</span><span class="tag">End-to-End Speech LLMs</span><span class="tag">Representation Dynamics</span><span class="tag">Information Redundancy</span><span class="tag">Reasoning Tasks</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>论文关注大型语音-语言模型（LSLMs）中的模态间隙（modality gap），即语音输入与文本输入在复杂推理任务（如知识问答和逻辑推理）中存在的性能差距。即使模型能准确转录语音，语音输入的推理能力仍显著低于文本输入，表明语音未能充分利用LLM的知识和推理能力，核心问题在于语音的冗余性阻碍了稳定的决策形成。</p>
+<h3>方法创新</h3>
+<p>论文提出从静态几何对齐转向动态推理轨迹分析的新框架，通过层对层（layer-by-layer）的表示演化来诊断模态间隙。使用跨层CKA分析（Centered Kernel Alignment）结合语音-文本token对齐，评估四个开放权重的端到端模型在SpeechMMLU和VoiceBench BBH数据集上的表现。方法创新包括识别语音处理的三个阶段：结构转换、语义扩散和决策不稳定，并引入“信息稀释”（Information Dilution）机制来解释语音冗余如何导致后期层无法稳定形成正确词汇选择。</p>
+<h3>实验结果</h3>
+<p>实验发现，语音表示在中间层与文本表示对齐，形成一个广泛的跨层对齐带，但由于语音的冗余性（语义内容分布在多个帧中），在后期层中无法稳定地驱动正确决策。简单的统计校准（如均值和方差匹配）在输入层应用时无效甚至有害，表明模态间隙不仅仅是分布偏移。结果强调了需要从特征级匹配转向token或时间粒度操作，以浓缩冗余语音为信息密集单元。</p>
+<h3>一句话评价</h3>
+<p>该论文提供了对模态间隙的深入机理分析，揭示了语音冗余是推理瓶颈的关键原因，为未来端到端语音LLMs的改进指明了动态表示优化的方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01482" target="_blank">A SUPERB-Style Benchmark of Self-Supervised Speech Models for Audio Deepfake Detection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2603.01482</span>
+                <a href="pdfs/2603.01482.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hashim Ali, Nithin Sai Adupa, Surya Subramani, Hafiz Malik<br>
+                <div style="margin-top:5px"><span class="tag">self-supervised learning</span><span class="tag">audio deepfake detection</span><span class="tag">benchmark</span><span class="tag">Spoof-SUPERB</span><span class="tag">SSL models</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：A SUPERB-Style Benchmark of Self-Supervised Speech Models for Audio Deepfake Detection</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>音频深度伪造检测在自监督学习（SSL）基准测试中被忽视，尽管其对安全至关重要。</li>
+<li>现有研究碎片化，模型、数据集和评估协议不一致，导致结果难以比较和复现。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出了首个SUPERB风格的基准测试<strong>Spoof-SUPERB</strong>，用于音频深度伪造检测。</li>
+<li>采用统一协议：冻结SSL前端、加权求和所有Transformer层、简单全连接分类器后端。</li>
+<li>评估了20个SSL模型，涵盖生成式、判别式和混合式架构，并在多个数据集（如ASVspoof 2019、ASVspoof 2021）上进行测试。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>大规模判别式模型（如XLS-R、UniSpeech-SAT、WavLM Large）表现最佳，平均等错误率（EER）低于25%。</li>
+<li>这些模型受益于多语言预训练、说话人感知目标和模型规模。</li>
+<li>在声学退化条件下，生成式方法性能急剧下降，而判别式模型保持鲁棒性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该基准为音频深度伪造检测建立了可复现的基线，提供了关于SSL表示可靠性的实用见解，推动了该领域的研究标准化。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01476" target="_blank">Entropy-Guided GRVQ for Ultra-Low Bitrate Neural Speech Codec</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Neural Speech Codec</span>
+                <strong>ID:</strong> <span class="tag">2603.01476</span>
+                <a href="pdfs/2603.01476.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yanzhou Ren, Noboru Harada, Daiki Takeuchi, Siyu Chen, Wei Liu, Xiao Zhang, Liyuan Zhang, Takehiro Moriya, Shoji Makino<br>
+                <div style="margin-top:5px"><span class="tag">Neural audio codec</span><span class="tag">entropy-guided quantization</span><span class="tag">codebook efficiency</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>在超低比特率约束下，神经音频编解码器需要同时确保语义建模的准确性和声学信号的高保真重建，但现有方法如Mimi在集成语义和声学分支时，资源分配不均可能限制重建质量，尤其是在可懂度和感知质量之间的权衡。</p>
+<h2>方法创新</h2>
+<p>论文提出熵引导的组残差向量量化（EG-GRVQ）方法，用于超低比特率神经语音编解码器。该方法扩展了组残差向量量化（GRVQ）框架，基于信息论假设编码器信道激活近似高斯分布，使用信道方差作为信息内容的代理。通过将编码器输出分组，使每组累积方差相等，实现信息平衡分配，从而提高码本效率、减少冗余，并加强声学分支以提升重建保真度，同时保留语义分支以维护可懂度。</p>
+<h2>实验结果</h2>
+<p>在LibriTTS和VCTK数据集上的训练和评估表明，EG-GRVQ在客观指标上优于基线方法。例如，在0.6875 kbps下，与Mimi（重训）相比，PESQ提高0.1至1.881，STOI提高至0.890，ViSQOL提升至2.496，同时码本利用率更均衡，归一化均方误差（NMSE）降低，验证了方法在感知质量和可懂度上的改进。</p>
+<h2>一句话评价</h2>
+<p>该方法通过熵引导分组策略，有效优化了码本效率和信息分配，在超低比特率条件下显著提升了神经语音编解码器的综合性能，为通信导向场景提供了高保真解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01467" target="_blank">Conversational Speech Naturalness Predictor</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Naturalness Estimation</span>
+                <strong>ID:</strong> <span class="tag">2603.01467</span>
+                <a href="pdfs/2603.01467.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anfeng Xu, Yashesh Gaur, Naoyuki Kanda, Zhicheng Ouyang, Katerina Zmolikova, Desh Raj, Simone Merello, Anna Sun, Ozlem Kalinli<br>
+                <div style="margin-top:5px"><span class="tag">Conversational Speech</span><span class="tag">Naturalness Predictor</span><span class="tag">Dual-Channel Encoder</span></div>
+            </div>
+            <div class="summary-section">
+                <p><strong>核心痛点</strong>: 现有语音自然度预测器针对单说话者、单句话评估，无法有效捕捉对话级别的自然度，如流畅的交替、适当的填充词和对话动态，导致与人类判断相关性低或甚至负相关。</p>
+<p><strong>方法创新</strong>: 提出双通道自然度预测框架，用于双说话者、多轮对话的自然度评估。该框架利用预训练编码器（如 Whisper、WavLM、Audiobox-Aesthetics）处理双通道音频输入，并通过数据增强（如大规横合成数据）提高模型的鲁棒性。</p>
+<p><strong>实验结果</strong>: 在 ConvTTS 数据集上，基于 Whisper 的双通道模型与人类判断的 Pearson 相关系数达 0.482，优于现有预测器（如 NISQA 和 UTMOSv2）。在 FDX-Conv 数据集的系统自然度评估中，模型也展现出良好的泛化能力，验证了其在领域外条件下的有效性。</p>
+<p><strong>一句话评价</strong>: 该工作为对话语音自然度评估提供了一个简单且有效的自动预测框架，填补了现有研究的空白，并显示出在现实应用中指导对话系统开发的潜力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01415" target="_blank">The USTC-NERCSLIP Systems for the CHiME-9 MCoRec Challenge</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.01415</span>
+                <a href="pdfs/2603.01415.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ya Jiang, Ruoyu Wang, Jingxuan Zhang, Jun Du, Yi Han, Zihao Quan, Hang Chen, Yeran Yang, Kongzhi Zheng, Zhuo Chen, Yanhui Tu, Shutong Niu, Changfeng Xi, Mengzhi Wang, Zhongbin Wu, Jieru Chen, Henghui Zhi, Weiyi Shi, Shuhang Wu, Genshun Wan, Jia Pan, Jianqing Gao<br>
+                <div style="margin-top:5px"><span class="tag">CHiME challenge</span><span class="tag">active speaker detection</span><span class="tag">audio-visual speech recognition</span><span class="tag">large language model</span><span class="tag">conversational clustering</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>论文针对 CHiME-9 MCoRec Challenge，核心问题是在室内社交环境中识别和聚类多个并发自然对话。场景特点是语音重叠率超过90%，最多八个说话者参与四个同时对话，导致严重声学干扰和传统单主题会议方法的失效。</p>
+<h3>方法创新</h3>
+<p>提出一个多模态级联系统，利用从同步360°视频提取的每个说话者视觉流和单声道音频。创新点包括：
+- <strong>Active Speaker Detection (ASD)</strong>：使用预训练音频-视觉编码器，采用两阶段迁移学习（先微调分类器再端到端优化），结合数据增强（如噪声注入）和时域平滑后处理。
+- <strong>Audio-Visual Target Speech Extraction (AVTSE)</strong>：开发四个系统（System I–IV），基于不同自监督预训练模型（如BRAVEn）和多模态架构，合成训练数据模拟2-3说话者混合，优化目标语音提取。
+- <strong>Audio-Visual Speech Recognition (AVSR)</strong>：集成多种框架，包括Whisper和大型语言模型（LLM）如Qwen 2.5和DeepSeek R1，通过自监督预训练策略（如BEST-RQ损失）和模型融合（后验概率平均、ROVER）提升转录准确性。
+- <strong>对话聚类</strong>：使用LLM进行零样本聚类，设计两阶段流程（候选生成和选择），通过投票融合提高鲁棒性，实现高效说话者分组。</p>
+<h3>实验结果</h3>
+<p>在开发集上：
+- 最佳单级联系统实现Speaker Word Error Rate (WER) 32.44%。
+- 通过ROVER融合多个前端和后端变体，WER降低至31.40%。
+- LLM-based对话聚类达到speaker clustering F1分数1.0。
+- 最终Joint ASR-Clustering Error Rate (JACER)为15.70%，提交3在精炼开发集上WER为29.35%。</p>
+<h3>一句话评价</h3>
+<p>该研究通过多模态集成和LLM技术，显著提升了在极端声学环境下的语音识别和对话聚类性能，为复杂场景的语音处理提供了创新解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01316" target="_blank">Inter-Speaker Relative Cues for Two-Stage Text-Guided Target Speech Extraction</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2603.01316</span>
+                <a href="pdfs/2603.01316.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wang Dai, Archontis Politis, Tuomas Virtanen<br>
+                <div style="margin-top:5px"><span class="tag">Target Speech Extraction</span><span class="tag">Text-Guided</span><span class="tag">Relative Cues</span><span class="tag">Two-Stage Framework</span><span class="tag">Speech Separation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>传统的文本引导目标语音提取（TSE）方法使用离散类别表示连续语音属性（如语速、音高），忽略了说话者间的相对关系，导致细粒度区别在量化过程中丢失。当目标说话者和干扰说话者属性相似但被分配到同一类别时，系统无法有效区分，降低了TSE的准确性和鲁棒性。</p>
+<h1>方法创新</h1>
+<ol>
+<li><strong>说话者间相对线索</strong>：提出使用相对线索来描述目标说话者和干扰说话者之间的属性差异（如“说话者A语速比说话者B快”），以保留人类感知中的细粒度比较信息，避免量化损失。</li>
+<li><strong>两阶段TSE框架</strong>：设计了一个两阶段系统：第一阶段使用语音分离模型生成候选语音源；第二阶段通过文本引导的分类器，基于嵌入相似性从候选源中选择目标说话者，提高了区分能力并缓解了单阶段系统中的说话者混淆问题。</li>
+<li><strong>理论分析</strong>：从人类感知和标签量化角度提供了相对线索的理论依据，解释了其相对于独立线索（仅基于个体说话者属性）的优势。</li>
+</ol>
+<h1>实验结果</h1>
+<ul>
+<li>相对线索在分类准确性和TSE性能上均优于独立线索。</li>
+<li>两阶段框架在信号级指标（如信噪比）和客观感知指标上显著超越单阶段文本条件提取方法。</li>
+<li>特定相对线索（如语言、性别、响度、距离、时间顺序、说话持续时间、随机线索和所有线索组合）的表现可以超越基于音频的TSE系统。</li>
+<li>分析揭示了不同线索类型在区分能力上的差异，为未来优化提供了见解。</li>
+</ul>
+<h1>一句话评价</h1>
+<p>该论文通过引入相对线索和两阶段框架，创新性地解决了文本引导目标语音提取中的细粒度区分挑战，显著提升了系统性能和实用性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.01270" target="_blank">VoxKnesset: A Large-Scale Longitudinal Hebrew Speech Dataset for Aging Speaker Modeling</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Dataset</span>
+                <strong>ID:</strong> <span class="tag">2603.01270</span>
+                <a href="pdfs/2603.01270.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yanir Marmor, Arad Zulti, David Krongauz, Adam Gabet, Yoad Snapir, Yair Lifshitz, Eran Segal<br>
+                <div style="margin-top:5px"><span class="tag">Longitudinal Speech Dataset</span><span class="tag">Aging Speaker Modeling</span><span class="tag">Hebrew Speech</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>语音处理系统易受人类声音随年龄变化的影响，但现有数据集存在局限性：横向数据集（如TIMIT）缺乏纵向覆盖；纵向数据集（如CSLU、VoxAging）规模小或标签质量差，无法同时支持大规模、长时间跨度、验证元数据的建模需求。</p>
+<h1>方法创新</h1>
+<p>引入VoxKnesset数据集，基于以色列议会（Knesset）2009年至2025年的录音，包含2300小时希伯来语语音，覆盖393个说话人，最长跨度达15年。数据集提供对齐的转录本和验证的人口统计元数据（如年龄、性别），并通过多阶段对齐管道确保质量，支持纵向说话人建模和老化分析。</p>
+<h1>实验结果</h1>
+<p>使用现代语音嵌入（WavLM-Large、ECAPA-TDNN、Wav2Vec2-XLSR-1B）进行基准测试：说话人验证的等错误率（EER）在15年内从2.15%升至4.58%，显示性能随老化下降；年龄预测中，横向训练的模型无法捕捉说话人内部老化信号，而纵向训练的模型能恢复有意义的时域变化；跨数据集评估表明VoxKnesset在可转移性上表现良好。</p>
+<h1>一句话评价</h1>
+<p>VoxKnesset是一个开源的大规模纵向希伯来语语音数据集，有效填补了老化说话人建模的资源空白，为开发老化鲁棒语音系统和推动希伯来语语音处理提供了关键支持。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00961" target="_blank">Using Songs to Improve Kazakh Automatic Speech Recognition</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.00961</span>
+                <a href="pdfs/2603.00961.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rustem Yeshpanov<br>
+                <div style="margin-top:5px"><span class="tag">ASR</span><span class="tag">Kazakh</span><span class="tag">songs</span><span class="tag">Common Voice</span><span class="tag">FLEURS</span><span class="tag">KSC2</span><span class="tag">low-resource languages</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>开发低资源语言（如哈萨克语）的自动语音识别（ASR）系统面临转录语料稀缺的挑战，导致模型性能受限，全球标准下哈萨克语仍属低资源语言。</p>
+<h2>方法创新</h2>
+<p>本研究提出使用歌曲作为非传统数据源来改善哈萨克语ASR。构建了一个包含3,013个音频-文本对的歌曲数据集（约4.5小时，来自36位艺术家的195首歌曲），基于Whisper模型在七种训练场景下进行微调（包括单独使用歌曲、Common Voice Corpus (CVC)、FLEURS及其组合），探索歌曲在低资源ASR中的潜力。</p>
+<h2>实验结果</h2>
+<p>实验结果表明，歌曲微调能显著提升零样本基线的性能。例如，在Songs、CVC和FLEURS混合训练下，Whisper Large-V3 Turbo在CVC测试集上达到27.6%的归一化词错误率（WER），在FLEURS上为11.8%，在Kazakh Speech Corpus 2 (KSC2)上将错误率从81.2%减半至39.3%。但与使用1,100小时KSC2语料库训练的上限模型相比，性能仍有差距，显示歌曲不是全面替代方案。</p>
+<h2>一句话评价</h2>
+<p>歌曲作为一种广泛可访问、语言无关的资源，在缺乏大型语音语料库时能为低资源ASR提供可测量的改进，但需结合其他数据以优化性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00610" target="_blank">CMI-RewardBench: Evaluating Music Reward Models with Compositional Multimodal Instruction</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Generation Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2603.00610</span>
+                <a href="pdfs/2603.00610.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yinghao Ma, Haiwen Xia, Hewei Gao, Weixiong Chen, Yuxin Ye, Yuchen Yang, Sungkyun Chang, Mingshuo Ding, Yizhi Li, Ruibin Yuan, Simon Dixon, Emmanouil Benetos<br>
+                <div style="margin-top:5px"><span class="tag">Music Reward Models</span><span class="tag">Compositional Multimodal Instruction</span><span class="tag">Evaluation Benchmark</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>音乐生成模型已能处理复杂多模态输入（如文本、歌词、参考音频），但现有评估机制滞后：传统指标如Fréchet Audio Distance (FAD) 是分布级的，无法提供样本级信号；现有方法如SongEval、PAM等分散且专注于孤立属性，不能处理灵活的输入组合，导致模型能力与评估方法不匹配。</p>
+<h3>方法创新</h3>
+<ul>
+<li>提出CMI-RewardBench，一个统一基准，用于评估音乐奖励模型在复合多模态指令（CMI）下的性能，整合现有资源（PAM、MusicEval、Music Arena）和新数据集。</li>
+<li>构建两个数据集：CMI-Pref-Pseudo（110k伪标签样本，通过LLM标注）和CMI-Pref（4,027对人类专家标注样本，覆盖多模态指令）。</li>
+<li>开发CMI-RM，一个参数高效的奖励模型家族（约30M参数），支持处理异构输入（文本、歌词、音频），实现单一模型评估多种任务。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>CMI-RM在CMI-Pref上与人类判断在音乐性和对齐性上强相关。</li>
+<li>在基准评估中，即使先进多模态LLM（如Gemini-2.5-Pro）也难以超过80%人类偏好一致；CMI-RM性能可比或优于开源基线如SongEval。</li>
+<li>CMI-RM通过top-k过滤实现推理时缩放，提升音乐生成质量。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该论文通过建立全面的生态系统，填补了音乐奖励模型在复合多模态指令下评估的空白，为多模态音乐生成对齐研究提供了重要工具。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00533" target="_blank">Voices of Civilizations: A Multilingual QA Benchmark for Global Music Understanding</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval</span>
+                <strong>ID:</strong> <span class="tag">2603.00533</span>
+                <a href="pdfs/2603.00533.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shangda Wu, Ziya Zhou, Yongyi Zang, Yutong Zheng, Dafang Liang, Ruibin Yuan, Qiuqiang Kong<br>
+                <div style="margin-top:5px"><span class="tag">Multilingual QA Benchmark</span><span class="tag">Music Understanding</span><span class="tag">Audio LLMs</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前音频大语言模型（Audio LLMs）和现有基准主要偏向高资源语言和全球主流音乐类型，忽略低资源、传统、区域音乐，导致模型在非主流内容上的文化理解不足，缺乏全面评估，存在系统偏见。</p>
+<h2>方法创新</h2>
+<p>提出了Voices of Civilizations (VoC)基准，是第一个多语言问答（QA）基准，用于评估音频LLMs在完整音乐录音上的文化理解。通过四步自动化管道构建：歌曲选择（手动从YouTube选取38种语言的代表歌曲）、上下文收集（使用Gemini 2.5 Pro生成双语文化背景文档）、属性提取（从文档中提取地区、情绪、主题）、问题生成（生成1,190个多项选择题，涵盖语言、地区、情绪和主题）。覆盖380首歌曲和38种语言。</p>
+<h2>实验结果</h2>
+<p>评估了Gemini 2.5 Pro、Qwen2.5-Omni-7B和Kimi-Audio-7B-Instruct在四种设置下的表现：噪声（作为下界）、音频（英文QA）、音频（原语言）、音频+文档。结果显示，模型在语言识别上准确率高（&gt;85%），但在提取文化属性（地区、情绪、主题）时表现差，尤其在低资源语言；提供文本背景后性能大幅提升（接近完美）。专家在中文歌曲上达到79.31%准确率。模型表现出对高资源语言的偏好和文化偏见。</p>
+<h2>一句话评价</h2>
+<p>VoC基准揭示了音频LLMs在文化理解方面的显著局限，强调了需要更多多样化和包容性的训练数据，以推动全球音乐理解研究的公平发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00395" target="_blank">Aurchestra: Fine-Grained, Real-Time Soundscape Control on Resource-Constrained Hearables</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2603.00395</span>
+                <a href="pdfs/2603.00395.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Seunghyun Oh, Malek Itani, Aseem Gauri, Shyamnath Gollakota<br>
+                <div style="margin-top:5px"><span class="tag">Aurchestra</span><span class="tag">Fine-Grained Soundscape Control</span><span class="tag">Real-Time Audio Processing</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有可听设备（如耳机、助听器）的声音控制粗糙，仅支持全局噪声抑制或单一目标声音聚焦，无法满足用户在复杂声学场景中独立调整多个同时存在声音源（如同时抑制交通噪音并增强语音）的需求。这限制了用户对声景的精细控制和个性化体验。</p>
+<h2>方法创新</h2>
+<p>Aurchestra 系统引入两个关键创新：1) <strong>动态接口</strong>：通过声音事件检测模型自动识别环境中活跃声类（如语音、交通、鸟鸣），仅显示相关控制选项，减少用户认知负荷；2) <strong>实时设备上多输出提取网络</strong>：使用双路径时频模型替代注意力机制，基于多热编码用户选择，为每个选定声类生成独立音频流，支持每类音量独立调节。系统针对资源受限硬件（如 Orange Pi、Raspberry Pi、GAP9）进行模型优化，实现低延迟（6毫秒音频块）和高效能处理。</p>
+<h2>实验结果</h2>
+<p>在20个声类数据集上训练后，Aurchestra 在信号质量（SNRi 11.99 dB vs 基线 7.29 dB）和参数效率（0.5M vs 1.2M 参数）上显著优于先前的实时单目标基线（Semantic Hearing）。系统支持多达5个重叠目标声音的实时提取，在多种硬件平台上实现低于10毫秒的推断延迟（如 Orange Pi 上5.22毫秒）。用户研究显示，背景噪声抑制改善（+1.54点）和整体听觉体验提升（+0.95点）；动态接口减少目标声音选择时间67.9%。</p>
+<h2>一句话评价</h2>
+<p>Aurchestra 首次在资源受限可听设备上实现了精细、实时的声景控制，将可听设备从简单过滤器转变为可编程的听觉增强工具，为增强听觉系统的发展开辟了新方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00355" target="_blank">StethoLM: Audio Language Model for Cardiopulmonary Analysis Across Clinical Tasks</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Medical Audio Analysis</span>
+                <strong>ID:</strong> <span class="tag">2603.00355</span>
+                <a href="pdfs/2603.00355.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yishan Wang, Tsai-Ning Wang, Mathias Funk, Aaqib Saeed<br>
+                <div style="margin-top:5px"><span class="tag">audio language model</span><span class="tag">cardiopulmonary auscultation</span><span class="tag">clinical reasoning</span><span class="tag">StethoBench</span><span class="tag">instruction-driven</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>临床听诊（auscultation）是心肺疾病诊断的基础步骤，但需要多年经验解读音频线索，限制了其可扩展性。现有深度学习方法大多局限于简单分类任务（如二元分类），缺乏临床可解释性和对多样临床推理任务（如报告生成、鉴别诊断、比较分析）的支持，这阻碍了AI在临床环境中的广泛应用。</p>
+<h2>方法创新</h2>
+<p>提出了StethoLM，第一个专门用于心肺听诊的音频-语言模型，能够执行七种指令驱动的临床任务：二元分类、检测、报告、推理、鉴别诊断、比较和基于位置的分析。模型架构集成音频编码器和医疗语言模型主干，通过多阶段训练（结合监督微调和直接偏好优化）进行优化。同时，引入了StethoBench基准，包含77,027个指令-响应对，基于16,125个标注的心肺录音，以支持模型训练和评估。</p>
+<h2>实验结果</h2>
+<p>StethoLM在领域内和领域外数据上显著优于通用多模态模型（如Qwen2.5-Omni），建立了新的最先进性能，展示了专门指令驱动训练在提高鲁棒性和性能方面的重要性。实验表明，模型能有效处理多种临床推理任务，并为临床决策提供支持。</p>
+<h2>一句话评价</h2>
+<p>StethoLM为临床听诊中的指令跟随AI系统奠定了基础，推动了医疗AI从简单分类向多任务临床支持的转变。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.00086" target="_blank">Iterative LLM-based improvement for French Clinical Interview Transcription and Speaker Diarization</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.00086</span>
+                <a href="pdfs/2603.00086.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ambre Marie (LaTIM), Thomas Bertin (DySoLab), Guillaume Dardenne (LaTIM), Gwenolé Quellec (LaTIM)<br>
+                <div style="margin-top:5px"><span class="tag">French Clinical Interview</span><span class="tag">LLM Post-processing</span><span class="tag">Speaker Diarization</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>法语临床访谈的自动语音识别(ASR)面临高词错误率(WER)，通常超过30%，尤其是在自发语音中，说话人标注(speaker diarization)错误常见，受限于医疗术语、同音词和法语特有的形态学挑战。非英语语言的医疗语音数据稀缺，加剧了ASR性能下降的问题。</p>
+<h2>方法创新</h2>
+<p>提出了一种迭代多通道LLM后处理架构，使用Qwen3-Next-80B模型，交替进行说话人识别(SR)和词识别(WR)通道。方法包括：
+- SR通道：将通用说话人标签映射到临床角色（如患者、医生），基于对话模式和医疗术语。
+- WR通道：纠正ASR错误、解决同音词、匿名化个人姓名，并保留自发语音标记（如犹豫声）。
+- 通过领域适配提示和角色提示优化性能，支持离线部署。</p>
+<h2>实验结果</h2>
+<p>在两个法语临床数据集上评估：自杀预防(SP)电话咨询和清醒神经外科(AN)咨询。使用Wilcoxon signed-rank测试，在SP数据集上观察到显著WDER降低（p &lt; 0.05, n=18），在AN数据集上保持稳定性（n=10）。计算成本可接受，实时因子(RTF)为0.32，无输出失败，表明适合离线临床部署。</p>
+<h2>一句话评价</h2>
+<p>该研究证明了LLM后处理在改善法语临床访谈转录和说话人标注方面的有效性，为非英语医疗语音处理提供了实用解决方案。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-03-02</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2602.23958" target="_blank">An Empirical Analysis of Task-Induced Encoder Bias in Fréchet Audio Distance</a>
