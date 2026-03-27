@@ -99,11 +99,155 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 531 篇论文 | 涵盖 37 天的数据
+            共收录 536 篇论文 | 涵盖 38 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-03-26</h2>
+    <h2 class="date-divider">📅 2026-03-27</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.25041" target="_blank">AdaLTM: Adaptive Layer-wise Task Vector Merging for Categorical Speech Emotion Recognition with ASR Knowledge Integration</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-27</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.25041</span>
+                <a href="pdfs/2603.25041.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chia-Yu Lee, Huang-Cheng Chou, Tzu-Quan Lin, Yuanchao Li, Ya-Tse Wu, Shrikanth Narayanan, Chi-Chun Lee<br>
+                <div style="margin-top:5px"><span class="tag">Speech Emotion Recognition</span><span class="tag">Task Vector Merging</span><span class="tag">Adaptive Learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>传统语音情感识别（SER）与自动语音识别（ASR）集成方法面临关键问题：特征融合存在性能瓶颈，多任务学习（MTL）因ASR（追求情感不变表示）和SER（依赖副语言可变性）目标冲突导致优化干扰。此外，使用域外ASR知识会引发领域不匹配，削弱SER性能。</p>
+<h1>方法创新</h1>
+<p>提出AdaLTM框架：基于WavLM-Large预训练模型，从域内ASR和SER微调模型中提取任务向量，通过自适应层间可学习系数（如λ参数）将任务向量合并到冻结的基础模型中。该方法避免梯度干扰，实现语言与副语言知识的深度感知平衡。</p>
+<h1>实验结果</h1>
+<p>在MSP-Podcast数据集上的实验表明，AdaLTM在双向量合并设置下达到未加权平均召回率（UAR）38.94%和宏观F1分数35.20%，优于MTL基线。域内ASR知识显著提升性能，验证了领域一致性的重要性；自适应层间合并策略优于全局合并。</p>
+<h1>一句话评价</h1>
+<p>该研究通过创新任务向量合并框架，有效解决了ASR和SER集成中的优化冲突和领域不匹配问题，为语音情感识别提供了新思路。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.24810" target="_blank">Unified Diffusion Refinement for Multi-Channel Speech Enhancement and Separation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-27</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2603.24810</span>
+                <a href="pdfs/2603.24810.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhongweiyang Xu, Ashutosh Pandey, Juan Azcarreta, Zhaoheng Ni, Sanjeel Parekh, Buye Xu, Romit Roy Choudhury<br>
+                <div style="margin-top:5px"><span class="tag">Diffusion Models</span><span class="tag">Multi-Channel Speech Enhancement</span><span class="tag">Generative Refinement</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有多通道语音增强和分离方法主要是判别式模型，虽然在信噪比（SNR）上表现出色，但会引入非线性失真，导致语音不自然、感知质量下降和可懂度降低，尤其在低信噪比环境中更明显。生成式方法（如扩散模型）能改善感知质量，但客观指标往往不如判别式方法。</p>
+<h2>方法创新</h2>
+<p>论文提出Uni-ArrayDPS，一个统一的扩散优化框架，用于多通道语音增强和分离。关键创新包括：
+- 利用预训练的清洁语音扩散模型作为先验，无需额外训练或微调（训练免费）。
+- 框架是生成式、阵列无关的，支持增强和分离任务，泛化性强。
+- 方法基于扩散后采样（DPS），使用判别式模型的输出来估计噪声空间协方差矩阵（SCM），然后计算似然以优化清洁语音源。
+- 通过结合判别式和生成式输出（如插值）进一步提升性能。</p>
+<h2>实验结果</h2>
+<p>实验显示，Uni-ArrayDPS能持续改进多种判别式模型，在增强和分离任务中显著提升感知质量、可懂度和自动语音识别（ASR）性能。在真实世界数据集上也报告了强结果，验证了其有效性。</p>
+<h2>一句话评价</h2>
+<p>这是一个创新的训练免费生成式方法，统一了多通道语音处理的优化，有效平衡了客观指标和感知质量。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.24651" target="_blank">When Consistency Becomes Bias: Interviewer Effects in Semi-Structured Clinical Interviews</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-27</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Clinical Natural Language Processing</span>
+                <strong>ID:</strong> <span class="tag">2603.24651</span>
+                <a href="pdfs/2603.24651.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hasindri Watawana, Sergio Burdisso, Diego A. Moreno-Galván, Fernando Sánchez-Vega, A. Pastor López-Monroy, Petr Motlicek, Esaú Villatoro-Tello<br>
+                <div style="margin-top:5px"><span class="tag">Depression Corpora</span><span class="tag">Clinical Interviews</span><span class="tag">Graph Convolutional Network (GCN)</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>自动抑郁检测模型在半结构化临床访谈中面临系统偏见问题：模型可能仅利用访谈者提示（interviewer prompts）而非参与者语言进行预测，导致性能膨胀和缺乏可解释性。这种偏见源于访谈脚本的一致性，使得模型可以利用固定提示和位置作为捷径，而非从参与者语言中学习真正的语言线索。</p>
+<h1>方法创新</h1>
+<p>论文通过分析三个数据集（ANDROIDS、DAIC-WOZ、E-DAIC）量化了这种提示诱导偏见（prompt-induced bias）。研究方法包括：
+- 数据准备：为缺乏完整转录的数据集（ANDROIDS 和 E-DAIC）使用 WhisperX ASR 管道生成自动转录。
+- 模型架构：使用两种模型家族（Longformer 和 GCN）以测试偏见的模型无关性。
+- 实验设置：训练和评估参与者-only（P）和访谈者-only（I）模型变体，直接比较其对抑郁检测的贡献。
+- 定量和定性分析：通过 F1 分数评估性能，并通过热图等可视化工具分析决策证据的分布。</p>
+<h1>实验结果</h1>
+<p>实验结果在表1和表2中报告：
+- 在多个数据集上，访谈者-only 模型常匹配或优于参与者-only 模型。例如，在 ANDROIDS 上，I-Longformer 达到 0.98 宏平均 F1 分数，而 P-Longformer 为 0.79。
+- 这种偏见是跨数据集的（出现在 ANDROIDS、DAIC-WOZ、E-DAIC 中）和模型无关的（在 Longformer 和 GCN 中都观察到）。
+- 定性分析显示，I-模型将决策证据集中在狭窄的访谈段（如特定提示位置），而 P-模型更广泛地分布在参与者语言中。
+- 测试集结果（表2）进一步确认了偏见的存在，表明在现实条件下模型性能可能被高估。</p>
+<h1>一句话评价</h1>
+<p>这项研究突出了在自动抑郁检测中谨慎处理访谈者提示的重要性，强调需要确保模型从参与者语言中学习，以避免利用脚本 artifact 导致的偏见，从而提高模型的可靠性和可解释性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.24596" target="_blank">X-OPD: Cross-Modal On-Policy Distillation for Capability Alignment in Speech LLMs</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-27</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Language Models</span>
+                <strong>ID:</strong> <span class="tag">2603.24596</span>
+                <a href="pdfs/2603.24596.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Di Cao, Dongjie Fu, Hai Yu, Siqi Zheng, Xu Tan, Tao Jin<br>
+                <div style="margin-top:5px"><span class="tag">Speech Language Model</span><span class="tag">On-Policy Distillation</span><span class="tag">Cross-Modal Alignment</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<ul>
+<li>端到端（E2E）语音大型语言模型（LLMs）相比文本 LLMs 存在显著性能下降，尤其在复杂指令遵循、逻辑推理和知识密集型查询任务中。</li>
+<li>标准监督微调（SFT）和强化学习（RL）训练方法无法弥补这一差距。</li>
+<li>主要原因包括：高质量语音-推理配对数据稀缺，以及连续声学表示与离散文本逻辑空间之间的模态不对齐。</li>
+</ul>
+<h1>方法创新</h1>
+<ul>
+<li>提出 X-OPD（跨模态在线策略蒸馏）框架，旨在系统对齐语音 LLMs 与文本 LLMs 的能力。</li>
+<li>核心机制：语音学生模型通过在线策略 rollout 探索自身分布，文本教师模型评估这些轨迹并提供 token 级反馈，使用 Kullback-Leibler（KL）散度进行动态信用分配，以蒸馏教师的逻辑知识到学生的多模态表示中。</li>
+<li>优势：提高训练效率，不依赖真实数据，减少对其他声学能力的灾难性遗忘，并解决曝光偏差问题。</li>
+</ul>
+<h1>实验结果</h1>
+<ul>
+<li>在多个基准测试中评估，包括 BIG Bench Audio、Audio Multi-Challenge 和 VoiceBench，涵盖语音和文本输入模态。</li>
+<li>X-OPD 显著缩小性能差距，相比基线方法（如 SFT、离线知识蒸馏）在复杂任务中表现更优，平均性能下降率降低。</li>
+<li>例如，在 Qwen3-Omni 模型上，X-OPD 将性能差距从其他方法的 10-20% 降低到约 3-4%。</li>
+</ul>
+<h1>一句话评价</h1>
+<p>X-OPD 是一种创新的训练框架，通过在线策略蒸馏有效对齐语音和文本模态的能力，为下一代智能语音交互模型提供了高效且低成本的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.22225" target="_blank">Adapting Self-Supervised Speech Representations for Cross-lingual Dysarthria Detection in Parkinson's Disease</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-03-27</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Pathology Detection</span>
+                <strong>ID:</strong> <span class="tag">2603.22225</span>
+                <a href="pdfs/2603.22225.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Abner Hernandez, Eunjung Yeo, Kwanghee Choi, Chin-Jou Li, Zhengjun Yue, Rohan Kumar Das, Jan Rusz, Mathew Magimai Doss, Juan Rafael Orozco-Arroyave, Tomás Arias-Vergara, Andreas Maier, Elmar Nöth, David R. Mortensen, David Harwath, Paula Andrea Perez-Toro<br>
+                <div style="margin-top:5px"><span class="tag">Cross-lingual Dysarthria Detection</span><span class="tag">Self-Supervised Speech Representations</span><span class="tag">Language Shift Adaptation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>构音障碍语音数据有限，导致跨语言检测成为一个重要但具有挑战性的问题。语音表示（如自监督学习模型提取的特征）往往编码语言依赖的结构，这可能会干扰跨语言的构音障碍检测，特别是在帕金森病语音分析中。</p>
+<h1>方法创新</h1>
+<p>提出了一种表示级的语言移转（LS）方法，通过基于质心的向量适应来对齐源语言和目标语言的语音表示分布。该方法使用健康控制（HC）语音计算语言质心，然后调整源语言表示以减少语言依赖的变异，而无需重新训练底层语音模型。这种方法直接在表示空间操作，简单且高效。</p>
+<h1>实验结果</h1>
+<p>在捷克语、德语和西班牙语的帕金森病语音数据集上评估，使用口述DDK录音。在跨语言设置中（目标语言帕金森病语音不可用），LS显著提高了敏感性和F1得分（例如，使用HuBERT模型，敏感性和F1分别从0.35/0.74提升到0.93/0.74等）。在多种语言设置中（目标语言帕金森病语音可用），LS也带来了较小但一致的性能增益。表示分析显示LS减少了嵌入空间中的语言身份，支持其移除语言依赖结构的解释。</p>
+<h1>一句话评价</h1>
+<p>该研究创新地提出了一种轻量级的跨语言适应方法，有效缓解了语言依赖变异对构音障碍检测的干扰，提升了模型在跨语言和多语言场景中的泛化能力。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-03-26</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2603.24589" target="_blank">YingMusic-Singer: Controllable Singing Voice Synthesis with Flexible Lyric Manipulation and Annotation-free Melody Guidance</a>
