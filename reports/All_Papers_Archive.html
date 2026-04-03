@@ -99,11 +99,269 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 567 篇论文 | 涵盖 42 天的数据
+            共收录 576 篇论文 | 涵盖 43 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-04-02</h2>
+    <h2 class="date-divider">📅 2026-04-03</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.02102" target="_blank">Prosodic ABX: A Language-Agnostic Method for Measuring Prosodic Contrast in Speech Representations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Processing</span>
+                <strong>ID:</strong> <span class="tag">2604.02102</span>
+                <a href="pdfs/2604.02102.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Haitong Sun, Stephen McIntosh, Kwanghee Choi, Eunjung Yeo, Daisuke Saito, Nobuaki Minematsu<br>
+                <div style="margin-top:5px"><span class="tag">Prosody</span><span class="tag">Self-Supervised Learning</span><span class="tag">ABX Task</span><span class="tag">Speech Representations</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有的自监督语音模型（S3Ms）如 wav2vec 2.0 和 HuBERT 在音素对比方面表现优异，但对韵律对比（如英语重音、日语音高重音、汉语声调）的敏感性尚未被直接测量。这限制了评估和优化模型在韵律相关应用中的能力，尤其在低资源语言和复杂韵律系统中缺乏高效、无标签的评估方法。</p>
+<h2>方法创新</h2>
+<p>提出 'prosodic ABX' 框架，扩展传统 ABX 任务到韵律领域。核心是利用韵律最小对（如英语名词-动词对、日语音高重音对、汉语声调对），通过动态时间规整（DTW）比较语音表示的距离，计算 ABX 分数以评估模型对韵律对比的区分能力。该方法无需训练或显式标签，仅需少量示例，语言无关，适用于资源有限场景。还构建并发布了英语和日语的韵律最小对数据集，补充了现有汉语数据。</p>
+<h2>实验结果</h2>
+<p>在英语、日语和汉语数据集上评估了 17 种 S3Ms（包括 wav2vec 2.0、HuBERT、XLSR-53 等）和声学基线（mel spectrograms、MFCCs）。结果显示，S3Ms 在最佳层能有效区分韵律对比，错误率低于声学基线。模型和层排名在多种实验条件（如自然 vs. 合成语音、不同说话者）下保持稳定，证明方法的鲁棒性。人类实验作为参考，S3Ms 表现接近人类水平，尤其在英语和日语任务中。实验还表明，合成语音可作为自然语音的有效替代，降低数据收集成本。</p>
+<h2>一句话评价</h2>
+<p>该研究通过创新性的 prosodic ABX 框架，首次系统评估了自监督语音模型中的韵律对比表示，为语言无关的韵律分析提供了实用工具，推动了韵律敏感模型的发展和应用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.02043" target="_blank">Tracking the emergence of linguistic structure in self-supervised models learning from speech</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Self-Supervised Speech Models</span>
+                <strong>ID:</strong> <span class="tag">2604.02043</span>
+                <a href="pdfs/2604.02043.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Marianne de Heer Kloots, Martijn Bentum, Hosein Mohebbi, Charlotte Pouw, Gaofei Shen, Willem Zuidema<br>
+                <div style="margin-top:5px"><span class="tag">self-supervised learning</span><span class="tag">speech models</span><span class="tag">linguistic structure</span><span class="tag">Wav2Vec2</span><span class="tag">HuBERT</span><span class="tag">Dutch</span><span class="tag">layerwise analysis</span><span class="tag">learning trajectories</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>自我监督语音模型（如Wav2Vec2和HuBERT）在学习过程中如何编码语言结构尚不明确，尤其是不同层次的语言结构（如音素、音节、词汇、句法）是否以层次方式组织，以及这些结构在训练中出现的顺序和时间轨迹。</p>
+<h2>方法创新</h2>
+<p>研究系统分析了六种Wav2Vec2和HuBERT模型在831小时荷兰语语音数据上的训练，使用探针方法评估九种语言结构（从声学到句法）在模型层和中间检查点中的编码。创新点包括跨多个结构层次的比较、不同模型架构（Wav2Vec2 vs. HuBERT）和目标（对比损失 vs. 预测损失）的效应分析，以及结合时间尺度和抽象程度的解释框架。</p>
+<h2>实验结果</h2>
+<p>不同层次的语言结构在模型层状模式和学习轨迹上表现出显著差异，例如较低层次结构（如音素）在早期层中编码较好，而较高层次结构（如句法）在后期层中更明显。学习轨迹受结构抽象程度和时间尺度影响，预训练目标级别（如高阶预测任务）强烈影响层状组织和学习动态，导致更大并行性。</p>
+<h2>一句话评价</h2>
+<p>这项研究深入揭示了自监督语音模型学习语言结构的动态过程，为模型解释性和语言学习建模提供了重要见解。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01832" target="_blank">GAP-URGENet: A Generative-Predictive Fusion Framework for Universal Speech Enhancement</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2604.01832</span>
+                <a href="pdfs/2604.01832.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xiaobin Rong, Yushi Wang, Zheng Wang, Jing Lu<br>
+                <div style="margin-top:5px"><span class="tag">speech enhancement</span><span class="tag">generative model</span><span class="tag">predictive model</span><span class="tag">fusion</span><span class="tag">URGENT challenge</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>论文指出，在通用语音增强（USE）领域，现有方法存在显著局限性：预测方法（如基于判别模型）在客观评估中表现良好，但主观感知质量不足；而生成方法（如基于生成模型）能提供更好的主观质量，但易产生幻觉（hallucinations），即引入不真实的音频内容。生成-预测融合系统试图平衡客观和主观指标，但仍有改进空间。URGENT挑战赛进一步强调了对多样化语音源和语言族的鲁棒性需求。</p>
+<h2>方法创新</h2>
+<p>本文提出GAP-URGENet（生成-预测融合框架），主要创新点包括：
+- <strong>双分支架构</strong>：系统由两个平行16-kHz分支组成：生成分支（generative branch）和预测分支（predictive branch）。生成分支扩展了低幻觉范式PASE，通过DeWavLM-Omni进行全栈语音恢复，并利用声码器（Vocoder）重构波形；预测分支在谱图域进行增强，提供补充线索以保持信号细节。
+- <strong>后处理模块（PostNet）</strong>：融合两个分支的输出，并执行带宽扩展（BWE）生成48-kHz波形，后下采样到原始采样率，提高鲁棒性和感知质量。
+- <strong>技术细节</strong>：生成分支引入改进的Vocos架构作为适配器（Adapter），使用对抗和特征匹配损失；预测分支采用TF-GridNet架构；PostNet基于CWS-TF-GridNet，并集成感知质量损失（如PESQ和UTMOS）。系统包含约567.76M参数，计算需求为472.84 GMACs/秒。</p>
+<h2>实验结果</h2>
+<p>在ICASSP 2026 URGENT挑战赛的官方验证集上，GAP-URGENet在多项指标上优于基线方法（如BSRNN和BSRNN-Flow）。例如，在DNSMOS、NISQA、UTMOS、SCOREQ、PESQ、ESTOI、SBS、LPS和SpkSim等指标上均达到最高分，尤其是在盲测阶段排名第一。这表明生成-预测融合策略在平衡客观和主观评估方面的有效性。</p>
+<h2>一句话评价</h2>
+<p>GAP-URGENet通过创新的生成-预测融合框架，在通用语音增强任务中实现了优异的鲁棒性和感知质量，成为当前最先进的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01760" target="_blank">T5Gemma-TTS Technical Report</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2604.01760</span>
+                <a href="pdfs/2604.01760.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chihiro Arata, Kiyoshi Kurihara<br>
+                <div style="margin-top:5px"><span class="tag">text-to-speech</span><span class="tag">zero-shot voice cloning</span><span class="tag">encoder-decoder</span><span class="tag">PM-RoPE</span><span class="tag">multilingual evaluation</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<ul>
+<li><strong>解码器-仅架构的文本条件化稀释问题</strong>：解码器-仅编解码语言模型（如VALL-E 2）在处理长话语时，文本前缀在注意力窗口中占比减小，导致文本条件化效果随音频序列增长而减弱，影响零-shot语音克隆的准确性。</li>
+<li><strong>自回归生成中的持续时间控制困难</strong>：自回归模型缺乏明确位置信号，难以匹配目标语音长度，导致持续时间控制不一致，影响合成语音的连贯性。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li><strong>T5Gemma-TTS模型</strong>：提出基于T5Gemma预训练编码器-解码器骨干（2B编码器+2B解码器，共4B参数）的编解码语言模型，直接处理子词级文本，无需音素转换，继承多语言语义知识。</li>
+<li><strong>集成PM-RoPE</strong>：在所有26个交叉注意力层中集成进度监控旋转位置嵌入（PM-RoPE），注入归一化生成进度信号，使解码器能持续跟踪相对目标语音长度的位置，改善持续时间控制。</li>
+<li><strong>大规模多语言训练</strong>：训练于约170,000小时语音数据，涵盖英语（100k小时）、中文（50k小时）和日语（20k小时），支持跨语言泛化。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li><strong>多语言性能优势</strong>：在日语上获得统计显著说话人相似度优势（SIM=0.677 vs. XTTSv2 0.622），韩语说话人相似度数值最高（SIM=0.747，尽管未训练韩语），日本语字符错误率（CER）数值最低（0.126）。</li>
+<li><strong>PM-RoPE有效性验证</strong>：启用PM-RoPE后，持续时间准确度（DA）为79%，禁用时降至46%，CER从0.129恶化至0.982，表明PM-RoPE对连贯生成至关重要。</li>
+<li><strong>跨语言泛化</strong>：在未训练的韩语上取得竞争性CER（0.082）和SIM（0.747），展示了预训练骨干的多语言泛化能力。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>T5Gemma-TTS通过编码器-解码器架构和PM-RoPE创新性地解决了零-shot TTS中的文本稀释和持续时间控制问题，在多语言评估中表现出色，推动了语音合成技术的发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01590" target="_blank">PhiNet: Speaker Verification with Phonetic Interpretability</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2604.01590</span>
+                <a href="pdfs/2604.01590.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Ma, Shuai Wang, Tianchi Liu, Haizhou Li<br>
+                <div style="margin-top:5px"><span class="tag">Speaker verification</span><span class="tag">Interpretability</span><span class="tag">Forensic speaker comparison</span><span class="tag">Phonetic</span><span class="tag">Explanation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>总结</h1>
+<h2>核心痛点</h2>
+<p>当前自动说话人验证（ASV）系统通常是黑盒模型，缺乏透明度，难以用于需要高问责的应用，如法医说话人比较（FSC）。FSC强调提供详细证据支持决策，而ASV系统只输出相似度分数，缺乏解释性，限制了用户信任和错误追踪。</p>
+<h2>方法创新</h2>
+<p>提出了PhiNet，一个具有语音解释性的说话人验证网络。它利用语音证据来增强局部和全局解释性：局部解释性提供音素级别的比较，显示每个音素对验证决策的贡献；全局解释性识别音素的独特性排名，帮助理解系统偏差。训练方案模拟验证过程，确保决策一致性。</p>
+<h2>实验结果</h2>
+<p>论文在多个基准数据集（如VoxCeleb、SITW、LibriSpeech）上进行了定性和定量评估。结果表明，PhiNet在说话人验证性能上与传统黑盒ASV模型相当，同时提供了有意义的解释性分析，例如识别出鼻音和元音对说话人验证的重要性，并展示了音素独特性排名与FSC启发式一致。</p>
+<h2>一句话评价</h2>
+<p>PhiNet通过引入语音解释性，有效桥接了ASV和FSC之间的差距，在保持高性能的同时提供了透明和可解释的决策过程。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01541" target="_blank">Robust Pitch Estimation and Tracking for Speakers Based on Subband Encoding and the Generalized Labeled Multi-Bernoulli Filter</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Processing</span>
+                <strong>ID:</strong> <span class="tag">2604.01541</span>
+                <a href="pdfs/2604.01541.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shoufeng Lin<br>
+                <div style="margin-top:5px"><span class="tag">Pitch Estimation</span><span class="tag">Pitch Tracking</span><span class="tag">Auditory Filterbank</span><span class="tag">GLMB Filter</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有音高估计方法在强噪声、混响和多说话者环境中性能显著下降，且许多先进方法（如基于隐藏马尔可夫模型或神经网络的方法）依赖大量训练数据，限制了实际应用的灵活性和鲁棒性。</p>
+<h2>方法创新</h2>
+<p>论文提出一种新型音高估计器，使用听觉滤波器组（如伽马通滤波器）将信号分解为子带，并引入频率覆盖度量来优化子带数量和中心频率选择，避免经验性设置。子带信号通过计算归一化自相关进行音高估计。此外，开发了一种基于广义标签多伯努利（GLMB）滤波器的音高跟踪器，采用Ornstein-Uhlenbeck过程建模音高状态转移，并应用测量驱动的出生模型自适应处理新音高目标，实现了无需训练的单说话者和多说话者音高跟踪。</p>
+<h2>实验结果</h2>
+<p>在各种加性噪声（如白噪声、环境噪声）和混响房间的真实录音测试中，所提方法在准确性上优于多种先进音高估计方法（如基于自相关、谐波产品谱等方法），在多数场景下表现出更好的鲁棒性。</p>
+<h2>一句话评价</h2>
+<p>这项研究通过结合子带编码和概率跟踪滤波器，提供了一种高效、无需训练的解决方案，显著提升了音高估计与跟踪在恶劣音频环境下的鲁棒性和实用性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01533" target="_blank">Validating Computational Markers of Depressive Behavior: Cross-Linguistic Speech-Based Depression Detection with Neurophysiological Validation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-Based Depression Detection</span>
+                <strong>ID:</strong> <span class="tag">2604.01533</span>
+                <a href="pdfs/2604.01533.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Fuxiang Tao, Dongwei Li, Shuning Tang, Xuri Ge, Wei Ma, Anna Esposito, Alessandro Vinciarelli<br>
+                <div style="margin-top:5px"><span class="tag">Depression Detection</span><span class="tag">Speech Analysis</span><span class="tag">Cross-Linguistic</span><span class="tag">EEG</span><span class="tag">Emotional Arousal</span><span class="tag">CDMA Framework</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<ul>
+<li><strong>传统诊断局限性</strong>：抑郁症诊断主要依赖患者自我报告和临床观察，存在主观性、记忆偏差和患者不愿披露等问题，影响准确性和可靠性。</li>
+<li><strong>语音检测挑战</strong>：当前语音为基础的抑郁症检测在以下方面存在不足：</li>
+<li><strong>情感上下文处理</strong>：自发语音常被处理为单一数据块，忽略了不同情感效价（积极、中性、消极）的差异，而情感依赖模式是抑郁症的关键指标。</li>
+<li><strong>跨语言泛化性</strong>：模型在类似语言家族（如欧洲语言）中表现良好，但在音调语言（如中文）和非音调语言（如英语）之间泛化性差，缺乏系统性验证。</li>
+<li><strong>缺乏神经验证</strong>：即使高性能模型也缺少解释性和生物基础验证，临床信任度低，需与神经标记对齐。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li><strong>扩展CDMA框架</strong>：基于先前在意大利语上验证的Cross-Data Multilevel Attention (CDMA)框架，应用于中文普通话数据集（MODMA语料库），结合脑电图（EEG）记录进行验证。</li>
+<li><strong>系统融合语音类型</strong>：融合读语音和自发语音，并根据情感效价（积极、中性、消极）进行分析，以探究情感唤醒（arousal）是否比情感效价（valence）更关键。</li>
+<li><strong>神经生理学验证</strong>：首次将语音模型的抑郁症预测与情感面孔处理期间的神经振荡模式（theta和alpha频段）相关联，提供神经生物学基础验证。</li>
+<li><strong>假设验证</strong>：验证情感唤醒假设，即情感强度（而非极性）是更关键的因素，用于增强检测性能。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li><strong>跨语言性能</strong>：CDMA框架在中文数据集上实现最先进性能，F1-score高达89.6%，与之前在意大利语上的验证相当，证明其跨语言鲁棒性。</li>
+<li><strong>情感语音优势</strong>：情感化语音（积极和消极）显著优于中性语音，支持情感唤醒假设，因为积极和消极任务表现相似，表明情感强度是关键。</li>
+<li><strong>EEG相关性</strong>：EEG分析显示，模型的语音衍生的抑郁症估计与神经振荡模式（theta和alpha频段）有显著相关性，与抑郁症中情绪调节障碍的神经标记对齐，验证了模型的生物合理性。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该研究通过结合语音分析和神经生理学数据，提供了一个鲁棒、跨语言可泛化且神经验证的抑郁症检测方法，为临床翻译和客观诊断工具发展奠定基础。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01524" target="_blank">Reverberation-Robust Localization of Speakers Using Distinct Speech Onsets and Multi-channel Cross-Correlations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Acoustic Source Localization</span>
+                <strong>ID:</strong> <span class="tag">2604.01524</span>
+                <a href="pdfs/2604.01524.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shoufeng Lin<br>
+                <div style="margin-top:5px"><span class="tag">acoustic multi-source localization</span><span class="tag">concurrent speakers</span><span class="tag">reverberation</span><span class="tag">onset detection</span><span class="tag">multi-channel cross-correlation</span><span class="tag">CASA</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有说话者定位方法在强混响环境（如混响时间高达1秒）和并发说话者情况下效果不佳，特别是在处理移动说话者时面临挑战。现有技术如子空间方法（如MUSIC、ESPRIT）、转向响应波束形成器和基于TDOA估计的方法（如GCC-PHAT）易受混响和空间混叠影响，难以可靠提取直接路径信号。</p>
+<h2>方法创新</h2>
+<p>本文提出两种新算法以增强混响鲁棒性：
+1. <strong>Onset-MCCC方法</strong>：基于听觉滤波器组将麦克风信号分解为子带，利用语音和房间冲激响应模型检测和编码清晰的语音起始，通过多通道互相关系数（MCCC）结合子带结果估计说话者到达方向（DOA），抑制随机反射并避免空间混叠。
+2. <strong>MCC-PHAT方法</strong>：扩展广义互相关-相位变换（GCC-PHAT），利用多麦克风冗余信息处理混响问题，通过多通道交叉相关性提高定位准确性。</p>
+<h2>实验结果</h2>
+<p>方法在模拟混响环境（混响时间T60高达1秒）和真实混响室（T60≈0.65秒）中评估，使用静态和移动说话者数据。实验结果表明，与现有先进方法如Neuro-Fuzzy、TF-CHB和EB-ESPRIT相比，所提方法能可靠定位说话者，在强混响下表现出色。</p>
+<h2>一句话评价</h2>
+<p>该方法通过结合语音起始检测和多通道互相关，有效解决了混响条件下的说话者定位问题，具有较高的鲁棒性和实用价值，适用于智能环境应用如视频会议和自动相机转向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01247" target="_blank">Combining Masked Language Modeling and Cross-Modal Contrastive Learning for Prosody-Aware TTS</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-03</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2604.01247</span>
+                <a href="pdfs/2604.01247.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kirill Borodin, Vasiliy Kudryavtsev, Maxim Maslov, Nikita Vasiliev, Mikhail Gorodnichev, Grach Mkrtchian<br>
+                <div style="margin-top:5px"><span class="tag">text-to-speech</span><span class="tag">prosody modelling</span><span class="tag">latent diffusion</span><span class="tag">masked language modeling</span><span class="tag">cross-modal contrastive learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>现代神经 TTS 系统在高保真波形生成上表现优异，但合成语音的自然度严重依赖准确的韵律建模（如音高轮廓、时长模式和重音位置）。标准文本编码器仅捕获语言内容，缺乏明确的韵律知识，导致韵律推断不足，造成过度平滑的语调，限制了可控性。</p>
+<h2>方法创新</h2>
+<ul>
+<li>提出一个说话者条件化的双流文本编码器（phoneme + BPE），使用 AdaLN-Zero 进行说话者注入，以增强个性化韵律建模。</li>
+<li>设计多阶段预训练课程：第一阶段为掩码语言建模（MLM），第二阶段为混合音素跨模态对比学习（使用 SigLIP-style 损失），第三阶段为同音素细化（可选）。此课程结合了 MLM 和对比学习，旨在平衡音素区分和韵律敏感性。</li>
+<li>采用 SigLIP 对比损失替代 CLIP-style 对称 softmax 损失，以改善缩放性和韵律敏感性。</li>
+<li>在 Grad-TTS 和 DiTTo-TTS 等下游 TTS 系统中集成该编码器，进行综合评估。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>两阶段课程（MLM + 混合音素对比学习）在合成质量上表现最佳，包括清晰度、说话者相似性和感知度量。</li>
+<li>同音素细化阶段虽能改善内在韵律检索（如 Recall@k），但降低了音素区分能力，导致下游合成质量退化，表明嵌入空间指标的提升不一定转化为更好的生成性能。</li>
+<li>通过实验验证了多阶段预训练的有效性，强调了在 TTS 预训练中平衡音素识别和韵律敏感性的重要性。</li>
+</ul>
+<h4>一句话评价</h4>
+<p>本研究通过创新的多阶段预训练策略，成功提升了韵律感知 TTS 的性能，为韵律建模和 TTS 预训练提供了重要见解。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-04-02</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2604.01120" target="_blank">Diff-VS: Efficient Audio-Aware Diffusion U-Net for Vocals Separation</a>
