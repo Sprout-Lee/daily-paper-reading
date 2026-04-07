@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-07</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-07 | 来源: eess.AS | 新增论文: 7 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.04847" target="_blank">Full-Duplex-Bench-v3: Benchmarking Tool Use for Full-Duplex Voice Agents Under Real-World Disfluency</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Agent Benchmarking</span>
+                <strong>ID:</strong> <span class="tag">2604.04847</span>
+                <a href="pdfs/2604.04847.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Guan-Ting Lin, Chen Chen, Zhehuai Chen, Hung-yi Lee<br>
+                <div style="margin-top:5px"><span class="tag">Full-Duplex</span><span class="tag">Tool Use</span><span class="tag">Voice Agents</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>现有语音代理系统在实时工具使用和真实世界不流畅性处理方面存在显著差距。当前基准多数依赖合成音频，缺乏对真实语音中填充词、停顿、自我纠正等自然不流畅性的评估，无法有效衡量模型在动态状态回滚和多步API调用中的表现。</p>
+<h1>方法创新</h1>
+<p>论文引入Full-Duplex-Bench-v3 (FDB-v3)基准，其创新点包括：1) 使用真实人类音频，系统注释五种不流畅类别（填充词、停顿、犹豫、错误启动、自我纠正）；2) 设计多步工具链场景，涵盖旅行与身份、金融与计费、住房与位置、电子商务支持四个领域；3) 包含21个自我纠正和状态回滚场景，以测试实时意图更新能力；4) 基于模拟API实现确定性输出，支持自动评分。</p>
+<h1>实验结果</h1>
+<p>评估六种模型配置：GPT-Realtime、Gemini Live 2.5、Gemini Live 3.1、Grok、Ultravox v0.7和Cascaded基线。结果显示：GPT-Realtime在任务完成率（Pass@1 0.600）和避免中断方面领先（13.5%）；Gemini Live 3.1延迟最低（4.25秒），但轮转率最低（78.0%）；Cascaded基线轮转率完美，但延迟最高（10.12秒）。自我纠正处理在所有系统中都是最一致的失败模式，成功率低于59%。</p>
+<h1>一句话评价</h1>
+<p>FDB-v3填补了评估实时语音代理在工具使用和真实不流畅条件下的空白，为公平模型比较和未来研究提供了关键基准。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.04160" target="_blank">AffectSpeech: A Large-Scale Emotional Speech Dataset with Fine-Grained Textual Descriptions for Speech Emotion Captioning and Synthesis</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Captioning and Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2604.04160</span>
+                <a href="pdfs/2604.04160.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tianhua Qi, Wenming Zheng, Björn W. Schuller, Zhaojie Luo, Haizhou Li<br>
+                <div style="margin-top:5px"><span class="tag">AffectSpeech</span><span class="tag">emotional speech dataset</span><span class="tag">fine-grained textual descriptions</span><span class="tag">speech emotion captioning</span><span class="tag">speech synthesis</span><span class="tag">human-LLM collaboration</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有语音情感模型主要依赖预定义类别（如愤怒、快乐）或低维连续属性（如效价、唤醒度），表达能力有限，难以捕捉情感的细微差别、复杂性和多维性。</li>
+<li>缺乏大规模、可靠细粒度自然语言标注的情感语音数据集，阻碍了语音情感标注（SEC）和可控情感语音合成（ESS）等新兴任务的研究进展。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>引入AffectSpeech数据集，包含253,799个真人录制的语音样本，每个样本标注六个互补维度：情感极性、开放词汇情感描述、情感强度、韵律描述、显著段、语义内容，支持多粒度情感分析。</li>
+<li>开发人类-LLM协作标注管道，整合算法预标注、多LLM描述生成和人在环验证，平衡标注质量、可扩展性和语言多样性。</li>
+<li>将标注转换为六种功能性风格（narrative, profiling, synopsis, bullet-point, technical, structural），减少下游模型对固定模板的过拟合，增强泛化能力。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在语音情感标注（SEC）和可控情感语音合成（ESS）任务中，基于AffectSpeech训练的模型在多个评估设置中表现优异，优于现有数据集训练的模型。</li>
+<li>实验证明AffectSpeech能显著提升模型在解释性情感分析和可控语音生成方面的性能。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>AffectSpeech是一个开创性的大规模情感语音数据集，通过细粒度文本标注和人类-LLM协作管道，为语音情感标注和合成研究提供了高质量资源，推动了该领域的进展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.03689" target="_blank">MALEFA: Multi-grAnularity Learning and Effective False Alarm Suppression for Zero-shot Keyword Spotting</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Keyword Spotting</span>
+                <strong>ID:</strong> <span class="tag">2604.03689</span>
+                <a href="pdfs/2604.03689.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Lo-Ya Li, Tien-Hong Lo, Jeih-Weih Hung, Shih-Chieh Huang, Berlin Chen<br>
+                <div style="margin-top:5px"><span class="tag">zero-shot keyword spotting</span><span class="tag">contrastive learning</span><span class="tag">false alarm</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>零样本关键词唤醒（ZSKWS）系统在构建自适应和个性化语音界面时面临挑战：计算资源受限、标注训练数据有限，以及现有方法难以区分语音相似的关键词，导致在实际部署中假警报率（FAR）较高。例如，如图1所示，'call mom'和'come on'等关键词在语音上相似，容易引发假警报。</p>
+<h3>方法创新</h3>
+<p>论文提出MALEFA，一种轻量级零样本关键词唤醒框架，其创新包括：
+- <strong>多粒度对比学习</strong>：联合学习utterance-level和phoneme-level对齐，通过跨注意力和对比学习目标捕获全局语义和细粒度发音。
+- <strong>假警报感知损失</strong>：引入基于sigmoid的精度约束损失，直接惩罚假阳性，优化低假警报率。
+- <strong>轻量级设计</strong>：模型仅650K参数和93M FLOPs，支持资源受限设备的实时部署。架构包括特征提取器（音频和文本编码器）、模式提取器（跨注意力对齐）和模式鉴别器。</p>
+<h3>实验结果</h3>
+<p>在四个公共基准数据集（Google Speech Commands, Qualcomm, LibriPhrase Easy/Hard, AMI）上评估：
+- <strong>准确率</strong>：达到90%的准确率，在LibriPhrase Hard数据集上AUC为93.58%，EER为13.91%。
+- <strong>假警报率</strong>：显著降低，在AMI数据集上FAR为0.007%，优于先前方法（如PhonMatchNet的17.879%）。
+- <strong>消融研究</strong>：显示多粒度对比学习和假警报感知损失对性能至关重要；移除任一组件会降低准确性或增加假警报率。
+- <strong>计算效率</strong>：模型轻量，参数少，适合实时部署。</p>
+<h3>一句话评价</h3>
+<p>MALEFA是一种创新的轻量级框架，通过多粒度学习和假警报抑制，有效解决了零样本关键词唤醒中的假警报问题，并在多个数据集上展示了优越性能，适用于资源受限环境。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.03279" target="_blank">Rewriting TTS Inference Economics: Lightning V2 on Tenstorrent Achieves 4x Lower Cost Than NVIDIA L40S</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2604.03279</span>
+                <a href="pdfs/2604.03279.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ranjith M. S., Akshat Mandloi, Sudarshan Kamath<br>
+                <div style="margin-top:5px"><span class="tag">Text-to-Speech</span><span class="tag">Inference Optimization</span><span class="tag">Hardware-Software Co-design</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>TTS 模型比大型语言模型（LLMs）更数值脆弱，因为其连续波形生成和对微小数值扰动感知敏感。传统的精度降低技术（如 BlockFloat8 和低保真计算）在 LLMs 中有效，但在 TTS 系统中应用会导致可听见的伪影、相位不稳定和谱失真，限制了成本降低。</p>
+<h1>方法创新</h1>
+<p>提出了 Lightning V2，一个针对 Tenstorrent 硬件协同优化的生产级 TTS 模型。通过精度感知的架构设计和硬件-软件协同优化，实现了超过 95% 的低保真计算保真度和超过 80% 的 BlockFloat8 部署，而不降低音频质量。利用 Tenstorrent 的 Network-on-Chip、分布式 SRAM 和确定性执行模型，减少内存移动和冗余权重获取。</p>
+<h1>实验结果</h1>
+<p>实现了高精度优化：95% 低保真计算保真度和 80% BlockFloat8 部署，模型大小减少约 2 倍，内存传输节省。在 550 个并发 TTS 请求下，相比 NVIDIA L40S 基线，成本降低了约 4 倍，同时保持生产级音频保真度。</p>
+<h1>一句话评价</h1>
+<p>这项研究通过精度协同设计和硬件感知优化，成功重塑了实时语音推理的经济性，为 TTS 系统提供了高效低成本的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.04841" target="_blank">Joint Fullband-Subband Modeling for High-Resolution SingFake Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Singing Voice Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2604.04841</span>
+                <a href="pdfs/2604.04841.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xuanjun Chen, Chia-Yu Hu, Sung-Feng Huang, Haibin Wu, Hung-yi Lee, Jyh-Shing Roger Jang<br>
+                <div style="margin-top:5px"><span class="tag">Singing Voice Deepfake Detection</span><span class="tag">Subband Modeling</span><span class="tag">High-Resolution Audio</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有唱歌声音深度伪造检测（SVDD）系统主要基于16 kHz采样音频，受限于奈奎斯特定理，只能捕获0-8 kHz频段，丢弃了高频信息。然而，专业唱歌包含复杂音高、宽动态范围和音色变化，高频谐波和呼吸纹理是检测伪造的关键线索，导致传统方法在高分辨率唱歌检测中性能不足。</p>
+<h2>方法创新</h2>
+<p>提出Sing-HiResNet框架，首次系统探索高分辨率（44.1 kHz采样率）音频在SVDD中的应用。该框架采用联合全频带-子频带建模：全频带模型捕获全局上下文，而多个子频带专家模型隔离频谱中不均匀分布的合成伪影。通过四种融合策略（如决策级聚合、特征级拼接）集成多尺度特征，以优化检测性能。</p>
+<h2>实验结果</h2>
+<p>在WildSVDD数据集上进行实验，结果表明高频子频带提供了必要的补充线索。Sing-HiResNet框架显著优于16 kHz采样模型，达到最先进水平，证明了高分辨率音频和战略性子频带集成对健壮在实际环境中检测至关重要。</p>
+<h2>一句话评价</h2>
+<p>该研究开创性地结合高分辨率音频与子频带建模，为唱歌深度伪造检测提供了更有效和健壮的解决方案，推动了该领域的技术进步。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.04507" target="_blank">DHFP-PE: Dual-Precision Hybrid Floating Point Processing Element for AI Acceleration</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">AI Hardware Acceleration</span>
+                <strong>ID:</strong> <span class="tag">2604.04507</span>
+                <a href="pdfs/2604.04507.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shubham Kumar, Vijay Pratap Sharma, Vaibhav Neema, Santosh Kumar Vishvakarma<br>
+                <div style="margin-top:5px"><span class="tag">Floating-point</span><span class="tag">Multiply Accumulate</span><span class="tag">artifical intelligence</span><span class="tag">Processing</span><span class="tag">hardware acceleration</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>随着人工智能和边缘计算的快速发展，对低精度算术的需求日益增长，现有乘法累加（MAC）或处理元素（PE）架构主要针对中高精度数据设计，无法高效支持FP8和FP4等低精度格式。此外，AI工作负载中采用多种FP8（E4M3、E5M2）和FP4（E2M1、E1M2）格式，需要硬件能动态重配置精度而不增加逻辑冗余或关键路径延迟。</p>
+<h1>方法创新</h1>
+<p>论文提出DHFP-PE（双精度混合浮点处理元素），采用创新的位分区技术，使单个4位单元乘法器能作为标准4×4乘法器用于FP8，或作为两个并行2×2乘法器用于FP4，实现100%硬件利用率。架构结合可配置乘法器数组、共享乘法器资源和格式自适应累加，支持FP8和FP4格式，优化低功耗和高吞吐量AI工作负载。</p>
+<h1>实验结果</h1>
+<p>在28nm技术中实现，该PE达到1.94 GHz的操作频率，面积0.00396 mm²，功耗2.13 mW。与最先进设计相比，面积减少60.4%，功耗节省86.6%。实验显示其适用于AI边缘处理器、神经网络加速器和混合精度训练引擎。</p>
+<h1>一句话评价</h1>
+<p>该设计通过高效硬件复用和动态精度调整，为AI加速提供了灵活、低功耗的浮点处理解决方案，显著优化了面积和功耗表现。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.01897" target="_blank">FastTurn: Unifying Acoustic and Streaming Semantic Cues for Low-Latency and Robust Turn Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue Systems</span>
+                <strong>ID:</strong> <span class="tag">2604.01897</span>
+                <a href="pdfs/2604.01897.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chengyou Wang, Hongfei Xue, Chunjiang He, Jingbin Hu, Shuiyuan Wang, Bo Wu, Yuyu Ji, Jimeng Zheng, Ruofei Chen, Zhou Zhu, Lei Xie<br>
+                <div style="margin-top:5px"><span class="tag">turn detection</span><span class="tag">full-duplex</span><span class="tag">low-latency</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>现有full-duplex口语对话系统中的turn检测方法面临两大问题：一是依赖语音活动检测（VAD），缺乏语义理解，易受背景噪声、回声道和犹豫影响；二是基于自动语音识别（ASR）的方法引入高延迟，且在重叠语音和噪声环境下性能下降。此外，现有数据集缺乏真实交互动态，如自然转场、重叠语音和噪声，限制了模型的评估和部署。</p>
+<h1>方法创新</h1>
+<p>论文提出FastTurn框架，通过统一声学和流式语义线索实现低延迟和鲁棒turn检测。主要创新包括：
+1. <strong>架构设计</strong>：结合流式CTC解码快速生成部分转录，减少延迟；集成Conformer编码器提取声学特征，通过LLM（如Qwen3-0.6B）进行语义推理；最终通过声学适配器和turn检测器融合声学与语义线索，提升预测准确性。
+2. <strong>训练策略</strong>：采用四阶段训练流程：语义预训练（在ASR数据上训练Conformer和CTC）、模态对齐（训练LLM适配器）、联合训练（结合声学嵌入和CTC提示）和模态融合（训练声学适配器和turn检测器），以优化延迟-准确性权衡。
+3. <strong>数据集发布</strong>：构建FastTurn测试集，基于真实人类对话，包含转场、重叠语音、回声道、暂停、音调变化和环境噪声，弥补现有数据不足。</p>
+<h1>实验结果</h1>
+<p>实验表明，FastTurn在turn检测任务中实现更高决策准确性和更低中断延迟，相比基线方法（如Smart Turn、TEN Turn Detection、Easy Turn）。在挑战性声学条件（如噪声和重叠语音）下保持鲁棒性能，验证了其在实际full-duplex对话系统中的有效性。评估指标包括延迟和准确性，具体数据在截断内容中未详述。</p>
+<h1>一句话评价</h1>
+<p>FastTurn通过创新地融合声学和流式语义线索，为full-duplex口语对话系统提供了一个高效、低延迟且鲁棒的turn检测解决方案，显著提升了交互自然性和实用性。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
