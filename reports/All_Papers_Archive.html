@@ -99,11 +99,234 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 637 篇论文 | 涵盖 52 天的数据
+            共收录 645 篇论文 | 涵盖 53 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-04-16</h2>
+    <h2 class="date-divider">📅 2026-04-17</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.15278" target="_blank">A Manual Bar-by-Bar Tempo Measurement Protocol for Polyphonic Chamber Music Recordings: Design, Validation, and Application to Beethoven's Piano and Cello Sonatas</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval (MIR) / Audio Tempo Analysis</span>
+                <strong>ID:</strong> <span class="tag">2604.15278</span>
+                <a href="pdfs/2604.15278.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ignasi Sole<br>
+                <div style="margin-top:5px"><span class="tag">Tempo Measurement</span><span class="tag">Polyphonic Music</span><span class="tag">Manual Protocol</span><span class="tag">Beethoven</span><span class="tag">Audio Analysis</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>自动节拍检测工具（如MUsanim）在处理复调室内音乐录音（特别是历史录音，如1930-2012年的贝多芬钢琴和大提琴奏鸣曲录音）时系统性地失败。失败原因包括乐器谱重叠（如大提琴和钢琴）、音频质量差、以及表达性时间现象（如rubato、fermatas）的干扰，导致无法准确提取节拍数据或产生不可靠结果。</p>
+<h1>方法创新</h1>
+<p>提出一个手动、条理化的节拍测量协议，使用累计时间戳架构设计。关键创新包括：
+- 累计时间测量：从乐章开始记录累计耗时，而非单独小节持续时间。
+- 误差隔离：单个小节的计时错误不影响后续小节。
+- 内部自验证：所有小节持续时间之和需独立验证为总乐章时长。
+- 表达性保真度：捕捉实际表演中的时间现象，如rubato和fermatas。
+- 跨学科开发：与VLSI设计工程师合作，强调精度和误差建模。</p>
+<h1>实验结果</h1>
+<p>协议应用于超过一百个贝多芬钢琴和大提琴奏鸣曲乐章录音，生成数据集并可视化通过tempographs、直方图、脊线图等图表。数据集和分析代码公开可用，展示了手动方法能可靠提取小节级节拍数据（以毫秒分辨率），并有效处理表达性时间变化。</p>
+<h1>一句话评价</h1>
+<p>手动标注不是方法论的退步，而是对计算工具在复调历史录音特定挑战下内在限制的原则性响应。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14619" target="_blank">The Acoustic Camouflage Phenomenon: Re-evaluating Speech Features for Financial Risk Prediction</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Computational Paralinguistics</span>
+                <strong>ID:</strong> <span class="tag">2604.14619</span>
+                <a href="pdfs/2604.14619.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Dhruvin Dungrani, Disha Dungrani<br>
+                <div style="margin-top:5px"><span class="tag">Computational Paralinguistics</span><span class="tag">Speech Analysis</span><span class="tag">Multimodal Fusion</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>在高风险金融预测中，声学特征可能因媒体训练的语音调节而变成噪音，而不是信号，导致多模态融合性能显著下降，特别是在野外电话会议环境中，训练有素的演讲者可能引入矛盾的声学伪装。</p>
+<h1>方法创新</h1>
+<p>本研究采用两流延迟融合架构，对比声学流（提取音调方差、抖动方差等临床声学特征）和文本流（使用FinBERT计算脚本与非脚本部分的Sentiment Delta）。通过L1正则化进行特征选择，并提出'声学伪装'概念来解释性能退化，挑战了多模态融合的普遍假设。</p>
+<h1>实验结果</h1>
+<p>孤立文本流对尾部风险事件的召回率为66.25%，孤立声学流为50.83%，而延迟融合元学习器降至47.08%，表明声学特征融合反而降低了性能，支持声学伪装假说。</p>
+<h1>一句话评价</h1>
+<p>本文揭示了在高风险金融环境中声学特征的局限性，为计算副语言学应用提供了重要边界条件，并强调了纯NLP方法在成本敏感风险预测中的优越性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14606" target="_blank">UniPASE: A Generative Model for Universal Speech Enhancement with High Fidelity and Low Hallucinations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2604.14606</span>
+                <a href="pdfs/2604.14606.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xiaobin Rong, Zheng Wang, Yushi Wang, Jun Gao, Jing Lu<br>
+                <div style="margin-top:5px"><span class="tag">universal speech enhancement</span><span class="tag">generative model</span><span class="tag">low hallucinations</span><span class="tag">high fidelity</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>生成模型在语音增强中常产生语言和声学幻觉，导致输出不真实的语音内容或说话者特性，限制了实用性和可靠性。现有方法优先考虑感知质量但低估幻觉效应，如在URGENT 2025挑战中，纯生成模型虽获高分但幻觉严重。</p>
+<h2>方法创新</h2>
+<p>提出UniPASE，一个统一生成框架，扩展低幻觉的PASE框架以适应通用语音增强（USE）。创新点包括：
+- 核心模块DeWavLM-Omni：通过知识蒸馏从WavLM微调，在语音表示域执行增强，处理多种失真（如噪声、混响、编码失真等）。
+- 显式声学增强阶段：使用Adapter生成增强的声学表示，保留丰富细节，提高说话者保真度。
+- 多采样率支持：通过PostNet模块将16 kHz波形上采样到48 kHz，再下采样到原始率，实现灵活输入输出处理。</p>
+<h2>实验结果</h2>
+<p>在多个评估数据集上（覆盖子任务和全任务），UniPASE达到优异或竞争性能，相比现有SOTA模型。在URGENT 2026挑战赛中获第一名，展示强鲁棒性和泛化能力，源代码和演示已公开。</p>
+<h2>一句话评价</h2>
+<p>UniPASE是一个创新的生成模型，有效克服幻觉问题，实现高保真度的通用语音增强，推动了纯生成方法在实用场景中的应用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14548" target="_blank">VoxSafeBench: Not Just What Is Said, but Who, How, and Where</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Language Model Benchmarking</span>
+                <strong>ID:</strong> <span class="tag">2604.14548</span>
+                <a href="pdfs/2604.14548.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuxiang Wang, Hongyu Liu, Yijiang Xu, Qinke Ni, Li Wang, Wan Lin, Kunyu Feng, Dekun Chen, Xu Tan, Lei Wang, Jie Shi, Zhizheng Wu<br>
+                <div style="margin-top:5px"><span class="tag">VoxSafeBench</span><span class="tag">Speech Language Models</span><span class="tag">Social Alignment</span><span class="tag">Safety</span><span class="tag">Fairness</span><span class="tag">Privacy</span><span class="tag">Two-Tier Design</span><span class="tag">Audio-Conditioned Risks</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有语音语言模型（SLMs）的基准测试存在局限性：主要关注基本音频理解、孤立研究个别风险，或将固有有害内容与因声学上下文（如说话者身份、副语言线索、环境声音）而变得有问题的内容混为一谈。这导致难以评估SLMs在社会对齐方面的表现，尤其是在多用户、共享环境中部署时，模型需要根据音频上下文调整响应以确保安全、公平和隐私。</p>
+<h2>方法创新</h2>
+<p>论文提出了VoxSafeBench，这是首个联合评估SLMs社会对齐的基准，涵盖安全、公平和隐私三个维度。采用Two-Tier设计：Tier 1评估内容中心风险（转录本本身有害），Tier 2评估音频条件风险（转录本良性，但正确响应取决于说话者、副语言线索或环境）。基准包括22个任务，支持双语（英语/中文）覆盖，并采用判别式和生成式评估格式。创新点在于通过结构化的任务分离内容与上下文风险，并通过中间感知探针验证Tier 2的有效性。</p>
+<h2>实验结果</h2>
+<p>大规模评估显示，当前SLMs存在显著的语音基础差距：在文本上看似稳健的安全措施在音频条件下退化。具体地，Tier 1中，多轮越狱攻击进一步侵蚀安全性；Tier 2中，模型常能感知音频线索但未能适当行动，导致安全意识下降、公平性因人口统计差异通过声音传达而退化、隐私保护在声学上下文提示下失效。这表明SLMs过度依赖词汇内容，未能一致地将行为基于副语言和环境信号。</p>
+<h2>一句话评价</h2>
+<p>VoxSafeBench为评估语音语言模型的社会对齐提供了全面基准，揭示了语音基础是可信SLMs的关键瓶颈，填补了现有研究空白。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14354" target="_blank">Who is Speaking or Who is Depressed? A Controlled Study of Speaker Leakage in Speech-Based Depression Detection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Depression Detection</span>
+                <strong>ID:</strong> <span class="tag">2604.14354</span>
+                <a href="pdfs/2604.14354.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hsiang-Chen Yeh, Luqi Sun, Aurosweta Mahapatra, Shreeram Suresh Chandra, Emily Mower Provost, Berrak Sisman<br>
+                <div style="margin-top:5px"><span class="tag">Speech-Based Depression Detection</span><span class="tag">Speaker Leakage</span><span class="tag">Domain-Adversarial Neural Network</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>语音基础抑郁检测模型在评估时存在说话者泄漏问题，即训练和测试集中有相同说话者，导致性能高估（如准确率超90%），但泛化到未见说话者时性能急剧下降至接近随机水平，表明模型可能依赖说话者身份线索而非抑郁相关的声学生物标志物，限制了临床实用性。</p>
+<h2>方法创新</h2>
+<ol>
+<li>提出一种控制说话者重叠的数据拆分策略：使用DAIC-WOZ数据集，设计大小匹配的训练集（训练集A无说话者重叠，训练集B有说话者重叠），以隔离身份泄漏影响。</li>
+<li>系统评估三种复杂度递增的模型：Wav2Vec-Linear Probing、XLSR-eGeMAPS Concatenation、Wav2Vec-SLS，并集成Domain-Adversarial Neural Network（DANN）通过梯度反转层减少说话者依赖性。</li>
+<li>引入量化分析，测量模型在说话者识别和抑郁分类中的表现，揭示特征纠缠程度。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>说话者重叠显著提升性能：例如，对于微调的Wav2Vec模型，准确率从说话者独立的58.74%提升到说话者重叠的97.65%。</li>
+<li>未见说话者时所有模型性能大幅下降，即使使用DANN，准确率差距仍存（如DANN模型仍显示显著退化），表明抑郁信号与说话者身份紧密耦合。</li>
+<li>模型在保持高抑郁分类的同时保留强说话者识别能力，验证了身份依赖的普遍性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本研究系统揭示了当前语音抑郁检测系统中身份泄漏的严重问题，强调了严格说话者独立评估协议的必要性，以推动更鲁棒和临床可泛化的模型发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14204" target="_blank">Disentangled Dual-Branch Graph Learning for Conversational Emotion Recognition</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multimodal Emotion Recognition</span>
+                <strong>ID:</strong> <span class="tag">2604.14204</span>
+                <a href="pdfs/2604.14204.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chengling Guo, Yuntao Shou, Tao Meng, Wei Ai, Yun Tan, Keqin Li<br>
+                <div style="margin-top:5px"><span class="tag">Emotion Recognition</span><span class="tag">Graph Learning</span><span class="tag">Transformer</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>多模态对话情感识别（MERC）面临三个主要挑战：跨模态输入中的冗余或重叠情感信息、情感信号在时间和语义上对齐不完美、高阶说话人交互建模不足（仅依赖成对建模可能不够）。</p>
+<h2>方法创新</h2>
+<p>提出一个框架，集成双空间特征解耦和双分支图学习。首先，使用共享编码器和模态特定编码器分离模态不变和模态特定表示，通过重构损失、循环一致性损失、边界损失和正交性损失优化解耦。其次，构建双分支：在模态不变分支中，使用傅里叶图神经网络（Fourier GNN）捕捉全局一致性和互补模式，并引入频域对比学习增强区分性；在模态特定分支中，构建说话人感知超图神经网络（Hypergraph NN）建模高阶交互，并加入说话人一致性约束保持语义连贯。最后，双分支表示融合用于情感分类。</p>
+<h2>实验结果</h2>
+<p>在 IEMOCAP 和 MELD 数据集上进行实验，该方法在准确性和鲁棒性上优于现有最先进方法，验证了其有效性。</p>
+<h2>一句话评价</h2>
+<p>该框架通过创新性地解耦特征和双分支图学习，有效解决了多模态对话情感识别中的关键挑战，提升了性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14186" target="_blank">HARNESS: Lightweight Distilled Arabic Speech Foundation Models</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2604.14186</span>
+                <a href="pdfs/2604.14186.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Vrunda N. Sukhadia, Shammur Absar Chowdhury<br>
+                <div style="margin-top:5px"><span class="tag">Self-supervised learning</span><span class="tag">Distillation</span><span class="tag">Arabic speech</span><span class="tag">Model compression</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大型自监督语音（SSL）模型在资源受限环境中的部署困难，因其模型大小限制。阿拉伯语语音建模具有挑战性：方言多样性大、多语言影响（如英语和法语），通用多语言模型可能无法充分捕捉阿拉伯语特定模式。训练和部署语言聚焦的SSL模型成本高，需要大规模计算和长时间训练。</p>
+<h2>方法创新</h2>
+<p>提出HArnESS模型家族，一个阿拉伯语中心的SSL模型，从零开始训练。使用迭代自蒸馏方法：从大型双语阿拉伯语-英语教师模型（HArnESS-L）蒸馏到轻量级学生变体（HArnESS-S浅层和HArnESS-ST浅层薄层）。结合双语预训练以增加多样性和正则化。研究PCA-based压缩教师监督信号，简化蒸馏目标空间，匹配学生模型容量。基于HuBERT风格的掩码预测预训练，采用迭代自蒸馏管道。</p>
+<h2>实验结果</h2>
+<p>评估在自动语音识别（ASR）、方言识别（DID）和语音情感识别（SER）下游任务上。与HuBERT-Large和XLS-R相比，HArnESS在阿拉伯语任务上表现一致更好，压缩模型在结构大幅减少下仍保持竞争力。模型公开发布以支持未来研究。</p>
+<h2>一句话评价</h2>
+<p>HArnESS提供了一个实用的阿拉伯语中心自监督语音基础模型，通过蒸馏有效平衡性能与效率，适合实际语音应用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.14152" target="_blank">From Black Box to Glass Box: Cross-Model ASR Disagreement to Prioto Review in Ambient AI Scribe Documentation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-04-17</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2604.14152</span>
+                <a href="pdfs/2604.14152.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Abdolamir Karbalaie, Fernando Seoane, Farhad Abtahi<br>
+                <div style="margin-top:5px"><span class="tag">automatic speech recognition</span><span class="tag">clinical documentation</span><span class="tag">uncertainty quantification</span><span class="tag">ensemble methods</span><span class="tag">health informatics</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>医疗转录中自动语音识别（ASR）的可靠性问题：ASR错误可能导致临床不准确，如遗漏和归因错误，增加患者安全风险。</li>
+<li>缺乏人类验证的参考转录本：在规模化临床文档中，难以进行系统质量保证，因为标准评估依赖人工参考转录本。</li>
+<li>聚合错误指标（如词错误率）局限性：这些指标不能区分含义承载错误（内容）和表面格式错误（如标点），降低了审查效率。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>利用多模型分歧作为参考免费的不确定信号：使用八个异构ASR系统的输出分歧来优先化人工审查，无需人类验证的转录本。</li>
+<li>构建共识伪参考：通过多数投票从对齐的多模型输出中生成共识，分析令牌级协议和分歧组成。</li>
+<li>引入留一模型出（jackknife）共识：评估每个模型的协议，避免循环偏差，并分析分歧是否集中在内容错误上。</li>
+<li>跨模型可靠性评估：使用类内相关系数（ICC）和口音组分析来验证信号的稳健性和公平性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>模型间可靠性低（ICC[2,1] = 0.131），表明系统间故障模式异构，支持分歧作为有用信号。</li>
+<li>在76,398个令牌位置中，72.1%达到低风险协议（7-8个模型一致），2.5%为高风险（0-3个模型一致）。</li>
+<li>低协议区域更富含内容类别分歧：内容比例从53.9%增加到73.9%跨高风险五分位数，表明分歧集中在含义承载词汇上。</li>
+<li>分歧信号稀疏且可本地化，适合作为审查分流机制，口音组间风险分布不均（0.7%至11.4%）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究提出了一种实用的、无需人工注释的方法，通过多模型分歧优先化医疗转录中的不确定区域审查，提高效率和安全潜力，但需进一步临床验证。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-04-16</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2604.13605" target="_blank">SpeakerRPL v2: Robust Open-set Speaker Identification through Enhanced Few-shot Foundation Tuning and Model Fusion</a>
