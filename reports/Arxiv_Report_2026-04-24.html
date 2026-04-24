@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-24</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-24 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.21682" target="_blank">PHOTON: Non-Invasive Optical Tracking of Key-Lever Motion in Historical Keyboard Instruments</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Human-Computer Interaction / Musical Instrument Sensing</span>
+                <strong>ID:</strong> <span class="tag">2604.21682</span>
+                <a href="pdfs/2604.21682.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Noah Jaffe, John Ashley Burgoyne<br>
+                <div style="margin-top:5px"><span class="tag">historical keyboards</span><span class="tag">optical sensing</span><span class="tag">key motion</span><span class="tag">performance capture</span><span class="tag">MIDI</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有光学键盘传感系统（如PNOScan、Moog PianoBar及McPherson等人的研究）专为现代钢琴设计，无法适应历史键盘乐器（羽管键琴、击弦古钢琴、早期钢琴）的多样化几何结构、有限间隙和非标准布局。历史键盘研究缺乏非侵入式、可复制的运动捕捉方案。</p>
+<h2>方法创新</h2>
+<p>PHOTON采用反射式光学传感器，安装于琴键杠杆末端下方，直接测量垂直位移，不干扰机械动作。系统模块化、低轮廓，支持多排键盘（如双排羽管键琴）和可变键数。硬件（KiCad原理图/PCB）和固件（CircuitPython）完全开源。传感器采用选择性启用（而非连续驱动），可扩展至122个传感器。提供约100个可分辨位置等级（约1cm行程），部分传感器采样率&gt;250Hz。USB复合设备输出标准MIDI和串行位置流。</p>
+<h2>实验结果</h2>
+<p>通过案例研究展示羽管键琴键-动作运动轨迹（Attack/Aftertouch/Release）。系统能区分约100个位置等级，非线性插值但单调。高分辨率模式下&gt;250Hz采样。与现有方法（Hamilton等人的拨子运动检测、Schmidt等人的键下传感器）对比，PHOTON更紧凑、易安装、兼容更紧空间。</p>
+<h2>应用场景</h2>
+<ol>
+<li>运动捕捉：高分辨率位移轨迹用于技巧分析、音乐学研究。</li>
+<li>现场声音增强：驱动虚拟乐器，实现声学校正。</li>
+<li>超乐器：通过MIDI控制管风琴等，如力度门控切换。</li>
+<li>数字乐器研究的生态效度参考：提供真实历史键盘动作数据。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>PHOTON是首个面向历史键盘乐器的非侵入式开源光学跟踪系统，填补了该类乐器运动捕捉的空白。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.21507" target="_blank">DiariZen Explained: A Tutorial for the Open Source State-of-the-Art Speaker Diarization Pipeline</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Diarization</span>
+                <strong>ID:</strong> <span class="tag">2604.21507</span>
+                <a href="pdfs/2604.21507.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nikhil Raghav<br>
+                <div style="margin-top:5px"><span class="tag">Speaker Diarization</span><span class="tag">EEND-VC</span><span class="tag">WavLM</span><span class="tag">Powerset Classification</span><span class="tag">VBx Clustering</span><span class="tag">Hybrid Pipeline</span><span class="tag">Open Source</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有说话人日志（SD）系统要么采用模块化流水线（如VAD、分割、嵌入、聚类）导致错误级联，要么采用端到端神经方法（EEND）受限于固定说话人数和长录音处理能力。DiariZen虽为开源SOTA，但其实现分散在多个仓库，缺乏统一、可复现的教程，研究者难以理解或扩展。</p>
+<h2>方法创新</h2>
+<p>DiariZen是一个混合SD流水线，结合了EEND风格神经分割前端和VBx聚类后端。主要创新包括：
+1. <strong>结构剪枝WavLM-Large编码器</strong>（参数从316M降至63M，通过DPHuBERT风格剪枝），并采用学习加权层组合（SUPERB方式）提取帧级特征。
+2. <strong>Conformer后端 + 幂集分类</strong>：预测最多4个说话人、最多2人重叠的11类组合（静音/单说话人/双说话人），而非独立的多标签分类。
+3. <strong>滑动窗口高重叠（90%）</strong> 后接重叠相加（OLA）和滤波，获得连续分割和瞬时说话人数。
+4. <strong>基于WeSpeaker ResNet34的说话人嵌入提取</strong>，带重叠排除掩码。
+5. <strong>VBx聚类</strong>（PLDA评分 + AHC + VB-HMM）实现全局说话人身份匹配。</p>
+<h2>实验结果</h2>
+<p>论文提及DiariZen在AMI、VoxSRC和DIHARD-III等多个基准上取得开源SOTA性能。示例中对AMI 30秒录音处理得到13个片段、4个全局说话人。</p>
+<h2>一句话评价</h2>
+<p>DiariZen通过混合架构结合神经分割与概率聚类的优势，以模块化教程和可视化方式促进可复现研究。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.21406" target="_blank">Full-Duplex Interaction in Spoken Dialogue Systems: A Comprehensive Study from the ICASSP 2026 HumDial Challenge</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue System</span>
+                <strong>ID:</strong> <span class="tag">2604.21406</span>
+                <a href="pdfs/2604.21406.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chengyou Wang, Hongfei Yue, Guojian Li, Zhixian Zhao, Shuiyuan Wang, Shuai Wang, Xin Xu, Hui Bu, Lei Xie<br>
+                <div style="margin-top:5px"><span class="tag">full-duplex interaction</span><span class="tag">spoken dialogue system</span><span class="tag">interruption handling</span><span class="tag">benchmark</span><span class="tag">humdial challenge</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统口语对话系统基于严格的轮流说话范式，无法处理中断、语音重叠、动态轮次协商等自然交互现象，导致对话不自然、响应迟缓。现有数据集多为单通道或脚本化，缺乏真实对话中的中断、反馈、背景干扰等细节；评估指标仅关注识别准确率或任务完成率，忽略中断处理、响应时机等交互维度。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>HumDial-FDBench基准</strong>：基于ICASSP 2026 HumDial挑战赛的全双工交互赛道，构建双通道真实人类对话数据集（&gt;100小时，中英双语），涵盖8个子场景（如追问、否定、重复请求、话题切换、静默终止、实时反馈、停顿、第三方语音、他人对话）。</li>
+<li><strong>评估框架</strong>：结合时间对齐ASR和LLM分类器，将模型行为分为Respond/Resume/Uncertain/Unknown；定义中断场景的首次响应延迟、停止延迟、响应延迟等指标；对拒绝场景采用定制化二元判定。</li>
+<li><strong>公开排行榜</strong>：支持开源与商业模型公平对比，促进可重复评估。</li>
+</ol>
+<h2>实验结果</h2>
+<p>本文主要介绍数据集和基准设计，未提供具体实验结果。但挑战赛接收了多个参赛团队的方案，并将在后续论文中总结。</p>
+<h2>一句话评价</h2>
+<p>该工作为全双工口语对话系统提供了首个大规模真实交互基准，推动更自然、更具交互性的模型评估。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.21651" target="_blank">Dilated CNNs for Periodic Signal Processing: A Low-Complexity Approach</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement / Periodic Signal Denoising</span>
+                <strong>ID:</strong> <span class="tag">2604.21651</span>
+                <a href="pdfs/2604.21651.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Eli Gildish, Michael Grebshtein, Igor Makienko<br>
+                <div style="margin-top:5px"><span class="tag">Deep Learning</span><span class="tag">periodic signal de-noising</span><span class="tag">signal waveform estimation</span><span class="tag">Dilated CNN</span><span class="tag">Low-power applications</span><span class="tag">IoT devices</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有深度学习方法（如DCNN）处理周期性信号时，需要大量计算资源和针对每个信号单独训练，难以部署在资源受限的IoT设备上。固定膨胀因子难以适应基频变化的信号。</p>
+<h2>方法创新</h2>
+<p>提出R-DCNN方法：使用一维膨胀卷积网络（DCNN），通过轻量级重采样（Resampling）将不同基频信号的时间轴对齐到参考信号，从而重用同一组网络权重。只需一次观测即可训练，推理时仅需调整时间缩放因子。</p>
+<h2>实验结果</h2>
+<p>（文中未提供具体数值，但声称）在去噪和波形估计精度上与经典自回归（AR）方法及单独训练的DCNN相当，计算复杂度显著降低。</p>
+<h2>一句话评价</h2>
+<p>一种低复杂度、适合资源受限设备的周期性信号去噪方法，通过重采样实现了跨基频的权重共享。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
