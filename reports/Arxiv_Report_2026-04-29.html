@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-29</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-29 | 来源: eess.AS | 新增论文: 8 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25719" target="_blank">Step-Audio-R1.5 Technical Report</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Large Audio Language Models</span>
+                <strong>ID:</strong> <span class="tag">2604.25719</span>
+                <a href="pdfs/2604.25719.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuxin Zhang, Xiangyu Tony Zhang, Daijiao Liu, Fei Tian, Yayue Deng, Jun Chen, Qingjian Lin, Haoyang Zhang, Yuxin Li, Jinglan Gong, Yechang Huang, Liang Zhao, Chengyuan Yao, Hexin Liu, Eng Siong Chng, Xuerui Yang, Gang Yu, Xiangyu Zhang, Daxin Jiang<br>
+                <div style="margin-top:5px"><span class="tag">Chain-of-Thought</span><span class="tag">Reinforcement Learning with Verified Rewards</span><span class="tag">Reinforcement Learning from Human Feedback</span><span class="tag">Audio Reasoning</span><span class="tag">Multi-turn Spoken Dialogue</span><span class="tag">Verifiable Reward Trap</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前主流的音频推理模型依赖强化学习与验证奖励（RLVR），但RLVR仅优化离散标签的正确性，导致模型在真实对话中丧失自然度、情感连续性和沉浸感，沦为“答录机”。作者将此现象称为“可验证奖励陷阱”。</p>
+<h2>方法创新</h2>
+<p>提出Step-Audio-R1.5，首次将基于人类反馈的强化学习（RLHF）系统性地引入音频推理。通过训练基于人类偏好判断的奖励模型，统一优化正确性、流畅性和情感共鸣，跳出奖励陷阱。架构采用Qwen2音频编码器（25Hz，冻结）、2倍下采样适配器（12.5Hz）和Qwen2.5 32B LLM解码器。训练分为三阶段：音频中心中期训练（强化音频推理）、冷启动SFT（优化多轮对话行为）、基于规则生成奖励模型的RLHF（联合优化显式约束与偏好驱动目标）。</p>
+<h2>实验结果</h2>
+<p>在语音转文本基准（如AudioMultiChallenge、Step-Caption等）上，Step-Audio-R1.5显著优于前代，并与Gemini 3 Pro等商业系统竞争。多轮对话能力在自然交互维度上大幅提升。</p>
+<h2>一句话评价</h2>
+<p>Step-Audio-R1.5通过RLHF解决了音频RLVR的“可验证奖励陷阱”，在保持推理准确性的同时大幅改善了对话自然度与用户体验。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25624" target="_blank">UNet-Based Fusion and Exponential Moving Average Adaptation for Noise-Robust Speaker Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Recognition</span>
+                <strong>ID:</strong> <span class="tag">2604.25624</span>
+                <a href="pdfs/2604.25624.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chong-Xin Gan, Peter Bell, Man-Wai Mak, Zhe Li, Zezhong Jin, Zilong Huang, Kong Aik Lee<br>
+                <div style="margin-top:5px"><span class="tag">Speaker Recognition</span><span class="tag">Speech Enhancement</span><span class="tag">Exponential Moving Average</span><span class="tag">UNet Feature Fusion</span><span class="tag">Noise Robustness</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的语音增强+说话人识别级联方法存在两个问题：1) 预训练的语音增强模型可能引入伪影，且未充分利用噪声语音中的说话人信息；2) 联合训练时，说话人编码器容易过拟合，且无法平滑地从干净语音过渡到噪声环境。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>UNet融合模块</strong>：将噪声语音与多个预训练增强模型（如BSRNN和DEMUCS）的输出在频谱层面堆叠，通过UNet进行非线性融合，生成鲁棒的融合表示，避免线性组合的信息损失。</li>
+<li><strong>指数移动平均（EMA）策略</strong>：使用预训练在干净语音上的说话人编码器初始化，并通过EMA动态更新参数，实现从干净到噪声环境的平滑过渡，防止灾难性遗忘。</li>
+</ol>
+<h2>实验结果</h2>
+<p>在多个噪声测试集上，UF-EMA方法优于现有方法（如单独训练、联合训练、观察添加等），展示了优越的噪声鲁棒性。</p>
+<h2>一句话评价</h2>
+<p>提出了一种结合UNet融合与EMA更新的噪声鲁棒说话人识别框架，有效利用了预训练增强模型的多源信息并缓解了过拟合问题。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25591" target="_blank">Walking Through Uncertainty: An Empirical Study of Uncertainty Estimation for Audio-Aware Large Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Uncertainty Estimation in Audio-Aware LLMs</span>
+                <strong>ID:</strong> <span class="tag">2604.25591</span>
+                <a href="pdfs/2604.25591.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chun-Yi Kuan, Wei-Ping Huang, Hung-yi Lee<br>
+                <div style="margin-top:5px"><span class="tag">uncertainty estimation</span><span class="tag">audio-aware large language models</span><span class="tag">semantic entropy</span><span class="tag">hallucination detection</span><span class="tag">unanswerable question answering</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<p>音频感知大语言模型（ALLMs）在音频理解与推理任务中表现优异，但仍频繁产生幻觉或过度自信的输出。尽管不确定性估计在纯文本LLMs中已有广泛研究，但在ALLMs中尚未被系统性探索，音频条件生成引入了感知模糊性和跨模态 grounding 等额外挑战。</p>
+<h2>方法创新</h2>
+<p>本文首次系统性地实证研究了ALLMs中的不确定性估计。基准测试了五种代表性方法：预测熵（Predictive Entropy）、长度归一化熵（Length-Normalized Entropy）、语义熵（Semantic Entropy）、离散语义熵（Discrete Semantic Entropy）和 P(True)。采用两阶段协议：先用低温解码获得预测答案，再通过采样估计不确定性。</p>
+<h2>实验结果</h2>
+<p>在通用音频理解与推理基准上，语义级和验证性方法（语义熵、P(True)）一致优于 token 级基线（预测熵、长度归一化熵）。在可信度导向基准（幻觉检测、不可回答问题）上，方法相对有效性变得高度依赖模型和任务，表明通用推理基准的结论不能直接迁移。此外，不确定性驱动的自适应推理作为下游应用进行了探索，但其效果取决于替代推理策略本身是否有益。</p>
+<h2>一句话评价</h2>
+<p>本文填补了ALLMs不确定性估计的空白，揭示了语义级方法在通用场景的优势及其在可信场景的局限性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25387" target="_blank">ASAP: An Azimuth-Priority Strip-Based Search Approach to Planar Microphone Array DOA Estimation in 3D</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Direction-of-Arrival Estimation</span>
+                <strong>ID:</strong> <span class="tag">2604.25387</span>
+                <a href="pdfs/2604.25387.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ming Huang, Shuting Xu, Leying Yang, Huanzhang Hu, Yujie Zhang, Jiang Wang, Yu Liu, Hao Zhao, He Kong<br>
+                <div style="margin-top:5px"><span class="tag">DOA estimation</span><span class="tag">SRP-PHAT</span><span class="tag">planar arrays</span><span class="tag">sound source localization</span><span class="tag">region contraction</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>ASAP: 平面麦克风阵列3D DOA估计的方位优先带状搜索方法</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>传统的SRP-PHAT方法在3D场景下需要在数千个候选方向上评估，计算开销大，难以在资源受限平台上实时运行。</li>
+<li>平面麦克风阵列的仰角估计通常比方位角估计更不可靠，现有方法（如CFRC）未充分利用这一特性。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出ASAP方法，将3D搜索分解为两个阶段：</li>
+<li><strong>阶段1（方位优先带状搜索）</strong>：在方位角带状区域内执行粗到细的区域收缩（CFRC-style），并通过球冠过滤保留多个峰值，锁定方位角。</li>
+<li><strong>阶段2（一维仰角细化）</strong>：沿大圆路径在候选点之间进行一维搜索，细化仰角估计。</li>
+<li>两种细化策略：Meridian-Centered (MC) 和 Between-Points (BP)，后者利用球面线性插值（SLERP）在两点间生成候选方向。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>仿真实验（3751个点）：ASAP（BP）在无噪声、3.09 dB噪声、1.5 dB噪声条件下，RMSE均低于或等于全网格SRP-PHAT和CFRC。</li>
+<li>最高网格分辨率下，ASAP相比CFRC减少了13.56%的运行时间和5.87%的RMSE。</li>
+<li>真实世界实验（8麦克风UCA）：ASAP比CFRC快13.98%，RMSE低4.33%。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ASAP通过利用平面阵列的方位优先特性，显著提升了3D DOA估计的效率和精度，适用于实时声源定位应用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25309" target="_blank">Cross-Linguistic Rhythmic and Spectral Feature-Based Analysis of Nyishi and Adi: Two Under-Resourced Languages of Arunachal Pradesh</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Rhythm Analysis</span>
+                <strong>ID:</strong> <span class="tag">2604.25309</span>
+                <a href="pdfs/2604.25309.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Deepshikha Gogoi, Parismita Gogoi, Yang Saring<br>
+                <div style="margin-top:5px"><span class="tag">Under-resourced languages</span><span class="tag">Rhythm Formant Analysis</span><span class="tag">Amplitude Modulation</span><span class="tag">Tani languages</span><span class="tag">MFCC</span><span class="tag">DCT</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>Nyishi和Adi是印度阿鲁纳恰尔邦的两种低资源语言，属于Tani语支。此前缺乏系统性声学-韵律分析，尤其是在节奏方面。传统基于间隔的节奏度量方法存在局限性，且难以用于语言区分。</p>
+<h1>方法创新</h1>
+<p>本文采用基于幅度调制（AM）低频（LF）频谱分析的节奏共振峰分析（RFA），直接从语音信号的包络中提取节奏特征（NDP、MFDP、VFDP），无需人工分割。同时提取DCT系数和MFCC表征频谱调制和整体频谱组织。通过统计建模和机器学习（SVM、MLP）评估节奏和频谱特征在语言区分中的层次性。</p>
+<h1>实验结果</h1>
+<ul>
+<li>仅使用节奏特征（RFA）的分类准确率约84-85%。</li>
+<li>融合MFCC后，SVM准确率达90.9%，MLP达93.96%。</li>
+<li>统计结果显示节奏特征表现出一致但温和的分离（Nyishi具有更高的主调制频率和更大的离散度），而频谱特征反映更精细的音位差异，形成层次化区分模式。</li>
+</ul>
+<h1>一句话评价</h1>
+<p>本文为低资源语言内部的声学区分提供了统一的信号处理框架，验证了节奏和频谱特征在互补水平上编码语言差异的假设。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25441" target="_blank">Praxy Voice: Voice-Prompt Recovery + BUPS for Commercial-Class Indic TTS from a Frozen Non-Indic Base at Zero Commercial-Training-Data Cost</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2604.25441</span>
+                <a href="pdfs/2604.25441.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Venkata Pushpak Teja Menta<br>
+                <div style="margin-top:5px"><span class="tag">text-to-speech</span><span class="tag">Indic languages</span><span class="tag">low-resource TTS</span><span class="tag">LoRA</span><span class="tag">voice cloning</span><span class="tag">Brahmic script processing</span><span class="tag">romanisation</span><span class="tag">open-source TTS</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>商业级Indic TTS系统需要大量GPU资源和商业数据，开源多语言基座（如Chatterbox）不支持Telugu/Tamil，且输出质量远逊于商业系统。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>BUPS (Brahmic Unified Phoneme Space)</strong>：将Devanagari、Telugu等Brahmic脚本确定性罗马化为ISO-15919拉丁字符串，使得Chatterbox的拉丁分词器可以处理。</li>
+<li><strong>LoRA适配器</strong>：仅在Chatterbox的文本预测器（t3）上训练LoRA（7.86M参数，占0.97%），使用BUPS预处理数据并伪装成Hindi语言ID，冻结声学解码器和语音编码器。</li>
+<li><strong>推理时语音提示恢复</strong>：提供8-11秒同语言参考音频，配合特定采样参数（exaggeration 0.7, temperature 0.6, min_p 0.1，称为Config B），无需训练声学解码器即可恢复商业级输出。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>Telugu：retroflex collapse 26.7%（商业最佳Sarvam Bulbul 33.3%），排名第一。</li>
+<li>Tamil：zha collapse 71%（商业系统86%），最显著提升。</li>
+<li>Hindi：LLM-WER 0.025（与Cartesia Sonic-3持平）。</li>
+<li>代码混合场景：IndicF5 + 原生脚本转写预处理器，LLM-WER从0.80-0.85降至0.14-0.27。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文以极小代价（无商业训练数据、仅微调0.97%参数）将不支持Telugu/Tamil的冻结多语言TTS基座提升至商业级，并开源LoRA权重和推理代码。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25383" target="_blank">ML-SAN: Multi-Level Speaker-Adaptive Network for Emotion Recognition in Conversations</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Emotion Recognition in Conversations</span>
+                <strong>ID:</strong> <span class="tag">2604.25383</span>
+                <a href="pdfs/2604.25383.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kexue Wang, Yinfeng Yu, Liejun Wang<br>
+                <div style="margin-top:5px"><span class="tag">multimodal sentiment recognition</span><span class="tag">emotional expression differences</span><span class="tag">multi-level speaker adaptive network</span><span class="tag">speaker identity confusion</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有对话情感识别方法忽视个体表达差异，将不同说话人视为可互换实体，导致特征错配和融合失效，尤其在多轮对话中识别效果差。</p>
+<h2>方法创新</h2>
+<p>提出多级说话人自适应网络（ML-SAN），通过三阶段自适应过程：
+- <strong>输入层校准（Input-level Calibration）</strong>：使用特征级线性调制（FiLM）将原始音视频特征调整至与说话人无关的中性空间。
+- <strong>交互层门控（Interaction-level Gating）</strong>：基于说话人身份信息动态重新调整每个模态（如语音或面部特征）的信任度。
+- <strong>输出层正则化（Output-level Regularization）</strong>：在潜在空间中保持说话人特征的一致性，引入辅助分类任务。</p>
+<h2>实验结果</h2>
+<p>在MELD和IEMOCAP数据集上，ML-SAN的加权F1分数分别达到67.73%和73.28%，优于所有基线（如MultiEMO提升1.39%和1.26%），消融实验验证了各组件的有效性。</p>
+<h2>一句话评价</h2>
+<p>通过多级说话人自适应机制，有效解决了说话人身份混淆问题，显著提升多模态对话情感识别的鲁棒性和准确性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.25133" target="_blank">Korean aegyo speech shows systematic F1 increase to signal childlike qualities</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">语音学（社会语音学/声学语音学）</span>
+                <strong>ID:</strong> <span class="tag">2604.25133</span>
+                <a href="pdfs/2604.25133.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ji-eun Kim, Volker Dellwo<br>
+                <div style="margin-top:5px"><span class="tag">aegyo</span><span class="tag">vowel space</span><span class="tag">formant frequency</span><span class="tag">childlike speech</span><span class="tag">Korean</span><span class="tag">voice style</span><span class="tag">F1 increase</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有研究对韩国撒娇语（aegyo）的语音特征关注不足，尤其缺乏对元音空间的系统性分析，而元音空间是构建孩童化语体的重要声学维度。</p>
+<h3>方法创新</h3>
+<ul>
+<li>招募12名首尔韩语母语者（6男6女），在同一脚本下分别以撒娇和非撒娇风格朗读。</li>
+<li>采用标准共振峰分析，提取8个单元音的平均F1、F2，并计算角元音三角形（/i, a, u/）和全元音凸包面积及质心。</li>
+<li>通过线性混合效应模型检验风格对元音空间面积、质心F1/F2及单个元音共振峰的影响。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li><strong>F1显著增加</strong>：撒娇语中所有元音的F1均显著上升（平均提升约43 Hz），表明元音整体降低（模仿儿童较短的声道）。</li>
+<li><strong>角元音空间扩大且前移</strong>：角元音三角形面积显著扩大（+17,716 Hz²），且质心F2显著增加（前移）。</li>
+<li><strong>全元音空间扩大但无显著前后移动</strong>：全元音凸包面积显著扩大（+46,454 Hz²），但F2质心无显著变化，说明前后移动仅局限于前元音。</li>
+<li>个别元音（如 /i/）F2显著增加（前移），后元音（如 /u/）F2无显著变化。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该研究首次揭示韩国撒娇语通过系统性地增加F1（元音降低）来模仿儿童声学特征，并伴随前元音选择性前移，为语体中介的语音风格化提供了量化证据。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
