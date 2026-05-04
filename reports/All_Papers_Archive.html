@@ -99,11 +99,232 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 718 篇论文 | 涵盖 63 天的数据
+            共收录 726 篇论文 | 涵盖 64 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-05-01</h2>
+    <h2 class="date-divider">📅 2026-05-04</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00777" target="_blank">LASE: Language-Adversarial Speaker Encoding for Indic Cross-Script Identity Preservation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Encoding / Voice Cloning / Cross-lingual Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2605.00777</span>
+                <a href="pdfs/2605.00777.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Venkata Pushpak Teja Menta<br>
+                <div style="margin-top:5px"><span class="tag">speaker encoder</span><span class="tag">gradient reversal</span><span class="tag">language-invariant representation</span><span class="tag">voice cloning</span><span class="tag">Indic languages</span><span class="tag">cross-script</span><span class="tag">code-switching</span><span class="tag">diarization</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>多语言语音克隆中，主流说话人编码器（如WavLM-base-plus-sv、ECAPA-TDNN）在面对同一说话者不同语种（如印地语、泰卢固语、泰米尔语）时，会输出差异显著的嵌入向量，导致跨语种身份丢失。例如，WavLM-base-plus-sv在印地语与英语之间余弦相似度下降0.082，ECAPA-TDNN下降0.105。</p>
+<h2>方法创新</h2>
+<p>提出<strong>LASE（Language-Adversarial Speaker Encoder）</strong>，结构为：1）冻结的WavLM-base-plus主干网络；2）可训练的投影头（两层MLP输出256维嵌入）；3）梯度反转层（GRL）连接的语言分类器（4语种）。训练结合两种损失：监督对比损失（SupCon）保持说话人身份；梯度反转交叉熵损失（GRL）迫使嵌入对语言不敏感。采用三阶段λ调度（先让SupCon收敛再引入对抗）。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在西部口音语料库上，跨脚本余弦相似度差距从0.082降至0.013（缩小84.3%），印度口音语料库上从0.006降至0.026（置信区间包含零）。</li>
+<li>相比基线，跨脚本与底噪的margin提升2.4–2.7倍。</li>
+<li>在合成多说话人码切换说话人日志任务中，LASE在跨脚本说话人召回率（0.788）上与ECAPA-TDNN（0.789）持平，但仅用1/100训练数据。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>LASE通过简单的对抗训练投影头有效缓解了印地语脚本下的说话人身份语言漂移问题，证明小规模针对性训练即可显著改善跨语种说话人一致性。</p>
+<h2>语料库</h2>
+<p>由于缺乏真实多语种同一说话人数据，使用ElevenLabs合成8个声音在4种语言下的语音，经质量门控后获得1118训练对和1043测试对。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00721" target="_blank">Towards Improving Speaker Distance Estimation through Generative Impulse Response Augmentation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement, Spoken Language Processing</span>
+                <strong>ID:</strong> <span class="tag">2605.00721</span>
+                <a href="pdfs/2605.00721.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anton Ratnarajah, Mehmet Ergezer, Arun Nair, Mrudula Athi<br>
+                <div style="margin-top:5px"><span class="tag">Room impulse response</span><span class="tag">speaker distance estimation</span><span class="tag">generative impulse response</span><span class="tag">data augmentation</span><span class="tag">FastRIR</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统扬声器距离估计（SDE）模型在稀疏的真实房间脉冲响应（RIR）数据下性能有限，缺乏多样化的训练数据导致泛化能力不足，尤其在中等至远距离场景中误差较大。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>生成式RIR增强</strong>：采用修改的FastRIR条件生成对抗网络，仅基于说话人和听众位置生成1秒长、32kHz采样率的RIR，去除房间几何条件以聚焦距离参数。</li>
+<li><strong>质量过滤器</strong>：基于T60混响时间（±20%）、直接-混响比（DRR）、能量衰减曲线和早期反射模式筛选生成RIR，保留约25%（约26万条）高质量样本。</li>
+<li><strong>两阶段训练</strong>：先在GWA数据集预训练（10万条RIR），再分别对Treble和GWA房间数据进行微调；最后使用超参数优化（学习率1e-5~1e-3，轮次5~50）微调SDE模型。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>GWA房间：MAE从1.66m降至0.6m；Treble房间：MAE从2.18m降至0.69m。</li>
+<li>近距离（&lt;1m）误差较大，远距离性能稳固（误差约0.5m）。</li>
+<li>针对数据集单独微调的专用模型进一步降低MAE（Treble降10%，GWA降5%）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过生成式RIR增强与严格质量控制，显著提升了扬声器距离估计精度，尤其在中等至远距离场景，为声学数据增强提供了有效范本。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00607" target="_blank">Beyond Decodability: Reconstructing Language Model Representations with an Encoding Probe</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">语言模型可解释性（Language Model Interpretability）</span>
+                <strong>ID:</strong> <span class="tag">2605.00607</span>
+                <a href="pdfs/2605.00607.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Gaofei Shen, Martijn Bentum, Tom Lentz, Afra Alishahi, Grzegorz Chrupała<br>
+                <div style="margin-top:5px"><span class="tag">Encoding Probe</span><span class="tag">decoding probe</span><span class="tag">feature contribution</span><span class="tag">correlated features</span><span class="tag">probing</span><span class="tag">representational analysis</span><span class="tag">ridge regression</span><span class="tag">ablation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的解码探针（Decoding Probe）存在两个主要局限性：（1）不同特征的贡献无法直接比较，因为准确率依赖于类别数量和分布；（2）特征相关性（如词身份与语法类别）会导致探针结果被混淆，无法判断模型是否真正编码了目标特征。</p>
+<h2>方法创新</h2>
+<p>本文提出<strong>编码探针（Encoding Probe）</strong>，反转探针方向：从可解释特征集 Y 重建模型内部表示 X（即 g: Y → X）。通过多元岭回归模型，并采用特征消融（ablation）来分析每个特征的相对贡献（通过重建误差的增加量衡量），同时能够控制特征之间的相关性。该方法源自神经科学中的脑编码（brain encoding）范式。</p>
+<h2>实验结果</h2>
+<p>在语音模型（wav2vec2系列）和文本模型（BERT）上，使用声学、音系、句法、词汇和说话人身份等特征集进行实验。结果显示：（1）说话人相关效应在不同训练目标（自监督、ASR微调、SID微调）和数据集上差异显著；（2）句法和词汇特征对重建有独立的贡献，即使它们高度相关。这表明编码探针能更精确地分离不同信息类型的作用。</p>
+<h2>一句话评价</h2>
+<p>本文提出的编码探针提供了一种比传统解码探针更可解释、更可控的模型表示分析方法，能够直接量化并比较不同特征的贡献，同时有效处理特征相关性问题。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00494" target="_blank">Transformer-based End-to-End Control Filter Generation for Active Noise Control</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Active Noise Control</span>
+                <strong>ID:</strong> <span class="tag">2605.00494</span>
+                <a href="pdfs/2605.00494.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ziyi Yang, Zhengding Luo, Yisong Zou, Boxiang Wang, Qirui Huang, Woon-Seng Gan<br>
+                <div style="margin-top:5px"><span class="tag">Active Noise Control</span><span class="tag">Generative Fixed-Filter ANC</span><span class="tag">Transformer</span><span class="tag">End-to-End Learning</span><span class="tag">Unsupervised Learning</span><span class="tag">Control Filter Generation</span><span class="tag">Attention Mechanism</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Transformer-based E2E-CFG 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有GFANC方法依赖子滤波器分解与重组，流程复杂，且需要监督学习（依赖标号数据）。</li>
+<li>CNN仅捕捉局部依赖，无法有效建模长程时序特性，影响滤波器生成质量。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>端到端控制滤波器生成</strong>：直接由输入帧生成控制滤波器系数，省去分解-重组步骤，避免误差累积。</li>
+<li><strong>Transformer作为协处理器</strong>：利用自注意力机制捕捉帧内长程依赖，提升对噪声动态特性的建模能力。</li>
+<li><strong>无监督训练</strong>：将协处理器与实时控制器整合为可微ANC系统，以累积误差信号为训练目标，无需标签数据。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在8种真实噪声中，Transformer E2E-CFG在6种上优于GFANC，平均降噪(NR)达18.36 dB。</li>
+<li>在合成噪声上也表现出更好的泛化能力。</li>
+<li>训练仅使用合成噪声，在未见过的真实噪声上仍取得一致改进。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>提出首款基于Transformer的无监督端到端控制滤波器生成框架，简化了ANC管道并提升了降噪性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00431" target="_blank">MMAudioReverbs: Video-Guided Acoustic Modeling for Dereverberation and Room Impulse Response Estimation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement / Room Acoustics Modeling</span>
+                <strong>ID:</strong> <span class="tag">2605.00431</span>
+                <a href="pdfs/2605.00431.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Akira Takahashi, Ryosuke Sawata, Shusuke Takahashi, Yuki Mitsufuji<br>
+                <div style="margin-top:5px"><span class="tag">Video-to-Audio</span><span class="tag">Dereverberation</span><span class="tag">Room Impulse Response Estimation</span><span class="tag">Multimodal Learning</span><span class="tag">MMAudio</span><span class="tag">Room Acoustics</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有视频转音频（V2A）模型虽然能合成语义合理的声音，但未显式建模房间声学效应（如混响和房间冲激响应RIR），导致对这些效果的控制能力有限。</p>
+<h2>方法创新</h2>
+<p>本文提出MMAudioReverbs，基于预训练的V2A模型MMAudio，通过微调（无需修改网络架构）统一处理去混响和RIR估计两个任务。利用MMAudio隐式学习的视觉与房间声学关系，将视觉信息作为物理先验，辅助声学处理。通过重新解释条件信号和目标潜变量的角色，在同一流匹配框架下实现两种任务。</p>
+<h2>实验结果</h2>
+<p>实验表明：视觉信息有助于更稳定的去混响行为，并提升估计RIR的物理可解释性（尤其是早期能量特征与场景视觉一致）。初始化为预训练权重相比从头训练效果更好，音频和视觉线索在不同物理声学类型上各有优势。</p>
+<h2>一句话评价</h2>
+<p>本文开创性地证明了预训练多模态V2A基础模型可直接用于物理声学任务，为声学处理提供了新的视觉先验范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00329" target="_blank">Fast Text-to-Audio Generation with One-Step Sampling via Energy-Scoring and Auxiliary Contextual Representation Distillation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Audio</span>
+                <strong>ID:</strong> <span class="tag">2605.00329</span>
+                <a href="pdfs/2605.00329.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kuan-Po Huang, Bo-Ru Lu, Byeonggeun Kim, Mihee Lee, Zalan Fabian, Renard Korzeniowski, Qingming Tang, Greg Ver Steeg, Hung-yi Lee, Chieh-Chi Kao, Chao Wang<br>
+                <div style="margin-top:5px"><span class="tag">text-to-audio</span><span class="tag">one-step sampling</span><span class="tag">energy-scoring</span><span class="tag">representation distillation</span><span class="tag">autoregressive model</span><span class="tag">diffusion model</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>自回归（AR）模型结合扩散头在文本到音频（TTA）生成中取得了优异性能，但其迭代解码和多步采样过程导致高延迟，限制了实时应用。</p>
+<h2>方法创新</h2>
+<p>提出AUDIODEAR框架，核心包含两部分：
+1. <strong>能量-距离训练目标（Energy-Scoring Head）</strong>：替代扩散损失，直接一步将高斯噪声映射为音频潜变量，消除递归扩散采样过程。
+2. <strong>辅助上下文表示蒸馏（Auxiliary Contextual Representation Distillation）</strong>：利用预训练的扩散AR模型（IMPACT）作为教师，通过蒸馏对齐学生模型（能量评分模型）与教师的骨干网络表示，缩小一步与多步采样的质量差距。</p>
+<p>该框架在保持AR迭代步骤（r）不变的前提下，将采样步数（n）降为1，实现快速生成。</p>
+<h2>实验结果</h2>
+<p>在AudioCaps基准上，AUDIODEAR在客观指标（FD、FAD、KL、IS、CLAP）和主观指标上均优于现有一步/少步基线（ConsistencyTTA、SoundCTM、AudioLCM、AudioTurbo）。与最先进的AR扩散系统IMPACT相比，批量推理速度提升8.5倍，同时音频质量极具竞争力。</p>
+<h2>一句话评价</h2>
+<p>首次将能量-距离目标应用于TTA生成，结合表示蒸馏，实现了高质量、低延迟的一步采样TTA合成。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00251" target="_blank">Alethia: A Foundational Encoder for Voice Deepfakes</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice Deepfake Detection & Localization</span>
+                <strong>ID:</strong> <span class="tag">2605.00251</span>
+                <a href="pdfs/2605.00251.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Zhu, Brahmi Dwivedi, Jayaram Raghuram, Surya Koppisetti<br>
+                <div style="margin-top:5px"><span class="tag">Voice Deepfakes</span><span class="tag">Foundational Encoder</span><span class="tag">Self-Supervised Learning</span><span class="tag">Bottleneck Masked Embedding Prediction</span><span class="tag">Flow-Matching Spectrogram Reconstruction</span><span class="tag">Generative Pretraining</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有语音深度伪造检测和定位模型依赖通用语音基础模型（SFMs）的表示，但下游微调收益递减，模型泛化性差，对未见生成方法和真实世界扰动敏感。离散化预训练目标（如量化token）丢失了深度伪造痕迹信息。</p>
+<h2>方法创新</h2>
+<p>提出Alethia，首个专为语音深度伪造任务设计的基础编码器。预训练结合两个分支：①瓶颈掩码嵌入预测（连续嵌入预测，避免量化损失）；②基于流匹配的频谱图重建（生成式预训练）。学生模型从掩码波形中预测教师模型的连续嵌入，并重建未掩码频谱图。</p>
+<h2>实验结果</h2>
+<p>在5个任务（语音/唱歌深度伪造检测、局部伪造定位、源追踪等）的56个基准数据集上，Alethia显著超越Wav2vec2、HuBERT、WavLM等SOTA SFMs，对真实世界扰动更鲁棒，且零样本泛化到未见过领域（如唱歌深度伪造）。</p>
+<h2>一句话评价</h2>
+<p>首个针对语音深度伪造的基础编码器，通过连续嵌入预测与生成式预训练联合优化，突破离散目标局限，实现强泛化与鲁棒性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00225" target="_blank">From Birdsong to Rumbles: Classifying Elephant Calls with Out-of-Species Embeddings</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-04</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Bioacoustics / Audio Classification / Transfer Learning</span>
+                <strong>ID:</strong> <span class="tag">2605.00225</span>
+                <a href="pdfs/2605.00225.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Christiaan M. Geldenhuys, Thomas R. Niesler<br>
+                <div style="margin-top:5px"><span class="tag">Elephant call classification</span><span class="tag">Pretrained audio embeddings</span><span class="tag">Out-of-species transfer</span><span class="tag">Self-supervised learning</span><span class="tag">Layerwise analysis</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大象叫声分类面临数据稀缺、标注昂贵的问题，传统监督方法易过拟合且泛化差。</p>
+<h2>方法创新</h2>
+<p>利用预训练的声学嵌入模型（来自通用音频、语音、其他物种生物声学），保持嵌入模型固定，仅训练轻量级下游分类器（逻辑回归、MLP、RNN、GRU、LSTM）。对Transformer编码器进行逐层分析，发现中间层（如第2层）嵌入更有效，可大幅减少参数量。</p>
+<h2>实验结果</h2>
+<p>在非洲象和亚洲象数据集上，Perch 2.0嵌入+下游分类器AUC分别达0.849和0.936，与端到端AST模型（AUC约0.87和0.95）差距在2.2%以内。中间层嵌入保留约10%参数即达到相近性能。</p>
+<h2>一句话评价</h2>
+<p>首次证明无需微调的跨物种声学嵌入可高效分类大象叫声，为低资源生物声学分类提供新范式。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-05-01</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2604.27936" target="_blank">Beyond the Baseband: Adaptive Multi-Band Encoding for Full-Spectrum Bioacoustics Classification</a>
