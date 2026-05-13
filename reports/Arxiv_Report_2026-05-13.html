@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-05-13</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-05-13 | 来源: eess.AS | 新增论文: 7 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.12287" target="_blank">The SMC Blind Spot: A Failure Mode Analysis of State-of-the-Art Beat Tracking</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval (Beat Tracking)</span>
+                <strong>ID:</strong> <span class="tag">2605.12287</span>
+                <a href="pdfs/2605.12287.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jaehoon Ahn, Tae Gum Hwang, Moon-Ryul Jung<br>
+                <div style="margin-top:5px"><span class="tag">beat tracking</span><span class="tag">failure mode analysis</span><span class="tag">SMC dataset</span><span class="tag">activation function</span><span class="tag">Dynamic Bayesian Network</span><span class="tag">tempo estimation</span><span class="tag">expressive timing</span><span class="tag">octave errors</span><span class="tag">continuity errors</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前最先进的节拍跟踪模型（如Beat Transformer、Beat This）在标准数据集上接近完美，但在SMC数据集上F-score仅0.63，存在系统性盲点。SMC数据集由217段节奏复杂的40秒音乐组成，模型普遍表现出三类失败模式：<strong>八度错误</strong>（正确相位但错误节拍层级）、<strong>连续性错误</strong>（局部正确但全局不稳定）、<strong>完全跟踪失败</strong>（F&lt;0.3且AMLt&lt;0.3）。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>细粒度诊断分析</strong>：首次利用SMC数据集每首曲目的难度标签，将23个描述符归纳为四类困难轴：弱节拍线索、节奏不稳定、节拍模糊、结构困难。</li>
+<li><strong>激活函数分析</strong>：提取原始激活函数，发现失败主因并非弱激活或缺失激活，而是模型在表现性计时音乐上产生“自信但错误”的激活（检测到非节拍事件）。</li>
+<li><strong>DBN参数调整</strong>：揭示madmom默认DBN最小BPM为55，导致21%的慢速曲目被强制预测双倍节奏；将最小BPM降至30可纠正。同时，将DBN的节奏连续性超参数设为自适应（每曲优化）可使F提升至0.642。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>Beat This在SMC上F=0.627（8折交叉验证），其中简单曲目F=0.819，困难曲目F=0.609。</li>
+<li>困难曲目平均有3.85个难度标签，激活2.33个困难轴；随着激活轴数增加，F-score从0.782（0轴）降至0.593（4轴）。</li>
+<li>完全失败曲目中，90%的激活峰值在错误位置，模型检测到了非节拍声学事件（如钢琴击键、吉他拨弦、人声入口）。</li>
+<li>将DBN限定为真值节奏±20%仅改善节拍层级连续性（CMLt），未改善节拍位置（F-measure），表明两者独立。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过细粒度诊断揭示了当前节拍跟踪模型在复杂音乐上的根本失败原因在于激活函数对非节拍事件的置信错误，而非后处理DBN，并提出了训练数据多样化与多假设节奏估计的具体改进方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.12107" target="_blank">Too Good to Be True: A Study on Modern Automatic Speech Recognition for the Evaluation of Speech Enhancement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2605.12107</span>
+                <a href="pdfs/2605.12107.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Danilo de Oliveira, Tal Peer, Timo Gerkmann<br>
+                <div style="margin-top:5px"><span class="tag">Speech Enhancement</span><span class="tag">Automatic Speech Recognition</span><span class="tag">Word Error Rate</span><span class="tag">Evaluation Metrics</span><span class="tag">Human Correlation</span><span class="tag">Transducer Model</span><span class="tag">CTC</span><span class="tag">Whisper</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有语音增强（SE）系统评估常用词错误率（WER），但WER高度依赖于自动语音识别（ASR）模型的选择和文本归一化流程，且现代ASR模型与人类识别增强语音的相关性尚未深入探究。</p>
+<h2>方法创新</h2>
+<p>本文系统比较了多种现代端到端ASR模型（包括CTC、Transducer、Attention架构）在噪声和深度神经网络SE伪影下的表现，通过听力实验评估与人类WER的相关性。选取了QuartzNet（CTC）、wav2vec2（CTC）、Parakeet TDT（Transducer）、Whisper（Attention）等模型，并采用多种SE模型（如SGMSE+、NCSN++M等）生成增强语音，进行综合评估。</p>
+<h2>实验结果</h2>
+<p>听力实验表明：Transducer模型（Parakeet TDT v2）与人类WER相关性最高，在评估子集上人类WAcc为95.1%，Parakeet TDT达到97.0%，而Whisper Large v3 Turbo为98.1%但可能存在幻觉问题。然而，现代ASR模型的噪声鲁棒性及其对上下文的利用可能削弱对声学增强性能的评估有效性，导致“好得不像真的”结果。</p>
+<h2>一句话评价</h2>
+<p>本文提醒研究者在使用ASR评估SE时需谨慎选择模型并明确报告配置，否则WER可能误导对增强效果的判断。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.12036" target="_blank">Towards Fine-Grained Multi-Dimensional Speech Understanding: Data Pipeline, Benchmark, and Model</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Understanding</span>
+                <strong>ID:</strong> <span class="tag">2605.12036</span>
+                <a href="pdfs/2605.12036.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Guojian Li, Zhixian Zhao, Zhennan Lin, Jingbin Hu, Qirui Zhan, Yuang Cao, Pengyuan Xie, Chuan Xie, Jie Liu, Qiang Zhang, Zhonghua Fu, Lei Xie<br>
+                <div style="margin-top:5px"><span class="tag">fine-grained</span><span class="tag">multi-dimensional</span><span class="tag">speech understanding</span><span class="tag">data pipeline</span><span class="tag">benchmark</span><span class="tag">curriculum fine-tuning</span><span class="tag">FM-Speech</span><span class="tag">FMSU-Bench</span><span class="tag">paralinguistic</span><span class="tag">acoustic attributes</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<p>当前语音大语言模型虽在基础语音识别任务上表现优异，但缺乏细粒度、多维度的感知能力，难以解耦微声学线索、声学场景和副语言信号等复杂特征，导致对真实世界语音的理解不完整。该问题源于三个交互因素：高质量表现性数据稀缺、缺乏多维度属性的细粒度建模、以及依赖覆盖范围有限且粗粒度的基准。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>数据管道</strong>：提出LLM驱动的数据筛选管道，结合多专家交叉验证，从影视等自然音频中提取高质量自发语音语料，解决复杂声学和长音频时间戳对齐挑战。采用安全分块策略和渐进式两阶段标注（先粗后细），并引入领域增强和多专家交叉验证确保质量。</li>
+<li><strong>基准FMSU-Bench</strong>：构建覆盖14个语音属性维度（分为5层分类：说话人人口统计、声学韵律特征、情感语义推理、声学场景分析、语言-副语言整合）的双语基准，包含超2万实例，用于细粒度多维度评估。</li>
+<li><strong>模型FM-Speech</strong>：采用解耦属性建模和渐进课程微调框架，在统一范式中联合捕获14个属性，提升细粒度感知能力，并在FMSU-Bench上取得开源模型最佳性能。</li>
+</ol>
+<h2>实验结果（基于摘要）</h2>
+<p>在FMSU-Bench上的广泛评估表明，现有语音LLM在多维度细粒度理解上仍需显著改进；而FM-Speech大幅超越当前开源模型，建立了鲁棒的真实世界语音理解范式。</p>
+<h2>一句话评价</h2>
+<p>该论文系统地解决了语音理解中的细粒度多维度感知难题，通过创新的数据管道、全面的基准和先进的模型，推动了语音AI向更具感知力和同理心的方向迈进。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.11422" target="_blank">Chunkwise Aligners for Streaming Speech Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2605.11422</span>
+                <a href="pdfs/2605.11422.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wen Shen Teo, Takafumi Moriya, Masato Mimura<br>
+                <div style="margin-top:5px"><span class="tag">Chunkwise Aligner</span><span class="tag">streaming ASR</span><span class="tag">self-transduction</span><span class="tag">end-of-chunk probability</span><span class="tag">Transducer</span><span class="tag">Aligner</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Chunkwise Aligners for Streaming Speech Recognition 论文总结</h1>
+<h2>核心痛点</h2>
+<ol>
+<li>Transducer 模型训练代价高，需计算所有可能的音-标签对齐。</li>
+<li>Aligner 模型虽简化训练，但丢弃了局部时间对齐，无法用于流式识别，且对未见语音长度不鲁棒。</li>
+</ol>
+<h2>方法创新</h2>
+<ul>
+<li>提出 Chunkwise Aligner，将音频划分为固定大小的块（chunks），在每个块内进行局部自转导（self-transduction），将标签对齐到块的最左侧帧。</li>
+<li>引入可学习的<strong>块结束概率（End-of-Chunk, EOC）</strong>，用于控制块间切换，无需 blank 符号。</li>
+<li>训练目标为交叉熵损失（标签概率）与二值交叉熵损失（EOC 概率）之和，计算复杂度从 Transducer 的 T×U×(V+1) 降至 U×(V+1+N/U)。</li>
+<li>解码采用束搜索，通过 EOC 阈值提前终止当前块，解码步数与标签长度 U 成正比，而非帧长 T。</li>
+</ul>
+<h2>实验结果（摘要中提及）</h2>
+<ul>
+<li>在离线和流式场景中均达到与 Transducer 相当的准确率。</li>
+<li>训练和解码效率显著优于 Transducer 和原始 Aligner。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>Chunkwise Aligner 在保持流式能力的同时，大幅降低了训练和计算成本，是流式 ASR 的高效替代方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.12135" target="_blank">STRUM: A Spectral Transcription and Rhythm Understanding Model for End-to-End Generation of Playable Rhythm-Game Charts</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Processing / Music Information Retrieval / Automatic Music Transcription</span>
+                <strong>ID:</strong> <span class="tag">2605.12135</span>
+                <a href="pdfs/2605.12135.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Joshua Opria<br>
+                <div style="margin-top:5px"><span class="tag">Automatic Music Transcription</span><span class="tag">Rhythm Game</span><span class="tag">Chart Generation</span><span class="tag">Onset Detection</span><span class="tag">Multi-instrument</span><span class="tag">Source Separation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>节奏游戏（如Clone Hero）的谱面制作需要大量手动工作，社区面临瓶颈：制作一个包含五种乐器、四个难度的谱面需要数小时，新手学习成本高。现有自动音乐转录（AMT）系统不直接生成可玩谱面，而端到端方法缺乏定量评估。</p>
+<h2>方法创新</h2>
+<p>提出STRUM，一个完整的音频到谱面管线，无需任何先验元数据（如节奏、调性）。核心组件：
+- <strong>源分离</strong>：使用htdemucs 6s将混合音频分离成6个音轨。
+- <strong>鼓</strong>：两阶段CRNN起始检测器（V14） + 六模型集成分类器（将鼓事件分为7类）+ 频谱混淆修正（鼓棒裁决器、Phase-3校正器、Tom细化CNN） + 目标启发式规则。
+- <strong>吉他/贝斯</strong>：CRNN起始检测 + pYIN单音高跟踪 + 基于规则的五弦映射。
+- <strong>人声</strong>：Whisper单词级时间戳 + pYIN音高轮廓 + 动态时间规整对齐。
+- <strong>键盘</strong>：频谱峰值检测 + 滑动窗口音高分配。
+- <strong>后处理</strong>：合并各乐器MIDI，统一节拍和速度元数据。</p>
+<h2>实验结果</h2>
+<p>在30首歌曲（筛选自65首，满足鼓音轨RMS阈值）的基准测试上，以±100 ms容忍度和每首歌全局偏移搜索：
+- 鼓：F1=0.838，精度0.823，召回0.854
+- 贝斯：F1=0.694，精度0.658，召回0.734
+- 吉他：F1=0.651，精度0.745，召回0.578
+- 人声：F1=0.539，精度0.632，召回0.470
+- 鼓每类准确率：Kick 0.61，Snare 0.44，Hi-hat 0.49，Ride/High-tom 0.19，Crash/Floor-tom 0.57
+- 消融实验：鼓棒裁决器、Phase-3校正器、Crash/Ride冲突否决对F1有显著贡献（约0.5-0.6%下降）。
+- 社区谱面与音频起始偏差：仅89.0%的ground truth事件在±100 ms内对应音频起始峰，说明社区谱面本身存在量化误差。</p>
+<h2>一句话评价</h2>
+<p>STRUM是首个开源的多乐器音频到可玩节奏游戏谱面管线，通过模块化设计、严格的操作包络定义和细粒度消融分析，在鼓上取得较好效果，但其他乐器仍有提升空间。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.11286" target="_blank">Adaptive Diagonal Loading using Krylov Subspaces for Robust Beamforming</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2605.11286</span>
+                <a href="pdfs/2605.11286.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Manan Mittal, Ryan M. Corey, John R. Buck, Andrew C. Singer<br>
+                <div style="margin-top:5px"><span class="tag">adaptive beamforming</span><span class="tag">diagonal loading</span><span class="tag">Krylov subspace</span><span class="tag">Lanczos algorithm</span><span class="tag">white noise gain</span><span class="tag">robust beamforming</span><span class="tag">eigenvalue decomposition</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大规模麦克风阵列在动态声学环境中，由于快拍数不足，样本协方差矩阵病态，导致白噪声增益（WNG）下降，目标信号严重抵消。传统的对角加载方法需要计算矩阵的极值特征值，精确特征分解复杂度为O(M^3)，计算负担大。</p>
+<h2>方法创新</h2>
+<p>本文提出一种基于Krylov子空间的快速自适应对角加载方法。利用Lanczos迭代，将大规模空间协方差矩阵投影到k×k三对角矩阵（k≪M），通过计算Ritz值近似极值特征值。只需k次矩阵-向量乘法（复杂度O(kM^2)）即可得到最小所需加载量，严格保证WNG在指定范围内。</p>
+<h2>实验结果</h2>
+<p>仿真（M=15，快拍数L=37）和SWellEx-96实际数据实验表明，仅需k=4次迭代，所提方法在输出SINR、WNG约束、均方误差等方面与精确特征分解性能完全相同，而计算复杂度大幅降低。</p>
+<h2>一句话评价</h2>
+<p>该方法在保证鲁棒波束成形性能的同时，将特征值估计的复杂度从O(M^3)降至O(kM^2)，是一种高效实用的自适应对角加载方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2509.13548" target="_blank">Mixture-of-Experts Framework for Field-of-View Enhanced Signal-Dependent Binauralization of Moving Talkers</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Rendering</span>
+                <strong>ID:</strong> <span class="tag">2509.13548</span>
+                <a href="pdfs/2509.13548.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Manan Mittal, Thomas Deppisch, Joseph Forrer, Chris Le Sueur, Zamir Ben-Hur, David Lou Alon, Daniel D.E. Wong<br>
+                <div style="margin-top:5px"><span class="tag">Spatial Audio</span><span class="tag">Binaural Rendering</span><span class="tag">Mixture of Experts</span><span class="tag">Field-of-View Enhancement</span><span class="tag">Signal-Dependent Binaural Signal Matching</span><span class="tag">Beamforming</span><span class="tag">Microphone Arrays</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统双耳信号匹配方法依赖于显式的到达方向（DOA）估计或静态假设，难以实时跟踪移动声源，且无法灵活支持用户自定义的视野增强（FoVE）功能，导致在增强现实/虚拟现实等动态场景中空间音频渲染效果不佳。</p>
+<h2>方法创新</h2>
+<p>提出一种基于混合专家（MoE）框架的信号相关双耳化方法，将每个候选方向视为一个“专家”，每个专家设计一个信号相关的双耳滤波器。通过在线凸优化和指数加权组合，动态融合各专家输出，实现隐式定位和连续声源跟踪。同时，通过增益控制和失真控制两种策略扩展至视野增强，允许用户强调或抑制特定方向的声音，且无需特定阵列几何结构。</p>
+<h2>实验结果</h2>
+<p>在仿真（pyroomacoustics，RT60≈200ms）和真实环境（头戴式4麦克风阵列）中，移动说话人沿6°步长连续运动（≈2m/s）。提出的基于残差能量的损失函数有效跟踪说话人运动，混合权重自适应组合滤波器。与现有BSM、COMPASS-BSM、d-BSM相比，MoE在保持双耳线索（ITD/ILD）精度的同时，提供了动态视野增强能力。</p>
+<h2>一句话评价</h2>
+<p>本文通过混合专家框架实现了无需显式DOA估计的动态视野增强双耳化，为下一代消费级音频设备的空间音频渲染提供了灵活且鲁棒的解决方案。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
