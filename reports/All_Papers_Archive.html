@@ -99,11 +99,113 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 783 篇论文 | 涵盖 72 天的数据
+            共收录 786 篇论文 | 涵盖 73 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-05-15</h2>
+    <h2 class="date-divider">📅 2026-05-18</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.16251" target="_blank">Real-time Speech Restoration using Data Prediction Mean Flows</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-18</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2605.16251</span>
+                <a href="pdfs/2605.16251.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sebastian Braun<br>
+                <div style="margin-top:5px"><span class="tag">flow matching</span><span class="tag">mean flows</span><span class="tag">speech restoration</span><span class="tag">real-time</span><span class="tag">low latency</span><span class="tag">data prediction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有语音恢复生成模型（如扩散、流匹配）多为离线大型模型，延迟高、计算量大，无法满足实时应用（如通信、助听器、AR设备）的低延迟（&lt;30ms）和低计算量要求。</li>
+<li>传统NCSN++架构因时间下采样引入&gt;600ms算法延迟；DiffusionBuffer延迟仍达180-320ms。因果化改进会增加数倍复杂度。</li>
+<li>流匹配模型的推理步骤数（NFE）与计算量正相关，需要减少步骤以降低复杂度。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>数据预测均值流（Data Prediction Mean Flows）</strong>：首次将改进均值流（IMF）训练与数据预测损失结合，替代瞬时速度损失，提升生成质量并减少推理步骤。</li>
+<li><strong>低延迟网络架构</strong>：提出新型骨干网络，在保持流匹配能力的同时，计算量降低120倍，并实现零算法延迟（仅含STFT固有延迟）。</li>
+<li><strong>训练调度优化</strong>：精心设计流时间分布、IMF调度（sigmoid-based r=t比率调度和cosine跨度分布调度）以及先验分布（从带噪均值开始，使用频谱相似噪声），提升性能。</li>
+<li><strong>操作域</strong>：在复压缩STFT域（幅度压缩c=0.3）进行流匹配，避免额外编码器/解码器引入的延迟和误差。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在大规模训练数据上验证泛化能力，并使用真实录音进行主观和客观评估。</li>
+<li>与NCSN++非因果基线相比，计算量减少120倍（MACs/s），同时实现相似音频质量，且无算法延迟（仅STFT窗口延迟）。</li>
+<li>单步推理即可达到满意效果（NFE=1），显著优于需要多步的传统流匹配模型。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过数据预测均值流和轻量级低延迟架构，首次实现了实时语音恢复的流匹配模型，计算量降低两个数量级，是实时音频生成领域的突破性工作。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.15854" target="_blank">Improving Automatic Speech Recognition for Speakers Treated for Oral Cancer using Data Augmentation and LLM Error Correction</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-18</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2605.15854</span>
+                <a href="pdfs/2605.15854.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hidde Folkertsma, Thomas Tienkamp, Sebastiaan de Visscher, Max Witjes, Rob van Son, Jiapan Guo, Bence Mark Halpern<br>
+                <div style="margin-top:5px"><span class="tag">automatic speech recognition</span><span class="tag">oral cancer speech</span><span class="tag">data augmentation</span><span class="tag">LLM error correction</span><span class="tag">Whisper</span><span class="tag">MMS</span><span class="tag">text-to-speech</span><span class="tag">voice conversion</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的ASR系统在口腔癌（OC）术后患者语音识别上表现不佳，主要由于OC语音数据稀缺且变异大，导致模型泛化能力差。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>数据增强</strong>：对比多种增强技术，包括传统信号处理方法（时间拉伸、速度扰动、声道长度扰动）、语音转换（kNN-VC）和文本转语音（XTTSv2），生成合成数据以扩充训练集。</li>
+<li><strong>LLM纠错</strong>：利用大语言模型（LLM）作为后处理步骤，纠正ASR模型的输出错误，进一步提升识别性能。</li>
+<li><strong>模型微调</strong>：基于Whisper和MMS模型进行微调，包括全参数微调和参数高效微调（LoRA），并对比是否使用语言模型。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在NKI-RUG-UMCG数据集上，采用留一说话者（LOSO）评估。</li>
+<li>TTS增强平均降低词错误率（WER）8%（相对值）。</li>
+<li>LLM纠错进一步使微调模型WER降低21.4-26.2%，非微调模型降低10.0%。</li>
+<li>整体上，Whisper WER降低40%，MMS降低50%。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文验证了结合数据增强和LLM纠错是提升口腔癌术后语音识别性能的有效策略。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.15442" target="_blank">Mind the Gap: Impact of Synthetic Conversational Data on Multi-Talker ASR and Speaker Diarization</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-05-18</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multi-talker Speech Processing / 多说话人语音处理</span>
+                <strong>ID:</strong> <span class="tag">2605.15442</span>
+                <a href="pdfs/2605.15442.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Alexander Polok, Ivan Medennikov, Jan Černocký, Shinji Watanabe, Lukáš Burget, Samuele Cornell<br>
+                <div style="margin-top:5px"><span class="tag">multi-talker ASR</span><span class="tag">speaker diarization</span><span class="tag">synthetic data</span><span class="tag">conversation simulation</span><span class="tag">FastMSS</span><span class="tag">DiCoW</span><span class="tag">Sortformer</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>真实多说话人对话数据匮乏，人工标注成本高昂且隐私受限，严重制约了多说话人ASR和说话人分离模型的发展。现有合成数据策略碎片化，缺乏对任务差异性和模拟参数影响的系统理解。</p>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>FastMSS</strong>：高效开源多说话人对话模拟器，支持灵活的 turn-taking 建模（包括 turn hold, turn switch, interruption, backchannel），可自动从语料库学习转换参数或手动设置，支持可扩展生成和Lhotse集成，显著优于MMS-MSG和NeMo模拟器。</li>
+<li>系统对比了不同模拟变量（turn-taking动态、源域、声学增强、数据混合）对<strong>DiCoW（MT-ASR）</strong>和<strong>Sortformer（说话人分离）</strong>的影响。</li>
+</ul>
+<h2>实验结果</h2>
+<ol>
+<li><strong>Turn-taking动态</strong>：使用语料库拟合的统计量优于均匀先验；增大交叠率提升ASR但损害说话人分离。</li>
+<li><strong>源域多样性</strong>：混合多种域数据（如LibriSpeech+VoxPopuli+AMI等）优于单一域匹配，即使域完全匹配也如此。</li>
+<li><strong>声学增强</strong>：对说话人分离至关重要，对ASR影响较小。</li>
+<li><strong>合成数据 vs 真实数据</strong>：合成数据训练可接近真实数据基线；合成+真实联合训练优于仅真实训练。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>该工作通过系统实验揭示了合成数据生成策略中任务相关的关键权衡，并提供了高效开源工具，对多说话人语音处理领域具有重要指导意义。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-05-15</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2605.15044" target="_blank">SpeakerLLM: A Speaker-Specialized Audio-LLM for Speaker Understanding and Verification Reasoning</a>
