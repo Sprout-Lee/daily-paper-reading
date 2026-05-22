@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-05-22</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-05-22 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.22120" target="_blank">Effective User-defined Keyword Spotting with Dual-stage Matching, Multi-modal Enrollment, and Continual Adaptation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Keyword Spotting</span>
+                <strong>ID:</strong> <span class="tag">2605.22120</span>
+                <a href="pdfs/2605.22120.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhiqi Ai, Han Cheng, Shiyi Mu, Xinnuo Li, Yongjin Zhou, Shugong Xu<br>
+                <div style="margin-top:5px"><span class="tag">user-defined keyword spotting</span><span class="tag">dual-stage detection</span><span class="tag">multi-modal enrollment</span><span class="tag">few-shot learning</span><span class="tag">continual adaptation</span><span class="tag">phoneme matching</span><span class="tag">query-by-example</span><span class="tag">CTC decoding</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<ol>
+<li><strong>零样本能力差</strong>：现有方法在未见关键词和易混淆词上区分能力不足。</li>
+<li><strong>说话人差异</strong>：同一关键词因口音不同导致性能不一致。</li>
+<li><strong>数据成本高</strong>：用户注册新关键词需大量数据，微调成本高。</li>
+</ol>
+<h3>方法创新</h3>
+<ul>
+<li><strong>双阶段匹配（Dual-stage Matching）</strong>：第一阶段用CTC流式音素搜索定位候选片段，第二阶段用QbyT音素匹配器精细验证，增强易混淆词区分能力。</li>
+<li><strong>多模态注册（Multi-modal Enrollment）</strong>：融合用户语音特征和关键词文本嵌入，提升注册用户准确率。</li>
+<li><strong>持续适应（Continual Adaptation）</strong>：通过合成数据和真实唤醒数据进行参数高效微调，仅更新187k参数，实现快速适应。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>LibriPhrase Hard子集：AUC 97.85%，EER 6.13%，达到SOTA。</li>
+<li>说话人依赖场景：优于纯文本注册，显著提升。</li>
+<li>持续适应机制仅用187k参数进一步提升性能，适合设备端部署。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>提出DMA-KWS框架，通过双阶段匹配、多模态注册和持续适应，有效解决用户定义关键词唤醒的零样本、说话人差异和数据成本问题，性能SOTA。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.21891" target="_blank">Neighbor-Consistent Neural Filters for Robust Personal Sound Zones Under Localization Uncertainty</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag">2605.21891</span>
+                <a href="pdfs/2605.21891.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hao Jiang, Edgar Choueiri<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>无法获取全文内容，跳过总结。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.22746" target="_blank">Plug-in Losses for Evidential Deep Learning: A Simplified Framework for Uncertainty Estimation that Includes the Softmax Classifier</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Uncertainty Estimation, Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2605.22746</span>
+                <a href="pdfs/2605.22746.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Berk Hayta, Hannah Laus, Simon Mittermaier, Felix Krahmer<br>
+                <div style="margin-top:5px"><span class="tag">Evidential Deep Learning</span><span class="tag">Uncertainty Estimation</span><span class="tag">Softmax Classifier</span><span class="tag">Plug-in Loss</span><span class="tag">Speech Commands</span><span class="tag">Selective Prediction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的Evidential Deep Learning (EDL) 使用Dirichlet分布的期望损失，计算复杂且优化困难，难以集成到标准训练流程。同时，softmax分类器在不确定性估计中的理论基础不足。</p>
+<h2>方法创新</h2>
+<p>论文提出一种简化EDL框架的方法：通过泰勒展开将Dirichlet期望损失近似为在Dirichlet均值处评估的损失（plug-in loss），证明当证据足够大时近似误差趋于零。该框架将标准softmax分类器作为特例纳入，从而为softmax用于不确定性估计提供了理论支持。</p>
+<h2>实验结果</h2>
+<p>在Google Speech Commands v1数据集上进行关键词识别任务，比较了经典EDL、简化EDL（包括softmax变体）的预测准确率和选择性预测性能（覆盖-准确率权衡）。结果表明，简化EDL在性能上与传统EDL相当，但实现更简单。</p>
+<h2>一句话评价</h2>
+<p>提出了一种理论上合理、实现简单的EDL简化方法，弥合了理论复杂性与实际部署之间的差距，并首次在语音识别任务中展示了EDL的不确定性估计能力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.22732" target="_blank">Beyond Acoustic Emotion Recognition: Multimodal Pathos Analysis in Political Speech Using LLM-Based and Acoustic Emotion Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Recognition, Multimodal Analysis</span>
+                <strong>ID:</strong> <span class="tag">2605.22732</span>
+                <a href="pdfs/2605.22732.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Juergen Dietrich<br>
+                <div style="margin-top:5px"><span class="tag">speech emotion recognition</span><span class="tag">political communication</span><span class="tag">pathos analysis</span><span class="tag">large language models</span><span class="tag">emotion2vec</span><span class="tag">multimodal analysis</span><span class="tag">EMO-DB</span><span class="tag">Russell Circumplex</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>总结</h2>
+<p><strong>核心痛点</strong>：传统声学语音情感识别（SER）模型在政治演讲的Pathos（情感诉求）分析中表现不佳，原因包括：1）标准SER基准（如EMO-DB）使用表演性语音，生态效度低；2）声学模型缺乏对语义和语境的深度理解；3）Pathos维度（由TRUST多智能体LLM流水线定义）与声学维度（Arousal/Valence）存在概念差异。</p>
+<p><strong>方法创新</strong>：
+- 比较三种分析模态：（1）emotion2vec_plus_large声学SER模型，通过后验Russell Circumplex投影得到连续Arousal/Valence；（2）Gemini 2.5 Flash多模态LLM，同时分析音频和转录，开放标签；（3）TRUST-Pathos得分（由三个LLM辩护者集成通过中位数共识得到）。
+- 对EMO-DB进行系统性质量评估，使用Gemini进行开放式标注，揭示其结构性缺陷（性别编码不一致、文本转录错误、类别不兼容）。
+- 引入后验Russell Circumplex投影概念，并讨论其假设和局限性。</p>
+<p><strong>实验结果</strong>：
+- 在Felix Banaszak的Bundestag演讲（51个片段，41个有效Pathos得分）上，Spearman秩相关表明：Gemini Valence与TRUST-Pathos强相关（ρ=+0.664, p&lt;0.001），而emotion2vec Valence不相关（ρ=+0.097, p=0.499）。
+- 在EMO-DB上，Gemini开放标注的总匹配率仅为30.1%，其中Disgust匹配率0%，Boredom匹配率12.3%，而平均置信度高达0.82，表明置信度与正确性不一致。
+- 低唤醒度的Boredom常被误标为Neutral，表明Gemini在低唤醒德语语音上的表现存在表示差距。</p>
+<p><strong>一句话评价</strong>：基于LLM的多模态分析在捕捉政治演讲中语义定义的Pathos维度上显著优于纯声学模型，但声学特征仍对低层Arousal估计有帮助；同时揭示了现有SER基准的生态效度缺陷。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.22262" target="_blank">Automatic Contextual Audio Denoising</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2605.22262</span>
+                <a href="pdfs/2605.22262.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Diep Luong, Konstantinos Drossos, Mikko Heikkinen, Tuomas Virtanen<br>
+                <div style="margin-top:5px"><span class="tag">automatic contextual audio denoising</span><span class="tag">context-dependent denoising</span><span class="tag">source separation</span><span class="tag">acoustic scene classification</span><span class="tag">neural network</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前音频去噪系统采用固定的目标-噪声定义，缺乏上下文感知，导致在不同场景下可能移除有用成分或无法抑制无关成分。</p>
+<h2>方法创新</h2>
+<p>提出<strong>自动上下文音频去噪（ACAD）</strong>概念，根据推断的音频上下文动态定义目标和噪声。本文限制上下文为声学场景类别，将场景典型事件定义为上下文内（IC），非典型事件定义为上下文外（OC）。方法包含两个模块：
+1. <strong>上下文提取器C</strong>：预训练的声学场景分类器（CRNN），从输入音频提取上下文嵌入。
+2. <strong>去噪模型D</strong>：基于UNet，以噪声频谱和上下文嵌入为输入，输出掩码，实现OC成分去除。
+训练分两阶段：先预训练C，再联合训练D（冻结或微调C）。</p>
+<h2>实验结果</h2>
+<p>在包含6个声学场景（厨房、公园、餐厅、洗手间、街道、地铁）的合成数据集上，比较了无上下文、Oracle上下文、无关上下文等方法。所提ACAD方法在客观指标上优于所有基线，表明上下文感知能提升去噪性能。</p>
+<h2>一句话评价</h2>
+<p>首次将声学场景上下文融入音频去噪，通过动态定义噪声实现自适应降噪，为上下文感知音频处理开辟新方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.22083" target="_blank">RobustSpeechFlow: Learning Robust Text-to-Speech Trajectories via Augmentation-based Contrastive Flow Matching</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2605.22083</span>
+                <a href="pdfs/2605.22083.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jinhyeok Yang, Hyeongju Kim, Yechan Yu, Joon Byun, Frederik Bous, Juheon Lee<br>
+                <div style="margin-top:5px"><span class="tag">text-to-speech</span><span class="tag">zero-shot TTS</span><span class="tag">flow matching</span><span class="tag">alignment robustness</span><span class="tag">contrastive learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>RobustSpeechFlow 论文总结</h2>
+<h3>核心痛点</h3>
+<p>Flow-matching 文本到语音（TTS）系统虽然实现了强大的零样本说话人相似度和自然度，但仍然存在内容保真度问题，特别是由于不完美对齐导致的跳跃和重复错误。这些错误在生成语音中表现为单词或短语的重复或跳过，严重降低系统可靠性，甚至可能带来安全合规风险。</p>
+<h3>方法创新</h3>
+<p>提出了 <strong>RobustSpeechFlow</strong>，一种通过扩展对比流匹配（Contrastive Flow Matching）并引入长度保持的重复和跳跃潜在增强（augmentation）来改进对齐鲁棒性的训练策略。该方法无需外部对齐器、ASR 模型或偏好数据，直接惩罚现实世界中常见的失败模式。具体地，在潜在空间合成“硬负样本”：通过保留长度不变的区域覆盖操作模拟重复错误（同时隐含跳过），以及通过移位并用静默填充模拟跳过错误。训练时，模型不仅学习正确的流匹配轨迹，还通过对比正则化项分离出朝向这些负样本的错误方向，从而在推理时避免类似错误。</p>
+<h3>实验结果</h3>
+<ul>
+<li>在 <strong>Seed-TTS-eval</strong> 基准上，仅用 0.06B 参数，将词错误率（WER）从 1.44 降低至 1.38。</li>
+<li>在自建的 <strong>ZERO500</strong> 基准（包含多样说话人、韵律和文本条件）上，在 NFE=24 时，英文字符错误率（CER）从 0.48% 降至 0.35%，韩文 CER 从 0.81% 降至 0.57%。</li>
+<li>相比基线（SupertonicTTS）和仅使用随机负样本的对比流匹配（ContrastiveFM），RobustSpeechFlow 在多个指标上均取得一致改进，尤其在低 NFE 推理时提升显著。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>RobustSpeechFlow 通过针对 TTS 典型对齐错误的简单潜在增强对比训练，在几乎不增加额外成本的前提下有效提升了内容鲁棒性，是一种实用且高效的改进方案。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
