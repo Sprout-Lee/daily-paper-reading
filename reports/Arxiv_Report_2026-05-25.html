@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-05-25</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-05-25 | 来源: eess.AS | 新增论文: 7 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23859" target="_blank">Natural Yet Challenging to Detect: Robust In-the-Wild TTS through EMA and Dual-Scoring Prompt Selection -- Submission for WildSpoof 2026 TTS Track</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2605.23859</span>
+                <a href="pdfs/2605.23859.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Renhe Sun, Jiayi Zhou, Haolin He, Yueying Feng, Jian Liu<br>
+                <div style="margin-top:5px"><span class="tag">WildSpoof Challenge</span><span class="tag">Text-to-Speech</span><span class="tag">Exponential Moving Average</span><span class="tag">Dual-scoring Prompt Selection</span><span class="tag">F5-TTS</span><span class="tag">In-the-Wild</span><span class="tag">Spoofing Detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结</h2>
+<p><strong>核心痛点</strong>：在嘈杂、声学多样化的现实场景中，传统TTS模型表现不佳，且高质量语音数据获取成本高昂。需要一种能在野外数据上稳定训练、生成自然且难以被检测的合成语音的方法。</p>
+<p><strong>方法创新</strong>：
+1. <strong>基于F5-TTS架构</strong>：采用flow matching和diffusion transformer的非自回归TTS基础模型。
+2. <strong>指数移动平均（EMA）</strong>：在监督微调中集成EMA，稳定训练、提升泛化能力，缓解过拟合。
+3. <strong>双评分提示选择（DPS）</strong>：使用LALM（Qwen2.5-Omni）对音频提示进行质量评分（情感丰富度、表现力、适用性），再使用LLM（Qwen3-30B-A3B）对文本提示进行语义对齐验证，筛选高质量参考。</p>
+<p><strong>实验结果</strong>：
+- 开发集：UTMOS 3.20，说话人相似度0.51，WER 8.65%。
+- 官方评估：在三个先进SASV系统上取得最佳a-DCF分数（0.1582, 0.5233, 0.2562），表明合成语音最难被检测，自然性和真实性最高。</p>
+<p><strong>一句话评价</strong>：通过EMA稳定微调和双评分提示选择，F5-TTS-DPS在野外TTS任务中实现了高自然度和强欺骗性，在WildSpoof 2026 TTS赛道中取得领先。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23619" target="_blank">Frame-Aligned Fusion of Canary and WavLM for Non-Intrusive Intelligibility Prediction of Hearing-Aid-Processed Speech</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Intelligibility Prediction / Assistive Hearing</span>
+                <strong>ID:</strong> <span class="tag">2605.23619</span>
+                <a href="pdfs/2605.23619.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kazushi Nakazawa<br>
+                <div style="margin-top:5px"><span class="tag">non-intrusive intelligibility prediction</span><span class="tag">hearing-aid-processed speech</span><span class="tag">Canary</span><span class="tag">WavLM</span><span class="tag">frame-aligned fusion</span><span class="tag">Clarity Prediction Challenge</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>非侵入式可懂度预测任务中，无法使用干净参考信号，需要利用助听器处理后的语音直接预测听力受损者的理解程度。现有方法多使用预训练模型，但如何有效融合多个编码器（如Canary和WavLM）的互补表征，以及融合时机（帧级还是话语级）尚不明确。</p>
+<h2>方法创新</h2>
+<p>提出帧对齐融合（Frame-Aligned Fusion），在池化前对WavLM进行可学习步长卷积下采样，使其与Canary较粗的时间轴对齐，实现帧级拼接融合。同时对比了单骨干基线、均匀分数平均、池化后融合、交叉注意力及反向对齐等策略。所有方法在左右耳分别处理，保持双耳信息。</p>
+<h2>实验结果</h2>
+<p>最佳模型（帧对齐融合+可学习卷积）在CPC3评估集上达到RMSE 24.96±0.06、相关系数0.796±0.001，优于其他融合策略。时间偏移分析表明，精确的帧同步并非必要，粗粒度局部对应是关键。</p>
+<h2>一句话评价</h2>
+<p>该工作系统性地揭示了在非侵入式可懂度预测中，预训练多编码器的帧级局部融合优于话语级融合，为助听器评估提供了有效归纳偏置。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23604" target="_blank">Word-Level Modeling with Alignment-Aware Acoustic Fusion for Text-Assisted Intelligibility Prediction in Listeners with Hearing Loss</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Intelligibility Prediction</span>
+                <strong>ID:</strong> <span class="tag">2605.23604</span>
+                <a href="pdfs/2605.23604.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kazushi Nakazawa<br>
+                <div style="margin-top:5px"><span class="tag">Speech intelligibility prediction</span><span class="tag">Whisper</span><span class="tag">text-assisted prediction</span><span class="tag">word-level modeling</span><span class="tag">hearing-impaired listeners</span><span class="tag">alignment</span><span class="tag">speech foundation models</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统Clarity Prediction Challenge（CPC）中的可懂度预测方法直接将整句话的音频编码后回归一个句子级分数，但句子可懂度本质上是单词识别结果的聚合，导致训练信号的粒度不匹配。</p>
+<h2>方法创新</h2>
+<p>本文提出<strong>参考条件化的词级正确性建模</strong>：
+- 使用冻结的Whisper模型，编码器处理退化语音，解码器以教师强制方式输入规范文本，得到词级解码器状态。
+- 增加<strong>对齐感知的局部声学分支</strong>：通过辅助字符级解码器的交叉注意力图动态选择头部，为每个参考词提取对齐的声学特征。
+- 增加<strong>全局声学分支</strong>：平均池化编码器状态获取句子级校准信号。
+- 将解码器特征、局部声学特征、全局声学特征和听障者严重程度嵌入拼接，通过轻量级分类器预测每个参考词的正确概率，再平均得到句子可懂度。</p>
+<h2>实验结果</h2>
+<p>在CPC3官方评估集上，解码器基线RMSE=24.92，相关性=0.795；联合融合方法提升至错误词F1=0.778，MCC=0.626，相关性=0.806，RMSE=24.39。Whisper medium模型上观察到一致趋势。</p>
+<h2>一句话评价</h2>
+<p>本文通过引入词级建模和对齐感知多粒度声学融合，有效弥合了训练信号粒度不匹配问题，显著提升了听力受损者语音可懂度预测的准确性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23593" target="_blank">A study on weakly-supervised training approaches for phoneme-level pronunciation scoring</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Pronunciation Assessment</span>
+                <strong>ID:</strong> <span class="tag">2605.23593</span>
+                <a href="pdfs/2605.23593.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jazmín Vidal, Luciana Ferrer<br>
+                <div style="margin-top:5px"><span class="tag">weakly-supervised learning</span><span class="tag">phoneme-level pronunciation scoring</span><span class="tag">GOPT</span><span class="tag">Goodness of Pronunciation</span><span class="tag">computer-assisted pronunciation training</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>音素级发音评分需要大量细粒度的音素标注，数据昂贵且稀缺，制约了计算机辅助发音训练（CAPT）系统的性能。</p>
+<h2>方法创新</h2>
+<p>提出一种基于GOPT架构的弱监督训练方法：通过将字/句级别的评分作为监督信号，利用平均或注意力池化机制从音素级预测汇总得到高层级分数，从而仅用高层级标签即可训练音素级评分模型。进一步提出两阶段训练：先用句子级标签预训练，再用少量精选的音素级标签微调。</p>
+<h2>实验结果</h2>
+<p>在Speechocean762数据集上，使用仅句子级标签训练的音素级评分（通过池化）与完全监督（所有层级标签）的结果相当。两阶段训练在仅使用10%音素级标签时性能接近完全监督。</p>
+<h2>一句话评价</h2>
+<p>巧妙利用高层级标签的弱监督信号，显著降低了对音素级标注的依赖，实现了近乎全监督的性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23463" target="_blank">StepAudio 2.5 Technical Report</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unified Audio-Language Modeling</span>
+                <strong>ID:</strong> <span class="tag">2605.23463</span>
+                <a href="pdfs/2605.23463.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bin Lin, Bo Zhao, Boyong Wu, Chao Yan, Chen Wu, Cheng Yi, Chengyuan Yao, Daijiao Liu, Fei Tian, Feng Tian, Haiyang Sun, Haoyang Zhang, Jiangjie Zhen, Jinglan Gong, Jun Chen, Li Xie, Peilin Li, Peng Yang, Pengfei Tan, Qingjian Lin, Runze Li, Shenghua Hu, Siyi Zhou, Wenwen Qu, Xiangyu Li, Xiangyu Tony Zhang, Xuerui Yang, Yang Yang, Yechang Huang, Yu Fu, Yuchu Luo, Yuxin Li, Yuxin Zhang, Zhengyan Sheng, Brian Li, Chang Zeng, Changlin Zhang, Chen Geng, Chenghao Dong, Chengli Feng, Dan Zhou, Danni Wan, Di Chen, Die Zhang, Dongqing Pang, Guanglong Yang, Guoqiang Hu, Huangxi Zhu, Jianzheng Gao, Jinghua Liang, Jinmei Wan, Junjie Yuan, Kang An, Lei Lei, Limin Zhong, Lun Cai, Mengqiang Ren, Min Xu, Mingliang Li, Mingxiao Li, Na Wang, Qiang Tong, Qiaoling Huang, Qingfu Du, Rui Wang, Shengchen Zhou, Shi Qiu, Shihao Peng, Shiliang Yang, Siqi Tu, Tianjiao Deng, Ting Xu, Tong Wang, WeiMing Niu, Wuxun Xie, Xianwei Zhang, Xianyu Feng, Xiaojia Liu, Xing Chen, Xiongbin Wu, Yan Wu, Yang Li, Yi Liu, Yifan Zhang, Yile Liu, Yongshen Long, Yu Luo, Yuanhao Ding, Yuhao Wang, Yuhe Yin, Yunfang Xu, Yuxiang Yang, Zhiguo Huang, Zhiyue Wu, Zichao Li, Zichao Zhou, Daxin Jiang, Future Li, Gang Yu, Xiangyu Zhang, Yibo Zhu<br>
+                <div style="margin-top:5px"><span class="tag">StepAudio 2.5</span><span class="tag">unified audio-language modeling</span><span class="tag">RLHF</span><span class="tag">ASR</span><span class="tag">TTS</span><span class="tag">realtime spoken interaction</span><span class="tag">multi-token decoding</span><span class="tag">MTP-5</span><span class="tag">pretraining</span><span class="tag">alignment</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有统一音频语言模型在自动语音识别(ASR)、文本转语音(TTS)和实时口语交互三项任务上，往往无法达到专用系统的深度。传统级联流水线在语音转文本中间表示时丢失信息，且不同任务目标（如ASR的准确高效转录、TTS的可控表达、实时交互的低延迟与人格一致）难以自然对齐。</p>
+<h2>方法创新</h2>
+<p>StepAudio 2.5 提出统一的音频语言基础模型，核心思想是：一旦文本和音频共享良好的多模态表示空间，任务差异化便从架构转向操作模式（数据、目标、解码约束）。
+- <strong>后训练范式</strong>：从标准监督微调(SFT)扩展到任务定制的强化学习从人类反馈(RLHF)，作为定义复杂优化目标的主要机制。
+- <strong>共享骨干</strong>：采用音频编码器-适配器-LLM解码器架构，解码器承载语义、上下文和生成能力。任务专用化通过方向性推理实现：ASR利用可验证的多令牌解码(MTP-5)每次向前步预测6个令牌以加速；TTS通过基于偏好的RLHF和上下文丰富的监督实现可控、富有表现力的合成；Realtime通过生成式奖励建模实现低延迟、人格一致的对话。
+- <strong>训练流程</strong>：渐进式预训练，包括对齐阶段（冻结编码器和LLM，仅训练适配器）、多模态训练（文本和语音各800B令牌，分为热身和主训练）、冷却阶段（600B高质量数据，扩展序列长度至32K）。</p>
+<h2>实验结果</h2>
+<p>在ASR、TTS和Realtime的标准基准上，StepAudio 2.5 取得最先进的结果，超越领先的统一模型和专用系统。</p>
+<h2>一句话评价</h2>
+<p>StepAudio 2.5 证明了一个统一的音频语言基础模型能够通过任务定制的RLHF和解码策略，在理解、生成和交互三个方向上同时达到专用系统的水平。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23293" target="_blank">Evaluating the Temporal Detection Capability of Integrated Gradients Applied on Sound Classifier</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Sound Event Detection</span>
+                <strong>ID:</strong> <span class="tag">2605.23293</span>
+                <a href="pdfs/2605.23293.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Martynas Dumpis, Tuomas Virtanen<br>
+                <div style="margin-top:5px"><span class="tag">Integrated Gradients</span><span class="tag">Sound Event Detection</span><span class="tag">Temporal Detection</span><span class="tag">Explainable AI</span><span class="tag">Weakly Supervised Learning</span><span class="tag">Post-hoc Attribution</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>弱监督声音事件检测（SED）中，获取精确的时间边界标注成本高昂。现有可解释性方法（如集成梯度）虽可用于音频分类，但其在时序定位任务中的有效性尚未被系统评估。</p>
+<h2>方法创新</h2>
+<p>本文系统评估了集成梯度（Integrated Gradients, IG）应用于仅经片段级标签训练的音频分类器时，能否恢复声音事件的时序活动信息。使用合成多声道音频（10类家庭声音，精确的起止时间标注），通过IoU、帧级F1和Pointing Game指标测量IG属性与事件边界的一致性。与弱监督帧级CNN（FW-WS，使用片段级标签）和强监督帧级CNN（FW-SS，使用帧级标签）进行对比。</p>
+<h2>实验结果</h2>
+<p>在10类家庭声音合成数据集上，IG达到平均IoU=0.39，帧级F1=0.52，Pointing Game准确率=82.6%。作为对比，FW-WS为0.42 IoU、0.55 F1、97.3% PG；FW-SS为0.45 IoU、0.58 F1、97.9% PG。所有方法显著优于随机基线。</p>
+<h2>一句话评价</h2>
+<p>本文证明即使没有时间监督，后验IG也能捕获有意义的声音事件时序活动模式，其定位性能接近显式生成帧级预测的模型，为弱监督SED的可解释性提供了一种有效替代方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.23261" target="_blank">UniSRM: A Unified Speech Reward Model for Reasoning-Based Fine-grained Assessment</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Reward Modeling</span>
+                <strong>ID:</strong> <span class="tag">2605.23261</span>
+                <a href="pdfs/2605.23261.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuanyuan Wang, Dongchao Yang, Yayue Deng, Zhiyong Wu, Yiwen Guo, Helen Meng, Xixin Wu<br>
+                <div style="margin-top:5px"><span class="tag">Speech Reward Model</span><span class="tag">Fine-grained Assessment</span><span class="tag">Reasoning</span><span class="tag">Reinforcement Learning</span><span class="tag">Unified Evaluation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>UniSRM: A Unified Speech Reward Model for Reasoning-Based Fine-grained Assessment</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>当前语音生成评估严重依赖人工MOS评分，成本高、主观、难以规模化。</li>
+<li>现有自动评估方法（如客观指标WER、SIM）仅覆盖单一维度，缺乏透明度和可解释性。</li>
+<li>基于AudioLLM的评判模型（如WavReward、SageLM、SpeechJudge）任务覆盖有限（仅语句级或单轮对话），评估维度不完整（如忽略说话人相似性），且推理过程缺乏监督，导致理由与决策不一致。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>UniSRM框架</strong>：提出统一的语音奖励模型，支持多维度、可解释的奖励信号，并带有可靠推理。</li>
+<li><strong>数据集和基准</strong>：构建UniSRM-Data（涵盖语句级质量、情境风格一致性、多轮对话评估等任务）和UniSRM-Bench。</li>
+<li><strong>两阶段训练</strong>：第一阶段SFT学习多维度分解推理，第二阶段提出Reasoning-Consistent GRPO，在维度级推理过程分配奖励，提升可靠性。</li>
+<li><strong>多维度评估</strong>：分解为文本保真度、说话人相似度、韵律表现力、自然度等维度，生成推理链后再聚合总分。</li>
+</ul>
+<h2>实验结果（论文片段未提供详细结果，但声称）</h2>
+<ul>
+<li>实验表明UniSRM在多种语音评估任务上输出更可靠、与人类偏好更对齐的判断。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>UniSRM通过多维度推理分解和一致性强化学习，首次实现了覆盖多种场景的可解释、高可靠语音统一奖励模型。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
