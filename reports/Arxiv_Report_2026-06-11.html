@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-06-11</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-06-11 | 来源: eess.AS | 新增论文: 13 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.12328" target="_blank">HALO: Half-Frame-Rate Adaptive Learnable Operator for Lightweight STFT-Based Speech Enhancement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2606.12328</span>
+                <a href="pdfs/2606.12328.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jiadong Zhao, Dahan Wang, Yu Sun, Leyan Yang, Xiaobin Rong, Shiruo Sun, Yuxiang Hu, Jing Lu<br>
+                <div style="margin-top:5px"><span class="tag">speech enhancement</span><span class="tag">STFT overlap</span><span class="tag">frame-rate reduction</span><span class="tag">computational complexity</span><span class="tag">lightweight model</span><span class="tag">dynamic convolution</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>STFT语音增强中，重叠分析帧导致相邻帧高度相关，产生冗余计算，尤其是在轻量级模型中。</p>
+<h2>方法创新</h2>
+<p>提出HALO（Half-frame-rate Adaptive Learnable Operator），一种因果即插即用模块，在不改变STFT流程的前提下，将内部帧率减半。HALO包含两个自适应可学习算子：帧率压缩算子（D）和帧率恢复算子（U），均基于轻量级动态卷积。压缩算子融合相邻两帧信息，恢复算子从半帧率输出恢复全帧率频谱。HALO不增加算法延迟，可集成到多种轻量级STFT后端。</p>
+<h2>实验结果</h2>
+<p>在DNS3数据集上，将HALO集成到GTCRN等轻量级模型中，在相近计算复杂度下，PESQ、ESTOI、SI-SNR等指标均一致提升。消融实验表明，直接去除重叠或简单降采样会显著降低性能，而HALO自适应算子有效保留了语音细节。</p>
+<h2>一句话评价</h2>
+<p>HALO通过降低内部帧率有效减少重叠引起的冗余计算，是一种通用且高效的轻量级语音增强加速模块。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.12199" target="_blank">Which Speech Representation Better Matches Text-Native Reasoning? A Study of Speech-Text Alignment on Frame Rate and Representation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue Modeling</span>
+                <strong>ID:</strong> <span class="tag">2606.12199</span>
+                <a href="pdfs/2606.12199.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhen Ye, Xu Tan, Yiming Li, Guangyan Zhang, Chimin Chan, Haohe Liu, Zhengxi Liu, Hongzhan Lin, Zheqi Dai, Xinshen Zhang, Peiwen Sun, Qiuqiang Kong, Wei Xue<br>
+                <div style="margin-top:5px"><span class="tag">Spoken Dialogue</span><span class="tag">Speech Tokenization</span><span class="tag">Cross-modal Alignment</span><span class="tag">Frame Rate</span><span class="tag">Factorized FSQ</span><span class="tag">Non-autoregressive LM Head</span><span class="tag">Representation Alignment</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>语音令牌在时间粒度上与文本令牌不匹配：语音令牌速率（12.5-50 Hz）远高于文本令牌速率（约3.32 Hz），导致每令牌语义密度稀释，削弱了文本LLM预训练的原生推理能力。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>因子化FSQ（Factorized Finite Scalar Quantization）</strong>：将高维特征向量分组独立量化，避免显式大码本，在低帧率下维持高信息容量（近300 bits/帧）。</li>
+<li><strong>轻量级非自回归音频LM头</strong>：并行预测各组的离散码，解决低帧率下码本过大导致的自回归预测计算瓶颈。</li>
+<li><strong>中间层对比对齐</strong>：使用InfoNCE损失在LLM中间隐藏层对齐语音和文本表示，优于嵌入层或深层对齐。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在固定信息率下，系统性地测试了50 Hz到2.08 Hz的帧率。</li>
+<li>最佳语音QA性能出现在4.17 Hz，并与中间层表示对齐相结合。</li>
+<li>仅需约100M可训练参数和2.5k小时数据，冻结的文本LLM即可实现有竞争力的语音到语音问答。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文通过量化分析和新颖的令牌化设计，揭示了帧率和对齐深度对跨模态推理迁移的关键影响，为构建高效语音对话模型提供了实用指导。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11795" target="_blank">Tight Boundary Prediction in Speaker Diarization Using Causal-Anticausal Consistency</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Diarization</span>
+                <strong>ID:</strong> <span class="tag">2606.11795</span>
+                <a href="pdfs/2606.11795.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shota Horiguchi, Marc Delcroix, Naohiro Tawara, Takanori Ashihara, Atsushi Ando<br>
+                <div style="margin-top:5px"><span class="tag">speaker diarization</span><span class="tag">tight boundary</span><span class="tag">causal-anticausal consistency</span><span class="tag">co-training</span><span class="tag">weak supervision</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>多说话人ASR语料库的标注通常松散（包含停顿和边界填充），导致说话人日记模型训练后输出边界不紧凑，影响下游任务（如引导源分离、对话模型训练）。现有紧标注获取成本高（如DIHARD需资深标注者，VoxConverse依赖视频且耗时），且强制对齐方法受限于多通道录音。</p>
+<h2>方法创新</h2>
+<p>提出利用因果模型与反因果模型（无法学习填充/补全行为）输出生成更紧凑的伪标签，并设计协同训练（co-training）框架：
+1. 因果模型：只能利用过去信息，无法填充段前边界或预判静默；
+2. 反因果模型：只能利用未来信息，无法填充段后边界；
+3. 双模型输出加权后掩盖原始松散标签，生成紧伪标签，并迭代联合训练逐步紧化。</p>
+<h2>实验结果</h2>
+<p>在多个数据集上，所提方法恢复了约70%的理想紧标签训练效果，显著提升下游任务性能（如语音分离中的掩码估计）。</p>
+<h2>一句话评价</h2>
+<p>通过因果-反因果一致性约束，首次实现仅利用松散标注即可训练输出紧凑边界的说话人日记模型，兼具实用性与有效性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11766" target="_blank">Fast Speech Foundation Model Distillation Using Interleaved Stacking</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Foundation Model Distillation</span>
+                <strong>ID:</strong> <span class="tag">2606.11766</span>
+                <a href="pdfs/2606.11766.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Eungbeom Kim, Kyogu Lee<br>
+                <div style="margin-top:5px"><span class="tag">speech foundation models</span><span class="tag">training acceleration</span><span class="tag">knowledge distillation</span><span class="tag">interleaved stacking</span><span class="tag">layer position consistency</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>论文针对语音基础模型（SFM）知识蒸馏中训练效率低下的问题。现有堆叠方法（如 gradual stacking、MIDAS）通过分阶段逐步增加模型深度来加速训练，但会导致性能下降，原因是层位置不一致破坏了 SFM 各层特有的知识。</p>
+<h2>方法创新</h2>
+<p>提出<strong>交错堆叠（Interleaved Stacking）</strong>：在每个训练阶段，每隔 b 层选择一层复制，并将复制层插入到原始层之后，从而保持各层在整体中的相对位置不变。该方法保留了层位置一致性，并且自然兼容中间层知识蒸馏损失，有助于传递层特定知识。</p>
+<h2>实验结果</h2>
+<p>在 SUPERB 基准上（PR、ASR、SF、SID 任务），使用 HuBERT 作为教师模型，12 层 Transformer 学生模型，采用 4 阶段训练。与 gradual stacking、MIDAS 以及无堆叠的全模型相比，交错堆叠在 Equal 和 Prop-1 两种调度策略下均取得最佳或接近最佳的性能，且训练速度提升约 1.2 倍。进一步实验表明，中间层 KD 损失权重 w 的加入可带来额外性能增益。</p>
+<h2>一句话评价</h2>
+<p>本文首次将堆叠方法应用于 SFM 蒸馏加速，提出的交错堆叠有效缓解了性能损失，具有实用价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11631" target="_blank">Benchmarking Neural Speech Compression from a Rate-Distortion Perspective</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Coding / Audio Compression</span>
+                <strong>ID:</strong> <span class="tag">2606.11631</span>
+                <a href="pdfs/2606.11631.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jun Xu, Zhengxue Cheng, Fengxi Zhang, Yuhan Liu, Li Song, Wenjun Zhang<br>
+                <div style="margin-top:5px"><span class="tag">Speech Compression</span><span class="tag">Neural Speech Codec</span><span class="tag">Rate-Distortion Optimization</span><span class="tag">Entropy-Constrained Coding</span><span class="tag">Entropy Model</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有神经语音编解码器多采用预设速率的离散符号（如VQ索引）或仅在符号生成后应用熵编码，导致表示学习与概率建模脱节，无法有效利用语音潜在变量的非均匀分布和时间依赖性。</p>
+<h3>方法创新</h3>
+<p>本文提出ECC（Entropy-Constrained Codec），将标量量化与学习的熵模型结合，构建端到端率失真优化框架。主要创新点包括：
+1. 基于超先验的侧信息、通道上下文建模、潜在残差预测和轻量级时间建模，用于训练时的率估计和推理时的算术编码。
+2. 熵跳过（entropy skip）机制：利用解码器可用的尺度估计省略高度可预测的残差符号，无需传输额外跳过掩码。</p>
+<h3>实验结果</h3>
+<p>在ViSQOL和PESQ指标上，ECC平均BD-rate比传统和神经编解码器基线分别降低39.9%和76.3%。在LibriTTS和VCTK数据集上，相比FunCodec，ViSQOL BD-rate降低44.2%/35.7%，PESQ BD-rate降低69.4%/83.3%。</p>
+<h3>一句话评价</h3>
+<p>ECC通过显式熵建模实现了低比特率下的优异率失真折衷，是神经语音压缩领域的一项重要进展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11581" target="_blank">Sensitivity Analysis of Generative Spatial Audio Metrics: A Study on Responsiveness, Smoothness, and Symmetry</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Evaluation / Generative Audio Metrics</span>
+                <strong>ID:</strong> <span class="tag">2606.11581</span>
+                <a href="pdfs/2606.11581.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Purnima Kamath, Adrian S. Roman, Koichi Saito, Yuki Mitsufuji, Juan P. Bello<br>
+                <div style="margin-top:5px"><span class="tag">Spatial audio generation</span><span class="tag">First-Order Ambisonics (FOA)</span><span class="tag">sensitivity analysis</span><span class="tag">metric evaluation</span><span class="tag">Responsiveness</span><span class="tag">Smoothness</span><span class="tag">Symmetry</span><span class="tag">Fréchet Audio Distance (FAD)</span><span class="tag">intensity vectors</span><span class="tag">acoustic maps</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>生成式空间音频（尤其是First-Order Ambisonics, FOA）的评估缺乏公认的度量标准，现有指标（如FAD、强度向量）对空间控制参数（方位角、仰角）变化的敏感性尚不明确，难以判断模型是否遵循空间控制。</p>
+<h2>方法创新</h2>
+<p>提出一个元评估框架，沿连续空间轨迹分析指标行为，定义三个理想属性：
+- <strong>Responsiveness（响应性）</strong>：指标对参数变化的响应幅度，通过拟合三角模型（tent-like）的斜率并加权拟合优度（R²）量化。
+- <strong>Smoothness（平滑性）</strong>：指标沿轨迹的局部规则性，基于相邻样本间距离的方差计算。
+- <strong>Symmetry（对称性）</strong>：对称位置（如±90°）指标值的一致性，通过均方根误差（RMSE）取负指数得到[0,1]分数。</p>
+<p>使用SoundSpaces 1.0的FOA房间冲激响应，生成三种复杂度递增的场景（单源、多源、单源多实例），并加入噪声，对常用指标进行系统评估。</p>
+<h2>实验结果</h2>
+<ul>
+<li>分布指标：使用定位相关嵌入（F-GRAM、F-PSELD）的FAD和基于声学图（MVDR-AM）的LPIPS在三个属性上均表现良好，且对噪声鲁棒。</li>
+<li>样本指标：强度向量（IV）在多源场景下性能退化。</li>
+<li>整体趋势：FAD结合空间感知嵌入（如GRAM、PSELD）在响应性和平滑性上优于单声道嵌入（如VGGish）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>首次系统性地对生成式空间音频评估指标进行敏感性分析，为选择合理度量提供了方法论和实证基础。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11429" target="_blank">Gumbel-BEARD: Automatic Layer Selection for Self-Supervised Adaptation of Whisper in Low-Resource Domains</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Automatic Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.11429</span>
+                <a href="pdfs/2606.11429.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zilai Wang, Natarajan Balaji Shankar, Mohan Shi, Kaiyuan Zhang, Abeer Alwan<br>
+                <div style="margin-top:5px"><span class="tag">Gumbel-Softmax</span><span class="tag">Layer Selection</span><span class="tag">Self-Supervised Adaptation</span><span class="tag">Whisper</span><span class="tag">Low-Resource Domains</span><span class="tag">Child Speech</span><span class="tag">Domain Adaptation</span><span class="tag">BEST-RQ</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Gumbel-BEARD: Automatic Layer Selection for Self-Supervised Adaptation of Whisper in Low-Resource Domains</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>语音基础模型在低资源领域（如儿童语音、方言）因域不匹配和数据稀缺而性能下降。</li>
+<li>现有自监督适应方法（如BEARD）需要手动选择固定的编码器中间层进行掩码预测，层选择耗时且可能不最优。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出Gumbel-BEARD框架，使用<strong>硬Gumbel-Softmax</strong>选择器，在自监督适应过程中动态选择编码器预测层，实现端到端训练。</li>
+<li>采用<strong>BEST-RQ</strong>目标（随机投影+码本量化）作为自监督损失，并联合内蒸馏和外蒸馏损失。</li>
+<li>温度退火策略：初始高温度促进探索所有层，逐渐退火到低温度，使选择集中到最优层。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li><strong>MyST儿童语音数据集</strong>：Whisper-medium取得8.21% WER；Whisper-small仅用10小时标注数据即匹配完全监督基线（133小时），WER 9.35% vs 9.34%。</li>
+<li><strong>OGI自发言语数据集</strong>：Whisper-small取得11.06% WER，为SOTA。</li>
+<li><strong>CORAAL方言数据集</strong>：相对WER降低6%，证明泛化性。</li>
+<li>计算效率：Gumbel-BEARD约1 GPU小时，而BEARD暴力搜索需12 GPU小时。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>Gumbel-BEARD通过自动层选择，以极低计算成本实现低资源域自监督适应，取得多个儿童语音和方言数据集SOTA。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11279" target="_blank">Massive Open-Vocabulary Keyword Spotting</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition / Keyword Spotting</span>
+                <strong>ID:</strong> <span class="tag">2606.11279</span>
+                <a href="pdfs/2606.11279.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Leonor Barreiros, Raul Monteiro, Afonso Mendes, Gonçalo M. Correia<br>
+                <div style="margin-top:5px"><span class="tag">open-vocabulary keyword spotting</span><span class="tag">embedding compression</span><span class="tag">contextual biasing</span><span class="tag">Whisper</span><span class="tag">automatic speech recognition</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有的开放词汇关键词检测（OV-KWS）系统结合上下文偏置（CB）能改善自动语音识别（ASR）对罕见专业术语的转录，但仅支持几百个术语的词汇表，无法扩展到大规模数据库。存储和延迟随词汇量线性增长，导致生产环境不可行（如12层Whisper-medium特征约7.3MB/词，80GB GPU仅能容纳约11,650词）。</p>
+<h2>方法创新</h2>
+<p>本文提出三层压缩机制：
+1. <strong>层选择压缩</strong>：通过可学习的稀疏得分向量（sparsemax激活）自动选择最预测性的Transformer编码器层（从32层中选出l_comp层），减少层数。
+2. <strong>隐藏维度压缩</strong>：使用单隐藏层前馈网络（FFN）将隐藏维度从h（1280）降至h_comp。
+3. <strong>帧率压缩</strong>：利用1D卷积网络沿帧方向降低时间分辨率（从50帧/秒降至更低，因子α）。
+整体压缩128倍，特征大小降至约57KB/词，48GB GPU可容纳约894,784词。无需微调Whisper模型，模块化训练。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在Aishell（中文）、ACL6060（英文技术演讲）、内部葡萄牙语医疗语料库（16,062词）上，与基线（CB-Whisper [11]）相比，实体召回率相当。</li>
+<li>使用Whisper-large-v2编码器，系统速度快6倍，内存占用低128倍。</li>
+<li>在未见过的语言（中文）上仍保持性能。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>提出一种可扩展的开放式关键词检测系统，通过有效的特征压缩大幅降低存储和延迟，适用于大规模生产环境。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11197" target="_blank">MA-DLE: Speech-based Automatic Depression Level Estimation via Memory Augmentation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-based Depression Estimation</span>
+                <strong>ID:</strong> <span class="tag">2606.11197</span>
+                <a href="pdfs/2606.11197.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xuzhi Wang, Xinran Wu, Ziping Zhao, Jianhua Tao, Björn W. Schuller<br>
+                <div style="margin-top:5px"><span class="tag">Memory augmentation</span><span class="tag">Depression level estimation</span><span class="tag">Speech-based mental health assessment</span><span class="tag">Long-range dependency modeling</span><span class="tag">Hierarchical Attention Fusion</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有基于RNN（如GRU、LSTM）的语音抑郁症水平估计方法难以捕捉长距离依赖，提取的特征主要集中于相邻语音片段，忽略了全局时序信息，导致抑郁相关关键特征提取不充分。</p>
+<h3>方法创新</h3>
+<p>提出MA-DLE（Memory-Augmented Depression Level Estimation）框架，第一个将外部记忆库机制引入抑郁症水平估计。具体包括：
+1. <strong>记忆增强特征</strong>：通过余弦相似度从历史特征中筛选与当前GRU输出高度相似的特征作为语义补充；同时从低相似度特征中提取动态记忆特征（基于特征变异性），捕获行为与情绪波动。
+2. <strong>层次注意力融合模块（HAF）</strong>：有效融合GRU输出、相似性检索特征和动态特征。</p>
+<h3>实验结果</h3>
+<p>在DAIC-WOZ和E-DAIC数据集上达到当前最优性能（具体数值未在截取部分给出）。</p>
+<h3>一句话评价</h3>
+<p>首次将外部记忆机制应用于语音抑郁症自动评估，通过选择性记忆增强有效缓解了长期依赖建模问题。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11836" target="_blank">Towards Data-free and Training-free Compression for Speech Foundation Models Using Parameter Clustering</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.11836</span>
+                <a href="pdfs/2606.11836.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Haoning Xu, Zhaoqing Li, Huimeng Wang, Youjun Chen, Chengxi Deng, Mengzhe Geng, Xunying Liu<br>
+                <div style="margin-top:5px"><span class="tag">parameter clustering</span><span class="tag">model pruning</span><span class="tag">speech foundation models</span><span class="tag">data-free compression</span><span class="tag">training-free compression</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有剪枝方法忽略参数相似性，可能导致功能冗余；</li>
+<li>依赖原始数据和微调，在数据受限场景下不可行；</li>
+<li>细粒度非结构化剪枝硬件不友好，难以在边缘设备部署。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>参数聚类（Parameter Clustering）</strong>：使用k-means对注意力头和FFN中间单元进行聚类融合，而非直接剪枝，保留信息；</li>
+<li><strong>数据无关且训练无关</strong>：无需原始数据或微调即可压缩；</li>
+<li><strong>混合稀疏性（Mixed Sparsity）</strong>：基于层间参数方差动态分配不同聚类数量，高层方差模块保留更多单元；</li>
+<li>产生结构化压缩模型，兼容通用硬件。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li><strong>HuBERT-large</strong>（50%稀疏度，无微调）：test-clean WER降低27.73% absolute（相对34.37%），test-other降低18.61% absolute（相对21.91%），优于幅度剪枝；微调3个epoch后仍保持优势。</li>
+<li><strong>Whisper-large-v3</strong>（10%稀疏度）：test-clean WER降低2.86% absolute（相对59.21%），test-other降低5.02% absolute（相对55.29%），与未压缩基线相比WER无明显增加。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>提出一种数据无关、训练无关的语音基础模型压缩方法，通过参数聚类融合而非剪枝，在保持性能的同时提升硬件部署友好性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11400" target="_blank">Steering Where to Listen: Instruction-Based Activation Steering Redirects Temporal Attention in Large Audio-Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Language Models Interpretability</span>
+                <strong>ID:</strong> <span class="tag">2606.11400</span>
+                <a href="pdfs/2606.11400.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tsung-En Lin, Hung-Yi Lee<br>
+                <div style="margin-top:5px"><span class="tag">large audio-language models</span><span class="tag">activation steering</span><span class="tag">attention analysis</span><span class="tag">temporal localization</span><span class="tag">model interpretability</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大型音频语言模型（LALMs）在音频理解中表现优异，但内部注意力机制不透明，难以定位具体声音事件的发生时刻。传统方法依赖专门训练或模态对比，无法有效揭示模型的时间注意力分布。</p>
+<h2>方法创新</h2>
+<p>提出<strong>基于指令的激活引导</strong>（Instruction-Based Vector Steering）：在固定音频输入下，对比不同指令（如“关注音频中有意义的部分”与“关注整个音频”）的模型激活差异，构建导向向量。注入该向量后，模型将更多注意力集中到与目标事件相关的音频区域，从而在不修改模型结构或不训练的情况下实现时间定位。</p>
+<h2>实验结果</h2>
+<p>在自建的三事件组合音频基准上，通过读取导向引起的注意力变化，提出的窗口选择方法在Qwen2-Audio和Audio Flamingo 3上分别达到60.87%和68.72%的区间重叠率，显著高于直接提示（31.84%, 46.75%）和随机基线（27.74%）。分析表明该方法在后半层有效，且注意力变化与事件位置高度对应。</p>
+<h2>一句话评价</h2>
+<p>一种简单、无需训练且可解释的激活引导技术，能够有效重定向LALMs的时间注意力，并从中提取精确的事件位置。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11386" target="_blank">Overcoming State Inertia in Full-Duplex Spoken Language Models via Activation Steering</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Full-Duplex Spoken Language Models</span>
+                <strong>ID:</strong> <span class="tag">2606.11386</span>
+                <a href="pdfs/2606.11386.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Cheng-Kuang Chang, Kai-Wei Chang, Alexander H. Liu, James Glass<br>
+                <div style="margin-top:5px"><span class="tag">state inertia</span><span class="tag">activation steering</span><span class="tag">full-duplex</span><span class="tag">spoken language model</span><span class="tag">interruption handling</span><span class="tag">logit lens</span><span class="tag">Zero-Buffer Benchmark</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>全双工口语语言模型（FD-SLM）在同时听和说时，内部状态切换存在延迟（称为“状态惯性”），导致在用户突然打断时，模型仍偏向生成状态，错过用户输入的开头信息。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>内部机制分析</strong>：通过logit lens分析隐藏表示的预测行为，发现模型在听时偏向预测用户流，在说时偏向预测模型输出流，并定义生成亲和度和感知亲和度来量化状态。</li>
+<li><strong>状态惯性发现</strong>：在用户中断时，模型从生成状态到感知状态的转换存在延迟，导致信息丢失。</li>
+<li><strong>Zero-Buffer Benchmark (ZBB)</strong>：专门评估中断瞬间理解能力的诊断基准，将语义关键词放在打断话语的第一个词，衡量正确率和初始词出现率（IWOR）。</li>
+<li><strong>激活引导</strong>：构建感知向量（生成状态与感知状态隐藏表示的差异），在中断开始时注入，无需微调，仅增加轻量推理开销，显著改善中断处理。</li>
+</ol>
+<h2>实验结果</h2>
+<p>在PersonaPlex上，正确率从28%提升到45%，IWOR从40%提升到72%；其他多个FD-SLM上也有显著改进。</p>
+<h2>一句话评价</h2>
+<p>本文首次揭示了全双工口语模型的状态惯性现象，并提出了一种无训练的激活引导方法有效缓解该问题。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.11371" target="_blank">The Dynamics of Human and AI-Generated Language: How Semantics Fluctuates across Different Timescales</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech and Language Processing / Semantic Analysis</span>
+                <strong>ID:</strong> <span class="tag">2606.11371</span>
+                <a href="pdfs/2606.11371.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Han-Jen Chang, Yasir Çatal, Angelika Wolman, Agustín Ibáñez, David Smith, I-Wen Su, Kai-Yuan Cheng, Georg Northoff<br>
+                <div style="margin-top:5px"><span class="tag">Semantic timescales</span><span class="tag">Autocorrelation window</span><span class="tag">WordNet</span><span class="tag">SBERT</span><span class="tag">Large language models</span><span class="tag">Speech processing</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>The Dynamics of Human and AI-Generated Language: How Semantics Fluctuates across Different Timescales</h1>
+<h2>核心痛点</h2>
+<p>传统语音分析或仅关注词的时序位置（无物理时长）或将时长作为因变量，缺少将语义视为随时间连续变化的信号并分析其时间结构的方法。</p>
+<h2>方法创新</h2>
+<p>提出语义时间尺度分析管道：
+1. 将带时间戳的文字转录转换为语义时间序列：
+   - 使用WordNet词深度（word depth）度量词汇通用/具体程度
+   - 使用SBERT嵌入计算上下文相似性
+2. 用自相关窗口（ACW-0, ACW-0以外的衍生指标）量化时间依赖性
+3. 设计多种打乱控制条件（随机词序、随机时长等）验证非随机性</p>
+<h2>实验结果</h2>
+<ul>
+<li>语义时间序列中ACW-0较长的片段包含更多通用词汇，ACW-0较短的片段包含更多具体词汇。</li>
+<li>打乱词序和时长后这一关联显著减弱或消失，表明ACW捕捉的是语义内容的非随机时间组织。</li>
+<li>在人类自传叙事、人类文本TTS、LLM文本TTS三种条件下模式一致。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文为分析人类与AI语音的时间语义结构提供了简单可解释的时域特征框架，有望应用于语音处理和临床语言评估。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
