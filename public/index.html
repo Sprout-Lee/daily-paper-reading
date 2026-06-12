@@ -99,11 +99,180 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 1034 篇论文 | 涵盖 90 天的数据
+            共收录 1040 篇论文 | 涵盖 91 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-06-11</h2>
+    <h2 class="date-divider">📅 2026-06-12</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13544" target="_blank">Adaptive Turn-Taking for Real-time Multi-Party Voice Agents</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multi-party Voice Agents</span>
+                <strong>ID:</strong> <span class="tag">2606.13544</span>
+                <a href="pdfs/2606.13544.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Soumyajit Mitra, Prabhat Pandey, Abhinav Jain, Shanmukha Sahith, K V Vijay Girish<br>
+                <div style="margin-top:5px"><span class="tag">Multi-party Conversation</span><span class="tag">Speech LLMs</span><span class="tag">Turn-taking</span><span class="tag">Role-playing Voice Agents</span><span class="tag">ModeratorLM</span><span class="tag">RolePlayConv</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>多轮语音对话（multi-party spoken conversations）中的话轮转换（turn-taking）在动态发言竞争和不同用户期望下是挑战性难题。</li>
+<li>现有工作多关注两人对话（dyadic），未能推广到多人场景，且缺乏对助手角色（role）的显式建模。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 <strong>ModeratorLM</strong>，一个角色扮演语音代理（role-playing voice agent），基于语音大模型（speech LLM），以流式（chunk-wise streaming）方式处理多说话人音频。</li>
+<li>引入 <strong>ModeratorLM-Think</strong>，在潜在话轮转换点加入链式思维（chain-of-thought）推理，提升角色一致性。</li>
+<li>构建大规模合成数据集 <strong>RolePlayConv</strong>，包含约75K带角色标注的多人对话，用于训练和评估。</li>
+<li>训练包括三阶段：Speech–LLM Alignment（对齐）、Conversation Pretraining（预训练）、Role-Conditioning Training（角色微调）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在真实会议数据集 NOTSOFAR-1 和合成数据集 RolePlayConv 上，<strong>ModeratorLM-Think</strong> 的 turn-taking 精确率（precision）提升超过40%，召回率（recall）提升超过70%，误打断率（false-positive rate）显著降低。</li>
+<li>与基线模型（Moshi、MP-Baseline）相比，F1-score 和宏准确率（macro-accuracy）均有大幅提升。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本工作首次将角色条件（role-conditioning）引入实时多人语音对话的 turn-taking 决策，通过语音LLM和推理增强显著提升 role-consistent 行为，是角色扮演语音代理的重要进展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13480" target="_blank">A beam--membrane biomechanical vocal fold model incorporating posturing and glottal conformation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice Biomechanics / Speech Production Modeling</span>
+                <strong>ID:</strong> <span class="tag">2606.13480</span>
+                <a href="pdfs/2606.13480.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mohamed A. Serry, Matías Zañartu, Sean D. Peterson<br>
+                <div style="margin-top:5px"><span class="tag">vocal fold model</span><span class="tag">beam-membrane</span><span class="tag">laryngeal muscle activation</span><span class="tag">glottal conformation</span><span class="tag">phonation</span><span class="tag">biomechanical model</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有高保真有限元模型计算成本高，难以进行大规模参数研究；简化模型无法捕捉真实声门形态和生理机制。</p>
+<h2>方法创新</h2>
+<p>提出一种计算高效的声带生物力学模型，将声带分为体层（beam）和覆盖层（membrane），耦合喉内肌激活的后置模型（posturing model），通过静态映射获得声带预应变和声门角度，作为动态beam-membrane模型的输入，模拟发声时的流固耦合和碰撞。</p>
+<h2>实验结果</h2>
+<p>模型产生的发声特征与高保真有限元模拟和临床研究定性一致，能复现后部声门开放、前部声门开放、沙漏形等声门形态对发声动力学的影响，计算成本大幅降低。</p>
+<h2>一句话评价</h2>
+<p>该工作提供了一个兼具生物力学可解释性和计算效率的声带模型，为探索正常发声及嗓音障碍机制提供了实用工具。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13450" target="_blank">Endpoint Anticipation for Low-Latency Spoken Dialogue</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue System / Low-Latency Speech Interaction</span>
+                <strong>ID:</strong> <span class="tag">2606.13450</span>
+                <a href="pdfs/2606.13450.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sathvik Udupa, Shinji Watanabe, Petr Schwarz, Jan Cernocky<br>
+                <div style="margin-top:5px"><span class="tag">Endpoint Anticipation</span><span class="tag">Low-Latency Spoken Dialogue</span><span class="tag">Speculative Execution</span><span class="tag">Voice Activity Projection</span><span class="tag">Turn-Taking</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>当前级联式口语对话系统（如 Unmute）因被动检测说话结束（endpoint）导致延迟瓶颈（通常 1-2 秒），而人类仅约 250 ms 响应。</p>
+<h3>方法创新</h3>
+<p>提出 <strong>Endpoint Anticipation (EPA)</strong>：基于语音的双流 Transformer 模型（EPA-S 单目标、EPA-M 多目标），提前 0.32-2.56 秒预测用户话轮结束信号；在用户说话期间即可启动 LLM 和 TTS 的推测执行（speculative execution），若预测错误则丢弃预计算内容。引入 <strong>MRA、PAR、ERC、HEA</strong> 四项指标衡量延迟降低与计算冗余的权衡。</p>
+<h3>实验结果</h3>
+<p>在 SpokenWOZ 和 Switchboard 数据集上，EPA 优于 VAP 基线：以 640 ms 为目标时，MRA 达 640 ms（最大降低），HEA 约 67%，PAR 约 66%，ERC 约 34%。集成到 Unmute 后，平均延迟降低 505 ms（相对 28.4% 计算冗余增加），有效掩盖级联处理瓶颈。</p>
+<h3>一句话评价</h3>
+<p>首项将端点检测从被动转为主动预测的工作，在保持实用性前提下显著降低延迟。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13193" target="_blank">A Dual-Mode Faust-to-CLAP Compilation System</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Plugin Development</span>
+                <strong>ID:</strong> <span class="tag">2606.13193</span>
+                <a href="pdfs/2606.13193.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Facundo Franchino (1), Stéphane Letz (2), Jatin Chowdhury (3) ((1) University of York, (2) GRAME-CNCM, (3) Massachusetts Institute of Technology)<br>
+                <div style="margin-top:5px"><span class="tag">FAUST</span><span class="tag">CLAP</span><span class="tag">hot-reload</span><span class="tag">parameter identity</span><span class="tag">audio plugin</span><span class="tag">compilation system</span><span class="tag">dynamic interpretation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统音频插件开发的工作流程在效率与迭代速度之间存在矛盾：原生编译追求高性能，但修改代码后需重新编译、加载插件，周期长；而动态解释则牺牲性能。FAUST语言虽简化了DSP描述，但编译-重载循环仍然存在。</p>
+<h2>方法创新</h2>
+<p>本文提出 <strong>faust2clap</strong>，一个将 FAUST DSP 规范编译为 CLAP 插件格式的双模式编译系统：
+1. <strong>静态模式</strong>：预先编译生成原生二进制，实现最高效率。
+2. <strong>动态模式</strong>：通过运行时解释（libfaust 虚拟机和文件监控），支持不中断宿主应用程序的 DSP 代码热重载。
+3. <strong>参数身份保持</strong>：提出基于地址的身份匹配算法和稳定插槽分配方案，确保热重载后参数值和宿主自动化绑定得以保留。
+4. <strong>自动分类启发式</strong>：根据元数据、文件名词汇和结构分析自动将 DSP 分类为效果器或乐器。</p>
+<h2>实验结果</h2>
+<ul>
+<li>热重载编译延迟：大多数 DSP 在 6–52ms 内完成，交互式开发可接受。</li>
+<li>解释器处理时间：在 48kHz/256-sample 块下，最复杂的混响仅需 0.27ms，头空间≥20倍。</li>
+<li>参数保持验证：所有测试用例的值和自动化绑定均成功保留（除非显式重命名地址）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>faust2clap 是首个官方维护的 FAUST 到 CLAP 编译通道，通过双模式设计和稳定的参数身份保持，显著提升了音频插件开发的迭代效率。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13109" target="_blank">Generating Training Targets for Real-World Speech Enhancement via Close-to-Distant Microphone Projection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2606.13109</span>
+                <a href="pdfs/2606.13109.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tomohiro Nakatani, Rintaro Ikeshita, Naoyuki Kamo, Marc Delcroix, Shoko Araki<br>
+                <div style="margin-top:5px"><span class="tag">C2D projection</span><span class="tag">speech enhancement</span><span class="tag">distant microphones</span><span class="tag">training data generation</span><span class="tag">PMWF</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>神经网络语音增强需要配对的失真和干净参考信号，但模拟数据与实际环境不匹配，导致在真实场景（如CHiME6）中性能受限。</p>
+<h2>方法创新</h2>
+<p>提出<strong>Close-to-Distant microphone Projection (C2D projection)</strong>，利用训练阶段可用的近麦（CM）和远麦（DM）真实录音，估计一个投影矩阵（基于PMWF变体），将CM信号转换为与DM对齐的干净参考信号，同时抑制噪声和干扰。</p>
+<h2>实验结果</h2>
+<p>在CHiME6 ASR任务上，使用C2D投影生成的训练数据训练的NN，以GSS输出作为辅助输入时，在oracle说话人分割下优于GSS基线。在CHiME8任务（使用估计的说话人标签）中，尽管存在训练与测试条件不匹配，该方法在大多数ASR场景下仍取得改进。</p>
+<h2>一句话评价</h2>
+<p>一种利用真实近远麦录音生成训练目标的创新方法，有效提升复杂场景下的语音增强性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.13095" target="_blank">Balancing ASR and diarization in end-to-end LLMs for multi-talker speech recognition</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-12</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.13095</span>
+                <a href="pdfs/2606.13095.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Naijun Zheng, Yuke Lin, Sanli Tian, Mengtian Li, Zhiwei Lin, Longshuai Xiao, Dandan Tu<br>
+                <div style="margin-top:5px"><span class="tag">multi-talker speech recognition</span><span class="tag">speaker diarization</span><span class="tag">large language model</span><span class="tag">dual-encoder</span><span class="tag">overlap handling</span><span class="tag">loss masking</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>多说话人语音识别（multi-talker speech recognition）的传统方法通常采用流水线（pipeline）方式，将自动语音识别（ASR）和说话人日志（speaker diarization）分开处理，但这种方式无法直接结合语义和说话人身份信息，尤其在语音重叠（overlap）场景下表现不佳。基于大语言模型（LLM）的方法虽然能联合建模，但需要大规模、高标注成本的多说话人语料。</p>
+<h2>方法创新</h2>
+<p>本文提出了一种在有限真实录音数据下高效训练LLM系统的方法，主要贡献包括：
+- <strong>双编码器架构（Dual-encoder）</strong>：使用SenseVoice-small作为ASR编码器提取语义特征，Campplus作为说话人特征编码器提取说话人特征，并通过适配器（adapter）投影到统一维度。
+- <strong>特征交织（Temporal Interleaving）</strong>：将语义特征序列和说话人特征序列按时间片交织，每个片段前加特殊标记，利用位置编码对齐。
+- <strong>长度感知说话人ID损失（Segment-aware Speaker ID Loss）</strong>：按说话人片段的长度加权计算交叉熵损失，更好对齐日志评估指标（如cpCER）。
+- <strong>自适应损失掩码（Adaptive Loss Masking）</strong>：根据损失分布动态屏蔽高损失token（通常来自重叠区域），减少幻觉（hallucination）。
+此外，采用多阶段训练：先纯ASR训练，再加入说话人信息联合训练，然后模拟长对话，最后在真实会议数据上微调。</p>
+<h2>实验结果</h2>
+<p>在AliMeeting和Aishell4语料上，相比开源基线（如SpeakerLM等），相对改进分别达到18%和24%。</p>
+<h2>一句话评价</h2>
+<p>通过结构设计和损失函数改进，有效平衡了ASR和说话人日志任务，在有限数据下实现了显著性能提升。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-06-11</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2606.12328" target="_blank">HALO: Half-Frame-Rate Adaptive Learnable Operator for Lightweight STFT-Based Speech Enhancement</a>
