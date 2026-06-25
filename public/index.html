@@ -99,11 +99,363 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 1200 篇论文 | 涵盖 98 天的数据
+            共收录 1212 篇论文 | 涵盖 99 天的数据
         </div>
     </div>
     
-    <h2 class="date-divider">📅 2026-06-24</h2>
+    <h2 class="date-divider">📅 2026-06-25</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.26083" target="_blank">Real-Time Voice AI Hears but Does Not Listen</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice AI</span>
+                <strong>ID:</strong> <span class="tag">2606.26083</span>
+                <a href="pdfs/2606.26083.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Martijn Bartelds, Federico Bianchi, James Zou<br>
+                <div style="margin-top:5px"><span class="tag">real-time voice AI</span><span class="tag">emotional intelligence gap</span><span class="tag">non-lexical cues</span><span class="tag">prosody</span><span class="tag">voice-word conflict</span><span class="tag">deployment safety</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前实时语音AI系统（如GPT Realtime-2、Gemini 3.1 Flash Live、Qwen3.5 Omni系列）在决策时严重依赖词汇内容，忽视语音中的情感、语调、口音等非词汇线索，导致在紧急呼叫、欺诈检测等场景中做出错误行为（如挂断哭泣者电话、批准恐惧中的转账、注册讽刺意愿者）。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>多轮场景测试</strong>：设计三个真实对话场景（福利回访、电汇欺诈、志愿者招募），其中词汇和语音传递相反信息，衡量系统最终行为。</li>
+<li><strong>单轮诊断</strong>：分离感知与行动，直接询问系统是否感知到语音中的情绪，发现多数系统能识别但无视。</li>
+<li><strong>口音/年龄诊断</strong>：测试系统对说话人属性的判断，显示其受词汇内容而非声学特征主导。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>所有四个系统在三个场景中均基于词汇做出错误决策，忽略语音线索。</li>
+<li>三个系统（除Qwen3.5 Omni Flash外）能正确识别语音中的情绪，但决策时不利用。</li>
+<li>提示系统注意语音仅部分改善表现，不一致。</li>
+<li>系统估计口音和年龄时偏向词汇暗示的答案。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文揭示了实时语音AI的“情感智能鸿沟”——听得见但不倾听，警示在依赖语气和情感信息的场景中需谨慎部署。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25959" target="_blank">SE-AGCNet: An End-to-End Framework for Joint Speech Enhancement and Loudness Control in Meeting Scenarios</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2606.25959</span>
+                <a href="pdfs/2606.25959.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jinming Zhang, Wei Rao, Xionghu Zhong, Eng Siong Chng<br>
+                <div style="margin-top:5px"><span class="tag">Speech Enhancement</span><span class="tag">Automatic Gain Control</span><span class="tag">Joint Training</span><span class="tag">Meeting Room Acoustics</span><span class="tag">Loudness Control</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统音频流水线将语音增强（SE）和自动增益控制（AGC）作为独立模块级联，导致两种局限：AGC先于SE会无差别放大噪声和语音，降低信噪比；SE先于AGC则易过度抑制低音量语音，且残留噪声被AGC放大。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>端到端联合框架 SE-AGCNet</strong>：在时频域联合优化SE和AGC，采用MP-SENet作为SE骨干，并引入非对称重加权策略（对过度抑制施加10倍惩罚），促使SE保留低音量语音；AGC模块通过RMS归一化、频率卷积、BiLSTM和频谱重建实现音量平衡，训练中采用条件加权损失抑制静音区噪声放大。</li>
+<li><strong>数据模拟管道 SE-AGC-DataGen</strong>：针对AGC任务缺乏公开数据集，基于LibriTTS构建LibriAGC数据集，模拟多说话人、音量变化（突发尖峰、渐变等）及真实噪声（风扇、键盘等），并生成SE目标（干净但音量不平衡）和AGC目标（干净且音量平衡）。</li>
+<li><strong>标准化响度评估指标</strong>：引入ITU-R BS.1770和EBU R128标准的集成响度（LUFS）、短期响度（St LUFS）和响度范围（LRA），更客观地评估AGC效果。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在LibriAGC、MMCSG和AliMeeting-far数据集上，SE-AGCNet在语音质量（SIGMOS、DNSMOS、PESQ）和ASR（WER/CER）指标上优于传统级联基线。</li>
+<li>响度指标达到目标-23 LUFS，且LRA较小，证明音量平衡效果好。</li>
+<li>真实场景评估进一步验证了数据模拟管道的有效性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>SE-AGCNet通过端到端联合训练有效解决了SE与AGC的协同难题，在会议场景下显著提升语音质量和ASR性能，并提供了可复现的数据管道与标准化评测方法。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25672" target="_blank">Joint Residual Reweighting for Classifier Free Guidance in Flow-Matching Zero-Shot TTS</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2606.25672</span>
+                <a href="pdfs/2606.25672.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Runwu Shi, Yujin Wang, Hongjin Song, Chunxiang Jin<br>
+                <div style="margin-top:5px"><span class="tag">Zero-shot TTS</span><span class="tag">Flow Matching</span><span class="tag">Classifier-Free Guidance</span><span class="tag">Joint Residual Reweighting</span><span class="tag">Speaker Similarity</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>标准CFG在零样本TTS中同时增强文本和说话人条件，导致两者权衡；分支选择性方法虽可分别增强但存在权衡。</p>
+<h2>方法创新</h2>
+<p>提出四分支残差分解（full, text-only, speaker-only, null），将全条件方向分解为文本残差、说话人残差和联合残差。基于此设计联合残差重加权，在标准CFG基础上独立控制说话人残差和联合残差，提供更细粒度的控制。</p>
+<h2>实验结果</h2>
+<p>在F5-TTS和CosyVoice2上，该方法在保持文本正确性的同时提升了说话人相似度（CosyVoice2在多个数据集上提升ASR错误率指标；F5-TTS在英语集上提升说话人相似度）。</p>
+<h2>一句话评价</h2>
+<p>提出联合残差重加权方法，通过四分支分解和独立加权联合残差，有效平衡了零样本TTS中的说话人相似度和文本准确度。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25460" target="_blank">Fully Differentiable Neural Forced Alignment via Soft Dynamic Programming</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Forced Alignment / Phoneme Alignment</span>
+                <strong>ID:</strong> <span class="tag">2606.25460</span>
+                <a href="pdfs/2606.25460.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rotem Rousso, Eyal Cohen, Joseph Keshet<br>
+                <div style="margin-top:5px"><span class="tag">Forced Alignment</span><span class="tag">Phoneme Alignment</span><span class="tag">Differentiable Dynamic Programming</span><span class="tag">Contrastive Learning</span><span class="tag">Soft-DP</span><span class="tag">End-to-End</span><span class="tag">Speech Segmentation</span><span class="tag">Neural Acoustic Modeling</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的强制对齐（Forced Alignment）方法主要依赖 HMM-GMM 框架，虽然精度高但依赖发音词典和 G2P 转换，无法适应自发语音中的实际发音变化。现代端到端 ASR 模型（如 wav2vec2.0、HuBERT、Whisper）虽在识别上表现优异，但未针对时间边界定位优化，导致对齐精度不足。</p>
+<h2>方法创新</h2>
+<p>提出一种全可微分的神经强制对齐架构，包括：
+1. <strong>双分支编码器</strong>：表示编码器（用于音素身份验证和边界检测，通过对比损失 MNCE 区分稳态帧和过渡帧）和上下文编码器（生成帧级音素概率）。
+2. <strong>可微软动态规划解码器</strong>：基于 Soft-DP 的端到端可训练模块，保持梯度流动。
+3. <strong>对比损失（MNCE）</strong>：增强稳态音素区域与过渡边界区域的声学区分。
+4. <strong>端到端联合优化</strong>：结合 MNCE、交叉熵和 Soft-DP 损失。</p>
+<h2>实验结果</h2>
+<p>在手工标注的英语基准上超越 HMM-GMM 和现有神经对齐方法，并泛化到词级对齐和未见语言。</p>
+<h2>一句话评价</h2>
+<p>首个结合对比表示学习与可微动态规划的端到端音素对齐系统，显著提升边界精度。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25444" target="_blank">Does Translation-Enhanced Speech Encoder Pre-training Affect Speech LLMs?</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech LLM, Speech Encoder Pre-training, Cross-lingual Translation</span>
+                <strong>ID:</strong> <span class="tag">2606.25444</span>
+                <a href="pdfs/2606.25444.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tomoya Mizumoto, Yusuke Fujita<br>
+                <div style="margin-top:5px"><span class="tag">Speech LLM</span><span class="tag">speech encoder</span><span class="tag">translation-enhanced pre-training</span><span class="tag">cross-modal alignment</span><span class="tag">bidirectional translation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统将预训练语音编码器（如基于ASR或SSL的模型）接入大语言模型（LLM）构建Speech LLM时，存在表征空间不对齐问题：ASR编码器产生语言特定的连续特征，而LLM工作于语言无关的语义空间，轻量适配器难以弥合这一鸿沟。</p>
+<h2>方法创新</h2>
+<p>提出在语音编码器预训练中引入<strong>双向翻译任务</strong>（X↔en），迫使编码器学习语言无关的抽象语义表示。具体设计：1）采用Whisper-style Seq2Seq架构，预训练后仅保留编码器；2）定义三种预训练配置：<strong>ASR-Only</strong>（仅多语言转录）、<strong>ASR &amp; ST (X→en)</strong>（非英语→英语翻译，模拟Whisper）、<strong>ASR &amp; ST (X↔en)</strong>（双向翻译，包含英语→其他语言）；3）改进prompt格式支持双向翻译（OWSM风格）。</p>
+<h2>实验结果</h2>
+<p>基于Llama-3.2-1B/3B-Instruct frozen LLM，在ASR、ST（X→en和en→X）任务上评估。<strong>双向翻译预训练（X↔en）始终最优</strong>：
+- 在1B LLM上，ASR WER从16.6降至14.6（en），ST X→en BLEU提升（如ja: 7.1→11.8）；
+- 在3B LLM上，en→X翻译（seen语言）提升显著（如zh: 28.3→30.8），unseen语言（fa, id, sv, tr）同样受益；
+- 相比仅X→en翻译，双向翻译带来更一致且更大幅度的改善，证明<strong>对称翻译目标对语义对齐的关键作用</strong>。</p>
+<h2>一句话评价</h2>
+<p>该工作通过系统性对比实验，首次验证了<strong>双向翻译预训练</strong>能有效解决语音编码器与LLM的模态鸿沟，为构建高性能Speech LLM提供了新的预训练范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25436" target="_blank">Evaluating Japanese Dialect Robustness Across Speech and Text-based Large Language Models</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Language Model</span>
+                <strong>ID:</strong> <span class="tag">2606.25436</span>
+                <a href="pdfs/2606.25436.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tomoya Mizumoto, Yusuke Fujita, Hao Shi, Lianbo Liu, Atsushi Kojima, Yui Sudo<br>
+                <div style="margin-top:5px"><span class="tag">Japanese dialect</span><span class="tag">robustness</span><span class="tag">large language model</span><span class="tag">speech language model</span><span class="tag">speech translation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>方言变体对大型语言模型（LLM）和语音语言模型（SLM）构成显著挑战，尤其是日语方言的鲁棒性尚未被系统研究。</p>
+<h2>方法创新</h2>
+<ul>
+<li>定义<strong>方言鲁棒性</strong>为模型在方言输入与标准输入上的性能比值，实现公平跨模型比较。</li>
+<li>采用<strong>翻译任务</strong>（日语方言→英语）作为评估任务，兼顾文本和语音模态。</li>
+<li>构建文本LLM（LoRA微调）和SLM（语音编码器+适配器+LLM）两种架构，对比分析。</li>
+<li>从三个维度探究：基础LLM方言能力是否迁移至SLM（RQ1）、方言训练数据的影响（RQ2）、语音编码器微调的作用（RQ3）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在CPJD方言集上，SLM的鲁棒性与对应文本LLM显著正相关（如Llama在CPJD1上文本鲁棒性0.839 vs 音频0.698）。</li>
+<li>使用方言数据训练和微调语音编码器均有效提升鲁棒性。</li>
+<li>不同LLM基座（Llama、LLMJP、Sarashina、Swallow）在方言鲁棒性上存在差异，但趋势一致。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文首次系统评估日语方言在文本和语音LLM中的鲁棒性，揭示了模态间方言能力迁移规律，并指出方言数据和编码器微调是关键改进手段。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25424" target="_blank">Adaptive Oscillatory Inductive Bias for Modeling Sharp Prosodic Dynamics in Diffusion-Based TTS</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2606.25424</span>
+                <a href="pdfs/2606.25424.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sandipan Dhar, Nirmesh J. Shah, Ashishkumar P. Gudmalwar, Pankaj Wasnik<br>
+                <div style="margin-top:5px"><span class="tag">Text-to-Speech</span><span class="tag">Diffusion Model</span><span class="tag">Oscilla Activation Function</span><span class="tag">Prosodic Dynamics</span><span class="tag">Expressive Speech Synthesis</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有扩散式文本到语音（TTS）模型在处理表达性语音中的尖锐韵律转换（如快速音高变化、清浊音边界）时效果不佳，固定的周期激活函数（如Snake）适应性有限。</p>
+<h2>方法创新</h2>
+<p>本文提出自适应振荡激活函数Oscilla，定义为 <code>x + tanh(α sin²(x))</code>。该函数结合了周期性的正弦分量和可学习参数α，通过tanh饱和机制实现门控，自适应调节振荡响应，同时线性旁路保持信号稳定。将其集成至StyleTTS2的解码器中，形成OscillaTTS系统。</p>
+<h2>实验结果</h2>
+<p>在LJSpeech（单说话人）和ESD（多情绪）数据集上，OscillaTTS在主观（MUSHRA评分86.67±1.49）和客观指标（MCD 6.59±0.01，F0-RMSE 0.35±0.003）上均优于StyleTTS2、GlowTTS、GRADTTS、FastSpeech2等基线，尤其在韵律建模上表现更佳。</p>
+<h2>一句话评价</h2>
+<p>OscillaTTS通过引入可自适应调制的振荡偏置，有效提升了扩散TTS对表达性语音中尖锐动态的建模能力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25403" target="_blank">CrossAccent-TTS: Cross-Lingual Accent-Intensity Controllable Text-to-Speech via Disentangled Speaker and Accent Representations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2606.25403</span>
+                <a href="pdfs/2606.25403.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ram Annamdevula, Ankit Tatawat, Ashishkumar P. Gudmalwar, Nirmesh J. Shah, Pankaj Wasnik<br>
+                <div style="margin-top:5px"><span class="tag">Accent Conversion</span><span class="tag">Controllable Speech Synthesis</span><span class="tag">Text-to-Speech</span><span class="tag">LLM based TTS</span><span class="tag">Accent Intensity Control</span><span class="tag">Indic Languages</span><span class="tag">L2 Accent</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>跨语言文本到语音（TTS）中，口音转换和强度控制仍是基本挑战，尤其是对于低资源和语音多样的印度语言。现有基于大语言模型（LLM）的TTS系统虽有强跨语言泛化能力，但对口音特征和强度的显式控制有限。</p>
+<h2>方法创新</h2>
+<p>提出CrossAccent-TTS框架，包含口音强度控制器（Accent Intensity Controller, AIC），通过加权语言嵌入注入口音子空间，实现口音间平滑插值和推理时口音强度细粒度调制。另设口音抑制模块（Accent Suppression Module），利用对抗性学习将口音与说话人/风格表征解耦，保留说话人相似性。模型基于Qwen 2.5（0.5B）和Neucodec语音编解码器，自回归生成声学令牌。</p>
+<h2>实验结果</h2>
+<p>在Indic Multilingual数据集（986小时）和L2-ARCTIC数据集（27小时）上评估，CrossAccent-TTS实现了精确的口音强度控制，在口音相似性和可控性上优于IndicF5、XTTS-v2、CV AE、GST-based等基线，同时保持说话人相似性和自然度。</p>
+<h2>一句话评价</h2>
+<p>首次实现跨语言口音强度连续可控的TTS，在低资源印度语言和L2英语口音上均有效。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25181" target="_blank">Phoneme-Level Mispronunciation Screening in Polish-Speaking Children with an Explainable Assistant</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.25181</span>
+                <a href="pdfs/2606.25181.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Milosz Dudek, Daria Hemmerling, Kamil Kwarciak, Maciej Stroinski, Maria Pensko, Mateusz Kowalewski, Leonid Pavlovskyi, Sebastian Jurczak, Anna-Mariia Vitkovska, Zuzanna Miodonska, Natalia Mocko, Michal Krecichwost<br>
+                <div style="margin-top:5px"><span class="tag">child speech</span><span class="tag">mispronunciation detection</span><span class="tag">speech sound disorders</span><span class="tag">Polish</span><span class="tag">phoneme recognition</span><span class="tag">wav2vec2</span><span class="tag">explainable feedback</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>波兰语儿童发音错误筛查依赖专家，资源有限；波兰语辅音密集，咝音系列复杂，自动筛查难度大。</p>
+<h2>方法创新</h2>
+<ul>
+<li>基于wav2vec2的CTC token识别器，附加6层Transformer后编码器以稳定CTC输出。</li>
+<li>扩展token集，引入括号化IPA音标（如[s], [ù]）标记常见替换，保留专家判断的替换证据。</li>
+<li>对齐后根据最小编辑距离定位错误，输出可解释的诊断向量（目标、实际、类型、置信度）。</li>
+<li>模板驱动的护理人员辅助工具，保守处理不确定情况（低置信度时要求重录或转专家）。</li>
+<li>使用LoRA进行参数高效微调（33.3%可训练参数）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在10名未见儿童（559个话语）测试集上，精确序列匹配88.7%。</li>
+<li>作为保守筛查代理（检测目标咝音替换），精确率72.9%，召回率61.4%，F1=0.67，误报率2.7%。</li>
+<li>移除后编码器会导致精确序列匹配下降4.2个百分点。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文提出了一种针对波兰语儿童咝音替换的可解释筛查流水线，在有限数据上取得了合理的识别和筛查性能，并设计了安全的护理人员辅助框架。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.25116" target="_blank">BCoughBench: Benchmarking Respiratory Acoustic Foundation Models Under Body-Coupled Wearable Sensor Conditions</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Health Monitoring / Foundation Model Benchmarking</span>
+                <strong>ID:</strong> <span class="tag">2606.25116</span>
+                <a href="pdfs/2606.25116.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mayur Sanap, Prasanna Desikan, Edgar Lobaton<br>
+                <div style="margin-top:5px"><span class="tag">respiratory acoustic foundation models</span><span class="tag">body-coupled sensing</span><span class="tag">wearable health monitoring</span><span class="tag">benchmark</span><span class="tag">clinical sensitivity</span><span class="tag">domain shift</span><span class="tag">cough detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前呼吸声学基础模型（FMs）仅在智能手机录音上评测，而临床部署日益转向体耦合（BC）可穿戴设备，其传感器通过组织和骨骼衰减高频内容，导致FM可靠性未知。</p>
+<h2>方法创新</h2>
+<ul>
+<li>提出BCoughBench基准，评估5个FM（OPERA-CT/CE/GT, HeAR, M2D+Resp）在5个EBEN模拟的BC传感器条件下的9个分类任务和3个年龄回归任务。</li>
+<li>使用预训练EBEN反向模型将智能手机咳嗽音频转换为5种传感器等效音频（前额加速度计、软入耳式、硬入耳式、太阳穴振动拾音器、喉部麦克风），模拟BC退化。</li>
+<li>多指标评估：AUROC、临床敏感性（Se@Sp95）、期望校准误差（ECE）用于分类；MAE对比均值预测基线用于回归。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>平均AUROC从0.785（智能手机）降至0.689–0.723，太阳穴振动拾音器下降最大（Δ=−0.096），软入耳式下降最小（Δ=−0.062）。</li>
+<li>在大多数疾病任务下，任何BC传感器上无FM达到临床敏感性阈值（Se@Sp95≥0.20）。</li>
+<li>CIDRZ数据集上的性别分类崩溃（AUROC从0.954降至0.596–0.628，Δ=−0.341），而COVID检测几乎不受影响（Δ=−0.004）。</li>
+<li>年龄回归稳健，在CoughVID上前额加速度计下MAE从9.61改善至8.97年。</li>
+<li>HeAR在回归和人口统计任务上领先，M2D+Resp在疾病和特征任务上领先。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>首个系统评估呼吸声学基础模型在体耦合可穿戴传感器条件下性能的基准，揭示了显著的传感器依赖性和任务特异性退化。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.24912" target="_blank">Velocity Prediction in Automatic Guitar Transcription</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Automatic Music Transcription</span>
+                <strong>ID:</strong> <span class="tag">2606.24912</span>
+                <a href="pdfs/2606.24912.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jackson Loth, Xavier Riley, Simon Dixon, Emmanouil Benetos<br>
+                <div style="margin-top:5px"><span class="tag">velocity prediction</span><span class="tag">automatic guitar transcription</span><span class="tag">synthetic data</span><span class="tag">transfer learning</span><span class="tag">deep learning</span><span class="tag">CRNN</span><span class="tag">MIDI</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>自动吉他转录（AGT）领域缺乏带速度标签的公开数据集，且速度在吉他上的定义模糊，导致多数模型忽略速度预测。</p>
+<h2>方法创新</h2>
+<ol>
+<li>使用虚拟乐器合成带速度标签的训练数据（约20小时），通过François Leduc数据集中的MIDI注释估算速度，并用五种音色渲染。</li>
+<li>两阶段训练：第一阶段在合成数据上训练完整CRNN模型（基于Kong et al.的High-Resolution Piano Transcription模型），学习速度映射；第二阶段冻结速度子模块，在真实音频数据集（GAPS、GOAT）上训练其他子模块（onset、offset、frame），使用修改后的损失函数（去除速度项）。</li>
+<li>数据增强：随机峰值滤波、混响、脉冲响应。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在合成数据上，速度预测平均绝对误差（MAE）从基线32.39降至7.04（song split），从33.59降至11.53（timbre split）。</li>
+<li>考虑速度的F1值（F50(vel)）从35.6提升至69.22（song split），从34.7提升至51.99（timbre split）。</li>
+<li>音符转录F1值略有提升（91.19→91.22），但不显著。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>首次提出吉他转录中的速度预测方法，通过合成数据预训练结合真实数据微调，实现了有效的速度预测，但音符转录性能提升有限。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.24910" target="_blank">End-to-End Voice Intent Recognition for Spontaneous Human-Drone Interaction with Naive Users</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-06-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Language Understanding / Voice Intent Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.24910</span>
+                <a href="pdfs/2606.24910.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Allan Henry (GIPSA-COPERNIC, GETALP, LPNC), Solange Rossato (GETALP), Christian Graff (LPNC), Sylvain Huet (GIPSA-COPERNIC), Jose-Ernesto Gomez-Balderas (GIPSA-COPERNIC)<br>
+                <div style="margin-top:5px"><span class="tag">End-to-End SLU</span><span class="tag">Spontaneous Speech</span><span class="tag">Human-Drone Interaction</span><span class="tag">Self-Supervised Learning</span><span class="tag">Knowledge Distillation</span><span class="tag">VoiceStick Corpus</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统无人机语音控制依赖严格预定义命令列表，无法处理非专业用户的自然口语（含犹豫、重复、修正等不流畅现象）。级联方案（ASR+语义分析）延迟高且错误传播，而端到端方法因缺乏大规模配对音频-意图数据而难以实现。</p>
+<h2>方法创新</h2>
+<p>提出端到端口语理解架构，冻结自监督学习（SSL）声学编码器（基于Wav2Vec），后接轻量级LSTM+注意力池化分类头。创新引入跨模态知识蒸馏：训练时利用冻结的文本教师（如CamemBERT）编码ASR转录，通过余弦损失对齐声学表示与语义嵌入，推理时无需转录。在法语自发语音语料库VoiceStick（29对非专业用户真实遥操作场景）上评估。</p>
+<h2>实验结果</h2>
+<ul>
+<li>简单命令：93%准确率，7ms推理延迟，远超级联基线（79%，202ms），速度提升29倍。</li>
+<li>全自发语音测试集：82%准确率，跨模态蒸馏在所有配置中一致提升鲁棒性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>端到端架构结合冻结SSL编码器与知识蒸馏，在实时无人机语音控制中实现低延迟、高鲁棒性，比级联方案更优。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-06-24</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2606.24813" target="_blank">A Methodology for Characterizing Underwater Radiated Noise from Submerged Electric Vehicles in a Coastal Environment: An AUV Test Case</a>
