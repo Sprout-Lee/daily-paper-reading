@@ -1,0 +1,195 @@
+# Arxiv Daily Deep Report - 2026-06-29
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 8
+---
+
+## 1. HPRO: Hierarchical Progressive Reward Optimization via Preference Extraction for Emotional Text-to-Speech
+
+**作者**: Sihang Nie, Xiaofen Xing, Rui Xing, Haoming Li, Ruitong Xiao, Jingyuan Xing, Baiji Liu, Xiangmin Xu
+**链接**: [2606.28249](https://arxiv.org/abs/2606.28249)
+**分类**: Emotional Text-to-Speech | **关键词**: Hierarchical Reward, Preference Optimization, Emotional TTS, Neural Codec, Differentiable Reward Modeling, Progressive Training
+
+## 核心痛点
+- **SFT局限**：标准有监督微调导致韵律平均化，情感表现力不足。
+- **偏好优化结构性失配**：
+  - 信息冲突：内容与情感共享潜在空间，梯度冲突导致奖励黑客和语义退化。
+  - 尺度差距：句子级稀疏奖励难指导帧级密集生成。
+
+## 方法创新
+- **HPRO框架**：分层渐进式奖励优化。
+- **HD-Emo Codec**：可微分奖励模型，将语音分解为内容偏好token和风格偏好token，通过ASR和层次化情感监督（SER + wVAD）实现解耦。
+- **渐进优化策略**：三阶段（帧级热身→词级细化→句级对齐），逐步引入高层次目标，防止奖励黑客。
+- **分层奖励**：帧级（L1对齐）、词级（wVAD CCC + ASR CE）、句级（SER CE）。
+
+## 实验结果
+- 显著提升情感表现力，同时有效保持语言可懂度。
+- 代码和音频样本公开。
+
+## 一句话评价
+HPRO通过结构化偏好空间和渐进式优化，解决了情感TTS中信息冲突和尺度差距问题，实现了更可控、更自然的情感语音合成。
+
+---
+
+## 2. Screening Matters: A Comparative Study of Conventional and Crowdsourced Listening Tests
+
+**作者**: Anika Treffehn, Andrea Eichenseer, Emily Kratsch, Nicola Pia
+**链接**: [2606.28114](https://arxiv.org/abs/2606.28114)
+**分类**: 主观听测与质量评估 | **关键词**: speech coding, neural audio coding, subjective evaluation, crowdsourced evaluation, listening tests, screening methods, P.800, P.808
+
+## 核心痛点
+传统实验室主观听测（P.800）可靠但成本高、耗时长；众包听测（P.808）快速廉价但结果质量较差，表现为评分范围缩窄、方差增大，导致平均评分偏移（MAE=0.573, RMSE=0.659）。
+
+## 方法创新
+系统对比三类筛选方法：
+1. **预筛选**：听力预测试和问卷，但效果不佳。
+2. **中筛选**：陷阱问题（随机要求特定评分）和黄金标准问题（参考评分阈值），可有效识别注意力缺失的参与者。
+3. **后筛选**：基于锚点排序（MNRU等级正确性）和评分跨度（参考与最差锚点评分差），能显著提升结果与P.800的一致性。
+
+## 实验结果
+- 无筛选时P.808与P.800相关系数r=0.929，但评分偏移大。
+- 后筛选（锚点排序+跨度）效果最好：r提升至0.976，RMSE降至0.280，MAE降至0.233。
+- 中筛选（陷阱）可剔除极端异常值，但单独使用效果有限。
+- 预筛选和问卷未显示显著改进。
+
+## 一句话评价
+本文通过系统实验验证了后筛选方法能有效提升众包听测结果质量，使其接近实验室水平，为低成本主观评估提供了实用方案。
+
+---
+
+## 3. DG^VoiC: Speaker Clustering for Fraud Investigation under Real Call-Centre Conditions
+
+**作者**: Muhammad Shakeel Akram, Amal Htait, Abdul Hamid Sadka, Emma Meisingseth, Karishma Jaitly
+**链接**: [2606.28048](https://arxiv.org/abs/2606.28048)
+**分类**: Speaker Clustering / Fraud Detection | **关键词**: Speaker clustering, Fraud investigation, Call-centre, ECAPA-TDNN, Cosine similarity, Anonymisation, Real-world audio
+
+## 核心痛点
+保险欺诈在呼叫中心场景中难以检测，尤其是首次损失通知（FNOL）阶段。现有方法主要依赖结构化数据、文本或图像，忽略了跨通话的说话人身份重用信号。真实呼叫中心音频因隐私和生物识别数据限制而难以研究。
+
+## 方法创新
+提出 DG^VoiC 框架，用于匿名化真实呼叫中心音频的说话人聚类。流程包括：
+- 基于 NER、正则表达式和 WhisperX 词级时间戳的敏感信息对齐匿名化；
+- 使用 Resemblyzer 预处理的语音聚焦预处理（静音去除）；
+- 滑动窗口（6秒窗口，3秒步长）提取 ECAPA-TDNN 说话人嵌入；
+- 余弦相似度聚类，并设置三个条件（相似度>0.718、簇中客户数>4、簇一致性）以生成风险评分。
+
+## 实验结果
+在 56 个样本（22 个人工标注簇）的验证集上，最佳配置（ECAPA-TDNN + 均值池化 + 6秒滑动窗口 + 余弦阈值0.718）达到：AMI 96%，ARI 95%，完整性 98%，同质性 100%，V-measure 99%，准确率 95%，F1 0.96。额外发现的2个簇实际源于真实录音中的噪声或变化。
+
+## 一句话评价
+该方法在真实呼叫中心条件下有效实现说话人聚类，为欺诈调查提供强辅助信号。
+
+---
+
+## 4. A Flexible Encoding Model for Non-Unique Note Alignments
+
+**作者**: Suhit Chiruthapudi, Adam Štefunko, Silvan Peter, Patricia Hu, Jan Hajič jr., Carlos Eduardo Cancino-Chacón
+**链接**: [2606.28032](https://arxiv.org/abs/2606.28032)
+**分类**: Symbolic Music Alignment | **关键词**: non-unique alignment, virtual pointer notes, Match file format, rehearsal alignment, basso continuo
+
+## 核心痛点
+传统的符号音乐对齐方法要求音符一一对应，无法处理排练、即兴等场景中的非唯一对齐（如一个谱面音符对应多个演奏音符，或一个演奏音符对应多个谱面音符）。
+
+## 方法创新
+提出对Match文件格式的简单扩展：
+- **虚拟谱面音符（virtualSnote）**：用于一个谱面音符对齐多个演奏音符（如排练重复、装饰音）。
+- **虚拟演奏音符（virtualPnote）**：用于一个演奏音符对齐多个谱面音符（如相同音乐内容的重复小节）。
+- **扩展Section行**：增加section和omittedSection行，支持标注排练重复段落和省略段落。
+扩展保持向后兼容，不引入新格式。
+
+## 实验结果与应用
+论文以钢琴排练对齐和低音连续对齐为例，展示了扩展格式如何编码重复、插入、删除等复杂对齐关系。未提供量化实验结果。
+
+## 一句话评价
+通过微小的格式扩展优雅地解决了非唯一音符对齐的编码问题，实用性强，适用于音乐排练和即兴演奏分析。
+
+---
+
+## 5. Dialogue to Detection: A Multimodal Hybrid NLP Pipeline for Insurance Fraud Detection
+
+**作者**: Muhammad Shakeel Akram, Amal Htait, Abdul Hamid Sadka, Emma Meisingseth, Karishma Jaitly
+**链接**: [2606.28002](https://arxiv.org/abs/2606.28002)
+**分类**: Insurance Fraud Detection | **关键词**: Insurance fraud, Multimodal data, Synthetic data, Voice clustering, Rule-based scoring, FNOL, NER, BERT, RAG, Speaker embedding
+
+## 核心痛点
+保险欺诈造成巨额经济损失，早期检测（首次损失通知FNOL阶段）面临数据稀缺问题，尤其是缺乏公开的多模态（文本+语音）数据集，现有方法多基于私有文本数据，难以复现和扩展。
+
+## 方法创新
+提出一个端到端的多模态混合NLP管道，包含：1）合成数据生成：用GPT-2生成欺诈/合法对话，xTTS合成双说话人音频；2）ASR与双音化：WhisperX将音频转为文本并标注说话人；3）特征提取：NER+正则提取实体，BERT+RAG检索历史叙述，Resemblyzer提取说话人嵌入；4）规则评分：融合多模态信号（文本、语音、说话人身份）计算风险分数，检测叙述复用、结构不一致和跨案例声音重复。
+
+## 实验结果
+数据集验证和组件级评估表明管道稳定且具有迁移潜力，平衡了灵敏度和误报率，为多模态欺诈检测提供了可复现基线。
+
+## 一句话评价
+该工作通过合成多模态数据填补了保险欺诈检测领域的数据空白，并提出了一个集成文本、语音和说话人信息的透明评分框架，具有重要研究价值。
+
+---
+
+## 6. Grammar-Guided Hierarchical Parsing for Long-form Audio Activity Recognition
+
+**作者**: Peng Zhang, Qingyu Luo, Philip J.B. Jackson, Wenwu Wang
+**链接**: [2606.27965](https://arxiv.org/abs/2606.27965)
+**分类**: Audio Activity Recognition | **关键词**: Hierarchical Activity Grammar, Long-form audio, Grammar-guided parsing, Probabilistic context-free grammar, Event detection
+
+## 核心痛点
+长音频（如烹饪、清洁）具有天然层次结构（事件→子活动→活动），现有方法分别建模各层级导致跨层级不一致，且需要多层级标注。
+
+## 方法创新
+提出**层次活动语法（Hierarchical Activity Grammar）**，一种概率上下文无关文法（PCFG），编码层次组合和时间顺序约束。通过语法引导解码，从事件级后验概率推断出动作-子事件解析树，进而导出子活动分割和活动分类，无需子活动或活动标签训练。引入噪声非终结符处理缺失/杂散事件；采用Earley-style最大后验解码。
+
+## 实验结果
+在MultiAct长音频数据集上，所提方法改进了时间顺序一致性（Edit分数），产出了可解释的层次结构。
+
+## 一句话评价
+一种无需中间层标注、利用语法先验增强长音频活动识别一致性的结构化推理方法。
+
+---
+
+## 7. Do Speech Emphasis Models Generalize across Languages and Emotions?
+
+**作者**: Megan Wei, Deepali Aneja, Jiaqi Su, Yunyun Wang, Haonan Chen, Zeyu Jin
+**链接**: [2606.27717](https://arxiv.org/abs/2606.27717)
+**分类**: Speech Prosody / Paralinguistics | **关键词**: speech emphasis, prosody, multilingual, emotion, paralinguistics, emphasis detection, cross-lingual generalization, MMEE
+
+## 论文总结
+
+### 核心痛点
+- 现有语音强调检测模型大多在单语、中性朗读语音上训练和评估，缺乏多语言、多情感场景的泛化能力研究。
+- 强调标注通常为二分类，忽略其渐变特性；且多依赖合成或预设强调，缺乏人类感知判断。
+
+### 方法创新
+- 构建了**MMEE**（Multilingual Multi-Emotion Emphasis）语料库：包含7种宏观语言（10种区域变体）、34种情感/风格、10000个专业录制样本（14.13小时），每个样本有10个三级别感知标注（不强调、强调、重度强调）。
+- 在单语、跨语言、多语言、跨情感唤醒度、跨数据集、训练数据规模等多种设置下，系统评测了两类最先进模型（EmphaClass和WhiStress）。
+
+### 实验结果
+- **单语模型零样本迁移有限**：在类型学距离远的语言间性能下降明显。
+- **多语言训练显著提升鲁棒性**：联合训练优于任何单语模型。
+- **跨情感迁移良好**：高唤醒度和低唤醒度情感之间可互相迁移。
+- **合成与感知基准双向迁移**：表明共享韵律结构。
+- **小规模训练性能稳健**：即使减少训练数据，模型仍保持较高准确率。
+
+### 一句话评价
+该工作通过大规模多语言多情感语料库和系统评测，揭示了语音强调模型跨语言和情感泛化的关键规律，为构建鲁棒、可迁移的强调检测系统提供了重要基准和见解。
+
+---
+
+## 8. Elastic Time: Dynamic Frame Rate Bottlenecks for Neural Audio Coding
+
+**作者**: Dimitrios Bralios, Paris Smaragdis, Minje Kim
+**链接**: [2606.27320](https://arxiv.org/abs/2606.27320)
+**分类**: Audio Coding / Compression | **关键词**: neural audio autoencoders, dynamic frame-rate, adaptive rate, latent predictor, Re-Bottleneck
+
+## 核心痛点
+现有神经音频自编码器多采用固定帧率，对信息密度不同的区域分配相同的时间预算，导致不必要的长序列，影响生成模型的计算和内存效率。
+
+## 方法创新
+提出**Elastic Time**，一种即插即用的重瓶颈模块，可将预训练的固定帧率自编码器转换为动态帧率模型。核心是训练一个轻量级潜在预测器，根据预测准确性判断帧的冗余性，在推理时通过贪心或动态规划算法自适应选择帧边界，仅保留锚定帧并用预测器重构其余帧。无需外部语义监督，支持推理时按用户指定压缩率调节。
+
+## 实验结果
+在多个压缩率下，Elastic Time相比固定下采样和CodecSlime等基线，在重建质量（如SI-SNR、PESQ）与效率之间取得了更好的权衡。动态规划版本性能最优，贪心算法接近且更高效。
+
+## 一句话评价
+一种将固定帧率自编码器灵活转换为动态帧率的插件方法，兼顾效率与质量。
+
+---
+
