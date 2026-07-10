@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-10</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-10 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.08714" target="_blank">Multimodal Digital Biomarker for Asthma: Complementary Roles of Vocal, Clinical and Demographic Factors</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Digital Biomarkers</span>
+                <strong>ID:</strong> <span class="tag">2607.08714</span>
+                <a href="pdfs/2607.08714.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Vladimir Despotovic, Milena Despotovic, Abir Elbeji, Petr V. Nazarov, Guy Fagherazzi<br>
+                <div style="margin-top:5px"><span class="tag">asthma</span><span class="tag">voice</span><span class="tag">digital biomarker</span><span class="tag">mixture-of-experts</span><span class="tag">multimodal learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>哮喘影响全球2.6亿人，但诊断依赖肺功能检查（肺量测定法）和专科评估，在初级医疗和资源匮乏地区可及性差。传统的语音生物标志物研究仅关注声学特征，未整合临床背景信息。</p>
+<h2>方法创新</h2>
+<p>提出一种多模态Mixture-of-Experts（MoE）框架，自适应地结合从持续元音发声和朗读任务中提取的声学嵌入，以及结构化临床和人口统计数据。模型在Colive Voice研究的1218例哮喘患者和健康对照匹配队列上评估。多模态模型实现AUROC 0.85和Brier评分0.17，优于单模态和双模态方法。自适应门控分析显示，在呼吸道症状负担较重的参与者中，模型更依赖音频特征；而在症状较轻的个体中，临床特征贡献更大。</p>
+<h2>实验结果</h2>
+<ul>
+<li>多模态MoE模型：AUROC=0.85，Brier Score=0.17</li>
+<li>使用重复10×10分层交叉验证</li>
+<li>门控网络揭示不同症状负担下的模态贡献动态变化</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究展示了利用智能手机收集的语音记录进行可扩展、可解释的哮喘筛查的可行性，为远程数字健康监测提供了新范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.08586" target="_blank">Why Do You Say It Like That? A Phoneme-Level Framework for Explainable Speech Deepfake Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Explainable Speech Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2607.08586</span>
+                <a href="pdfs/2607.08586.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anna Taylor, Michele Panariello, Massimiliano Todisco, Chiara Galdi, Nicholas Evans, Driss Matrouf<br>
+                <div style="margin-top:5px"><span class="tag">speech deepfake detection</span><span class="tag">explainable artificial intelligence</span><span class="tag">phoneme-level analysis</span><span class="tag">Grad-CAM</span><span class="tag">self-supervised learning</span><span class="tag">ASVspoof 5</span><span class="tag">WavLM</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前语音深度伪造检测系统（如基于wav2vec 2.0、HuBERT、WavLM的模型）在准确率上表现优异，但其预测过程缺乏可解释性，难以理解模型基于哪些声学或语言学特征做出“真实”或“伪造”的判断。这使得系统在安全、公平等关键应用中难以获得信任，也不利于后续改进。</p>
+<h2>方法创新</h2>
+<p>本文提出一个音素级可解释性分析框架，主要包括三部分：
+1. <strong>自监督前端</strong>：使用WavLM提取帧级语音表示。
+2. <strong>CNN分类器</strong>：采用时间卷积网络作为后端，结合掩码时间平均池化得到话语级表示，并输出真实类与伪造类的logit。
+3. <strong>事后解释模块</strong>：基于Grad-CAM计算真实类（bona fide-CAM）和伪造类（spoof-CAM）的注意力图，再通过Whisper转写和Bournemouth Forced Aligner对语音进行音素级强制对齐，将注意力值按音素/停顿段平均，得到与语言学单元（音素、非语音段）关联的重要性得分。</p>
+<p>该方法无需修改检测模型，即可将解释从低层声学特征提升到人类可理解的语言学单元，并支持大规模统计比较。</p>
+<h2>实验结果</h2>
+<p>在ASVspoof 5数据集上，所提框架使用的检测器取得了竞争性的等错误率（EER）。通过聚合语料库中音素级归因分数，统计分析发现：
+- 不同欺骗攻击（spoofing attack）和不同说话人之间存在显著差异的音素激活模式；
+- 元音、擦音及静音/非语音区域对模型判决贡献尤为突出；
+- 解释未牺牲检测性能，实现了可解释性。</p>
+<h2>一句话评价</h2>
+<p>本文首次将语音深度伪造检测的归因分析映射到音素级语言单元，在保持检测精度的同时提供了人类可理解的解释，促进了可信任AI的发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.08371" target="_blank">On the Role of Conversational Timing in Synthetic Training Data for ASR</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.08371</span>
+                <a href="pdfs/2607.08371.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Máté Gedeon, Péter Mihajlik<br>
+                <div style="margin-top:5px"><span class="tag">Automatic speech recognition</span><span class="tag">Conversational speech</span><span class="tag">Data simulation</span><span class="tag">Multi-speaker speech</span><span class="tag">Speech data augmentation</span><span class="tag">Overlapped speech</span><span class="tag">Bayesian optimization</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>合成多说话人对话数据广泛应用于训练对话ASR系统，但对话时机属性（如暂停时长、重叠频率）对下游ASR性能的影响尚未明确。现有方法多关注数据真实感（匹配语料库统计），但真实分布不一定是最优训练分布。</p>
+<h3>方法创新</h3>
+<ol>
+<li>提出基于指数倾斜（exponential tilting）的对话时机参数化模型，将时机分布表示为低维参数向量θ的平滑族，可生成从多个语料库估计的基分布及其可控偏移。</li>
+<li>结合拉丁超立方采样（LHS）和多目标贝叶斯优化，在参数空间中进行高效探索，每个采样点作为受控时机条件，用于分析内在统计量（重叠率、重叠时长、间隙统计、尾部行为等）与cpWER/cpCER的关系。</li>
+<li>实验设计围绕研究问题（RQ1-RQ5），系统分析哪些内在属性最影响ASR性能，而非仅追求最低错误率。</li>
+</ol>
+<h3>实验结果</h3>
+<p>在匈牙利语BEA-Dialogue基准上：
+- 更高重叠暴露与更低cpWER相关，而更长、更多变的间隙与更高cpWER相关；cpCER趋势类似但统计支持较弱。
+- 贝叶斯优化带来适度聚合改进，但主要价值在于分析：揭示模拟训练数据中存在重叠-间隙权衡。
+- 高表现设置不一定靠近语料库分布，可能位于外推区域。</p>
+<h3>一句话评价</h3>
+<p>该工作通过可控时机参数化和优化框架，系统揭示了对话时机属性对ASR训练的影响，为合成数据的设计提供了任务驱动的诊断方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.07985" target="_blank">A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Language Models / Voice Agent Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2607.07985</span>
+                <a href="pdfs/2607.07985.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> A. Sayyad, J. Emmons, S. Jones, T. Lin, H. Krishnan<br>
+                <div style="margin-top:5px"><span class="tag">LALM-as-judge</span><span class="tag">audio language models</span><span class="tag">validation</span><span class="tag">voice agents</span><span class="tag">production deployment</span><span class="tag">full-duplex audio</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有的音频评估方法主要针对孤立语音片段，缺乏对全双工语音代理对话中原始立体声音频的整体评估，且人类评分成本高昂（约两个数量级）。</p>
+<h2>方法创新</h2>
+<p>首次使用LALM（Gemini 2.5 Flash）作为音频评判器，直接对全双工代理-客户对话的原始立体声波形进行评分，覆盖8个生产维度（如语音清晰度、韵律自然度等），并与三位校准人类评分者对比，同时引入对抗性缺陷注入测试敏感性。</p>
+<h2>实验结果</h2>
+<p>在5个维度上LALM与人类的一致性（Spearman ρ）与人类间一致性差距不超过0.07；在6个维度上，LALM评分与人类均值偏差在1分以内的会话占比60%以上；在45/48个（缺陷，维度）单元中，LALM的缺陷检测敏感度不低于人类。但存在天花板效应导致简单一致性高而Krippendorff α近乎为零。</p>
+<h2>一句话评价</h2>
+<p>该研究为将LALM作为全双工语音评估的替代或第四评分者提供了可靠的实证基础，但需按维度验证而非全局假设。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
