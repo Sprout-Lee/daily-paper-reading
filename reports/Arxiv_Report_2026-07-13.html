@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-13</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-13 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.09043" target="_blank">Technical Report for MERL's Real-TSE Challenge Submission</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target Speaker Extraction</span>
+                <strong>ID:</strong> <span class="tag">2607.09043</span>
+                <a href="pdfs/2607.09043.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Dominik Klement, Yoshiki Masuyama, Christoph Boeddeker, Kohei Saijo, Julius Richter, Gordon Wichern, Jonathan Le Roux<br>
+                <div style="margin-top:5px"><span class="tag">目标语音提取</span><span class="tag">数据清洗</span><span class="tag">多阶段训练</span><span class="tag">真实远场</span><span class="tag">课程学习</span><span class="tag">BSRNN</span><span class="tag">DNSMOS</span><span class="tag">说话人相似度</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有TSE模型在合成数据上表现优异，但难以泛化到真实远场嘈杂环境，主要原因在于模拟数据与真实数据之间的领域差距。</p>
+<h3>方法创新</h3>
+<ul>
+<li><strong>模型改进</strong>：基于基线BSRNN，将EcapaTDNN-512替换为EcapaTDNN-1024，并将BSRNN深度从6增至10块。</li>
+<li><strong>数据预处理</strong>：采用ClearerVoice增强、MFA对齐、WER过滤等清洗多源数据；使用真实远场-近讲麦克风对，通过Wiener滤波投影近讲信号到远场并增强。</li>
+<li><strong>四阶段训练课程</strong>：</li>
+<li>全重叠合成数据预训练（200k步）。</li>
+<li>带噪与混响的模拟对话训练。</li>
+<li>远场单说话人片段训练（含噪声增强）。</li>
+<li>真实远场混合数据训练（含20%合成数据与30%阶段三数据混合）。</li>
+<li><strong>损失函数</strong>：结合时间域L1损失、多尺度STFT幅度损失、DNSMOS损失和说话人余弦相似度损失。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>在挑战赛道2中取得第一名。</li>
+<li>各阶段逐步提升TER、F1、DNSMOS等指标，第四阶段TER降至0.37，F1达0.88。</li>
+<li>发现DNSMOS和说话人相似度易被过度优化，通过对抗攻击可将其推至极值而不影响TER或VAD F1。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>通过高质量数据清洗与多阶段课程训练，简单的TSE模型能在真实远场场景中取得领先性能，凸显数据准备的重要性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.09020" target="_blank">Phone Segmentation and Recognition through Phonological Activation Mapping</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition: Phone Segmentation and Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.09020</span>
+                <a href="pdfs/2607.09020.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shikhar Bharadwaj, Kwanghee Choi, Stephen McIntosh, Chin-Jou Li, Eunjung Yeo, Daisuke Saito, Nobuaki Minematsu, Shinji Watanabe, Jian Zhu, David Harwath, David R. Mortensen<br>
+                <div style="margin-top:5px"><span class="tag">phone segmentation</span><span class="tag">phone recognition</span><span class="tag">self-supervised learning</span><span class="tag">phonological features</span><span class="tag">SPAM</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>音素分割与识别是语音处理的基础任务，但传统方法将两者分开建模，且依赖大量人工标注。专家标注一小时语音需40-100小时，成本高且主观性强。</p>
+<h2>方法创新</h2>
+<p>提出了SPAM（Self-supervised Phonological Activation Mapping）方法，利用自监督语音模型（S3M）的表示空间，通过音系特征向量（如清浊、鼻音等）线性分解，构建每个时间帧的激活映射。在此基础上，设计了两个无需梯度下降的轻量级预测头：
+- <strong>分割头</strong>：基于相邻帧SPAM的余弦距离和峰值检测，定位音素边界。
+- <strong>识别头</strong>：将每帧的SPAM与PanPhon词典中规范音系向量进行相似度匹配，实现零样本识别。
+该方法仅需不到1分钟的标注数据，且能识别训练中未出现的音素。</p>
+<h2>实验结果</h2>
+<p>在多种语言和数据集（包括低资源语言和非典型语音）上达到强分割和识别性能，具有样本高效性和泛化能力。</p>
+<h2>一句话评价</h2>
+<p>巧妙利用自监督模型中的音系结构，以极简方式统一了音素分割与识别，兼具解释性和实用性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.09134" target="_blank">ReGen: Hierarchical Multi-Prompt Representation Generation for Efficient Waveform Diffusion Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2607.09134</span>
+                <a href="pdfs/2607.09134.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sang-Hoon Lee, Ha-Yeong Choi<br>
+                <div style="margin-top:5px"><span class="tag">Representation Generation</span><span class="tag">Flow Matching</span><span class="tag">Diffusion Transformer</span><span class="tag">Neural Audio Codec</span><span class="tag">Text-to-Speech</span><span class="tag">Hierarchical Multi-Prompt</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>在低比特率波形生成中，表示对齐（REPA）方法导致隐表示纠缠，限制生成容量，尤其是高频细节丢失。</li>
+<li>传统CFM模型在低比特率下难以保持语义和声学一致性。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>ReGen框架</strong>：在单个DiT中联合估计表示和数据的多个向量场，通过分层结构从语义到波形逐步生成。</li>
+<li><strong>分层多提示机制</strong>：使用掩码填充策略，同时利用语义（SSL）、声学（Mel）和波形提示进行条件生成。</li>
+<li><strong>广义流匹配（GFM）</strong>：在向量场空间中引入排斥项，缓解零坍缩问题，提高波形级流匹配的鲁棒性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在12.5 Hz/400 bps低比特率下，ReGen显著提升波形重建质量。</li>
+<li><strong>ReGenVoice</strong>（基于LDM的TTS）：在6.25 Hz潜空间运行，仅需4 GPU训练1天，RTF=0.08，达到高语音可懂度（WER）和说话人相似度（SIM）。</li>
+<li>优于REPA和REPA-H基线。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ReGen通过分层表示生成替代表示对齐，在超低比特率下实现了高效、高质量的波形和语音生成。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.09001" target="_blank">Optimal Transport-based Semantic Alignment for LLM-based Audio-Visual Speech Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.09001</span>
+                <a href="pdfs/2607.09001.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xugang Lu, Peng Shen, Yu Tsao, Hisashi Kawai<br>
+                <div style="margin-top:5px"><span class="tag">Audio-visual speech recognition</span><span class="tag">optimal transport</span><span class="tag">feature fusion</span><span class="tag">large language model</span><span class="tag">semantic alignment</span><span class="tag">contrastive learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有基于大语言模型（LLM）的音频-视觉语音识别（LLM-AVSR）方法通常独立预训练音频和视觉编码器，输出经投影后融合作为软提示输入LLM进行识别。但大多数方法未显式处理音频、视觉和文本模态之间的表征差异，导致跨模态集成效果受限。此外，时间同步并不保证语义同步，直接组合时间对齐特征难以有效减少歧义。</p>
+<h3>方法创新</h3>
+<p>本文提出基于最优传输（OT）的语义对齐框架，在融合前显式弥合模态差距。具体来说：
+1. 将音频特征、视觉特征和LLM的语言嵌入建模为共享隐空间中的经验概率分布，使用熵正则化的OT计算模态特征与语言嵌入之间的概率耦合矩阵。
+2. OT耦合作为软伪标签监督对比学习，鼓励提取语义一致、跨模态一致的音频-视觉表征。
+3. 对齐模块插入编码器和投影层之间，无需修改预训练编码器和LLM架构。</p>
+<h3>实验结果</h3>
+<p>在LRS3-TED基准上，所提方法在干净和多种SNR的噪声条件下均持续超越强基线，达到当前最佳性能（state-of-the-art）。</p>
+<h3>一句话评价</h3>
+<p>通过OT将多模态特征显式对齐到LLM的语言空间，显著提升了LLM-AVSR的鲁棒性和准确性。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
