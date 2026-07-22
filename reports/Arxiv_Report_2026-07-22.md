@@ -1,0 +1,203 @@
+# Arxiv Daily Deep Report - 2026-07-22
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 7
+---
+
+## 1. Towards a reproducible cross-venue method for quantifying crowd noise in stadiums
+
+**作者**: Alejandro Osses, Bente Ackermans, Helmer Nuijens, Rick Scholte
+**链接**: [2607.18922](https://arxiv.org/abs/2607.18922)
+**分类**: Acoustic Measurement | **关键词**: crowd noise, stadium acoustics, sound level measurement, reproducibility, spatial measurement, Guinness World Records
+
+## 核心痛点
+当前体育场馆人群噪声测量主要依赖单点峰值 dB(A) 读数（如吉尼斯世界纪录），这种方法缺乏标准化，存在以下问题：
+- 未指定测量仪器、时间计权、测点数量，导致结果不可重复、不可跨场馆比较。
+- 峰值读数易受瞬态声干扰，与感知响度不符（ISO 推荐使用快时间计权或等效连续声级）。
+- 测点选择无依据，无法保证代表球场上的声环境。
+
+## 方法创新
+提出一种可重复的跨场馆人群噪声测量框架：
+1. **推荐方案**：采用空间分布式测量（如声学相机），获取多个观众区域的声压级，从而计算具有代表性的“场馆人群声级”。
+2. **最低报告基线**：当无法分布测量时，采用单锚点测量（指向球场中央），确保捕获各观众区对场地的贡献。
+3. **关键指标**：建议使用快时间计权最大声级 L_AF,max 或等效连续声级 L_Aeq，而非峰值 dB(A)。
+
+## 实验/分析
+论文以实际足球比赛进球时刻为例，显示峰值读数比快时间计权最大值高 11.6 dB（121.7 vs 110.1 dB(A)），说明峰值读数的夸大性。同时指出吉尼斯纪录设备（Larson Davis 831）的过载点（143 dB(Z)）接近所报告值，可能存在饱和问题。
+
+## 一句话评价
+本研究首次系统性地批判了现有单点峰值测量方法，并提出了一个兼顾跨场馆可比性与实际应用场景的标准化测量框架，为体育声学评估奠定了方法论基础。
+
+---
+
+## 2. Summary of DCASE 2026 Task 5: Audio-Dependent Question Answering
+
+**作者**: Haolin He, Renhe Sun, Zheqi Dai, Xingjian Du, Chunyat Wu, Zining Liang, Zhengxi Liu, Jiahe Lei, Runbang Wang, Jiayi Zhou, Mingru Yang, Xiquan Li, Yun Chen, Xie Chen, Zhiyao Duan, Weiqiang Wang, Mark D. Plumbley, Jian Liu, Qiuqiang Kong
+**链接**: [2607.18718](https://arxiv.org/abs/2607.18718)
+**分类**: Audio Question Answering / Multimodal Evaluation | **关键词**: Audio-Dependent Question Answering, Large Audio-Language Models, Multimodal Benchmark, DCASE Challenge, Audio-Dependency Filtering
+
+# DCASE 2026 Task 5: Audio-Dependent Question Answering (ADQA) 总结
+
+## 核心痛点
+现有大型音频语言模型（LALMs）在多选音频问答中常利用文本捷径（如语言先验、数据集伪影）而非真正依赖音频，导致在静音替换音频后仍能正确回答。DCASE 2026 Task 5 旨在构建一个严格依赖音频的评估基准（ADQA-Bench），推动模型真正的音频理解能力。
+
+## 方法创新
+1. **音频依赖过滤（ADF）流水线**：四阶段筛选确保问题必须依赖音频。
+   - Hard-ADF：静音音频探测，若多个盲模型仍答对则剔除。
+   - Soft-ADF：基于语言模型困惑度，若正确答案文本困惑度最低则剔除。
+   - LLM常识过滤：纯文本LLM能答对的问题剔除。
+   - 人工验证：两轮审核确保答案正确且干扰项合理但声学错误。
+2. **训练集**：AudioMCQ-StrongAC-GeminiCoT，包含强音频贡献子集和Gemini蒸馏的CoT理由。
+3. **赛道划分**：Overall（≤100B参数，单组件≤30B）和Lightweight（<10B）。
+
+## 实验结果
+- **14支队伍，36个提交**，准确率范围31.87%–58.33%。
+- **Overall冠军**：Lim_CAU_4 (Chung-Ang University)，58.33%，使用MOSS-Audio-8B-Thinking + Qwen3-Omni-30B 集成，结合GDPO、LoRA、声学标签器和选项排列投票。
+- **Lightweight冠军**：Lim_CAU_1 (MOSS-Audio-8B-Thinking)，57.30%。
+- **平均开发-评估下降**：11.91pp（中位数10.91pp），评估集更难。
+- **最常用骨干**：MOSS-Audio-8B-Thinking（13/36提交），常见LoRA微调和强化学习（GRPO/GDPO）。
+- **所有系统都答错相同的233个评估项**，表明存在系统性难点。
+
+## 一句话评价
+DCASE 2026 Task 5 提出了目前最大规模的音频依赖问答基准，通过严格过滤确保音频依赖性，但最优准确率仅58.33%，仍有巨大提升空间。
+
+---
+
+## 3. Towards Array-Invariant Speech Enhancement via Geometry-Aware Dynamic Convolution
+
+**作者**: Zhenglong Liu, Wangyou Zhang, Chenda Li, Yanmin Qian
+**链接**: [2607.18658](https://arxiv.org/abs/2607.18658)
+**分类**: Audio Enhancement | **关键词**: 多通道语音增强, 麦克风阵列不变, 动态卷积, 几何感知, RealMAN
+
+## 核心痛点
+多通道语音增强系统依赖固定麦克风阵列几何结构，难以泛化到不同设备；现有阵列无关方法虽能处理可变麦克风数量和排列，但未利用显式几何信息，导致性能低于固定阵列模型。
+
+## 方法创新
+提出**Geometry-Aware Dynamic Convolution (Geo-DConv)** 框架，包含两个关键模块：
+1. **Fourier Positional Encoding**：将麦克风相对坐标映射为高维特征。
+2. **Topology-Aware Coordinate Transformer (TACT)**：通过自注意力机制建模阵列拓扑，生成动态变换矩阵，从而调制固定卷积核的权重，使任意固定阵列模型能处理可变通道输入。
+
+该模块作为通用适配器，可插入现有固定阵列模型（如BSRNN、SpatialNet）中，实现阵列不变性，并保持输出稳定性和置换等变性。
+
+## 实验结果
+在真实录音数据集**RealMAN**（32通道，83.7小时语音）上进行训练和评估。将Geo-DConv集成到两个固定阵列模型后，在多种子阵列配置下，SDR、SI-SDR、PESQ、STOI、DNSMOS指标均优于原始阵列无关基线（FaSNet-TAC、USES2-comp）和固定阵列基线，验证了显式几何先验的有效性。
+
+## 一句话评价
+通过显式注入麦克风坐标信息并利用动态卷积，Geo-DConv有效解决了多通道语音增强中阵列几何适配问题，实现了在真实场景下的阵列不变性。
+
+---
+
+## 4. Staged Depth-Pruning Distillation of a Flow-Matching Text-to-Speech Teacher: A Compact Hindi Speech Synthesizer
+
+**作者**: Sivateja Trikutam
+**链接**: [2607.18662](https://arxiv.org/abs/2607.18662)
+**分类**: Text-to-Speech | **关键词**: 深度剪枝, 知识蒸馏, 流匹配, 印地语TTS, 渐进式蒸馏, ASR-WER门控
+
+## 总结
+
+### 核心痛点
+- 高质量多语言TTS模型（如IndicF5，337M参数）过大，难以在设备端和低成本场景部署。
+- 印地语TTS两极分化：大型模型质量高但参数量大（>300M），小型模型如MMS-TTS（36M）和Kokoro（82M）质量较差。
+- 在有限数据预算（17.6小时）下，从头训练小模型不可行。
+
+### 方法创新
+1. **深度专用剪枝（Depth-Only Warm-Start）**：仅减少Transformer块数量，保持宽度、文本维度、注意力头数等不变，使得非块张量能直接复制教师权重。
+2. **剪枝容忍度分析**：通过未训练学生模型的输出振幅（RMS）测量，发现移除~27%块仍保持功能，移除≥50%则崩溃，因此采用渐进式下降。
+3. **渐进式蒸馏阶梯（Staged Distillation Ladder）**：从教师模型（22块）逐步剪枝至16→12→8→6块，每步剪枝后微调，并用ASR词错误率（WER）门控判断是否继续。
+4. **训练/推理一致性问题修复**：解决mel滤波器组库版本差异和旋转嵌入库版本差异导致的无声质量下降问题，并提出版本无关的修复方法。
+
+### 实验结果
+- 学生模型在249M、190M、131M参数下表现良好：249M在未见句子上WER 0.00；190M在FLEURS 50句基准上WER 0.170，UTMOS 3.65（教师为3.79），SIM 0.750（教师0.784），速度提升1.8倍。
+- 102M模型出现容量悬崖，认为由数据预算限制而非方法导致。
+- 推荐190M为最佳小型模型，131M为最小鲁棒模型。
+
+### 一句话评价
+本文提出一种通过深度剪枝和渐进蒸馏从大TTS模型构建紧凑印地语TTS的实用方法，在有限数据下取得了接近教师质量的小模型。
+
+---
+
+## 5. A Situational Speech Synthesizer for Yoruba: System Design, Phonological Rule Architecture, and Orthographic Extensions for Contour
+
+**作者**: Kola Tubosun, Adedayo Oluokun, Hafiz Adewuyi, Dadepo Aderemi
+**链接**: [2607.18317](https://arxiv.org/abs/2607.18317)
+**分类**: Text-to-Speech | **关键词**: Yoruba, Text-to-Speech, low-resource languages, diphone synthesis, contour tones, rule-based synthesis
+
+# 论文总结
+
+## 核心痛点
+Yorùbá语言资源匮乏，现有神经TTS系统需要大量标注语音数据，而Yorùbá尚无公开可用的TTS系统。同时，Yorùbá个人姓名数据库增长迅速，手动录制音频不可扩展，需要自动化合成引擎。
+
+## 方法创新
+1. **基于规则的拼接式双音素合成**：构建包含651个双音素单元的语料库，覆盖所有音节-声调组合（五种声调变体：低、中、高、升、降）。
+2. **完整的声调文件选择逻辑**：根据当前音节的拼写声调和前一个音节的声调，选择正确的双音素文件，实现上下文相关的升调（L→H）和降调（H→L）实现。
+3. **三向鼻音消歧系统**：区分口/n/、鼻化元音和成音节鼻音，规则明确。
+4. **正字法贡献**：采用Unicodeのcaron（ˇ）和circumflex（ˆ）作为单元音轮廓调标记，集成到TTS流水线和WriteYoruba键盘工具，解决以前无法合成的姓名。
+
+## 实验结果
+通过50名听众的Mean Opinion Score（MOS）评估（详细结果见Section 6）。系统已部署在TTSYoruba.com及YorubaName.com，为近10,500个姓名条目生成音频。
+
+## 一句话评价
+该论文为低资源语言Yorùbá提供了一个完整、可部署、可复现的基于规则的语音合成系统，并在正字法上做出了创新性贡献。
+
+---
+
+## 6. Fretiq: Browser-Native Electric Guitar String Classification via Engineered Spectral Features and Held-Out Free-Play Evaluation
+
+**作者**: Aadi Garg
+**链接**: [2607.18303](https://arxiv.org/abs/2607.18303)
+**分类**: Audio Classification / Music Information Retrieval | **关键词**: electric guitar string classification, browser-native, MFCC, feature engineering, comparison training, free-play evaluation
+
+## 核心痛点
+电吉他单音高（pitch）可在多根弦的不同品上发出，人类听觉难以区分，现有系统依赖特殊硬件或离线处理。
+
+## 方法创新
+- **26维特征表示**：频带能量、频谱统计、13个MFCC，提取自单声道直接输入信号。
+- **对比训练（Comparison Training）**：针对相邻弦对（如D3-A2）交替录制开放弦与第五品，减少帧级混淆。
+- **浏览器原生系统**：基于Next.js/Web Audio API，无需hexaphonic拾音器、传感器或摄像头。
+- **训练-推理一致性**：Python训练与TypeScript推理使用相同特征提取管道。
+
+## 实验结果
+- 帧级验证（shuffled）准确率：97.1%（322,215帧）
+- 消融实验：MFCC贡献最大（从92.2%提升至97.1%）
+- 对比训练使D3→A2混淆率降低44%，但对其他相邻弦对效果不一
+- 自由演奏评估（held-out）：103,000帧，准确率87.8%
+- 推理速度：平均2.07ms/帧（p95: 4.40ms），满足60fps
+
+## 一句话评价
+首个纯浏览器端电吉他弦分类系统，通过精心设计的特征与对比训练，在无需额外硬件的情况下取得接近专业水平的识别率。
+
+---
+
+## 7. StemFX: Learning Mixing Style Representations via Autoregressive FX Chain Prediction on Source-Separated Stems
+
+**作者**: Yuan-Chiao Cheng, Jui-Te Wu, Brian Chen, Yen-Tung Yeh, Yu-Hua Chen, Yi-Hsuan Yang
+**链接**: [2607.15634](https://arxiv.org/abs/2607.15634)
+**分类**: Audio Signal Processing / Music Information Retrieval | **关键词**: mixing style representation, autoregressive prediction, FX chain, source separation, band-split CNN, FiLM conditioning, MultiAFx, stem mixing
+
+# 论文总结
+
+## 核心痛点
+现有混音风格表示学习方法存在以下局限：
+- 多数方法要求固定长度或固定效果的FX链，缺乏灵活性。
+- 需要可微效果实现，限制可用效果种类。
+- 依赖稀缺的多轨干/湿配对数据，数据集规模小（如MUSDB18仅150首）。
+- 部分方法（如LLM2Fx-Tools）冻结音频编码器，生成目标不优化表示。
+- 推理时优化方法（如ST-ITO）速度慢（>1000秒/例）。
+
+## 方法创新
+提出**STEMFX**框架，核心贡献如下：
+1. **自回归FX链生成**：将混音风格表示为变长、多效果的FX链，通过Transformer解码器自回归预测令牌化序列，支持任意效果顺序和链长。
+2. **BSFiLM编码器**：基于频带分割（band-split）的多分支CNN，结合FiLM条件注入手工设计的混音特征（64维），捕获每轨频谱结构。
+3. **分离-增强管道（Sep-Aug）**：对约105K首歌曲进行源分离得到伪干音，再用MultiAFx工具（85种效果）随机增强，构建大规模配对训练数据。
+4. **端到端联合训练**：编码器和解码器共同优化，生成目标反向传播至音频表示。
+
+## 实验结果
+- **混音风格检索**：在全部测试链长上，STEMFX优于FxEncoder、CLAP等基线。
+- **风格迁移**：获得最佳频谱保真度（如MSS、LSD指标）和最高听众偏好（MUSHRA测试），且比迭代优化方法（ST-ITO）快4000倍以上。
+- **可解释性**：输出为人类可读的FX链（如“sox_compand→threshold=-20 dB, ratio=4:1”）。
+
+## 一句话评价
+STEMFX通过自回归生成变长FX链并联合训练编码器，首次在105K歌曲规模上实现高效、灵活、可解释的混音风格表示学习。
+
+---
+
