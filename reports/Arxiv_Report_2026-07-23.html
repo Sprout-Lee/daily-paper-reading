@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-23</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-23 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.20386" target="_blank">Improved Monitoring of Honey bee Colony Strength via Audio IoT Sensors, Modulation Tensorgrams and Recurrent Neural Networks</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Signal Processing for Precision Apiculture</span>
+                <strong>ID:</strong> <span class="tag">2607.20386</span>
+                <a href="pdfs/2607.20386.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mahsa Abdollahi, Yi Zhu, Heitor R. Guimarães, Nico Coallier, Ségolène Maucourt, Pierre Giovenazzo, Tiago H. Falk<br>
+                <div style="margin-top:5px"><span class="tag">Honey bee acoustics</span><span class="tag">Modulation spectrogram</span><span class="tag">Modulation tensorgram</span><span class="tag">Convolutional neural network</span><span class="tag">Recurrent neural network</span><span class="tag">Colony strength monitoring</span><span class="tag">IoT sensors</span><span class="tag">Explainability</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<p>传统蜂群强度监测依赖人工检查，耗时且干扰蜂群；使用音频IoT传感器时，传统时频特征对噪声敏感，且之前的方法丢弃了调制频谱中的时间动态信息。</p>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>调制张量图（modulation tensorgram）</strong>，保留时间维度，捕获调制频谱的时域动态。</li>
+<li>使用CNN和卷积循环深度神经网络（CRDNN）直接处理调制张量图，替代手工特征。</li>
+<li>结合可解释性分析（saliency maps和Grad-CAM）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在UrBAN数据集（&gt;3000小时音频）上，所提方法在准确性、跨蜂群泛化能力和鲁棒性上均优于基准方法。</li>
+<li>证明了调制频谱时域动态的重要性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究通过保留调制频谱时间维度的深度学习方法，显著提升了基于音频的蜂群强度远程监测的准确性和泛化能力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.19636" target="_blank">Multimodal Speaker Verification as a Threat to Speaker Anonymization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Anonymization / Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2607.19636</span>
+                <a href="pdfs/2607.19636.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ashi Garg, Cristina Aggazzotti, Leibny Paola García-Perera, Nicholas Andrews<br>
+                <div style="margin-top:5px"><span class="tag">multimodal speaker verification</span><span class="tag">speaker anonymization</span><span class="tag">voice privacy</span><span class="tag">multi-utterance aggregation</span><span class="tag">prosodic features</span><span class="tag">linguistic embeddings</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有说话人匿名化方法主要针对单条孤立话语的声学特征进行保护，但现实中的语音交流往往包含多条话语，攻击者可通过聚合多个话语的声学、韵律和语言学线索来重构说话人身份，从而威胁隐私。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>多话语聚合</strong>：研究两种聚合粒度：</li>
+<li><strong>话语级聚合</strong>：独立编码每条话语后通过查询注意力机制加权融合，并分别融合音频-文本（使用WavLM-ECAPA-TDNN和LUAR）和音频-韵律（F0均值、有声率、语速）。</li>
+<li><strong>帧级聚合</strong>：在帧级别（注意力统计池化前）拼接多话语的帧表征，再统一池化；同样支持音频-文本和音频-韵律融合。</li>
+<li><strong>多模态融合</strong>：除音频外，引入文本（ASR转录的LUAR嵌入）和韵律特征（F0均值、有声率、语速），并探索加权融合策略（如文本主导权重0.2:0.8）。</li>
+<li><strong>攻击场景</strong>：在匿名化语音（通过语音转换生成）上评估两种攻击者：懒惰知情攻击者（仅用原始语音训练）和半知情攻击者（使用匿名化训练数据）。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>RQ1</strong>：聚合多个匿名化话语的音频一致提升ASV性能，性能增益随话语数增加而增大。</li>
+<li><strong>RQ2</strong>：多模态系统（音频+文本或音频+韵律）优于单模态音频系统，表明匿名化后仍保留大量说话人判别信息。</li>
+<li><strong>RQ3</strong>：帧级聚合在所有设置下均优于话语级聚合，表明残留信息分布在时域中，最好在池化前聚合。</li>
+<li>仅用5条匿名化话语，音频+文本的帧级融合相比纯音频聚合等错误率（EER）相对降低超过15%。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文首次系统性地证明多话语、多模态攻击能有效利用匿名化语音中的残留说话人信息，显著降低隐私保护效果，为未来匿名化方法设计提供了重要挑战和评估标准。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.20253" target="_blank">Pushing the Frontier of Full-Song Generation: Hierarchical Autoregressive Planning Meets Flow-Matching Rendering</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Generation / Full-Song Generation</span>
+                <strong>ID:</strong> <span class="tag">2607.20253</span>
+                <a href="pdfs/2607.20253.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Junyu Dai, Xinyue Fan, Weiqin Li, Xiangang Li, Yunjia Li, Bin Ma, Yukun Ma, Chongjia Ni, Yufei Shi, Haoxu Wang, Menglin Wu, Jianwei Yu, Huaicheng Zhang, Han Zhao, Shengkui Zhao, Haina Zhu<br>
+                <div style="margin-top:5px"><span class="tag">Full-Song Generation</span><span class="tag">Hierarchical Autoregressive Modeling</span><span class="tag">Flow Matching</span><span class="tag">RVQ Tokenizer</span><span class="tag">Cover Song Generation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li><strong>全歌生成挑战</strong>：音乐包含歌词、旋律、伴奏、节奏等复杂元素，现有方法在结构连贯性、声学自然性和可控性上不足。</li>
+<li><strong>离散表示瓶颈</strong>：单码本分词难以捕捉音乐多样性，多码本RVQ虽好但高码本预测困难。</li>
+<li><strong>长序列合成</strong>：现有分块解码方式影响全局一致性和音频质量。</li>
+<li><strong>翻唱生成</strong>：需在保留主旋律的同时平衡音符级结构与细粒度音高变化。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>语义感知RVQ分词器</strong>：三阶段训练（BEST-RQ预训练、多任务微调、RVQ训练），8码本8192大小，保留语义与重建保真度。</li>
+<li><strong>Hybird-LM</strong>：层次自回归模型，8B全局LLM预测第一级音频tokens，0.4B局部LLM预测残差tokens，支持歌词/描述/属性条件。</li>
+<li><strong>FullDiT</strong>：8B DiT模型，在连续VAE潜空间进行非因果流匹配，条件为全部8码本tokens、歌词和文本描述，实现全歌高质量渲染。</li>
+<li><strong>双层旋律模块</strong>：提取参考音频的音符级和帧级音高线索，离散化为粗粒度与细粒度旋律tokens，用于翻唱生成。</li>
+<li><strong>偏好对齐后训练</strong>：结合DPO、GRPO、OPD策略，提升音乐性和渲染质量。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>自动评估</strong>：在500例多语言基准上，大多数自动评估维度取得最高点估计。</li>
+<li><strong>人类偏好</strong>：Artificial Analysis Music with Vocals排行榜上，系统Elo评分1129，排名范围2-3，与第二名Mureka V8差距仅12 Elo点，置信区间重叠，属于同一性能梯队。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文提出了一个统一的全歌生成框架，通过层次自回归规划与流匹配渲染，在歌词到歌曲、纯音乐和翻唱任务上实现了可控、高保真的生成，达到了领先的竞争性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.19902" target="_blank">Nonlinear Bias-Compensated Adaptive Filter and Its Application for Time-Series Prediction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Adaptive Filtering</span>
+                <strong>ID:</strong> <span class="tag">2607.19902</span>
+                <a href="pdfs/2607.19902.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Peng, Haiquan Zhao, Jinhui Hu<br>
+                <div style="margin-top:5px"><span class="tag">random Fourier features</span><span class="tag">errors-in-variables</span><span class="tag">bias-compensated</span><span class="tag">general adaptive function</span><span class="tag">non-Gaussian noise</span><span class="tag">time-series prediction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有非线性自适应滤波算法大多只考虑输出噪声，忽略了输入噪声的存在（EIV模型）。BCKLMS算法虽能处理输入噪声，但存在两个主要限制：(1) 固定大小的字典无法充分捕捉输入信号特征；(2) 基于LMS的算法对输出信号中的非高斯噪声鲁棒性差。</p>
+<h2>方法创新</h2>
+<p>本文提出随机傅里叶偏置补偿广义自适应滤波器（RFFBCGA）。在随机傅里叶特征（RFF）偏置补偿（BC）框架下，算法保持固定网络结构，通过BC项有效抑制输入噪声，同时RFF映射能更好表征输入信号。此外，利用广义自适应（GA）函数的灵活性，在不同噪声环境下增强算法鲁棒性。GA函数可退化为LMS、LMLS、MCC等常见代价函数。</p>
+<h2>实验结果</h2>
+<p>在真实世界时间序列预测任务上的仿真表明，所提方法在非线性EIV模型下优于其他对比算法。同时还提供了均值和均方稳定性分析，并推导了两个简化推导过程的关键理论结果。</p>
+<h2>一句话评价</h2>
+<p>RFFBCGA算法通过结合RFF、BC和GA函数，同时解决了非线性EIV模型中的输入噪声和非高斯输出噪声问题，具有固定网络结构和高鲁棒性。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
