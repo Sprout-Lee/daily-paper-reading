@@ -1,0 +1,384 @@
+# Arxiv Daily Deep Report - 2026-08-11
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 16
+---
+
+## 1. Dynamic Clustering for Cross-Segment Permutation Alignment in Long Speech Separation
+
+**作者**: Yuzhu Wang, Archontis Politis, Konstantinos Drossos, Tuomas Virtanen
+**链接**: [2608.09451](https://arxiv.org/abs/2608.09451)
+**分类**: Speech Separation | **关键词**: Speech Separation, Permutation Alignment, Dynamic Clustering, Speaker Embeddings, Long Speech Processing
+
+### 核心痛点
+长语音分离通常采用“分割-分离-拼接”范式，但跨片段（cross-segment）的排列（permutation）对齐问题严重制约性能。现有方法如重叠匹配（overlap matching）仅保证局部连续性，全局聚类（global clustering）离线且易受VAD错误和残留干扰影响，静态缓存（static cache）无法适应动态变化，而动态缓存方法依赖神经网络预测分数，泛化性受限。
+
+### 方法创新
+本文提出一种**无训练的动态聚类方法**，用于跨片段排列对齐。方法为每个说话人维护一个参考池（reference pool），通过当前片段嵌入与参考池的余弦相似度预测排列，并利用**TopN更新策略**保留最具代表性的嵌入（基于整体余弦相似度）。该方法无需VAD，通过质量分数抑制低质量嵌入，作为即插即用的后处理模块，兼容现有分离模型。
+
+### 实验结果
+在密集和稀疏长语音场景下，该方法均优于现有基线，尤其在稀疏场景（长静默间隔）下提升显著。此外，方法对说话人数目估计误差具有鲁棒性。实验采用SI-SDR和逐段排列准确率评估。
+
+### 一句话评价
+本文提出了一种简单有效、无需训练的动态聚类排列对齐方法，显著提升了长语音分离中跨片段排列的鲁棒性和准确性，特别适合稀疏语音场景。
+
+---
+
+## 2. Neural Array-Generic Direction-of-Arrival Estimation Exploiting Array Transfer Functions
+
+**作者**: Mikko Heikkinen, Archontis Politis, Konstantinos Drossos, Tuomas Virtanen
+**链接**: [2608.09425](https://arxiv.org/abs/2608.09425)
+**分类**: Sound Source Localization | **关键词**: Direction-of-Arrival Estimation, Array Transfer Functions, Array-Generic, Cross-Attention, Multichannel Audio
+
+### 核心痛点
+传统深度学习的 DoA 估计方法通常与训练时使用的麦克风阵列绑定，难以泛化到未见过的阵列。基于几何元数据（如麦克风坐标）的方法假设全向麦克风和自由场传播，无法建模实际设备中的频率相关指向性和散射效应。
+
+### 方法创新
+提出一种基于阵列传递函数（ATF）的阵列无关 DoA 估计框架。该方法使用复值方向性 ATF 作为阵列描述符，通过两个独立的卷积编码器分别处理多通道频谱图和 ATF 元数据，再利用交叉注意力机制融合表征，最后输出多源笛卡尔向量形式的 DoA 估计。模型采用 CoordConv 替换标准卷积，并引入排列不变损失和 SinkPIT 近似进行训练。
+
+### 实验结果
+在混响和扩散噪声环境下，分别进行了 2D 单源方位角估计和 3D 多源定位实验。结果表明，该方法能够泛化到未见过的阵列（包括手机样式阵列），性能下降不显著，且与 FCGA、MUSIC 等基线相比具有竞争力。在 2D 任务中，所提方法取得 F1@5°=0.75、LE=4.0°，而 FCGA 和 MUSIC 分别为 0.81/9.8° 和 0.97/1.5°。
+
+### 一句话评价
+利用 ATF 作为阵列条件信息，实现了对复杂阵列的泛化 DoA 估计，为实际设备中的阵列无关学习提供了新思路。
+
+---
+
+## 3. Speaker Role and Language Diarization for Analyzing Multilingual Interviews for Language Proficiency of Older Adults
+
+**作者**: Anfeng Xu, Tiantian Feng, Kevin Huang, Pranali Khobragade, Sudarsana Kadiri, Anushikha Dhankhar, Madeleine Snider, Sarah Gao, Miguel Arce Rentería, Jinkook Lee, Shrikanth Narayanan
+**链接**: [2608.09032](https://arxiv.org/abs/2608.09032)
+**分类**: Speech Processing | **关键词**: speaker diarization, language diarization, language proficiency assessment, Whisper, speech foundation model, multilingual interviews
+
+**核心痛点**：现有自动语言能力评估系统大多聚焦于单说话人录音的词汇、声学或发音特征，对多说话人和多语言场景关注不足。在访谈式评估中，目标受访者语音需从双人对话中提取，同时多语言使用（如代码混合）增加了分析难度。
+
+**方法创新**：基于Whisper语音基础模型，构建了说话人角色日志（speaker-role diarization）和语言日志（language diarization）系统，自动提取受访者语音区域并识别语言使用。同时结合统计分析和预测模型，探究由日志导出的会话参与度和语言使用行为对语言熟练度评估的价值。
+
+**实验结果**：语言适配的Whisper模型显著提升了低资源印度语言的语言日志性能；受访者语音比例和预期语言使用是熟练度评分的强预测因子；简单的日志特征在熟练度预测上与Whisper嵌入相当，结合两者效果最佳；且自动日志输出与手动标注在统计分析和预测性能上基本一致。
+
+**一句话评价**：本文验证了说话人角色和语言日志在自动语言熟练度评估中的可行性与可解释性，为多语言老年人群体的规模化评估提供了新范式。
+
+---
+
+## 4. Beyond Piano: Cross-Instrument MIDI Velocity Estimation via Differentiable SoundFont Proxies
+
+**作者**: Zhanhong He, Hanyu Meng, David Defeng Huang, Roberto Togneri
+**链接**: [2608.08985](https://arxiv.org/abs/2608.08985)
+**分类**: Music Information Retrieval | **关键词**: MIDI velocity estimation, cross-instrument adaptation, differentiable SoundFont proxy, label-scarce learning, performance audio
+
+# Summary
+
+## Core Problem
+Many music datasets contain MIDI notes but lack reliable velocity labels, especially outside the piano domain. Velocity is a core component for expressive rendering, music generation, performance analysis, and data curation. However, most public MIDI files do not have human-performance velocities, and learning-based velocity estimation from audio works well almost entirely in the piano domain, largely because datasets like MAESTRO provide note-aligned velocity labels via sensor-equipped Disklavier pianos. For guitar, violin, and other instruments, public datasets provide audio and aligned notes but no velocity labels.
+
+## Method Innovation
+The paper studies label-scarce cross-instrument MIDI velocity estimation. The authors propose a framework that starts from a piano-trained velocity estimator (VeloEst) and adapts it to target instruments using real performance audio. Two adaptation strategies are investigated: differentiable synthesizers (Diff-Synth) and the proposed differentiable SoundFont proxies (Diff-SFProxy). Diff-Synth renders velocities into audio and minimizes a multi-scale spectral loss against real audio, but it suffers from residual timbral mismatch. Diff-SFProxy instead supervises velocity through note-wise, loudness-related acoustic parameters—pitch-conditioned harmonic energy (PHE) and onset-window spectral flux (OSF)—rather than waveform reconstruction. This design focuses gradients on velocity-dependent behavior, allows off-the-shelf SoundFonts to be plugged in, and avoids waveform details that are sensitive to recording and timbre mismatch. The proxy is implemented as an encoder-only Transformer that maps note sequences to per-note PHE/OSF targets, trained on SoundFont-rendered synthetic data.
+
+## Experiments
+Experiments are conducted on piano (MAESTRO) as the source domain and guitar (GAPS) as the main label-scarce target domain. The results show that Diff-SFProxy is effective for cross-instrument MIDI velocity estimation, while waveform-domain Diff-Synth degrades performance. Evaluation uses Bark-scale specific loudness (BSSL) and Bark-scale total loudness (BSTL) to assess whether predicted velocities reproduce the perceived loudness of the original recording, without relying on ground-truth velocity labels.
+
+## One-sentence Evaluation
+This paper presents a novel and effective approach for label-scarce cross-instrument MIDI velocity estimation via differentiable SoundFont proxies, avoiding timbral mismatch issues of waveform-based adaptation and enabling practical adaptation without ground-truth velocities on target instruments.
+
+---
+
+## 5. Beyond Reconstruction: Full-Context Generative DiT for Music Generation
+
+**作者**: Yunjia Li, Menglin Wu, Junyu Dai, Xinyue Fan, Xiangang Li, Haoxu Wang, Jianwei Yu, Huaicheng Zhang, Han Zhao, Weiqin Li, Yufei Shi, Cheng Wen, Sitong Zhao, Qixi Zheng, Haina Zhu, Wei Li
+**链接**: [2608.08787](https://arxiv.org/abs/2608.08787)
+**分类**: Music Generation | **关键词**: FullDiT, EMDC, Music Generation, Diffusion Transformer, Codec-interface exposure bias, Hybrid Music Generation, Classifier-free Guidance
+
+## 核心痛点
+混合音乐生成器将自回归语言模型的长期规划与扩散/流式声学渲染器的保真度结合，但渲染器在训练时使用干净的目标码本token，部署时却面对不完美的语言模型预测，导致码本接口暴露偏差（codec-interface exposure bias）。均匀损坏不足以模拟真实错误分布，因为不同RVQ码本的预测难度不同，且错误token可能局部合理。
+
+## 方法创新
+本文提出FullDiT，一个全上下文条件生成式声学DiT，用于从有缺陷的离散计划生成音乐。其核心设计包括：
+- 融合八路帧对齐RVQ码本流，并独立编码歌词与标题，在完整声学隐序列上应用非因果自注意力。
+- 训练时采用错误匹配干扰条件（EMDC），将每个码本的替换率匹配到教师强制top-1错误率，并从余弦KNN邻域采样近miss token，同时保持声学目标不变。
+- 推理时使用四路无分类器引导（4-CFG），独立缩放码本、歌词和标题的引导增量。
+
+## 实验结果
+- EMDC在合成token损坏下将ViSQOL提升0.77，在固定语言模型token的盲听测试中明显更受偏好。
+- 消融实验证明全歌曲上下文和渲染器侧文本条件带来增益。
+- 完整系统在18个自动指标中的15个上优于五个商业系统，并在Artificial Analysis Music with Vocals排行榜上位列前三。
+
+## 一句话评价
+FullDiT通过全上下文生成式DiT和错误匹配的条件策略，有效缓解了混合音乐生成中的码本接口暴露偏差，显著提升渲染鲁棒性与生成质量。
+
+---
+
+## 6. A Unifying Perspective on Audio Generative Modeling: Latent Representations and Modeling Strategies
+
+**作者**: Dongchao Yang
+**链接**: [2608.08667](https://arxiv.org/abs/2608.08667)
+**分类**: Audio Generative Modeling | **关键词**: Audio Generation, Latent Representation, Dependency Horizon, Conditional Ambiguity, Representation Design, Autoregressive Modeling, RVQ, AudioLM, Streaming Compatibility
+
+## 核心痛点
+音频生成系统通常将表示学习与分布建模视为独立模块，但实际上二者高度耦合。现有工作往往孤立地设计编码器/解码器（如 SoundStream、EnCodec）或生成模型（如 VALL-E、AudioLM），缺乏统一的评估与设计框架，导致难以在不同表示-模型组合之间进行理性比较和选择。
+
+## 方法创新
+本文提出一个统一的视角，将音频生成建模分解为两个耦合决策：**表示设计**（离散、连续或混合 latent）和**分布建模**（如何分解依赖关系）。
+- **表示设计四目标**：表示负担、失真、经验可建模性、流式兼容性。强调这些目标构成 Pareto 问题，而非简单标量；离散/连续只是实现选择。
+- **两个诊断维度**：依赖范围（dependency horizon）和条件模糊性（conditional ambiguity）。用于细化“语义低熵、声学高熵”的常见直觉，指导建模策略：长依赖结构应使用全局建模，条件模糊的细节可委托给局部或迭代生成器。
+- **原则性论断**：重建质量不等于可建模性（Principle 1）；应预测长程结构、生成模糊细节（Principle 2）。
+- **示例分析**：解释 RVQ 的残差顺序提供有序容量但非有序语义；AudioLM 的语义-声学级联仅为一种显式边界放置；自回归、迭代细化与混合模型的主要差异在于依赖范围与关键路径成本的权衡。
+
+## 实验结果
+本文为综述/视角类论文，未提出新模型或实验数据，而是通过代表性系统（如 DAC、AudioLM、DiTAR、CALM 等）的案例说明框架的诊断能力，并强调经验可建模性必须基于具体任务、数据集、预算等条件进行测量。
+
+## 一句话评价
+这是首个从表示-模型联合设计角度系统化音频生成框架的视角论文，为后续音频生成系统提供评估与设计蓝图。
+
+---
+
+## 7. BAMU: Bitstream-Aware Marginal-Utility Allocation for Frozen Pretrained Neural Speech Codecs
+
+**作者**: Mingyu Zhao, Zijian Lin, Yutang Feng, Jiatao Chen, Fan Wang, Jiehui Luo, Yuhao Ding, Jinchao Zhang, Zhiyong Wu
+**链接**: [2608.08432](https://arxiv.org/abs/2608.08432)
+**分类**: Neural Speech Coding | **关键词**: neural speech coding, residual vector quantization, dynamic bit allocation, marginal utility, variable-rate coding
+
+## 核心痛点
+传统神经语音编码器（如 EnCodec、DAC）使用固定的残差矢量量化（RVQ）深度，对所有帧采用相同的量化层级，忽略了帧间量化难度的动态差异，导致部分帧浪费比特资源。现有自适应编码方法多为联合训练或仅关注名义码率，缺乏对冻结预训练编码器进行事后逐帧比特分配的系统方案，尤其无法严格满足实际序列化容器大小（而非理论平均码率）的约束。
+
+## 方法创新
+提出 BAMU（Bitstream-Aware Marginal-Utility Allocation）框架，用于冻结预训练神经语音编码器的动态 RVQ 层分配。核心包括：
+- **率无关的边际效用预测**：轻量级预测器基于冻结编码器的潜在表示，逐帧、逐层估计边际潜在失真降低量（MSE 减少），不依赖目标码率，可为多个操作码率复用。
+- **比特流感知分配器**：采用 Lagrangian 松弛与 GPU 批量 Viterbi 解码，在精确序列化大小预算下选择前缀有效的 RVQ 深度；考虑头部、RLE 深度图、字节填充等真实容器开销，确保解码安全。
+- **前缀早退与动态比特流**：通过前缀早退机制实现活动码本选择，仅执行所需 RVQ 层；动态比特流完整可解码，与冻结解码器兼容。
+
+## 实验结果
+- 在 LibriSpeech 上评估 EnCodec 和 DAC：EnCodec 在所有匹配预算下 PESQ、STOI 一致提升（例如 depth-4 PESQ 从 2.086→2.226，win rate 89.6%，Cohen's d=1.12）；DAC 在中高码率下明显改进，低码率（depth-3）略有下降。
+- 跨数据集泛化：VCTK 上 EnCodec PESQ 从 2.303 提升至 2.490，无需适配。
+- 消融研究：优于随机、周期、波形能量分配；与 privileged 的真实边际效用相比仍有差距。使用 signed 边际目标可缓解低码率问题但未完全消除，表明潜在 MSE 效用作为感知目标的局限性。
+- 主观听感：30 人听测中 MOS 从 3.449 提升至 3.780（对应匹配固定深度方案）。
+
+## 一句话评价
+BAMU 通过在冻结预训练码码器上执行比特流感知的边际效用分配，实现了对显式容器预算的精确控制，带来一致的性能提升，是实际部署友好的动态 RVQ 编码新范式。
+
+---
+
+## 8. CtrlSpeech: Coarse-to-Fine Control for Expressive Speech Synthesis
+
+**作者**: Zhisheng Zheng, Xiaohang Sun, Zhu Liu, Caren Chen, Rohith Kumar, Manoj Aggarwal, Gerard Medioni, David Harwath
+**链接**: [2608.08362](https://arxiv.org/abs/2608.08362)
+**分类**: Text-to-Speech | **关键词**: controllable TTS, prosody control, autoregressive diffusion, coarse-to-fine control, expressive speech synthesis, zero-shot voice cloning
+
+## 核心痛点
+现有TTS系统在自然度和零样本声音克隆方面表现出色，但在词或音素级别的精细韵律控制上仍存在挑战。大多数系统将说话人身份、韵律和风格高度纠缠，控制信号通常仅能在句子或话语级别提供（如全局风格提示或指令），无法精确操控特定词语或音素的局部韵律特征（如音高、响度、时长）。这使得用户在实际应用中难以在保留目标音色的同时灵活调整局部表达。
+
+## 方法创新
+CTRLSPEECH提出了一种粗到细的可控表达性语音合成框架。具体创新包括：
+- **架构**：基于DiTAR（扩散Transformer自回归建模）作为骨干，结合全局说话人条件（说话人嵌入或提示语音）与音素对齐的韵律信号（音高、响度、时长），实现局部韵律控制同时保持音色。
+- **粗到细控制**：全局说话人嵌入作为粗粒度控制，音素级别的音高、响度、时长信号作为细粒度控制，支持用户对特定片段的精准调节。
+- **迭代优化**：支持用户通过调整控制信号逐步优化合成语音，提高实际应用中的灵活性。
+- **连续表征**：采用VAE将波形编码为连续潜在令牌，避免离散codec的信息损失，并在DiTAR的patch-wise框架中进行扩散建模。
+
+## 实验结果
+模型在Emilia和GigaSpeech子集（约20,000小时英语语音）上进行预训练。评估显示，CTRLSPEECH在零样本TTS性能上具备竞争力，并显著提升了表达性属性的细粒度可控性。具体定量结果（如MOS、可控性指标）未在提供片段中详细列出，但实验证明了其有效性和实用性。
+
+## 一句话评价
+CTRLSPEECH通过粗到细的控制，在保留目标音色的同时实现了词/音素级别的韵律精细操控，为表达性语音合成提供了灵活实用的解决方案。
+
+---
+
+## 9. ReLMCodec: Designing Predictable Speech Tokens from Pre-Quantization Phoneme Structure
+
+**作者**: Zixiang Wan, Xusheng Yang, Zheng Wang, Peiji Yang
+**链接**: [2608.08286](https://arxiv.org/abs/2608.08286)
+**分类**: Speech Codec | **关键词**: Predictable speech tokens, Phoneme structure, Quantization, Self-supervised learning, Single-codebook codec, Text-to-speech, PAPA, WavLM
+
+# ReLMCodec 论文总结
+
+## 核心痛点
+
+神经网络语音编解码器在语言模型时代面临一个基本矛盾：支持高保真重建的token不一定容易让自回归模型预测。现有RVQ多码本编解码器重建好但多流序列难以建模，而单码本编解码器需在语义和声学间权衡。重建驱动训练会分配容量给声学细节，直接量化SSL特征则缺乏重建细节。
+
+## 方法创新
+
+- 受控诊断协议：固定量化器容量、语言模型和评估协议，评估24种codec/SSL表示，发现量化前的音素结构（KNN准确率等）与token可预测性高度相关（ρ=0.911）。
+- 提出ReLMCodec，基于“保留-控制-细化”原则：
+  - 保留：冻结W2v-BERT 2.0特征的语言学组织作为量化器输入。
+  - 控制：PAPA（Pre-quantization Anchor-Preserving Adaptation）通过固定缩放残差路径添加声学细节，不增加参数。
+  - 细化：训练中WavLM-Large L24教师优化量化后潜在空间，减少音素级token碎片化。
+- 在650和800 bps低比特率下推进单码本前沿。
+
+## 实验结果
+
+- 24种表示上，KNN音素准确率与探测准确率P-ACC的Spearman相关系数0.911，与P-PPL为-0.901，表明音素结构越清晰，token越易预测。
+- 量化后token-音素共现更集中，结构转移明显。
+- 层分析显示不同层音素结构不同，WavLM在L24保持宽的高可分区域。
+- 下游TTS可懂度和说话人相似度均有提升。
+
+## 一句话评价
+
+ReLMCodec通过保留语义锚点、受控添加声学细节和训练后精化，成功协调了语音token的可预测性和重建质量，为低比特率单码本编解码器设立了新前沿。
+
+---
+
+## 10. SraVaani 1.0: Scaling Inclusive Speech Recognition for Indic Languages
+
+**作者**: Sujith Pulikodan, Agneedh Basu, Pavan Kumar J, Pranav D Bhat, Suryansh Shukla, Nihar Desai, Prasanta Kumar Ghosh
+**链接**: [2608.08235](https://arxiv.org/abs/2608.08235)
+**分类**: Speech Recognition | **关键词**: Multilingual ASR, Low-resource languages, Self-supervised learning, Multimodal alignment, FastConformer
+
+# SraVaani 1.0: Scaling Inclusive Speech Recognition for Indic Languages
+
+## 核心痛点
+印度拥有超过700种语言和数千种方言，但现有自动语音识别（ASR）系统仅覆盖少数高资源语言，绝大多数印度语言（尤其是低资源部落语言）没有可用的ASR系统，导致数字鸿沟和不平等。
+
+## 方法创新
+提出三阶段训练框架：1) 在31,255小时未标记的VAANI语音上使用对比学习目标进行自监督预训练；2) 利用VAANI中11.85百万配对的音频-图像样本，引入音频-图像表示对齐阶段，使语音编码器学习语义更丰富的表示，特别提升低资源语言性能；3) 使用混合Token-and-Duration Transducer (TDT)和CTC解码器，在31,263小时标注多语言印度语音上端到端微调。模型基于FastConformer架构，覆盖65种印度语言和方言。
+
+## 实验结果
+在Common Voice、FLEURS、IndicTTS、Kathbath、RESPIN、GramVaani、MUCS和VAANI八个基准上，与IndicConformer-600M-Multilingual、Sarvam Saaras v3和Gemini 3 Flash对比。SraVaani-1.0在多数语言-数据集组合上取得最低词错误率（WER），在高资源语言上与最佳系统相当，并且是唯一提供多种低资源和部落语言转录能力的开源模型。
+
+## 一句话评价
+SraVaani-1.0通过大规模自监督学习、多模态表示对齐和多语言监督微调，显著扩展了印度语言ASR的覆盖范围，对低资源语言具有重要价值。
+
+---
+
+## 11. The Voiceprint Fallacy: Why Voices Are Not Unique Biometric Imprints
+
+**作者**: Tianle Yang, Cuiling Zhang, Chengzhe Sun, Siwei Lyu, Phil Rose
+**链接**: [2608.07980](https://arxiv.org/abs/2608.07980)
+**分类**: Forensic Voice Comparison / Speaker Recognition | **关键词**: voiceprint, voice biometrics, speaker recognition, forensic voice comparison, speech deepfakes
+
+本论文系统批判了'声纹（voiceprint）'这一比喻在科学上的误导性，认为将声音视为类似指纹的独特、稳定生物特征是一种谬误。作者回顾了声纹识别从二战时期贝尔实验室的保密研究到Kersta 1962年文章的历史发展，并综合了语音科学、法庭语音比对、自动说话人识别和语音深度伪造等领域的最新证据，指出语音特征由解剖、生理、语言背景、情绪、健康、年龄、社会语境及录音条件等多种因素动态塑造，并非固定不变的个体印记。论文强调，法庭语音证据应采用经过验证和校准的概率框架（如似然比）进行解释，以明确量化和传递变异、不确定性及替代解释，而不是基于声音唯一性的假设。
+
+---
+
+## 12. VIOLET: High-Fidelity Violin Synthesis with Techniques and Dynamics
+
+**作者**: Baotong Tian, Cynthia Lu, Vincent K.M. Cheung, Ting-Kang Wang, Jonathan Churchill, Zhiyao Duan
+**链接**: [2608.07944](https://arxiv.org/abs/2608.07944)
+**分类**: Music Synthesis | **关键词**: 小提琴合成, 潜在扩散模型, 演奏技巧控制, 动态控制, Diffusion Transformer, Rectified Flow
+
+# VIOLET: High-Fidelity Violin Synthesis with Techniques and Dynamics
+
+## 核心痛点
+- 钢琴合成研究多，小提琴等连续演奏乐器研究少。
+- 小提琴每个音符持续变化，需要连续控制。
+- 现有采样库和虚拟乐器存储开销大，需密集keyswitch和控制曲线，拼接有断点。
+- 需要同时控制技巧和动态。
+
+## 方法创新
+- 提出VIOLET框架，基于潜在扩散模型（Latent Diffusion Model），使用Diffusion Transformer (DiT) 和整流流（Rectified Flow）目标。
+- 利用DACVAE编码器将音频压缩到潜在空间，并微调提高小提琴高频重建。
+- 条件化：MIDI音符（钢琴卷帘）、12种演奏技巧（二进制钢琴卷帘）、动态曲线（CC1归一化），作为时间对齐的局部条件。
+- 架构：条件嵌入器（MIDI、技巧、动态）通过自适应层归一化（AdaLN）注入DiT块。
+
+## 数据集
+- 新构建数据集CSV-TD，39小时48kHz小提琴音频，包含MIDI音符、乐句级技巧和连续动态曲线注释。
+
+## 实验结果
+- 客观和主观评估：技术遵循度高，音高和时序准确，动态控制好。
+- 优于当前最先进的神经小提琴合成系统，逼近顶级商业虚拟乐器。
+
+## 一句话评价
+- 第一个实现高质量小提琴合成并明确控制演奏技巧和动态的神经合成系统。
+
+---
+
+## 13. Mitigating Over-Suppression in Speech Enhancement via Inference-Time Rethink-and-Refine Correction Module
+
+**作者**: Mike Qu, Yu-Wen Chen, Julia Hirschberg
+**链接**: [2608.07781](https://arxiv.org/abs/2608.07781)
+**分类**: Speech Enhancement | **关键词**: Speech enhancement, Over-suppression correction, Inference-time adaptation, Rethink-and-refine, ASR-guided segmentation, Non-intrusive speech assessment
+
+## 核心痛点
+语音增强（SE）模型在未见过的噪声环境下常常出现**过度抑制**（over-suppression），即过度去除噪声的同时丢失了语音中的有效信息，导致可懂度和下游任务性能下降，甚至比未处理信号更差。
+
+## 方法创新
+提出一种**推理时重思-精炼校正模块**（Rethink-and-Refine Correction Module），无需额外训练即可集成到任意现成SE模型。核心步骤：
+1. **ASR引导分段**：利用ASR（如Whisper、Charsiu）将噪声和增强信号在词/音素级别对齐切分。
+2. **SA引导段级权重选择**：对每个片段优化一个凸插值权重，在增强信号和原始噪声信号之间插值，以最大化复合目标（感知质量Q + 语音保持R）。
+3. **调和策略**：同时从噪声和增强信号分别得到分段视图，分别优化后选择得分更高者，并设置兜底机制保证不劣于原始信号。
+该模块以SA模型（如SCOREQ）和ASR嵌入相似度作为指导，将权重作为推理时变量，实现了内容自适应的修正。
+
+## 实验结果
+在URGENT 2024/2025、VCTK-DEMAND、MSP-PODCAST等多个数据集上，对CMGAN、SEMamba、SGMSE等先进SE模型进行测试，一致提升了PESQ、STOI等侵入式指标，降低了ASR词错误率（WER），并改善了语音特征保留。
+
+## 一句话评价
+一种新颖、即插即用的推理时修正框架，有效缓解SE模型的过度抑制问题，显著提升感知质量和下游任务表现。
+
+---
+
+## 14. Structured Phonological Representations for Audio-Articulatory rtMRI Speech Classification
+
+**作者**: Abner Hernandez, Tomás Arias Vergara, Daiqi Liu, Andreas Maier, Paula Andrea Pérez-Toro
+**链接**: [2608.09767](https://arxiv.org/abs/2608.09767)
+**分类**: Speech Processing | **关键词**: rtMRI, phonological features, self-supervised speech models, PhonoQ, articulatory modeling
+
+# 核心痛点
+
+- 实时MRI（rtMRI）能直接观察发音过程中的声道运动，但将发音轮廓（articulatory contours）映射到音系类别（phonological categories）仍是一大挑战。
+- 大多数计算语音模型主要从声学信号中学习，缺乏显式的音系结构，难以利用发音信息。
+- 从矢状面发音轮廓区分细粒度音素十分困难，需要结构化音系表示作为桥梁。
+
+# 方法创新
+
+- 提出使用音频预训练模型PhonoQ（PhonoQ 2.0）提取结构化的音系特征表示（包括发音方式、位置、清浊、元音高度/后位），作为音频与发音建模之间的中间表示。
+- 在两种设置下利用PhonoQ：1）推理时特征融合（audio-articulatory complementarity）；2）训练时教师监督，仅轮廓推理（contour-only prediction）。
+- 系统比较了PhonoQ、HuBERT-large和WavLM-large在39音素分类及五个音系目标上的表现，覆盖unseen-speech和unseen-subject两种泛化协议。
+- 通过后验分析（posterior analysis）揭示可解释的发音模式，如flapping /t/、/t/–/r/ retraction或affrication、鼻音位置同化。
+
+# 实验结果
+
+- 在unseen-speech和unseen-subject设置下，融合PhonoQ表示显著提升了音系目标（manner、place、voicing、vowel height、vowel backness）的宏F1，同时改进了39音素分类。
+- 在仅用轮廓的推理设置中，音频教师监督带来适度但一致的性能提升，表明音系信息可部分迁移到发音模型中。
+- 后验分析显示与表面音系现象（flapping、/t/–/r/变体、鼻音同化）一致的可解释模式。
+
+# 一句话评价
+
+该论文创新性地引入结构化音系表示（PhonoQ）提升音频-发音rtMRI语音分类，为跨模态语音理解与可解释建模提供了有效思路。
+
+---
+
+## 15. Multilingual Emotion Neurons in Large Audio-Language Models
+
+**作者**: Xiutian Zhao, Philipp Koehn, Björn Schuller, Berrak Sisman
+**链接**: [2608.08772](https://arxiv.org/abs/2608.08772)
+**分类**: Speech Emotion Recognition | **关键词**: Multilingual Emotion, Neuron Interpretability, Large Audio-Language Models, Cross-lingual Transfer, Activation Steering
+
+# Multilingual Emotion Neurons in Large Audio-Language Models
+
+## 核心痛点
+大型音频语言模型（LALMs）在多语言语音任务上表现优异，但对其如何跨语言编码情感缺乏机制性理解。现有单语言神经可解释性研究发现，情感相关神经元在不同语言间泛化能力差，跨语言激活引导（activation steering）的泛化效果存在争议。
+
+## 方法创新
+- 首次提出 **多语言情感神经元（MLENs）** 概念，定义为跨语言具有稳定情感选择性和一致因果效应的功能单元。
+- 提出 **一致性正则化融合（CR-Fusion）** 方法，在任意神经元选择器（如 ConAct）之上，通过惩罚跨语言得分方差（λ·σ）来偏好高稳定性的神经元，从而利用多语言证据识别 MLENs。
+- 实验覆盖 4 个现代 LALMs（Audio-Flamingo-3、Qwen2.5-Omni-7B、MiniCPM-o-4.5、Kimi-Audio）和 12 种类型多样的语言（含低资源语言如 Amharic、Bengali、Urdu）。
+
+## 实验结果
+1. **单语言 ESNs 重叠极小**：独立语言识别的情感敏感神经元集合交集有限，排名相关性中等偏弱。
+2. **单语证据快速饱和**：超过 50 个实例后，额外单语数据不再提升可迁移神经元的识别效果。
+3. **CR-Fusion 提升跨语言控制**：因果干预显示，MLENs 比单语神经元集提供更精确、更可迁移的情感控制（零样本和低资源设置下），但 Qwen2.5-Omni-7B 的转向干预除外。
+4. **情绪间因果效应异质**：愤怒、快乐、悲伤的干预效果大且稳定；恐惧和中性较弱，但后者的不变表示份额反而最高。
+5. **不对称迁移**：各识别语言贡献非冗余证据，低资源语言既能提供独特信息，也受益于跨语言迁移。
+
+## 一句话评价
+首次以神经元级因果方式揭示 LALMs 如何跨语言编码情感，为跨语言情感理解和低资源情感计算提供了新机制。
+
+---
+
+## 16. Steering dense music retrieval with open-vocabulary concept discovery
+
+**作者**: Julien Guinot, Alain Riou, Elio Quinton, György Fazekas
+**链接**: [2608.08757](https://arxiv.org/abs/2608.08757)
+**分类**: Controllable Music Retrieval | **关键词**: Controllable music retrieval, Sparse autoencoders, Concept attribution, Multimodal embeddings, Sparse inversion
+
+## 核心痛点
+可控音乐检索旨在通过放大或抑制特定概念（如更环境、更少失真）来修改查询嵌入，同时保持原始语义。稀疏自编码器（SAE）提供了概念级控制，但关键问题是如何将自由文本概念映射到应编辑的稀疏特征上。现有方法如Discover-Then-Name（DTN）通过文本对齐选择神经元，但在多模态空间中，文本和音频嵌入存在模态差异，概念可能分布在多个特征上，导致选择的神经元与音频表达不一致。
+
+## 方法创新
+将概念归属视为稀疏反演问题，而非文本侧神经元排序。提出Sparse Modality Inversion：给定概念文本嵌入，在SAE解码空间中优化稀疏编码，使解码表示重构概念方向，同时通过几何约束保持与音频流形一致。该方法无需训练，无需配对音频-文本监督，适用于任意开放式概念。
+
+## 实验结果
+在JamendoMaxCaps数据集上训练BatchTopK SAE（m=4096，L0∈{5,10,20,50,100}），使用CLAP和MuQ音频编码器。实验表明概念通常对应多个特征的组合（神经元束），而非单一神经元。与DTN基线相比，该方法在概念放大和抑制任务中实现更强的编辑强度与内容保持性的权衡，更精确地恢复音频侧概念支持。
+
+## 一句话评价
+无需训练的多模态稀疏反演方法，有效解决了可控制音乐检索中的概念归属问题，提升了编辑的精度和可靠性。
+
+---
+
