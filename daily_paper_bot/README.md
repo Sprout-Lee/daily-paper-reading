@@ -6,8 +6,8 @@
 
 - `main.py`: 主程序，负责抓取、总结和生成报告。
 - `requirements.txt`: Python 依赖库列表。
-- `env_example.txt`: 环境变量配置文件示例。
-- `reports/`: 生成的日报将保存在这里。
+- `.env`: 环境变量配置文件。
+- `../reports/YYYY-MM/`: 生成的日报将按月份保存在这里。
 
 ## 快速开始
 
@@ -16,14 +16,13 @@
 确保你已经安装了 Python (建议 3.8+)。在终端运行：
 
 ```bash
-pip install -r requirements.txt
+pip install -r daily_paper_bot/requirements.txt
 ```
 
 ### 2. 配置 API Key
 
-1. 在当前目录下创建一个名为 `.env` 的文件。
-2. 将 `env_example.txt` 的内容复制进去。
-3. 填入你的 LLM API Key（支持 OpenAI, DeepSeek, Kimi 等兼容 OpenAI SDK 的模型）。
+1. 在仓库根目录创建一个名为 `.env` 的文件。
+2. 填入你的 LLM API Key（支持 OpenAI, DeepSeek, Kimi 等兼容 OpenAI SDK 的模型）。
 
 示例 `.env`:
 ```ini
@@ -37,14 +36,15 @@ LLM_MODEL=gpt-3.5-turbo
 直接运行 Python 脚本：
 
 ```bash
-python main.py
+python daily_paper_bot/main.py
 ```
 
 程序将：
 1. 访问 `https://arxiv.org/list/eess.AS/recent`。
 2. 获取最新论文的 ID 和详细摘要。
 3. 调用 AI 进行总结。
-4. 在 `reports/` 目录下生成 `Arxiv_Daily_Report_YYYY-MM-DD.md`。
+4. 在 `reports/YYYY-MM/` 目录下生成 `Arxiv_Report_YYYY-MM-DD.md` 和对应 HTML。
+5. 更新 `reports/All_Papers_Archive.html`、`public/index.html` 和根目录 `index.html`。
 
 ## 如何实现每天自动运行？
 
@@ -52,10 +52,10 @@ python main.py
 
 1. 将此项目上传到 GitHub 仓库。
 2. 在仓库设置 (Settings) -> Secrets and variables -> Actions 中添加 `LLM_API_KEY`。
-3. 创建 `.github/workflows/daily_run.yml` 文件：
+3. 使用仓库里的 `.github/workflows/daily_process.yml` 文件：
 
 ```yaml
-name: Daily Paper Bot
+name: Daily Arxiv Bot
 on:
   schedule:
     - cron: '0 0 * * *' # 每天 UTC 时间 0点 (北京时间 8点) 运行
@@ -71,18 +71,19 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r daily_paper_bot/requirements.txt
       - name: Run bot
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: "https://api.openai.com/v1" # 根据需要修改
           LLM_MODEL: "gpt-3.5-turbo"
-        run: python main.py
+        run: python daily_paper_bot/main.py
       - name: Commit and push report
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add reports/
+          git add public/ index.html daily_paper_bot/processed_ids.txt
           git commit -m "Add daily report"
           git push
 ```

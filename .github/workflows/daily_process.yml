@@ -4,7 +4,7 @@ name: Daily Arxiv Bot
 on:
   schedule:
     # 每天 UTC 时间 0点 (北京时间 8点) 运行
-    - cron: '0 8 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch: # 允许手动点按钮触发
 
 permissions:
@@ -42,7 +42,6 @@ jobs:
           python daily_paper_bot/merge_reports.py
 
       - name: Commit and Push changes
-        if: always()  # 关键：即使脚本中途报错退出，也要提交已生成的内容
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -63,11 +62,16 @@ jobs:
           echo "=== Git Status After Add ==="
           git status
           
-          # 提交（如果没东西提交就跳过）
-          git commit -m "🤖 Auto update: New papers & Website build" || echo "No changes to commit"
+          # 没有变化时跳过提交和推送
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Auto update: New papers and website build"
           
           # 先拉取远程最新代码，避免冲突
-          git pull --rebase origin main || true
+          git pull --rebase origin main
           
           # 推送
           git push origin HEAD:main
