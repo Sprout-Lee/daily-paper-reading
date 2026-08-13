@@ -11,6 +11,7 @@ OUTPUT_FILE = os.path.join(REPORTS_DIR, "All_Papers_Archive.html")
 PUBLIC_DIR = os.path.join(PROJECT_ROOT, "public")  # 对外发布的目录
 INDEX_FILE = os.path.join(PUBLIC_DIR, "index.html")  # 首页生成到 public 里面
 ROOT_INDEX_FILE = os.path.join(PROJECT_ROOT, "index.html")
+REPORTS_README_FILE = os.path.join(REPORTS_DIR, "README.md")
 
 def parse_md_file(filepath):
     """
@@ -303,6 +304,68 @@ def generate_archive_html(all_papers):
     shutil.copy(OUTPUT_FILE, ROOT_INDEX_FILE)
     print(f"已更新根目录首页: {ROOT_INDEX_FILE}")
 
+def generate_reports_readme(report_files):
+    """
+    生成 reports/README.md，作为 GitHub 目录里的倒序导航。
+    """
+    reports_by_month = {}
+    for path in report_files:
+        filename = os.path.basename(path)
+        if not filename.startswith("Arxiv_Report_") or not filename.endswith(".md"):
+            continue
+
+        date_match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
+        if not date_match:
+            continue
+
+        date = date_match.group(1)
+        month = date[:7]
+        html_path = os.path.splitext(path)[0] + ".html"
+        md_link = os.path.relpath(path, start=REPORTS_DIR).replace(os.sep, "/")
+        html_link = os.path.relpath(html_path, start=REPORTS_DIR).replace(os.sep, "/")
+
+        reports_by_month.setdefault(month, []).append({
+            "date": date,
+            "md_link": md_link,
+            "html_link": html_link,
+            "has_html": os.path.exists(html_path),
+        })
+
+    lines = [
+        "# Reports",
+        "",
+        "按月份倒序归档，越新的月份越靠上。",
+        "",
+        "- [完整论文归档](All_Papers_Archive.html)",
+        "",
+    ]
+
+    total_reports = 0
+    for month in sorted(reports_by_month, reverse=True):
+        entries = sorted(reports_by_month[month], key=lambda item: item["date"], reverse=True)
+        total_reports += len(entries)
+        lines.extend([
+            f"## {month}",
+            "",
+            f"- 目录: [{month}/]({month}/)",
+            f"- 日报数量: {len(entries)}",
+            "",
+        ])
+
+        for entry in entries:
+            html_link = f" / [HTML]({entry['html_link']})" if entry["has_html"] else ""
+            lines.append(f"- {entry['date']}: [Markdown]({entry['md_link']}){html_link}")
+
+        lines.append("")
+
+    lines.insert(4, f"共 {len(reports_by_month)} 个月，{total_reports} 份日报。")
+    lines.insert(5, "")
+
+    with open(REPORTS_README_FILE, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines).rstrip() + "\n")
+
+    print(f"reports 目录说明页已生成: {REPORTS_README_FILE}")
+
 def main():
     if not os.path.exists(REPORTS_DIR):
         print(f"目录 {REPORTS_DIR} 不存在。")
@@ -329,6 +392,7 @@ def main():
             
     if all_papers:
         generate_archive_html(all_papers)
+        generate_reports_readme(files)
     else:
         print("没有找到任何论文数据。")
 
