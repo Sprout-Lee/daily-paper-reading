@@ -1,14 +1,16 @@
 import os
 import re
 import markdown
+import shutil
 from datetime import datetime
 
-import shutil
-
-REPORTS_DIR = "reports"
-OUTPUT_FILE = "reports/All_Papers_Archive.html"
-PUBLIC_DIR = "public"  # 新增：对外发布的目录
-INDEX_FILE = "public/index.html"  # 首页生成到 public 里面
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+REPORTS_DIR = os.path.join(PROJECT_ROOT, "reports")
+OUTPUT_FILE = os.path.join(REPORTS_DIR, "All_Papers_Archive.html")
+PUBLIC_DIR = os.path.join(PROJECT_ROOT, "public")  # 对外发布的目录
+INDEX_FILE = os.path.join(PUBLIC_DIR, "index.html")  # 首页生成到 public 里面
+ROOT_INDEX_FILE = os.path.join(PROJECT_ROOT, "index.html")
 
 def parse_md_file(filepath):
     """
@@ -27,6 +29,7 @@ def parse_md_file(filepath):
     # 从文件名提取日期 (Arxiv_Report_2024-02-05.md)
     date_match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
     date = date_match.group(1) if date_match else "Unknown Date"
+    month = date[:7] if date_match else "Unknown Month"
     
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -62,6 +65,7 @@ def parse_md_file(filepath):
             # 开始新论文
             current_paper = {
                 "date": date,
+                "month": month,
                 "title": title_match.group(1).strip(),
                 "authors": "Unknown",
                 "id": "",
@@ -149,6 +153,15 @@ def generate_archive_html(all_papers):
             color: #2c3e50;
             font-size: 1.5em;
         }}
+
+        .month-divider {{
+            margin: 50px 0 10px 0;
+            padding: 14px 18px;
+            border-radius: 8px;
+            background: #2c3e50;
+            color: white;
+            font-size: 1.8em;
+        }}
         
         .paper-card {{
             background: white;
@@ -231,9 +244,16 @@ def generate_archive_html(all_papers):
     """
     
     content_html = ""
+    current_month = None
     current_date = None
     
     for p in all_papers:
+        month = p.get('month', p['date'][:7])
+        if month != current_month:
+            current_month = month
+            current_date = None
+            content_html += f'<h2 class="month-divider">{current_month}</h2>'
+
         # 添加日期分隔符
         if p['date'] != current_date:
             current_date = p['date']
@@ -280,24 +300,32 @@ def generate_archive_html(all_papers):
     shutil.copy(OUTPUT_FILE, INDEX_FILE)
     print(f"已更新网站首页: {INDEX_FILE}")
 
+    shutil.copy(OUTPUT_FILE, ROOT_INDEX_FILE)
+    print(f"已更新根目录首页: {ROOT_INDEX_FILE}")
+
 def main():
     if not os.path.exists(REPORTS_DIR):
         print(f"目录 {REPORTS_DIR} 不存在。")
         return
         
     all_papers = []
-    files = [f for f in os.listdir(REPORTS_DIR) if f.endswith('.md') and f.startswith('Arxiv_')]
+    files = []
+    for root, _, filenames in os.walk(REPORTS_DIR):
+        for filename in filenames:
+            if filename.endswith('.md') and filename.startswith('Arxiv_'):
+                files.append(os.path.join(root, filename))
+    files.sort(reverse=True)
     
     print(f"找到 {len(files)} 个历史报告文件。")
     
-    for f in files:
-        path = os.path.join(REPORTS_DIR, f)
-        print(f"正在解析: {f}...")
+    for path in files:
+        rel_path = os.path.relpath(path, start=REPORTS_DIR)
+        print(f"正在解析: {rel_path}...")
         try:
             papers = parse_md_file(path)
             all_papers.extend(papers)
         except Exception as e:
-            print(f"解析 {f} 失败: {e}")
+            print(f"解析 {rel_path} 失败: {e}")
             
     if all_papers:
         generate_archive_html(all_papers)

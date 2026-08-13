@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-20</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-20 | 来源: eess.AS | 新增论文: 2 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.16254" target="_blank">ArtifactNet: Detecting AI-Generated Music via Forensic Residual Physics</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Forensics for AI-Generated Content</span>
+                <strong>ID:</strong> <span class="tag">2604.16254</span>
+                <a href="../../pdfs/2604.16254.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Heewon Oh<br>
+                <div style="margin-top:5px"><span class="tag">AI-generated music detection</span><span class="tag">forensic physics</span><span class="tag">residual analysis</span><span class="tag">neural audio codecs</span><span class="tag">ArtifactNet</span></div>
+            </div>
+            <div class="summary-section">
+                <p><strong>核心痛点</strong>: AI生成音乐在流媒体平台泛滥，现有检测方法（如表示学习和自编码器指纹识别）在未见生成器上泛化能力差，且受音频编解码器和流派分布影响。</p>
+<p><strong>方法创新</strong>: 提出ArtifactNet框架，将问题重构为法医物理学，专注于提取神经音频编解码器（如RVQ）留下的不可逆残差伪影。使用ArtifactUNet（3.6M参数）从幅度谱中提取残差，通过HPSS分解为7通道法医特征，并由紧凑CNN（0.4M参数）分类。引入代码感知训练以提高跨编解码器鲁棒性。</p>
+<p><strong>实验结果</strong>: 在ArtifactBench基准（6,183轨道，22个生成器）的未见测试集（n=2,263）上，ArtifactNet达到F1=0.9829，FPR=1.49%，优于CLAM（F1=0.7576）和SpecTTTra（F1=0.7713）。参数效率高，总参数4.0M，比CLAM少49倍，比SpecTTTra少4.8倍。代码感知训练将跨编解码器概率漂移减少83%。</p>
+<p><strong>一句话评价</strong>: ArtifactNet通过法医残差物理学，提供了一个轻量级、高效且泛化能力强的AI音乐检测范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.15804" target="_blank">Qwen3.5-Omni Technical Report</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Omnimodal Large Language Models</span>
+                <strong>ID:</strong> <span class="tag">2604.15804</span>
+                <a href="../../pdfs/2604.15804.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Qwen Team<br>
+                <div style="margin-top:5px"><span class="tag">Qwen3.5-Omni</span><span class="tag">Omni-modality</span><span class="tag">ARIA</span><span class="tag">Hybrid Attention MoE</span><span class="tag">Audio-Visual Understanding</span><span class="tag">Multilingual Speech Generation</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有全模态系统主要局限于被动感知-响应范式，缺乏可扩展的代理行为、实时交互、自主工具利用和跨模态推理能力，这些是实际部署的关键障碍。</p>
+<h3>方法创新</h3>
+<p>Qwen3.5-Omni引入多项关键技术升级：
+- 采用混合注意力MoE（Mixture-of-Experts）架构，在Thinker和Talker中实现高效推理。
+- 支持256k上下文长度，可处理长达10小时音频和400秒720P视频（以1 FPS）。
+- 引入ARIA（Adaptive Rate Interleave Alignment）技术，动态对齐文本和语音单元，显著改善流式语音合成的稳定性和自然度。
+- 扩展多语言支持至113种语言用于语音识别和36种用于语音合成。
+- 新增能力：可控音频-视觉字幕（生成结构化描述和自动场景分割）、实时交互（包括语音中断识别和零样本语音克隆）、原生全模态代理行为（如自主WebSearch和音频-视觉Vibe编码）。</p>
+<h3>实验结果</h3>
+<p>Qwen3.5-Omni-Plus在215个音频和音频-视觉理解、推理和交互子任务中达到SOTA（State-of-the-Art），在关键音频任务中超越Gemini-3.1 Pro，整体音频-视觉理解与之匹配。模型在文本和视觉模态上保持SOTA性能，无退化。</p>
+<h3>一句话评价</h3>
+<p>Qwen3.5-Omni通过创新架构和大规模多模态训练，实现了高效的全模态理解和生成，在音频-视觉交互和实时应用中表现卓越，推动了AI向更自然、代理式的多模态系统发展。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

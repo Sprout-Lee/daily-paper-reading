@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-02-16</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-02-16 | 来源: eess.AS | 新增论文: 7 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12986" target="_blank">A two-step approach for speech enhancement in low-SNR scenarios using cyclostationary beamforming and DNNs</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2602.12986</span>
+                <a href="../../pdfs/2602.12986.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Giovanni Bologni, Nicolás Arrieta Larraza, Richard Heusdens, Richard C. Hendriks<br>
+                <div style="margin-top:5px"><span class="tag">Speech Enhancement</span><span class="tag">Cyclostationarity</span><span class="tag">DNN</span><span class="tag">Beamforming</span><span class="tag">Low-SNR</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>Deep Neural Networks (DNNs) 在低信噪比（SNR）场景下，特别是面对谐波噪声（如旋转机械产生的循环平稳噪声）时，性能显著下降，难以有效抑制噪声并可能引入语音失真。标准基于短时傅里叶变换（STFT）的 DNN 架构无法利用噪声的循环平稳性（cyclostationarity）结构，因为 STFT 处理丢弃了频谱相关性，导致模型缺乏抑制谐波干扰的归纳偏置。</p>
+<h1>方法创新</h1>
+<p>本文提出一种两阶段语音增强框架，结合循环平稳性感知的预处理和深度学习。第一阶段使用循环最小功率无失真响应（cMPDR）光束形成器作为前端预处理，通过频率偏移和频谱协方差矩阵来抑制谐波噪声成分，利用噪声的频谱相关性而不需修改 DNN 架构。第二阶段采用轻量级 DNN 架构，如卷积循环神经网络（CRNN）或超低复杂度网络（ULCNet），进行掩码估计和进一步去噪。cMPDR 通过时间域调制精确对齐循环平稳分量，增强预处理效果。</p>
+<h1>实验结果</h1>
+<p>在合成数据和真实世界数据（如 IDMT-ISA Electric Engine 数据集）上的实验表明，cMPDR 预处理结合轻量 DNN（如 CRNN）在低 SNR（-20 dB 到 0 dB）下 consistently 优于端到端 DNN 基线及 Wiener 滤波预处理。具体地，参数效率高的 CRNN 加 cMPDR 在性能上超越了更大的 ULCNet 模型处理原始或 Wiener 滤波输入，同时模型参数量减少约 30%。结果证实，显式结合循环平稳性先验比单纯增加 DNN 容量更有效地抑制谐波干扰。</p>
+<h1>一句话评价</h1>
+<p>该工作通过整合循环平稳性感知预处理和轻量深度学习，为低 SNR 语音增强提供了一种高效且性能优越的混合解决方案，突出了先验知识在噪声抑制中的重要性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12546" target="_blank">Decoder-only Conformer with Modality-aware Sparse Mixtures of Experts for ASR</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.12546</span>
+                <a href="../../pdfs/2602.12546.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jaeyoung Lee, Masato Mimura<br>
+                <div style="margin-top:5px"><span class="tag">Automatic speech recognition</span><span class="tag">decoder-only architecture</span><span class="tag">Conformer</span><span class="tag">sparse mixture-of-experts</span><span class="tag">modality-aware routing</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>解码器-only架构在自动语音识别（ASR）中面临整合异质模态（如连续语音特征和离散文本令牌）的挑战。之前方法依赖额外的对齐模块或适配器，增加了模型复杂性和训练难度。</p>
+<h3>方法创新</h3>
+<p>论文提出了一种解码器-only Conformer架构，结合模态感知稀疏混合专家（MoE）。主要创新点包括：
+- <strong>统一解码器</strong>：使用单一堆栈处理语音和文本，无需外部语音编码器或预训练大型语言模型（LLM）。
+- <strong>模态感知MoE</strong>：分离的专家池用于语音和文本，采用硬路由和top-1选择，专门处理不同模态。
+- <strong>混合因果性</strong>：在Conformer块中，语音部分使用双向自注意力，文本部分使用因果自注意力。
+- <strong>训练策略</strong>：结合CTC损失在语音位置和标签平滑的交叉熵损失在文本生成，提高训练稳定性。</p>
+<h3>实验结果</h3>
+<p>在Librispeech数据集上，提出的113M参数模型在test-clean和test-other的WER分别为2.8%和5.6%，优于139M参数的AED基线（3.2%和6.0%）。在Common Voice 16.1多语言数据集上，平均WER从12.2%降低到10.6%。这表明模型在减少参数的同时提高了准确性。</p>
+<h3>一句话评价</h3>
+<p>该研究首次展示了通过模态感知MoE在随机初始化的解码器-only架构中超越强AED基线，为ASR提供了一种简化且高效的替代方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12299" target="_blank">Acoustivision Pro: An Open-Source Interactive Platform for Room Impulse Response Analysis and Acoustic Characterization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Room Acoustics Analysis</span>
+                <strong>ID:</strong> <span class="tag">2602.12299</span>
+                <a href="../../pdfs/2602.12299.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mandip Goswami<br>
+                <div style="margin-top:5px"><span class="tag">room impulse response</span><span class="tag">acoustic analysis</span><span class="tag">open-source platform</span><span class="tag">visualization</span><span class="tag">reverberation time</span><span class="tag">speech transmission index</span><span class="tag">RIRMega dataset</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<p>现有房间声学分析工具面临两大挑战：一是昂贵的商业软件（如 ODEON、CATT-Acoustic）需要大量资金和培训投入；二是开源的命令行工具（如 Python Acoustics 库）缺乏直观的用户界面和可视化功能，使非专业人员难以访问。这导致在建筑、音频工程和听力研究中，结合严谨信号处理与直观可视化的工具稀缺，阻碍了广泛应用。</p>
+<h2>方法创新</h2>
+<p>论文提出了 AcoustiVision Pro，一个开源网络平台，针对房间冲激响应（RIR）分析进行创新：1. 平台计算 12 个标准化声学参数（如 RT60、C80、D50、STI 代理、IACC），基于数学理论和感知相关性；2. 集成 RIRMega 和 RIRMega Speech 数据集，提供数千个带元数据的模拟 RIR，用于基准测试和教育；3. 引入新颖可视化，包括交互式 3D 反射映射、瀑布衰减图和房间模态密度分析；4. 自动化合规检查，支持 ANSI S12.60、ISO 3382 等 10 个国际标准；5. 开发健康评分系统，综合多个声学参数生成可操作建议。</p>
+<h2>实验结果</h2>
+<p>通过初步案例研究和评估，AcoustiVision Pro 在多个领域展示出实用性：课堂声学分析可优化语音可懂度；医疗设施设计有助于减少患者压力；录音室评估支持音频工程改进。平台提供详细 PDF 报告和 CSV 数据导出，便于工程文档和进一步分析，并支持基于 FFT 卷积的实时仿真。</p>
+<h2>一句话评价</h2>
+<p>AcoustiVision Pro 是一个突破性的开源平台，将专业级声学分析与易用性相结合，为研究人员、建筑师和教育工作者提供了可访问的工具，有望推动房间声学领域的创新和应用普及。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12746" target="_blank">Lamer-SSL: Layer-aware Mixture of LoRA Experts for Continual Multilingual Expansion of Self-supervised Models without Forgetting</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.12746</span>
+                <a href="../../pdfs/2602.12746.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jing Xu, Minglin Wu, Xueyuan Chen, Xixin Wu, Helen Meng<br>
+                <div style="margin-top:5px"><span class="tag">Self-supervised models</span><span class="tag">Multilingual speech processing</span><span class="tag">Continual training</span><span class="tag">Parameter-efficient training</span><span class="tag">LoRA</span><span class="tag">Mixture of Experts</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>自监督语音模型（如HuBERT）在扩展到新语言时面临泛化困难，并在持续训练中容易发生灾难性遗忘，导致先前学到的知识丢失。现有方法如大规模联合训练成本高昂，而参数高效方法如LoRA在处理语言干扰时表现有限，限制了多语言场景下的有效性。</p>
+<h3>方法创新</h3>
+<p>提出Lamer-SSL框架，集成层感知的LoRA专家混合（Lamer）模块和重播策略。Lamer模块结合LoRA的效率和混合专家（MoE）的灵活性，通过层感知专家分配策略，将更多专家分配给深层Transformer层以捕获丰富的语义信息，而浅层分配较少专家以处理语言无关的声学特征。重播策略使用少量先前语言数据（如英语）在持续训练中回放，以缓解遗忘，无需访问整个历史数据集。</p>
+<h3>实验结果</h3>
+<p>在ML-SUPERB协议下的自动语音识别（ASR）和语言识别（LID）任务中，Lamer-SSL有效将HuBERT-Large扩展到新语言（如汉语和粤语），同时保持对先前语言（如英语）的强性能。实验显示，仅使用2.14%的可训练参数，在ASR任务上字符错误率（CER）降低，LID任务上准确率（ACC）提升，优于基线方法如HuBERT-LoRA和mHuBERT-147。</p>
+<h3>一句话评价</h3>
+<p>Lamer-SSL是一种参数高效的持续训练框架，成功平衡了共享和语言特定表示，为自监督模型的多语言扩展提供了可扩展且抗遗忘的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12304" target="_blank">OmniCustom: Sync Audio-Video Customization Via Joint Audio-Video Generation Model</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Video Customization</span>
+                <strong>ID:</strong> <span class="tag">2602.12304</span>
+                <a href="../../pdfs/2602.12304.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Maomao Li, Zhen Li, Kaipeng Zhang, Guosheng Yin, Zhifeng Li, Dong Xu<br>
+                <div style="margin-top:5px"><span class="tag">audio-video customization</span><span class="tag">joint audio-video generation</span><span class="tag">identity preservation</span><span class="tag">timbre cloning</span><span class="tag">sync customization</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有视频定制方法主要分为两类：调优基础（tuning-based）和免调优（tuning-free），它们专注于生成身份一致的视频，但要么不包含音频（如典型视频定制），要么音频内容不能自由指定（如音频驱动视频定制）。这限制了在需要个性化音频-视频内容的应用中的灵活性，例如电影、广告和游戏。</p>
+<h3>方法创新</h3>
+<p>OmniCustom 提出一个基于 Diffusion Transformer (DiT) 的框架，用于同步音频-视频定制（sync audio-video customization）。关键创新包括：
+- 引入独立的参考图像和音频 LoRA 模块，通过自注意力层控制视觉身份和音频音色，避免大规模计算开销。
+- 结合对比学习目标与标准流匹配目标，使用参考条件样本作为正例，无参考条件样本作为负例，增强身份和音色保留能力。
+- 训练于自建的大规模、高质量音频-视觉人类数据集 OmniCustom-1M（包含一百万单人人像视频）。</p>
+<h3>实验结果</h3>
+<p>通过广泛定性定量实验，OmniCustom 在生成身份一致、音色保真的音频-视频内容方面优于现有方法。实验展示其在零样本设置下的有效性，能够根据参考图像、参考音频和文本提示同步生成个性化视频和音频。</p>
+<h3>一句话评价</h3>
+<p>该研究首次提出同步音频-视频定制任务，并提供了一个高效、可扩展的零样本框架，推动了多模态生成模型向更实用和灵活的应用发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12301" target="_blank">Beyond Musical Descriptors: Extracting Preference-Bearing Intent in Music Queries</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval</span>
+                <strong>ID:</strong> <span class="tag">2602.12301</span>
+                <a href="../../pdfs/2602.12301.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Marion Baranes, Romain Hennequin, Elena V. Epure<br>
+                <div style="margin-top:5px"><span class="tag">music queries</span><span class="tag">preference-bearing intent</span><span class="tag">descriptors</span><span class="tag">large language models</span><span class="tag">benchmark</span><span class="tag">user intent</span><span class="tag">annotation</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有音乐描述符数据集主要关注描述符提取，但忽略了用户意图中的偏好信息（如正面、负面或参照性意图），导致音乐推荐系统在处理开放式查询时效果有限，难以准确理解用户需求。</p>
+<h3>方法创新</h3>
+<ul>
+<li>引入MusicRecoIntent数据集：一个手动标注的语料库，包含2,291个Reddit音乐请求，标注了七个类别（如类型、情绪、聆听上下文）的音乐描述符及其偏好意图（+、-、~）。</li>
+<li>基准测试：使用多种大型语言模型（LLMs，如Gemma、LLaMA、Mistral、Qwen）进行自动描述符提取和偏好意图预测，评估其可靠性。</li>
+<li>评估指标：采用精确匹配和部分匹配的F1分数等指标，分析模型在描述符提取和意图预测上的性能。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>描述符提取：LLMs在显式描述符（如命名实体、类型、情绪）上表现良好（F1分数可达0.84），但在上下文依赖描述符（如聆听上下文、乐器）上较差（F1分数低至0.45）。</li>
+<li>偏好意图预测：整体准确率较高（约89%），但模型倾向于过度预测正面意图，混淆参照性意图；负面意图提取准确但样本稀少。</li>
+<li>最佳模型：Gemma3:27b在描述符提取中取得最高F1分数（0.69精确匹配，0.76部分匹配）。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该论文通过创建新数据集和基准测试，为音乐查询中的细粒度用户意图理解提供了重要工具，同时揭示了LLMs在上下文依赖描述符提取上的局限性，对改进音乐推荐系统具有参考价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.12287" target="_blank">Retrieval-Augmented Self-Taught Reasoning Model with Adaptive Chain-of-Thought for ASR Named Entity Correction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.12287</span>
+                <a href="../../pdfs/2602.12287.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Junjie An, Jingguang Tian, Tianyi Wang, Yu Gao, Xiaofeng Mou, Yi Xu<br>
+                <div style="margin-top:5px"><span class="tag">Retrieval-Augmented Generation</span><span class="tag">Adaptive Chain-of-Thought</span><span class="tag">Named Entity Correction</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Retrieval-Augmented Self-Taught Reasoning Model with Adaptive Chain-of-Thought for ASR Named Entity Correction</h1>
+<h2>核心痛点</h2>
+<p>自动语音识别（ASR）系统在处理领域特定短语（如命名实体）时容易发生误识别，导致下游任务失败。现有基于大语言模型（LLM）的命名实体校正方法未能充分利用LLM的复杂推理能力，且缺乏高质量推理数据，难以处理罕见实体和语音歧义情况。</p>
+<h2>方法创新</h2>
+<p>提出RASTAR（检索增强自教学推理模型与自适应思维链）框架，主要包括两个关键组件：
+1. <strong>重新表达语言模型（RLM）</strong>：用于命名实体识别（NER），通过模拟人类语义重构整个句子，替代传统的序列标注方法，以捕获全局语义信息。
+2. <strong>自适应思维链自教学推理模型（A-STAR）</strong>：采用自训练技术生成思维链推理数据，根据任务难度动态调整推理深度，并利用直接偏好优化（DPO）进行自我改进，从而减少推理开销并提高校正准确性。</p>
+<h2>实验结果</h2>
+<p>在AISHELL-1和Homophone数据集上进行评估，命名实体字符错误率（NE-CER）相对于强基线（如DANCER）分别减少了17.96%和34.42%，NER模块在召回率、精确率和F1分数上均优于现有方法。</p>
+<h2>一句话评价</h2>
+<p>该研究通过结合检索增强和自适应推理，有效解决了ASR命名实体校正中的推理和数据稀缺问题，展示了显著的性能提升和实用性。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-15</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-15 | 来源: eess.AS | 新增论文: 12 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12878" target="_blank">Four Decades of Digital Waveguides</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Sound Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2604.12878</span>
+                <a href="../../pdfs/2604.12878.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Pablo Tablas de Paula, Julius O. Smith III, Vesa Välimäki, Joshua D. Reiss<br>
+                <div style="margin-top:5px"><span class="tag">digital filters</span><span class="tag">electronic music</span><span class="tag">optimization</span><span class="tag">reverberation</span><span class="tag">sound synthesis</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Four Decades of Digital Waveguides</h1>
+<h2>核心痛点</h2>
+<p>传统物理建模方法（如有限差分方案）在计算声学波传播时计算成本高，难以实现实时应用，导致声音合成领域依赖大量录音而非物理方程，效率低下且资源密集。</p>
+<h2>方法创新</h2>
+<p>数字波导（DWG）模型通过优化一维波传播介质（如弦、管）的计算，提供高效物理模拟，扩展至多维波导网格，并集成现代机器学习（如进化算法和神经网络）及可微分数字信号处理技术进行参数优化，提升模型准确性和计算效率。</p>
+<h2>实验结果</h2>
+<p>数字波导已成功应用于实时乐器建模（如Yamaha VL1合成器）、声效、人工混响和人声合成，通过开源代码和Web Audio API实现浏览器内实时音频合成，验证了其高效性和实用性。</p>
+<h2>一句话评价</h2>
+<p>数字波导是声音合成中连接物理准确性与计算效率的关键技术，结合传统方法与现代优化，推动了音频处理领域的创新。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12527" target="_blank">Audio-Cogito: Towards Deep Audio Reasoning in Large Audio Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Reasoning</span>
+                <strong>ID:</strong> <span class="tag">2604.12527</span>
+                <a href="../../pdfs/2604.12527.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Longhao Li, Hongjie Chen, Zehan Li, Qihan Hu, Jian Kang, Jie Li, Lei Xie, Yongxiang Li<br>
+                <div style="margin-top:5px"><span class="tag">Large Audio Language Models</span><span class="tag">Audio Reasoning</span><span class="tag">Chain-of-Thought</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>当前大型音频语言模型（LALMs）在音频推理方面能力有限且不稳定，主要由于高质量音频推理数据集的稀缺。现有数据集如AudioSet、AudioCaps等仅提供简短标签，不足以支持深度推理，且依赖闭源模型导致成本高和可复现性差。</p>
+<h3>方法创新</h3>
+<p>论文提出Audio-Cogito，一个全开源解决方案，用于增强LALMs的深度音频推理能力。关键创新包括：
+- <strong>Cogito-Pipe</strong>：一个四阶段管道（数据收集、QA构建、CoT生成、质量验证），自动构建高质量音频推理数据集，产生545k个多样样本，覆盖声音、语音和音乐领域。
+- <strong>自蒸馏策略</strong>：使用相同模型架构（基于Qwen3-Omni-Thinking）进行推理数据生成和微调，确保推理模式一致性和逻辑连贯性。
+- 通过自由形式的CoT生成和双阶段质量验证，提升数据可靠性和模型性能。</p>
+<h3>实验结果</h3>
+<ul>
+<li>在MMAR基准测试中，Audio-Cogito在开源模型中达到最佳性能，并在某些指标上匹配或超越闭源模型。</li>
+<li>在Interspeech 2026音频推理挑战中排名顶级，特别是在混合领域推理任务中表现突出。</li>
+<li>实验使用了基于答案正确性和推理质量的评估指标，如平均准确率和Rubrics分数。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该研究通过系统化的开源数据构建和自蒸馏方法，显著提升了音频推理的深度和可靠性，为音频AI社区提供了重要贡献。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12456" target="_blank">X-VC: Zero-shot Streaming Voice Conversion in Codec Space</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice Conversion</span>
+                <strong>ID:</strong> <span class="tag">2604.12456</span>
+                <a href="../../pdfs/2604.12456.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Qixi Zheng, Yuxiang Zhao, Tianrui Wang, Wenxi Chen, Kele Xu, Yikang Li, Qinyuan Chen, Xipeng Qiu, Kai Yu, Xie Chen<br>
+                <div style="margin-top:5px"><span class="tag">voice conversion</span><span class="tag">streaming voice conversion</span><span class="tag">speech codec</span><span class="tag">speech generation</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>零样本语音转换（VC）在交互式场景中面临挑战，因为需要同时实现高保真说话人转换和低延迟流式推断，这在现有系统中难以兼顾。</p>
+<h3>方法创新</h3>
+<p>提出 X-VC，一个在预训练神经编解码器潜在空间中进行一步转换的零样本流式 VC 系统。它采用双重条件声学转换器，结合源编解码器潜在和来自目标参考语音的帧级声学条件，并通过自适应归一化注入话语级说话人信息。训练时使用生成的对数据和角色分配策略（包括标准、重建和反转模式），以减少训练与推断之间的不匹配。流式推断采用分块方案与重叠平滑，与编解码器的分段训练范式对齐。</p>
+<h3>实验结果</h3>
+<p>在 Seed-TTS-Eval 数据集上，X-VC 在英语和中文中实现了最佳流式词错误率（WER），在相同语言和跨语言设置中表现出强说话人相似度，并且离线实时因子显著低于基线方法，表明其在高质量、低延迟转换方面的有效性。</p>
+<h3>一句话评价</h3>
+<p>X-VC 通过编解码器空间的一步转换，为构建高效、实用的零样本流式语音转换系统提供了一个创新且可行的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12455" target="_blank">Sky-Ear: An Unmanned Aerial Vehicle-Enabled Victim Sound Detection and Localization System</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Acoustic Sensing for Search and Rescue</span>
+                <strong>ID:</strong> <span class="tag">2604.12455</span>
+                <a href="../../pdfs/2604.12455.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Hong, Mingyang Wang, Yalin Liu, Yaru Fu, Kevin Hung<br>
+                <div style="margin-top:5px"><span class="tag">Unmanned Aerial Vehicles</span><span class="tag">Search and Rescue</span><span class="tag">Acoustic Sensing</span><span class="tag">Anomaly Detection</span><span class="tag">Continuous Localization</span><span class="tag">Microphone Array</span><span class="tag">Masking Autoencoder</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>在无人机搜索救援任务中，现有方法面临挑战：视觉传感系统负载重且易受视线阻挡（如森林树冠或浓雾），热红外成像在夜间工作但可靠性低（如在高温背景或遮挡物下）。声学传感虽可靠轻量，但传统麦克风阵列方法计算开销大、能效低，盲搜索阶段（占任务时间超90%）浪费能源，而低功率睡眠架构可能导致高误检率。</p>
+<h2>方法创新</h2>
+<p>提出Sky-Ear系统，基于圆形麦克风阵列设计两阶段音频处理：
+- <strong>Sentinel阶段</strong>：使用单通道MAE（Masking Autoencoder）进行异常检测，将音频转换为Mel-spectrogram分析频率-时间特征，通过重构背景噪声检测受害者声音（如尖叫或呼喊）。
+- <strong>Responder阶段</strong>：触发多通道定位，基于TDoA估计方向，采用环缓冲机制跟踪音频流。
+- <strong>连续定位</strong>：通过多观测优化检测方向，提高精度，定理1和2提供数学基础。
+系统优化能效，只在异常检测时激活高功耗处理。</p>
+<h2>实验结果</h2>
+<p>进行广泛模拟实验验证性能：
+- 使用综合音频数据集（环境背景噪声、无人机螺旋桨噪声、受害者声音）微调MAE模型，适应不同SAR场景。
+- 评估受害者检测准确性和定位误差，验证连续定位通过多观测提升精度。</p>
+<h2>一句话评价</h2>
+<p>Sky-Ear系统通过能效优化和精确声学检测，为无人机搜索救援任务提供了创新且可靠的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12439" target="_blank">Room compensation for loudspeaker reproduction using a supporting source</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2604.12439</span>
+                <a href="../../pdfs/2604.12439.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> James Brooks-Park, Søren Bech, Jan Østergaard, Steven van de Par<br>
+                <div style="margin-top:5px"><span class="tag">Room Compensation</span><span class="tag">Loudspeaker Reproduction</span><span class="tag">Supporting Source</span><span class="tag">Direct-to-Reverberant Ratio</span><span class="tag">Precedence Effect</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文详细总结</h1>
+<h2>核心痛点</h2>
+<p>传统房间补偿方法主要关注改善扬声器再现的频谱（音色）和时间准确性，但忽略了空间准确性，尤其是在混响环境中的距离感知。这由直接-混响比（DRR）决定，而传统方法无法有效控制 DRR，导致空间图像不准确。此外，传统补偿滤波器设计复杂，可能引入伪影（如预回声），且在空间位置间鲁棒性差，仅适用于低频范围。</p>
+<h2>方法创新</h2>
+<p>论文提出了一种新方法，通过添加一个延迟的次级辅助源来修改感知混响声场，从而补偿频谱和空间不准确性。具体而言，辅助源在频率选择性的方式下向混响声场添加能量，以调整 DRR 作为频率的函数。通过适当延迟辅助源（激活优先效应），确保听众只感知主要扬声器作为声源，而不察觉辅助源的存在。这种方法允许同时控制频谱和空间属性，超越传统单滤波器方法。</p>
+<h2>实验结果</h2>
+<p>方法进行了感知评估，结果表明：
+- 能够有效改变主要扬声器的感知（包括空间和音质），而不让听众感知到辅助源。
+- 与一个成熟的商业房间补偿算法相比，性能相当。
+- 具有多个优势，如改善空间鲁棒性、减少伪影风险，并能在更广泛的频率范围内工作。</p>
+<h2>一句话评价</h2>
+<p>该研究创新性地结合了辅助源和优先效应，为房间补偿中的空间准确性提供了新思路，有望提升沉浸式音频播放体验。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12438" target="_blank">An Ultra-Low Latency, End-to-End Streaming Speech Synthesis Architecture via Block-Wise Generation and Depth-Wise Codec Decoding</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Streaming Speech Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2604.12438</span>
+                <a href="../../pdfs/2604.12438.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tianhui Su, Tien-Ping Tan, Salima Mdhaffar, Yannick Estève, Aghilas Sini<br>
+                <div style="margin-top:5px"><span class="tag">Streaming Speech Synthesis</span><span class="tag">End-to-End Architecture</span><span class="tag">Neural Audio Codec</span><span class="tag">Discrete Acoustic Modeling</span><span class="tag">Depth-Wise Sequential Decoding</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统流式语音合成系统面临两个主要瓶颈：1. <strong>高延迟</strong>：依赖计算密集型神经声码器（如HiFi-GAN）进行相位重建，导致流式推理延迟显著增加；2. <strong>音频质量下降</strong>：连续回归声学建模（如基于Mel频谱图）易导致频谱过度平滑，损失高频细节和音质自然度，影响实时交互应用。</p>
+<h2>方法创新</h2>
+<p>论文提出了一种新颖的端到端非自回归架构，主要创新点包括：
+- <strong>块生成策略</strong>：优化用于超低延迟的块处理，实现流式文本到波形生成。
+- <strong>深度顺序解码</strong>：集成修改后的FastSpeech 2骨干网络，采用渐进式深度顺序解码策略，直接建模Mimi神经音频编码器的高度压缩离散潜在空间（包含32层残差矢量量化代码）。该方法动态条件化高层量化器，解决语音对齐退化问题，无需引入时间自回归开销。
+- <strong>语言独立设计</strong>：架构无需语言特定修改，在英语和马来语单说话人数据集上验证其鲁棒性。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>性能提升</strong>：相比传统连续回归模型，定量改进基音准确性，有效缓解高频频谱退化。</li>
+<li><strong>延迟优势</strong>：实现超低延迟推理，相比传统级联流水线加速10.6倍，平均时间到第一字节（TTFB）延迟为48.99毫秒，低于人类感知阈值，适合实时交互。</li>
+<li><strong>部署可行性</strong>：在资源受限环境中展示了高质量实时流式语音接口的优化部署能力。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该架构通过离散声学建模和深度解码策略，成功平衡延迟与音质，是流式语音合成领域的高效解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12398" target="_blank">Contextual Biasing for ASR in Speech LLM with Common Word Cues and Bias Word Position Prediction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2604.12398</span>
+                <a href="../../pdfs/2604.12398.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sashi Novitasari, Takashi Fukuda, Kurata Gakuto, George Saon<br>
+                <div style="margin-top:5px"><span class="tag">Contextual biasing</span><span class="tag">ASR</span><span class="tag">SLLM</span><span class="tag">common word cues</span><span class="tag">bias word position prediction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音感知大型语言模型（SLLM）在自动语音识别（ASR）中难以准确转录偏置词（即训练数据中罕见或未见的词），尤其是在没有兼容的G2P系统时。</li>
+<li>用户缺乏语音学知识，难以手动提供准确的音素序列作为发音提示，这限制了现有音素辅助上下文偏置方法的实用性。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出使用常见词作为偏置词的发音提示，而非直接音素表示，解决了G2P系统不可用和用户专业知识不足的问题。</li>
+<li>探索多种基于音素和结构相似性的常见词提示选择方法，包括音节部分匹配、元音匹配和字符/音素编辑距离。</li>
+<li>引入偏置词位置预测模块，通过多输出学习增强模型鲁棒性，提高在上下文和非上下文ASR任务上的性能，且该模块在推理时移除，不增加计算成本。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>与基线系统相比，该方法将偏置词识别错误减少了16.3%，在域外数据上也表现出改进。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一个创新且实用的方法，通过利用常见词提示和偏置词位置预测，有效提升了SLLM在ASR中对偏置词的识别能力，同时保持了模型简单性和用户友好性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12389" target="_blank">VoxEffects: A Speech-Oriented Audio Effects Dataset and Benchmark</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-Oriented Audio Effects</span>
+                <strong>ID:</strong> <span class="tag">2604.12389</span>
+                <a href="../../pdfs/2604.12389.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhe Zhang, Yigitcan Özer, Junichi Yamagishi<br>
+                <div style="margin-top:5px"><span class="tag">audio effects</span><span class="tag">speech processing</span><span class="tag">dataset</span><span class="tag">benchmark</span><span class="tag">audio effect identification</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现实世界中的语音音频常经过后期效果处理（如降噪、压缩、均衡等），以提高可懂度和广播质量。然而，现有语音数据集通常缺乏精确的效果和参数注释，这使得音频效果识别（AEI）任务的系统研究受限，尤其是在处理分布退化和域偏移时，阻碍了生产感知内容理解、音频工程辅助等应用。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>数据集设计</strong>: 提出 VoxEffects，一个语音导向的音频效果数据集，基于清洁语音录音（来自 DAPS、EARS、TSP 语料库），通过一个规范的效果链（包括 DN、DRC、EQ、DS、RVB、LIM）和预设库生成处理后的语音，并提供多粒度监督（效果存在、预设分类、强度预测）。</li>
+<li><strong>渲染管道</strong>: 实现了一个可扩展的渲染器，支持离线合成和实时渲染，便于高效训练和评估。</li>
+<li><strong>鲁棒性协议</strong>: 引入捕获端和平台端退化模拟（如噪声、重采样、有损编解码），以增强模型在真实环境中的泛化能力。</li>
+<li><strong>基准任务</strong>: 定义了多个 AEI 任务，包括效果存在检测、预设分类、活动效果计数和强度回归。</li>
+<li><strong>基线模型</strong>: 开发了 AudioMAE-Fx，一个基于 AudioMAE 的多任务模型，通过微调处理这些任务，并采用课程学习策略提高鲁棒性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在基准测试中，AudioMAE-Fx 在不同退化设置下表现良好。例如，在无退化训练时，效果存在检测的宏观准确率达到 91.59%（In-Domain），而在添加退化训练后提升到 95.58%。</li>
+<li>表格 1 显示了详细的性能指标，包括 In-Domain 和 Out-of-Domain 评估。模型在预设分类等复杂任务上仍有挑战（如 Top-1 准确率在 ID 设置下最高为 36.78%），但通过退化训练显著提高了鲁棒性。</li>
+<li>分析涵盖了域偏移、输入持续时间、性别公平性等方面，表明 VoxEffects 支持全面的评估。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>VoxEffects 填补了语音音频效果识别领域的空白，提供了一个标准化、可扩展的数据集和基准，有望推动音频工程、内容理解和法医学应用的研究。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12246" target="_blank">TokenSE: a Mamba-based discrete token speech enhancement framework for cochlear implants</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2604.12246</span>
+                <a href="../../pdfs/2604.12246.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hsin-Tien Chiang, John H. L. Hansen<br>
+                <div style="margin-top:5px"><span class="tag">Speech Enhancement</span><span class="tag">Cochlear Implants</span><span class="tag">Mamba</span><span class="tag">Discrete Token</span><span class="tag">Neural Audio Codec</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>在真实世界中，语音信号常被噪声和混响降质，严重影响语音质量和可懂度。对于耳蜗植入（CI）用户，由于时间-频率解码能力有限，这种降质更为严重，导致语音理解能力显著下降。现有语音增强（SE）方法，如基于Transformer或生成式模型，泛化能力差，可能引入失真，且大多数针对正常听力者设计，缺乏对CI用户的特定需求适应。</p>
+<h3>方法创新</h3>
+<p>本文提出TokenSE，一个基于Mamba的离散令牌语音增强框架，专为CI用户设计。框架在神经音频编解码器（NAC）空间中操作，使用Mamba-based模型从降质语音中预测干净编解码器令牌。Mamba的线性复杂度优于Transformer的二次复杂度，适合计算资源有限的CI应用。创新点包括同时处理噪声和混响（而非单独处理）、微调NAC编码器以适应降质条件、并引入Mamba变体（如单向、双向和Transformer-MHSA混合模型）以优化性能。</p>
+<h3>实验结果</h3>
+<p>客观评估显示TokenSE在域内和域外数据集上 consistently outperforms baseline methods，包括基于Transformer、GAN和其他SE方法。主观听力实验表明，CI用户在不利噪声和混响环境下的语音可懂度有明显改善，验证了框架的有效性。</p>
+<h3>一句话评价</h3>
+<p>TokenSE是首个针对CI用户的离散令牌语音增强框架，创新地结合Mamba的效率和离散令牌表示，显著提升语音可懂度，为听力辅助技术提供了有前景的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12145" target="_blank">Why Your Tokenizer Fails in Information Fusion: A Timing-Aware Pre-Quantization Fusion for Video-Enhanced Audio Tokenization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multimodal Audio Processing</span>
+                <strong>ID:</strong> <span class="tag">2604.12145</span>
+                <a href="../../pdfs/2604.12145.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xiangyu Zhang, Benjamin John Southwell, Siqi Pan, Xinlei Niu, Beena Ahmed, Julien Epps<br>
+                <div style="margin-top:5px"><span class="tag">Multimodal</span><span class="tag">Audio-Video</span><span class="tag">Tokenization</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有音频标记化器在融合多模态信息（特别是视频）时，重建音频质量显著下降，这限制了音频语言模型在理解任务中的有效性，尤其是在音频信号模糊或不完整的场景下。</p>
+<h2>方法创新</h2>
+<p>提出了Timing-Aware Pre-Quantization Fusion (TAPF)方法，基于三个关键发现：1. 融合在标记化架构中的位置对保持重建质量至关重要；2. 对比学习虽在连续表示融合中有效，但不适用于离散标记化；3. 时间轴融合（基于特征独特性原理）优于特征维度融合。TAPF通过时间感知方式在预量化阶段整合视觉信息，解决重建质量下降问题。</p>
+<h2>实验结果</h2>
+<p>在标准基准测试中，TAPF不仅维持了高保真音频重建，还在下游理解任务中优于单模态音频标记器和现有多模态融合基线，实现了理解和生成能力的平衡。</p>
+<h2>一句话评价</h2>
+<p>该工作为多模态音频标记化提供了一个有效且创新的解决方案，成功解决了重建质量与跨模态理解之间的权衡问题。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.11917" target="_blank">StreamMark: A Deep Learning-Based Semi-Fragile Audio Watermarking for Proactive Deepfake Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Watermarking</span>
+                <strong>ID:</strong> <span class="tag">2604.11917</span>
+                <a href="../../pdfs/2604.11917.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhentao Liu, Milos Cernak<br>
+                <div style="margin-top:5px"><span class="tag">Semi-Fragile Audio Watermarking</span><span class="tag">Deepfake Detection</span><span class="tag">Complex-Domain Embedding</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>生成式 AI 技术的快速发展使得深度伪造音频与真实语音难以区分，对数字通信的完整性构成威胁。传统被动检测方法（如机器学习分类器）存在反应性、泛化能力有限、易受对抗攻击等缺陷，且无法处理音频真实性中的模糊场景（如 AI 降噪）。现有音频水印方法过度强调鲁棒性，导致水印在恶意语义篡改（如语音转换）后仍能幸存，无法有效指示语义完整性失效。</p>
+<h1>方法创新</h1>
+<p>StreamMark 是首个基于深度学习的半脆弱音频水印框架，专为主动深度伪造检测设计。其创新点包括：引入半脆弱性概念，使水印对良性转换（如噪声、压缩、风格迁移）鲁棒，而对恶意转换（如文本到语音、语音转换、语音编辑）脆弱；采用编码器-失真-解码器架构，在 STFT 复杂域中嵌入水印以提升不可感知性；通过独特训练目标，使用双路径失真层（包含良性转换集和恶意转换集）明确区分两类转换，优化半脆弱行为。</p>
+<h1>实验结果</h1>
+<p>在综合基准测试中，StreamMark 展现出高不可感知性（SNR 24.16 dB, PESQ 4.20），对现实失真如 Opus 编码保持鲁棒。对良性 AI 风格转换，消息恢复准确率 &gt;98%；而对深度伪造攻击，消息恢复准确率降至机会水平（约 -50%），验证了其半脆弱性。这些结果证明了 StreamMark 在实时企业耳机场景中的实用性和有效性。</p>
+<h1>一句话评价</h1>
+<p>StreamMark 开创性地将半脆弱水印概念应用于音频领域，为主动检测深度伪造提供了可靠且高效的解决方案，弥补了传统方法的不足。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.12928" target="_blank">MoshiRAG: Asynchronous Knowledge Retrieval for Full-Duplex Speech Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Full-Duplex Speech Language Models</span>
+                <strong>ID:</strong> <span class="tag">2604.12928</span>
+                <a href="../../pdfs/2604.12928.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chung-Ming Chien, Manu Orsini, Eugene Kharitonov, Neil Zeghidour, Karen Livescu, Alexandre Défossez<br>
+                <div style="margin-top:5px"><span class="tag">Full-Duplex Speech Language Models</span><span class="tag">Retrieval-Augmented Generation</span><span class="tag">Asynchronous Retrieval</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>全双工语音语言模型（如 Moshi）在实现高交互性的同时，面临事实性不足的挑战。扩大模型规模可以提高事实性，但会显著增加推理成本，破坏实时交互性。</p>
+<h2>方法创新</h2>
+<p>论文提出 MoshiRAG，一种模块化框架，将紧凑的全双工前端与异步知识检索后端结合。关键创新在于利用语音响应中关键词延迟的自然时间差，在响应生成过程中异步触发检索，从而在不中断对话流的情况下整合外部知识。系统设计确保检索延迟不超过2秒，并支持即插即用的检索方法，无需重新训练模型。</p>
+<h2>实验结果</h2>
+<p>MoshiRAG 在问答基准测试中显著提高了事实性，达到与非双工语音模型相当的水平，同时保持了全双工系统的交互性。此外，模型在域外数学推理任务上表现良好，展示了其泛化能力和工具使用潜力。</p>
+<h2>一句话评价</h2>
+<p>该研究通过创新的异步检索机制，有效解决了全双工语音模型在事实性和交互性之间的权衡问题，为构建更可靠和用户友好的语音AI助手提供了新方向。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

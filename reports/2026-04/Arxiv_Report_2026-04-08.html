@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-08</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-08 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.05545" target="_blank">Multimodal Deep Learning Method for Real-Time Spatial Room Impulse Response Computing</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2604.05545</span>
+                <a href="../../pdfs/2604.05545.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhiyu Li, Xinwen Yue, Shenghui Zhao, Jing Wang<br>
+                <div style="margin-top:5px"><span class="tag">Spatial Room Impulse Response</span><span class="tag">Multimodal Deep Learning</span><span class="tag">Auralization</span><span class="tag">Virtual Reality</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有VR听觉化方法中，几何声学计算复杂度高，难以实时生成高质量音频；深度学习模型在准确预测低阶反射方面存在局限；现有数据集多样性不足，且RIR类型（如单声道和双耳RIRs）不完全满足VR交互需求。</p>
+<h2>方法创新</h2>
+<p>提出一个多模态深度学习模型，输入包括场景信息（几何和声学属性）和低阶反射波形，输出空间房间脉冲响应（SRIRs），以降低计算复杂度并便于集成个性化头相关传递函数。构建了包含多样化3D场景和SRIRs的新数据集。模型架构结合GCN-TF编码器、LoR编码器（并行处理波形和Mel-spectrogram）和参数解码器，优化了早期反射和晚期混响的生成。</p>
+<h2>实验结果</h2>
+<p>在多项客观指标（如MAE、T60、DRR、Mel-spectrogram错误）上，该方法优于基线系统MESH2IR、Listen2Scene和M2PAIR，显示了在实时SRIR计算中的优越性能。数据集特征分布更广泛，提升了模型泛化能力。</p>
+<h2>一句话评价</h2>
+<p>该研究通过创新多模态输入和SRIR输出，有效解决了VR听觉化中实时音频渲染的挑战，提升了真实感和计算效率。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.05519" target="_blank">Active noise cancellation on open-ear smart glasses</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2604.05519</span>
+                <a href="../../pdfs/2604.05519.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kuang Yuan, Freddy Yifei Liu, Tong Xiao, Yiwen Song, Chengyi Shen, Saksham Bhutani, Justin Chan, Swarun Kumar<br>
+                <div style="margin-top:5px"><span class="tag">active noise cancellation</span><span class="tag">open-ear smart glasses</span><span class="tag">virtual in-ear sensing</span><span class="tag">neural network</span><span class="tag">real-time audio processing</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>传统主动噪声消除（ANC）技术依赖于耳道内的误差麦克风来测量和调整噪声消除效果，但开放式耳机智能眼镜无法使用这种设计，因为它们不能密封耳道，导致在嘈杂环境中音频质量下降。</p>
+<h3>方法创新</h3>
+<p>提出首个实时ANC系统，通过分布在眼镜框架上的八个MEMS麦克风阵列捕获环境噪声，利用神经网络进行虚拟耳内感知来估计噪声在耳道中的传播。系统采用双管道架构：CPU运行神经网络（每200毫秒更新一次滤波器系数），DSP实时生成抗噪声信号（延迟113微秒）。方法还支持用户校准以优化性能。</p>
+<h3>实验结果</h3>
+<p>在100-1000 Hz频率范围内的8个移动环境中进行用户研究，使用自定义3D打印原型眼镜，实现平均噪声减少：无校准时9.6 dB，用户校准时11.2 dB。系统能有效处理动态声学条件，适用于真实世界穿戴场景。</p>
+<h3>一句话评价</h3>
+<p>这篇论文首次在开放式耳机智能眼镜上实现了实时主动噪声消除，通过创新性的虚拟耳内感知和低延迟处理，为穿戴式音频增强和未来智能交互奠定了技术基础。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.05201" target="_blank">Exploring Speech Foundation Models for Speaker Diarization Across Lifespan</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Diarization</span>
+                <strong>ID:</strong> <span class="tag">2604.05201</span>
+                <a href="../../pdfs/2604.05201.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anfeng Xu, Tiantian Feng, Shrikanth Narayanan<br>
+                <div style="margin-top:5px"><span class="tag">Speaker Diarization</span><span class="tag">Speech Foundation Models</span><span class="tag">Age-related Domain Shift</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Exploring Speech Foundation Models for Speaker Diarization Across Lifespan</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有的说话人日记化（Speaker Diarization）系统主要基于成人语音数据（如25-60岁年龄组）训练和评估，但实际应用常涉及儿童和老年语音，这些语音存在年龄相关的声学差异（如音高、发音模式、语速变化），导致模型在跨年龄组应用时性能显著下降。</li>
+<li>语音基础模型（如Whisper和WavLM）在多种语音任务中表现出强迁移能力，但它们在年龄相关领域转移下的说话人日记化效果尚未系统探索。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出了一个统一的端到端神经日记化框架（EEND-VC），集成语音基础模型作为编码器，以评估跨年龄组的鲁棒性。</li>
+<li>评估三种实际场景：</li>
+<li><strong>零样本跨年龄推理</strong>：仅用成人数据训练，直接应用于儿童和老年语音。</li>
+<li><strong>联合多年龄训练</strong>：结合成人、儿童和老年数据集进行训练。</li>
+<li><strong>领域特定适应</strong>：在成人模型基础上，针对儿童或老年数据微调。</li>
+<li>实验覆盖成人会议数据集（如AMI、AISHELL-4、AliMeeting）和年龄多样化数据集（如Playlogue儿童数据和SeniorTalk老年数据）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li><strong>零样本推理</strong>：模型在儿童和老年语音上性能显著下降（例如，在Playlogue数据集上误字率（DER）高达65%以上）。</li>
+<li><strong>联合多年龄训练</strong>：提高了在儿童和老年语音上的鲁棒性，同时不损害成人语音性能，甚至在某些情况下提升。</li>
+<li><strong>领域适应</strong>：针对特定年龄组微调进一步改进性能，特别是使用Whisper编码器时。例如，Whisper-Medium模型在老年数据上适应后误字率相对下降45.8%。</li>
+<li>结果表明，Whisper编码器从领域适应中受益较大，而WavLM模型在跨年龄泛化中表现更稳健。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文系统性评估了语音基础模型在说话人日记化中的跨年龄泛化能力，为应对年龄多样性提供了实用见解和基准，推动了鲁棒语音处理的发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.05007" target="_blank">Generalizable Audio-Visual Navigation via Binaural Difference Attention and Action Transition Prediction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Visual Navigation</span>
+                <strong>ID:</strong> <span class="tag">2604.05007</span>
+                <a href="../../pdfs/2604.05007.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jia Li, Yinfeng Yu<br>
+                <div style="margin-top:5px"><span class="tag">Audio-Visual Navigation</span><span class="tag">Binaural Difference Attention</span><span class="tag">Action Transition Prediction</span><span class="tag">Generalization</span><span class="tag">Reinforcement Learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有音频视觉导航（AVN）方法在未见声音类别和环境中泛化能力有限，主要问题包括对声音语义特征的过拟合、对训练环境动态和几何的依赖，导致在分布外场景下性能下降，如方向推断不稳定和导航轨迹振荡。</p>
+<h3>方法创新</h3>
+<p>提出 BDATP 框架，包括两个核心组件：Binaural Difference Attention (BDA) 模块，通过显式建模双耳差异来增强空间方向感知，减少对语义类别的依赖；Action Transition Prediction (ATP) 任务，作为辅助正则化项，通过预测动作转移来促进跨环境的策略一致性，缓解过拟合问题。该框架可集成到主流 AVN 基线中，共同优化感知和策略学习。</p>
+<h3>实验结果</h3>
+<p>在 Replica 和 Matterport3D 数据集上的实验表明，BDATP 显著提升了性能，特别是在挑战性的零样本泛化设置中。例如，在 Replica 数据集的未见声音类别上，成功率达到最高 21.6% 的绝对提升（例如，AV-WaN + BDATP 达 70.7%），并展示了跨不同导航架构的稳健性。</p>
+<h3>一句话评价</h3>
+<p>BDATP 框架通过强调空间感知和策略正则化，有效地解决了 AVN 中的泛化问题，为未见场景下的音频视觉导航提供了创新解决方案。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-05-08</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-05-08 | 来源: eess.AS | 新增论文: 10 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06631" target="_blank">Task-Aware Answer Preservation under Audio Compression for Large Audio Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Large Audio Language Models (Audio Compression & Question Answering)</span>
+                <strong>ID:</strong> <span class="tag">2605.06631</span>
+                <a href="../../pdfs/2605.06631.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Amir Ivry<br>
+                <div style="margin-top:5px"><span class="tag">Large Audio Language Models</span><span class="tag">Audio Compression</span><span class="tag">Answer Preservation</span><span class="tag">Task-Aware</span><span class="tag">Query Families</span><span class="tag">Compression Budget</span><span class="tag">Family-Wise Excess Risk</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大型音频语言模型（LALMs）在部署时通常会对音频进行压缩以减少内存和延迟，但压缩可能对特定关键查询族（如语音内容、事件计数、说话人状态）的答案准确性造成严重损害，而整体平均精度可能看似可接受。现有方法缺乏对任务感知的答案保留的考虑。</p>
+<h2>方法创新</h2>
+<p>本文首次提出任务感知的答案保留音频压缩框架。主要贡献包括：
+1. <strong>形式化定义</strong>：将答案保留定义为族级超量风险问题（family-wise excess-risk），证明其与受限答案充分性的等价性。
+2. <strong>签收协议</strong>：给出实践者可直接使用的压缩预算决策协议，基于统计置信度返回点估计和置信感知的压缩预算前沿（compression-budget frontier）。
+3. <strong>理论分析</strong>：推导了查询族划分细化对预算的影响（更细的划分可能导致更严格的预算），以及查询条件压缩的理论优势（在理想情况下可减少保留信息量）。</p>
+<h2>实验结果</h2>
+<p>在五个多选题音频问答基准（包含SpeechContent、EventCounting等任务）上，使用Qwen2-Audio-7B-Instruct和Qwen2.5-Omni-7B backbone评估。主要发现：
+- 数据集平均误差会隐藏严重的族级失败（如极端受损族被平均掩盖）。
+- 声明的查询族划分会影响签收预算决策。
+- 查询条件压缩仅在特定族域下有助于保持答案保留。</p>
+<h2>一句话评价</h2>
+<p>本文为LALM音频压缩提供了首个任务感知的答案保留框架，通过理论分析和实证揭示了平均精度指标的不足，并为实践者提供了可操作的签收协议。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06407" target="_blank">WavCube: Unifying Speech Representation for Understanding and Generation via Semantic-Acoustic Joint Modeling</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Representation Learning</span>
+                <strong>ID:</strong> <span class="tag">2605.06407</span>
+                <a href="../../pdfs/2605.06407.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Guanrou Yang, Tian Tan, Qian Chen, Zhikang Niu, Yakun Song, Ziyang Ma, Yushen Chen, Zeyu Xie, Tianrui Wang, Yifan Yang, Wenxi Chen, Qi Chen, Wenrui Liu, Shan Yang, Xie Chen<br>
+                <div style="margin-top:5px"><span class="tag">WavCube</span><span class="tag">speech representation</span><span class="tag">unified understanding and generation</span><span class="tag">semantic bottleneck</span><span class="tag">acoustic enrichment</span><span class="tag">two-stage training</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音理解与生成长期依赖不同表示：理解使用SSL语义特征，生成使用重建声学特征（如Mel谱、VAE潜在），导致架构冗余、兼容性差。</li>
+<li>SSL特征存在高维冗余（直接用于扩散模型性能差，如WavLM-Large 1024维零样本TTS的WER达110%）和声学细节缺失（重建质量不足）。</li>
+<li>现有统一表示方法（如Semantic-VAE、Dasheng Tokenizer）仍存在瓶颈：要么维度高不利于扩散，要么重建与理解难以兼顾。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出WavCube：一种紧凑连续潜在表示，同时支持语音理解、重建和生成。</li>
+<li>两阶段训练策略：</li>
+<li>Stage 1（压缩）：使用对称适配器自编码器将冻结的WavLM-Large特征蒸馏为128维瓶颈，去除冗余；同时用重建任务预热声学解码器。</li>
+<li>Stage 2（丰富）：解冻SSL编码器，端到端优化整个流水线以注入细粒度声学细节；引入语义锚定正则化，保持语义流形的稳定。</li>
+<li>核心思想：通过“先压缩再丰富”解决SSL特征的两大缺陷，实现语义判别性、声学保真度和扩散可训练性的协同。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>理解任务：在SUPERB基准上，8倍维度压缩下仍接近WavLM性能。</li>
+<li>生成任务：</li>
+<li>零样本TTS：达到SOTA，训练收敛显著加速。</li>
+<li>语音增强、分离、转换：在SUPERB-SG基准上持续优于声学基线。</li>
+<li>消融实验：验证了两阶段训练有效修复SSL特征的内在缺陷，为统一语音系统铺平道路。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>WavCube通过两阶段“压缩-丰富”流程，将语义SSL特征转化为紧凑、声学增强的统一表示，首次在单一空间中平衡理解、重建与生成，实现SOTA性能与高效训练。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06189" target="_blank">Predictive-Generative Drift Decomposition for Speech Enhancement and Separation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2605.06189</span>
+                <a href="../../pdfs/2605.06189.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Julius Richter, Yoshiki Masuyama, Christoph Boeddeker, Takahiro Edo, Gordon Wichern, Jonathan Le Roux<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: 'NoneType' object has no attribute 'choices'</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06108" target="_blank">NDF+: Joint Neural Directional Filtering and Diffuse Sound Extraction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2605.06108</span>
+                <a href="../../pdfs/2605.06108.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Weilong Huang, Le Nhat Tam Huynh, Oliver Thiergart, Emanuël A. P. Habets<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: Error code: 503 - {'error': {'message': 'Service is too busy. We advise users to temporarily switch to alternative LLM API service providers.', 'type': 'service_unavailable_error', 'param': None, 'code': 'service_unavailable_error'}}</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.05554" target="_blank">Optimal Transport Audio Distance with Learned Riemannian Ground Metrics</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2605.05554</span>
+                <a href="../../pdfs/2605.05554.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wonwoo Jeong<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: Error code: 500 - {'error': {'message': 'Internal Server Error', 'type': 'internal_error', 'param': None, 'code': 'internal_error'}}</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.05231" target="_blank">Prompting Whisper for Joint Speech Transcription and Diarization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2605.05231</span>
+                <a href="../../pdfs/2605.05231.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mariia Zamyrova, Henk van den Heuvel<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</p>
+<HTML><HEAD><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>ERROR: The request could not be satisfied</TITLE>
+</HEAD><BODY>
+<H1>504 Gateway Timeout ERROR</H1>
+<H2>The request could not be satisfied.</H2>
+<HR noshade size="1px">
+We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later, or contact the app or website owner.
+<BR clear="all">
+If you provide content to customers through CloudFront, you can find steps to troubleshoot and help prevent this error by reviewing the CloudFront documentation.
+<BR clear="all">
+<HR noshade size="1px">
+<PRE>
+Generated by cloudfront (CloudFront) HTTP3 Server
+Request ID: g-XwBluCqu8VyVemflC-3seLOvvW8nBjhVz3RZXUGzOSuI-2V434wQ&#x3D;&#x3D;
+</PRE>
+<ADDRESS>
+</ADDRESS>
+</BODY></HTML>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06628" target="_blank">LiVeAction: a Lightweight, Versatile, and Asymmetric Neural Codec Design for Real-time Operation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Neural Data Compression</span>
+                <strong>ID:</strong> <span class="tag">2605.06628</span>
+                <a href="../../pdfs/2605.06628.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Dan Jacobellis, Neeraja J. Yadwadkar<br>
+                <div style="margin-top:5px"><span class="tag">轻量级神经编解码器</span><span class="tag">非对称设计</span><span class="tag">率失真优化</span><span class="tag">通用模态压缩</span><span class="tag">实时操作</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现代传感器（可穿戴、医疗、卫星等）产生高分辨率数据，但带宽和功耗受限。</li>
+<li>标准编解码器（JPEG、MPEG）针对人类感知设计，不适用于机器感知任务和非传统模态（如空间音频、高光谱图像、3D医学图像）。</li>
+<li>通用压缩方法（标量量化、分辨率降低）未能利用信号冗余，率失真性能差。</li>
+<li>生成式神经编解码器（tokenizer）参数多、数据需求大、模态特定，不适合资源受限环境。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>LiVeAction</strong>：一种轻量级、通用、非对称神经编解码器架构。</li>
+<li><strong>轻量级编码器</strong>：采用类似FFT的块对角结构（如ShuffleNet和Monarch矩阵），用分组卷积替换密集投影，显著降低计算量。</li>
+<li><strong>非对称设计</strong>：编码器轻量，解码器使用EfficientViT线性注意力块（可泛化到1/2/3维），平衡效率与重建质量。</li>
+<li><strong>简化训练目标</strong>：用基于方差的率惩罚替代对抗性和感知损失，仅需MSE率失真优化，稳定训练且适用于任意模态，无需大量数据。</li>
+<li><strong>通用性</strong>：架构和损失函数与模态无关，可处理均匀网格采样信号；超参数选择简单。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在Kodak RGB图像数据集上，与Cosmos相比，LiVeAction实现<strong>34% BD-rate改进</strong>，同时编码速度快<strong>10倍以上</strong>（见Fig. 1）。</li>
+<li>在空间音频、高光谱图像、3D医学CT、标准音视频等多种模态上均优于现有神经tokenizer。</li>
+<li>编码器仅<strong>493K参数</strong>（Cosmos为32M），在低功耗CPU上实测吞吐量高。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>LiVeAction通过非对称架构和简化损失函数，在低功耗边缘设备上实现了高效、高质量、多模态的数据压缩，在率失真-复杂度权衡上超越现有最先进生成式tokenizer。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.06599" target="_blank">Weight-Decay Turns Transformer Loss Landscapes Villani: Functional-Analytic Foundations for Optimization and Generalization</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Deep Learning Theory</span>
+                <strong>ID:</strong> <span class="tag">2605.06599</span>
+                <a href="../../pdfs/2605.06599.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Abhijit Das, Sayantan Dutta<br>
+                <div style="margin-top:5px"><span class="tag">Weight Decay</span><span class="tag">Transformer Optimization</span><span class="tag">Villani Function</span><span class="tag">Log-Sobolev Inequality</span><span class="tag">Langevin Dynamics</span><span class="tag">PAC-Bayes</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>权值衰减在大语言模型中广泛使用，但其对Transformer损失景观的理论作用尚不明确。现有理论仅适用于凸或浅层模型，无法直接应用于深度注意力网络。</p>
+<h2>方法创新</h2>
+<p>首次严格证明了带有L2正则化的Transformer交叉熵损失函数满足Villani函数的三个条件：强制、高斯尾部可积和微分增长。推导出对数索波列夫常数和庞加莱常数的表达式，建立了与有限时间收敛保证和PAC-Bayesian泛化界的联系。提出可扩展的Villani诊断Ψ_s(θ) = -∆F + s^{-1}∥∇F∥²，并使用Hutchinson迹探测器高效估计。</p>
+<h2>实验结果</h2>
+<p>在GPT-Neo-125M模型上，使用Penn Treebank和WikiText-103数据集，验证了Ψ_s的二次增长、Hessian谱膨胀以及指数收敛行为，与理论预测一致。</p>
+<h2>一句话评价</h2>
+<p>该工作为权值衰减在Transformer优化中的几何作用提供了严格的数学基础，揭示了其作为Langevin动力学快速混合和曲率感知优化关键要素的角色。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.05927" target="_blank">Minimizing Modality Gap from the Input Side: Your Speech LLM Can Be a Prosody-Aware Text LLM</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Large Language Models</span>
+                <strong>ID:</strong> <span class="tag">2605.05927</span>
+                <a href="../../pdfs/2605.05927.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wenqian Cui, Xiao-Hui Li, Daxin Tan, Qiyong Zheng, Irwin King<br>
+                <div style="margin-top:5px"><span class="tag">modality gap</span><span class="tag">speech large language model</span><span class="tag">prosody-aware</span><span class="tag">input side</span><span class="tag">WhisperPro</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有语音大语言模型（SLM）基于文本大语言模型（TLM）构建，但存在显著的模态差距，导致语音问答性能远低于文本。先前工作主要从输出侧缩小差距（如中间文本令牌、思考者-说话者架构），但模态差距仍然存在。</p>
+<h2>方法创新</h2>
+<p>提出 TextPro-SLM，从输入侧缩小模态差距。核心组件：
+1. <strong>WhisperPro</strong>：统一语音编码器，基于Whisper-large-v3，输出同步的文本令牌（内容）和韵律嵌入（语气、情感、音色等），通过附加的梅尔重构器强制保留韵律信息。
+2. <strong>LLM骨干</strong>：训练时结合知识蒸馏（保持原始TLM语义能力）和韵律理解任务，使模型同时理解语言内容和副语言信息。</p>
+<p>该方法使SLM更接近“韵律感知的文本LLM”，输入表示与TLM兼容且保留韵律。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在3B和7B尺度上，模态差距均低于现有SLM。</li>
+<li>在副语言理解任务上表现强劲。</li>
+<li>仅需约1000小时音频数据进行LLM训练，数据效率高。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过从输入侧分离内容与韵律表示，有效且数据高效地缩小了语音与文本LLM之间的模态差距。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.05611" target="_blank">X-Voice: Enabling Everyone to Speak 30 Languages via Zero-Shot Cross-Lingual Voice Cloning</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2605.05611</span>
+                <a href="../../pdfs/2605.05611.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rixi Xu, Qingyu Liu, Haitao Li, Yushen Chen, Zhikang Niu, Yunting Yang, Jian Zhao, Ke Li, Berrak Sisman, Qinyuan Cheng, Xipeng Qiu, Kai Yu, Xie Chen<br>
+                <div style="margin-top:5px"><span class="tag">zero-shot voice cloning</span><span class="tag">cross-lingual</span><span class="tag">flow-matching</span><span class="tag">multilingual</span><span class="tag">IPA</span><span class="tag">two-stage training</span><span class="tag">transcript-free</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有零样本语音克隆模型依赖参考音频的转录文本，在低资源语言和无文字方言场景下难以应用。同时，自回归模型存在推理瓶颈和错误累积，非自回归模型在多语言扩展中需要统一的文本表示。</p>
+<h2>方法创新</h2>
+<p>X-Voice 是一个 0.4B 参数的流匹配（flow-matching）模型，支持 30 种语言的零样本跨语言语音克隆。主要创新包括：
+- <strong>两阶段训练范式</strong>：第一阶段在 420K 小时多语言语料上训练基础模型 X-Voice_s1，使用国际音标（IPA）作为统一表示；第二阶段利用 X-Voice_s1 合成 10K 小时说话人一致的音频作为提示，微调得到 X-Voice_s2，从而完全摆脱对参考文本的依赖。
+- <strong>双重语言注入</strong>：在文本级和时间级分别注入语言标识，有效缓解跨语言合成中的口音泄漏。
+- <strong>解耦调度 CFG</strong>：采用解耦和调度的无分类器引导（Classifier-Free Guidance），在保持音色的同时提升发音准确性和自然度。
+- <strong>开源生态</strong>：开源全部训练语料（420K 小时）、高质量子集（30K 小时）及评估基准。</p>
+<h2>实验结果</h2>
+<p>主观和客观评估表明，X-Voice 优于现有流匹配多语言系统（如 LEMAS-TTS），并与百亿参数模型（如 Qwen3-TTS）性能相当，实现了无转录文本的零样本跨语言克隆。</p>
+<h2>一句话评价</h2>
+<p>一个高效、开源的多语言零样本语音克隆模型，通过创新的两阶段训练彻底消除对参考文本的依赖，在 30 种语言上达到业界领先水平。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

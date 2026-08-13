@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-06-15</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-06-15 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14175" target="_blank">HIDVAS: A Hearing Instrument Dataset in Various Acoustical Scenarios for Algorithm Evaluation and Training</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Processing</span>
+                <strong>ID:</strong> <span class="tag">2606.14175</span>
+                <a href="../../pdfs/2606.14175.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Arnout Roebben, Giuliano Bernardi, Jan Wouters, Toon van Waterschoot, Marc Moonen<br>
+                <div style="margin-top:5px"><span class="tag">Hearing instrument</span><span class="tag">Behind-the-ear</span><span class="tag">Receiver-in-canal</span><span class="tag">Impulse responses</span><span class="tag">Audio recordings</span><span class="tag">Multi-microphone</span><span class="tag">Multi-loudspeaker</span><span class="tag">Reverberation</span><span class="tag">Open/closed domes</span><span class="tag">Direct-to-reverberant ratio</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有助听器算法评估和训练的数据集要么是模拟数据（不够真实），要么是录音数据（但缺乏多种场景同时覆盖）。多数数据集仅包含脉冲响应或仅包含音频，且很少同时考虑多种麦克风/扬声器配置、多种耳塞类型以及多种混响条件。</p>
+<h2>方法创新</h2>
+<p>本文提出HIDVAS数据集，同时满足以下所有自由度：
+- <strong>麦克风配置</strong>：耳背式（BTE）助听器麦克风、鼓膜处麦克风、外部麦克风；
+- <strong>扬声器配置</strong>：外部扬声器（8个不同角度）和耳内接收器（RIC）扬声器；
+- <strong>耳塞类型</strong>：开放式、半开放式、封闭式、无RIC；
+- <strong>录音内容</strong>：脉冲响应（扫频）和音频（男女语音、语音噪声、歌声、弦乐、管乐、打击乐）；
+- <strong>混响条件</strong>：4种T30（0.09s、0.47s、0.73s、1.48s），通过改变房间和吸音材料实现。
+数据以“助听器一体盒”形式提供，包含所有通道对，并保留硬件效应，增强真实感。</p>
+<h2>实验结果</h2>
+<p>通过三个用例展示数据集价值：
+1. <strong>反馈路径</strong>：开放/半开放耳塞的反馈路径相似且远大于封闭耳塞；
+2. <strong>直接-混响比（DRR）</strong>：BTE麦克风的DRR低于靠近声源的外部麦克风，且随混响时间增大差异增加；
+3. <strong>泄露</strong>：开放/半开放耳塞的声泄露明显高于封闭耳塞。
+数据集公开可用。</p>
+<h2>一句话评价</h2>
+<p>首个同时涵盖多种耳塞、多麦克风、多扬声器、多混响条件以及脉冲响应+音频的助听器数据集，为算法评估与训练提供了高度真实的“一体盒”平台。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14091" target="_blank">Who Spoke When in Multi-Conversation: Target Speaker Tagging Task and Benchmark</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Recognition</span>
+                <strong>ID:</strong> <span class="tag">2606.14091</span>
+                <a href="../../pdfs/2606.14091.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Minjae Lee, Hee-Soo Heo, Youngki Kwon, Han-Gyu Kim, You Jin Kim, Bong-Jin Lee<br>
+                <div style="margin-top:5px"><span class="tag">target speaker tagging</span><span class="tag">speaker diarization</span><span class="tag">speaker verification</span><span class="tag">speaker identification</span><span class="tag">benchmark dataset</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有说话人识别任务（验证、识别、日志）被孤立研究，缺乏统一评估。</li>
+<li>真实应用（如会议转录）需同时进行语音分段、识别已知说话人、拒绝未知说话人，但缺乏合适的评价资源。</li>
+<li>现有数据集存在无全局标签、说话人数量少、无标准化协议等问题。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>目标说话人标记（TST）</strong>任务，整合说话人日志、验证和识别。</li>
+<li>设计专用系统：先进行说话人日志得到分段，再进行开放集识别，针对分段长度和聚类误差进行优化。</li>
+<li>构建<strong>TST-Bench</strong>，大规模合成基准，包含150+注册说话人、300个20-60分钟会话，支持8-30人/会话，提供全球标签和可控条件。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在真实和合成数据上实验表明，TST存在传统基准未捕捉的挑战。</li>
+<li>专用系统设计比简单整合现有方法有显著提升。</li>
+<li>聚类误差不对称：欠聚类严重影响识别，过聚类可部分纠正。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该工作首次正式定义并评估了集成说话人日志、识别和拒绝未知说话人的统一任务，并发布了大规模基准数据集。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14004" target="_blank">Unsupervised Approaches for Global Prosodic Embedding Extraction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Prosody Embedding</span>
+                <strong>ID:</strong> <span class="tag">2606.14004</span>
+                <a href="../../pdfs/2606.14004.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Martin Meza, Luciana Ferrer, Pablo Riera<br>
+                <div style="margin-top:5px"><span class="tag">prosodic embeddings</span><span class="tag">disentanglement</span><span class="tag">pitch and energy modeling</span><span class="tag">autoencoder</span><span class="tag">self-supervised learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有自监督语音模型（如wav2vec 2.0、HuBERT）编码了韵律、说话人、语言等纠缠信息，导致在仅依赖韵律的任务中鲁棒性不足；手工设计的韵律特征可能不完整或次优。</p>
+<h3>方法创新</h3>
+<ul>
+<li>提出多种无监督自编码器架构（GRU和Transformer），仅以帧级F0、能量和发声信号为输入，输出重构信号，从而学习纯韵律的全局嵌入。</li>
+<li>设计三种评估协议：说话人独立、说话人和文本独立、以及显式测试文本鲁棒性的虚假相关协议。</li>
+<li>创建了合成的语音数据集，用于受控评估。</li>
+<li>系统性地比较了多种架构变体（信息瓶颈、训练目标、解码器类型等）。</li>
+</ul>
+<h3>实验结果</h3>
+<p>与手工特征、大型自监督模型（wav2vec 2.0、HuBERT等）、emotion2vec及VQ-VAE基线相比，提出的嵌入在挑战性条件下表现出竞争性或更优的性能，尤其在跨说话人和跨文本场景中更具鲁棒性。</p>
+<h3>一句话评价</h3>
+<p>该工作系统地探索了基于自编码器的全局韵律嵌入提取方法，并提供了新的评估基准，证明了纯韵律表示在解耦和鲁棒性上的优势。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14612" target="_blank">Moonlight in Latent Space: Chirality and Structural Correspondence Between Beethoven's Op. 27 No. 2 and Machine Learning Mechanisms</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Computational Musicology</span>
+                <strong>ID:</strong> <span class="tag">2606.14612</span>
+                <a href="../../pdfs/2606.14612.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chen Ying Claude, Zhihan Luo<br>
+                <div style="margin-top:5px"><span class="tag">structural isomorphism</span><span class="tag">information theory</span><span class="tag">computational musicology</span><span class="tag">reverse sonification</span><span class="tag">chirality</span><span class="tag">contextual embeddings</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有音乐与机器学习之间的类比停留在隐喻层面，缺乏形式化的结构同构性证明。</p>
+<h2>方法创新</h2>
+<ol>
+<li>对贝多芬《月光奏鸣曲》三个乐章提取每小节的统计特征（熵、JSD、不协和度、左右手相似性、自相似矩阵等），建立与机器学习机制（位置编码、循环网络、流式模型）的结构对应。</li>
+<li>提出“反向声化”：从特征向量重新生成MIDI音乐，通过编码-解码循环测量“手性”（chirality），即统计分布保留但时序顺序丢失的程度。</li>
+<li>引入上下文嵌入：每个音级在同小节内共现音级的分布作为上下文向量，跨乐章聚类揭示无监督的调性结构。</li>
+</ol>
+<h2>实验结果</h2>
+<ol>
+<li>感知的音乐“温度”由信息吞吐量（每单位时间的和声变化）决定，而非分布宽度。</li>
+<li>最轻快的第二乐章实际具有最高和声不协和度。</li>
+<li>三个乐章分别对应：周期性位置编码（慢板）、循环记忆（小快板）、高吞吐流式模型（急板）。</li>
+<li>上下文嵌入的无监督聚类恢复了奏鸣曲的调性结构。</li>
+<li>手性随n-gram阶数单调增加，且自然语言的手性高于音乐。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>将音乐分析与机器学习机制进行形式化同构映射，并通过反向声化验证结构对应关系，提出手性概念，具有跨学科创新性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14528" target="_blank">BayLing-Duplex: Native Full-Duplex Speech Dialogue with a Single Autoregressive LLM</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">语音交互 / 语音语言模型 (Speech Language Model, Full-Duplex Dialogue)</span>
+                <strong>ID:</strong> <span class="tag">2606.14528</span>
+                <a href="../../pdfs/2606.14528.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Qingkai Fang, Shoutao Guo, Yang Feng<br>
+                <div style="margin-top:5px"><span class="tag">全双工语音对话</span><span class="tag">自回归LLM</span><span class="tag">语音语言模型</span><span class="tag">多通道交错序列</span><span class="tag">直接偏好优化</span><span class="tag">GLM-4-Voice</span><span class="tag">Moshi</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>传统语音语言模型（如LLaMA-Omni、GLM-4-Voice）采用<strong>回合制</strong>交互，依赖外部VAD模块标记用户话语结束，导致系统行为受VAD精度限制、无法处理重叠、犹豫、打断等自然对话现象。</li>
+<li>原生全双工训练通常需要上百万小时预训练和数万小时配对数据，学术团队难以复现。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>BayLing-Duplex</strong>：基于单个自回归LLM的原生全双工语音对话模型，无额外模块或辅助头。</li>
+<li><strong>多通道交错序列</strong>：将用户语音、助手文本、助手语音三种流以固定帧率交错排列为块（block），通过文本通道中的四个对话状态令牌（[SILENCE]、[ASSISTANT]、[PAD]、[EPAD]）实现听、说、停的决策，将对话状态预测转化为标准下一个令牌预测。</li>
+<li><strong>训练策略</strong>：以公开GLM-4-Voice检查点为起点，仅用<strong>40万</strong>全双工样本进行监督微调（SFT）加轻量级直接偏好优化（DPO），提升时序决策效果。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li><strong>InstructS2S-Eval</strong>：切换成功率92%，打断成功率100%。</li>
+<li><strong>语音响应质量</strong>：得分从Moshi的2.17提升至3.39。</li>
+<li><strong>全双工问答</strong>：Llama Questions和Web Questions准确率分别达46.0%和18.1%，显著超越Moshi（21.0%/9.2%）。</li>
+<li><strong>与回合制对比</strong>：在三个标准口语基准上持平或超越自身回合制版本。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>BayLing-Duplex以极简的令牌设计实现原生全双工语音对话，在极低数据量下达到甚至超越大规模全双工模型性能，为学术友好和高交互性能兼顾提供了有效方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2606.14120" target="_blank">FAConformer: Frequency-Aware Convolutional Transformer for Auditory Attention Decoding</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Brain-Computer Interface, Auditory Attention Decoding</span>
+                <strong>ID:</strong> <span class="tag">2606.14120</span>
+                <a href="../../pdfs/2606.14120.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ziwei Wang, Xingyi He, Tianwang Jia, Hongbin Wang, Dongrui Wu<br>
+                <div style="margin-top:5px"><span class="tag">Auditory attention decoding</span><span class="tag">EEG</span><span class="tag">Transformer</span><span class="tag">convolutional neural network</span><span class="tag">frequency-aware</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有AAD模型未充分挖掘频域EEG信息，多频带处理多采用手工特征或浅层拼接，忽略了频带特有模式和跨频带交互。</p>
+<h2>方法创新</h2>
+<p>提出FAConformer框架：1) 将EEG信号分解为多个频带，每个频带由独立CNN-Transformer编码器进行频带特异性建模；2) 频带感知注意力(FAA)模块将频带特征作为token进行自适应融合；3) 频带辅助监督(BAS)防止弱贡献分支欠优化。</p>
+<h2>实验结果</h2>
+<p>在DTU和KUL数据集上，三种决策窗口长度下，FAConformer一致优于12个基线方法，分别比当前SOTA高4.9%和3.0%。</p>
+<h2>一句话评价</h2>
+<p>FAConformer通过层次化频带感知建模，有效利用了频域信息，显著提升了AAD性能。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

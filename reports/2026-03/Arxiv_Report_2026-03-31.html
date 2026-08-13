@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-03-31</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-03-31 | 来源: eess.AS | 新增论文: 13 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.28737" target="_blank">ParaSpeechCLAP: A Dual-Encoder Speech-Text Model for Rich Stylistic Language-Audio Pretraining</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2603.28737</span>
+                <a href="../../pdfs/2603.28737.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anuj Diwan, Eunsol Choi, David Harwath<br>
+                <div style="margin-top:5px"><span class="tag">ParaSpeechCLAP</span><span class="tag">dual-encoder</span><span class="tag">contrastive learning</span><span class="tag">speech-text alignment</span><span class="tag">rich styles</span><span class="tag">TTS reward modeling</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有语音-文本对齐模型（如ParaCLAP）只能处理有限的风格属性（如基本情感），而真实语音包含更丰富的内在（如音高、纹理）和情境（如情感）维度，且常以自由形式自然语言描述，当前模型支持不足，限制了风格提示TTS、语音检索等应用的发展。</p>
+<h3>方法创新</h3>
+<ul>
+<li>提出ParaSpeechCLAP，一个双编码器对比模型，使用现代编码器（WavLM-Large用于语音，Granite Embedding用于文本）将语音和丰富文本风格描述映射到共同嵌入空间。</li>
+<li>训练三个模型：ParaSpeechCLAP-Intrinsic（针对说话者级标签，添加分类损失和类平衡训练）、ParaSpeechCLAP-Situational（针对话语级标签）和ParaSpeechCLAP-Combined（统一模型），比较专门化与统一策略的互补性。</li>
+<li>首次将双编码器模型用作推理时奖励模型，通过best-of-N选择改进风格提示TTS的风格一致性，无需额外训练。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>在风格字幕检索、丰富语音属性分类和TTS推理时引导三个应用上评估：ParaSpeechCLAP在大多数指标上优于基线（如ParaCLAP、VoxProfile-VQ）。</li>
+<li>专门化模型（Intrinsic和Situational）在各自风格维度上表现更强，而统一模型（Combined）在组合评估（同时涉及内在和情境属性）上表现更好。</li>
+<li>分类损失提高了ParaSpeechCLAP-Intrinsic的性能，类平衡训练进一步优化了稀有标签处理。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>ParaSpeechCLAP通过双编码器架构和创新训练策略，成功支持广泛语音风格标签，并在多个应用中展示了优越性能，推动了丰富风格语音处理的发展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.28723" target="_blank">Acoustic-to-articulatory Inversion of the Complete Vocal Tract from RT-MRI with Various Audio Embeddings and Dataset Sizes</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Acoustic-to-Articulatory Inversion</span>
+                <strong>ID:</strong> <span class="tag">2603.28723</span>
+                <a href="../../pdfs/2603.28723.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sofiane Azzouz, Pierre-André Vuissoz, Yves Laprie<br>
+                <div style="margin-top:5px"><span class="tag">Acoustic-to-articulatory inversion</span><span class="tag">RT-MRI</span><span class="tag">vocal tract</span><span class="tag">audio embeddings</span><span class="tag">Bi-LSTM</span><span class="tag">contour extraction</span><span class="tag">dataset size</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统声学到发音倒置方法主要依赖电磁发音图（EMA）数据，但这些数据仅覆盖声道前部，传感器数量有限，且存在数据获取困难、辐射风险以及无法捕捉完整声道（如咽部和喉部）信息等问题。实时磁共振成像（RT-MRI）数据能提供完整声道覆盖，但面临数据质量低、噪声大、空间分辨率有限以及缺乏自动轮廓提取工具等挑战。</p>
+<h2>方法创新</h2>
+<p>本研究提出了一种创新的完整声道倒置方法：使用RT-MRI数据，自动提取声道轮廓（而非原始图像），以聚焦几何动态并减少冗余像素信息。结合去噪音频，采用双向长短时记忆网络（Bi-LSTM）架构进行倒置。实验重点评估了三种音频嵌入（MFCCs、LCCs和HuBERT）的影响以及数据集大小（从10分钟到3.5小时）对性能的作用。此外，引入了新的测量指标——喉部高度，以更全面评估倒置精度。</p>
+<h2>实验结果</h2>
+<p>在测试数据上，平均均方根误差（RMSE）为1.48 mm，接近像素大小1.62 mm。结果表明，使用RT-MRI数据实现从声门到嘴唇的完整声道倒置是可行的，且音频嵌入中HuBERT表现最佳，数据集大小增加能提升性能。</p>
+<h2>一句话评价</h2>
+<p>该方法通过创新使用轮廓提取和高质量数据，在声学到发音倒置中实现了高精度结果，为完整声道建模和应用（如语音康复）提供了有效途径。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.28717" target="_blank">Can Hierarchical Cross-Modal Fusion Predict Human Perception of AI Dubbed Content?</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">AI Dubbing Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2603.28717</span>
+                <a href="../../pdfs/2603.28717.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ashwini Dasare, Nirmesh Shah, Ashishkumar Gudmalwar, Pankaj Wasnik<br>
+                <div style="margin-top:5px"><span class="tag">AI Dubbing evaluation</span><span class="tag">Hierarchical fusion</span><span class="tag">Multimodal</span><span class="tag">Proxy MOS</span><span class="tag">Active learning</span></div>
+            </div>
+            <div class="summary-section">
+                <p><strong>核心痛点</strong>: AI 配音内容评估具有多维度性（包括同步性、清晰度、说话者一致性、情感对齐和语义上下文），但人类平均意见分数（MOS）作为金标准成本高、难以大规模应用。</p>
+<p><strong>方法创新</strong>: 提出一种层次化多模态融合架构，集成音频、视频和文本特征，通过 intra- 和 inter-modal 融合层渐进整合；引入 Proxy MOS 作为弱监督标签，通过主动学习优化客观指标权重；使用轻量级 LoRA 适配器实现参数高效微调。</p>
+<p><strong>实验结果</strong>: 在 12k 印地语-英语双向配音剪辑上训练，模型预测与人类感知对齐度高（PCC&gt;0.75），全多模态系统性能优于单模态和双模态配置。</p>
+<p><strong>一句话评价</strong>: 该研究为 AI 配音内容的自动评估提供了一个可扩展且感知对齐的解决方案，结合多模态融合和弱监督策略。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.28714" target="_blank">VAANI: Capturing the language landscape for an inclusive digital India</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Processing</span>
+                <strong>ID:</strong> <span class="tag">2603.28714</span>
+                <a href="../../pdfs/2603.28714.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sujith Pulikodan, Abhayjeet Singh, Agneedh Basu, Lokesh Rady, Nihar Desai, Pavan Kumar J, Prajjwal Srivastav, Pranav D Bhat, Raghu Dharmaraju, Ritika Gupta, Sathvik Udupa, Saurabh Kumar, Sumit Sharma, Vaibhav Vishwakarma, Visruth Sanka, Dinesh Tewari, Harsh Dhand, Amrita Kamat, Sukhwinder Singh, Shikhar Vashishth, Partha Talukdar, Raj Acharya, Prasanta Kumar Ghosh<br>
+                <div style="margin-top:5px"><span class="tag">VAANI</span><span class="tag">multimodal dataset</span><span class="tag">linguistic diversity</span><span class="tag">India</span><span class="tag">speech data collection</span><span class="tag">inclusivity</span><span class="tag">geographic coverage</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>印度语言多样性高，现有语音数据集存在三大主要问题：缺乏广泛语言覆盖（尤其忽视低资源语言）、缺乏地理和人口统计学覆盖（忽略区域变体和方言），以及缺乏多模态数据（多为单一语音-文本模态），限制了包容性语音技术发展。</p>
+<h1>方法创新</h1>
+<p>VAANI项目采用地理中心的数据收集方法，从印度165个地区系统性采集数据，使用图像提示鼓励自发语音回应，创建对齐的图像-语音-文本多模态数据集，并通过严格自动和手动质量评估确保高标准。</p>
+<h1>实验结果</h1>
+<p>数据集包含约289,000张图像、约31,270小时音频和约2,067小时转录语音，覆盖112种语言、来自31个州和联合领土的165个地区，许多语言首次在这种规模的数据集中表示，提升了语言包容性。</p>
+<h1>一句话评价</h1>
+<p>这是一个开创性的努力，通过创建印度代表性的多模态数据集，为促进语言包容性和发展包容性语音模型提供了重要资源。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.27998" target="_blank">BiFormer3D: Grid-Free Time-Domain Reconstruction of Head-Related Impulse Responses with a Spatially Encoded Transformer</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2603.27998</span>
+                <a href="../../pdfs/2603.27998.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shaoheng Xu, Chunyi Sun, Jihui Zhang, Amy Bastine, Prasanga N. Samarasinghe, Thushara D. Abhayapala, Hongdong Li<br>
+                <div style="margin-top:5px"><span class="tag">head-related impulse responses</span><span class="tag">binaural rendering</span><span class="tag">spatial audio</span><span class="tag">HRIR up-sampling</span><span class="tag">transformer</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Summary of BiFormer3D</h1>
+<h2>Core Pain Points</h2>
+<ul>
+<li>Individualized head-related impulse responses (HRIRs) are costly to measure densely per listener, requiring sparse up-sampling methods.</li>
+<li>Prior methods often operate in the frequency domain, rely on minimum-phase assumptions or separate timing models, and use fixed direction grids, which can degrade temporal fidelity and spatial continuity.</li>
+</ul>
+<h2>Methodological Innovations</h2>
+<ul>
+<li>Proposes BiFormer3D, a time-domain, grid-free binaural Transformer for reconstructing HRIRs at arbitrary directions from sparse inputs.</li>
+<li>Uses sinusoidal spatial features for direction encoding, a Conv1D refinement module for temporal consistency, and auxiliary interaural time difference (ITD) and interaural level difference (ILD) heads for binaural cue preservation.</li>
+<li>Enables continuous angular HRIR reconstruction without requiring a fixed measurement grid or minimum-phase preprocessing.</li>
+</ul>
+<h2>Experimental Results</h2>
+<ul>
+<li>Evaluated on the SONICOM database, BiFormer3D improves normalized mean squared error (NMSE), cosine distance, and ITD/ILD errors compared to prior methods.</li>
+<li>Ablation studies validate the effectiveness of the proposed modules and show that minimum-phase pre-processing is unnecessary.</li>
+</ul>
+<h2>One-Sentence Evaluation</h2>
+<p>BiFormer3D offers an innovative time-domain approach that effectively addresses HRIR spatial up-sampling, enhancing reconstruction quality and flexibility for spatial audio applications.</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.27342" target="_blank">SHroom: A Python Framework for Ambisonics Room Acoustics Simulation and Binaural Rendering</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2603.27342</span>
+                <a href="../../pdfs/2603.27342.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yhonatan Gayer<br>
+                <div style="margin-top:5px"><span class="tag">Ambisonics</span><span class="tag">Room Acoustics Simulation</span><span class="tag">Binaural Rendering</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有房间声学模拟库如pyroomacoustics（PRA）在双耳渲染中依赖非Spherical Harmonics（SH）域处理，导致高计算开销、不支持Magnitude Least Squares（MagLS）优化、实时头部旋转能力有限，以及多源场景下的效率瓶颈。</p>
+<h2>方法创新</h2>
+<p>SHroom引入了一个开源Python框架，通过将Image Source Method（ISM）计算的镜像源批量投影到SH基上生成Ambisonic Room Impulse Response（ARIR）。关键创新包括：固定一次解码器（amortised over sources）、MagLS渲染以改善感知质量、Wigner-D矩阵实现快速头部旋转（&lt;1 ms/frame），以及可组合处理器链支持球形阵列模拟和Ambisonic/Binaural Signal Matching编码。</p>
+<h2>实验结果</h2>
+<p>与PRA基线相比，SHroom在使用MagLS时在SH阶数5达到感知透明性（Log Spectral Distance 2.02 dB，在1-2 dB Just Noticeable Difference内）。性能评估显示：解码开销在多源情况下从7倍减少到3.1倍（K=1到8），动态头部旋转成本低于1毫秒每帧，且缩放性优于PRA，尤其在低SH阶数和多源场景中。</p>
+<h2>一句话评价</h2>
+<p>SHroom通过统一的SH管道显著提升了房间声学模拟和双耳渲染的效率与质量，是实时音频应用和研究的强大工具。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.27001" target="_blank">PHONOS: PHOnetic Neutralization for Online Streaming Applications</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Synthesis and Voice Conversion</span>
+                <strong>ID:</strong> <span class="tag">2603.27001</span>
+                <a href="../../pdfs/2603.27001.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Waris Quamer, Mu-Ruei Tseng, Ghady Nasrallah, Ricardo Gutierrez-Osuna<br>
+                <div style="margin-top:5px"><span class="tag">Speaker Anonymization</span><span class="tag">Accent Conversion</span><span class="tag">Streaming Speech Processing</span><span class="tag">Voice Conversion</span><span class="tag">Privacy Preservation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有的说话者匿名化系统修改音色但保留口音（如区域或非本地口音），这降低了隐私保护效果，因为口音可以缩小匿名集，导致说话者链接性和社会感知问题（如可信度判断）。口音被视为个人可识别信息，影响隐私攻击。</p>
+<h2>方法创新</h2>
+<p>提出PHONOS，一个流式系统，用于实时外国口音转换以增强说话者匿名性。关键创新包括：
+1. 两阶段方法：离线生成黄金说话者话语（使用静音感知DTW对齐和零样本语音转换，结合本地发音和非本地音色/节奏），在线训练因果口音翻译器（基于TVTSyn骨架，最多40ms前瞻）。
+2. 训练使用联合交叉熵和CTC损失，映射非本地内容令牌到本地等效令牌。
+3. 支持低延迟（单GPU上≤241 ms）和流式处理，保留时长和暂停结构。</p>
+<h2>实验结果</h2>
+<p>在印度口音英语数据集上评估：
+- 非本地口音置信度减少81%。
+- 听测评分与口音减少一致。
+- 说话者链接性降低，口音中性化的话语在嵌入空间中远离原始说话者（余弦相似度降低）。
+- 延迟低（≤241 ms），合成质量通过NISQA-MOS和主观MOS验证。</p>
+<h2>一句话评价</h2>
+<p>PHONOS是一个高效的流式系统，通过口音中性化显著增强隐私保护，同时保持低延迟和实用沟通效果，适用于在线流应用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.26840" target="_blank">Dual-branch Graph Domain Adaptation for Cross-scenario Multi-modal Emotion Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multimodal Emotion Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.26840</span>
+                <a href="../../pdfs/2603.26840.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuntao Shou, Jun Zhou, Tao Meng, Wei Ai, Keqin Li<br>
+                <div style="margin-top:5px"><span class="tag">Dual-branch Graph Domain Adaptation</span><span class="tag">Cross-scenario</span><span class="tag">Multimodal Emotion Recognition</span><span class="tag">Graph Neural Networks</span><span class="tag">Domain Adaptation</span><span class="tag">Label Noise</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>现有多模态情绪识别在对话（MERC）方法通常忽略跨场景（如不同说话者、话题、风格、噪声水平）的域差异（domain shift）和标签噪声（noisy labels）问题，导致模型在从源域迁移到未见过的目标域时泛化能力受限，影响在实际场景中的部署。</p>
+<h1>方法创新</h1>
+<p>提出双分支图域适应（Dual-branch Graph Domain Adaptation, DGDA）框架：
+1. 构建情绪交互图以建模话语间的复杂情感依赖。
+2. 设计双分支编码器，包括超图神经网络（HGNN）显式建模多元关系，和路径神经网络（PathNN）隐式捕获全局依赖。
+3. 引入域对抗判别器来学习跨域的不变表示，处理域差异。
+4. 结合正则化损失以抑制噪声标签的负面影响，提高模型鲁棒性。该框架首次在MERC中联合解决域适应和标签噪声问题。</p>
+<h1>实验结果</h1>
+<p>在IEMOCAP和MELD数据集上进行广泛实验，DGDA consistently outperforms strong baselines，优于现有基线方法，并更好地适应跨场景对话，展示了优越的泛化性能。理论分析提供了更紧的泛化界。</p>
+<h1>一句话评价</h1>
+<p>这是一个创新的框架，首次将域适应和标签噪声处理集成到多模态情绪识别中，提升了模型在真实跨场景环境下的实用性和可靠性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.26795" target="_blank">HASS: Hierarchical Simulation of Logopenic Aphasic Speech for Scalable PPA Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Pathological Speech Simulation</span>
+                <strong>ID:</strong> <span class="tag">2603.26795</span>
+                <a href="../../pdfs/2603.26795.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Harrison Li, Kevin Wang, Cheol Jun Cho, Jiachen Lian, Rabab Rangwala, Chenxu Guo, Emma Yang, Lynn Kurteff, Zoe Ezzes, Willa Keegan-Rodewald, Jet Vonk, Siddarth Ramkrishnan, Giada Antonicelli, Zachary Miller, Marilu Gorno Tempini, Gopala Anumanchipalli<br>
+                <div style="margin-top:5px"><span class="tag">Primary progressive aphasia</span><span class="tag">pathological speech simulation</span><span class="tag">dysfluency modeling</span><span class="tag">logopenic variant PPA</span><span class="tag">hierarchical simulation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>原发性进行性失语症（PPA）诊断模型面临数据稀缺挑战，因为临床数据收集成本高、伦理限制严格，且现有公共资源如DementiaBank和AphasiaBank规模有限。先前研究通过模拟不流畅语音生成训练数据，但方法不够全面，仅模拟孤立的不流畅性（如重复、插入或停顿），未能捕捉PPA作为多层级表型（语义、语音、时间缺陷）的互动，导致临床真实性不足和泛化能力差。</p>
+<h2>方法创新</h2>
+<p>本研究提出HASS（Hierarchical Aphasic Speech Simulation）框架，首次分层模拟logopenic variant PPA（lvPPA）的临床缺陷。方法包括：1) 词汇检索损伤层：基于临床专家指导，使用LLM（Gemini 3）模拟内容级不流畅性（如迂回、错误启动），考虑词汇偏倚和句法约束；2) 语音编码破坏层：在词对齐IPA表示中引入六种错误标记（如暂停、替换、删除），模拟语音级缺陷，并根据严重程度控制标记分布。整个流程整合TTS（VITS）合成语音，确保不流畅性保留。HASS提供了可扩展的临床数据增强方案，生成严重程度可控的合成数据集。</p>
+<h2>实验结果</h2>
+<p>实验显示HASS显著提升PPA检测模型性能：使用HASS生成数据训练的模型在跨站点泛化评估中，AUC达到0.892（±0.076），优于基线0.850（±0.122），召回率（Dys）从0.659提升至0.899。数据分布分析确认模拟数据遵循临床标记层次，主要标记（暂停、删除、替换）占主导，且随严重程度增加。模型基于Wav2Vec 2.0 fine-tuned with LoRA，在真实临床录音（如Baycrest、Hopkins PPA语料库）上展示出更好的泛化能力。</p>
+<h2>一句话评价</h2>
+<p>HASS是一个创新、临床接地气的语音模拟框架，有效解决了PPA数据稀缺问题，通过分层模拟多级缺陷提升了检测模型的准确性和泛化性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.27237" target="_blank">Can pre-trained Deep Learning models predict groove ratings?</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval (MIR)</span>
+                <strong>ID:</strong> <span class="tag">2603.27237</span>
+                <a href="../../pdfs/2603.27237.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Axel Marmoret, Nicolas Farrugia, Jan Alexander Stupacher<br>
+                <div style="margin-top:5px"><span class="tag">groove prediction</span><span class="tag">deep learning</span><span class="tag">audio embeddings</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统方法如手工音频特征和监督学习模型在捕捉音乐中groove的复杂、非线性交互方面存在局限性，只能提取孤立维度，而groove是主观、风格依赖的体验，现有方法无法全面编码其多层面特性。</p>
+<h2>方法创新</h2>
+<p>本研究创新地采用七种预训练的深度学习模型（AudioMAE, CLAP, M2D, MATPAC++, MERT, MuQ, MusicFM）直接从音频信号提取嵌入，使用线性探测（Ridge回归）预测groove评分。关键创新包括：1) 系统对比深度学习嵌入与传统手工特征（基于MIR工具箱提取的16个特征）；2) 引入源分离技术以分析单个乐器（如鼓、贝斯）对groove预测的贡献，从而揭示音乐元素的独立作用。</p>
+<h2>实验结果</h2>
+<p>实验基于包含148首歌曲的数据集，覆盖funk、pop、rock等多种风格。结果显示，深度学习模型能成功编码风格依赖的groove组件，在预测groove评分方面普遍优于传统手工特征。具体发现包括groove特征受底层音乐风格驱动，深度学习表示能捕获传统方法遗漏的复杂、非线性的节奏和音色交互。</p>
+<h2>一句话评价</h2>
+<p>本研究通过实证分析，证实了预训练自监督深度学习模型在捕捉主观音乐体验如groove方面的强大潜力，为音乐信息检索领域提供了基于表示学习的新范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.26988" target="_blank">Rhythmic segment analysis: Conceptualizing, visualizing, and measuring rhythmic data</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval</span>
+                <strong>ID:</strong> <span class="tag">2603.26988</span>
+                <a href="../../pdfs/2603.26988.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bas Cornelissen<br>
+                <div style="margin-top:5px"><span class="tag">rhythmic segment analysis</span><span class="tag">rhythm ratio</span><span class="tag">isochrony</span><span class="tag">anisochrony</span><span class="tag">nPVI</span><span class="tag">quantality</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>领域缺乏一个统一的概念框架来处理节奏数据。现有方法如 nPVI（归一化成对变异性指数）有限，只能测量等时性（isochrony），并且受到方法论批评，难以描述复杂的节奏结构。</p>
+<h1>方法创新</h1>
+<p>提出了 rhythmic segment analysis 框架：
+- <strong>概念化</strong>：将节奏数据视为固定长度的段（segments），每个段可分解为持续时间（duration）和模式（pattern），其中模式是间隔之间的比率。
+- <strong>可视化</strong>：统一了现有可视化方法（如相位图、比率图、光栅图），并引入新的模式-持续时间图（pattern-duration plot），结合聚类转换网络来揭示节奏规律。
+- <strong>测量</strong>：推广了节奏比率（rhythm ratios）和 nPVI；将 nPVI 重构为与等时性的平均距离，并提出更一般的 anisochrony 测量来替代它。引入了 quantality 概念来描述节奏的近似离散性。</p>
+<h1>实验结果</h1>
+<p>论文提供了理论框架和几何可视化示例（如图1和图2），展示了段、模式、持续时间和距离测量之间的关系。通过 Python 包 rhythmic-segments 实现，但具体应用数据未在提供的片段中详细展示。</p>
+<h1>一句话评价</h1>
+<p>该框架以其简洁性和通用性，为节奏数据分析提供了一个统一的理论基础，有助于澄清概念、可视化和测量节奏规律。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.26939" target="_blank">Multilingual Stutter Event Detection for English, German, and Mandarin Speech</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2603.26939</span>
+                <a href="../../pdfs/2603.26939.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Felix Haas, Sebastian P. Bayerl<br>
+                <div style="margin-top:5px"><span class="tag">stuttering detection</span><span class="tag">dysfluency</span><span class="tag">multilingual</span><span class="tag">pathological speech</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>Stuttering detection faces challenges such as data scarcity, limited model generalizability across languages and datasets, and variability in stuttering manifestations across individuals and contexts. Previous systems often struggled with small datasets, poor cross-corpus performance, and insufficient exploration of cross-linguistic consistency.</p>
+<h3>方法创新</h3>
+<p>This paper introduces a multilingual stuttering detection system using wav2vec 2.0 (W2V2) models pre-trained on multiple languages. It incorporates multi-task learning with language detection as an auxiliary task and employs Focal Loss to handle class imbalance. The system is trained on combined data from four datasets (KSoF, SEP-28k-E, FluencyBank, AS-70) in English, German, and Mandarin, aiming to capture language-independent stuttering characteristics.</p>
+<h3>实验结果</h3>
+<p>Multilingual training achieves performance comparable to or better than previous single-language systems across English, German, and Mandarin. It demonstrates improved results on the KSoF dataset for four out of five dysfluency types and supports the hypothesis of cross-linguistic consistency in stuttering. The TRILANG-LL variant with length-limited training data shows optimal performance with a 7-second threshold.</p>
+<h3>一句话评价</h3>
+<p>This research effectively leverages multilingual data to enhance the robustness and generalizability of automated stuttering detection systems, paving the way for more universal applications.</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2603.26856" target="_blank">AFSS: Artifact-Focused Self-Synthesis for Mitigating Bias in Audio Deepfake Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2603.26856</span>
+                <a href="../../pdfs/2603.26856.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hai-Son Nguyen-Le, Hung-Cuong Nguyen-Thanh, Nhien-An Le-Khac, Dinh-Thuc Nguyen, Hong-Hanh Nguyen-Le<br>
+                <div style="margin-top:5px"><span class="tag">Audio deepfake detection</span><span class="tag">bias mitigation</span><span class="tag">generalization</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>当前音频深度伪造检测方法存在严重的偏差问题，导致在未见数据集上泛化能力差。检测器倾向于学习不相关因素如说话者身份和语义内容，而不是真正的伪造伪影，从而影响跨域性能。这源于数据集特定特征和自监督学习模型中的固有编码偏差。</p>
+<h3>方法创新</h3>
+<p>本文提出Artifact-Focused Self-Synthesis (AFSS) 方法，通过两种机制生成伪假样本以减轻偏差：自转换（使用同说话者语音转换系统）和自重构（通过神经声码器重建），强制真实和伪假样本共享相同的说话者身份和语义内容。此外，引入可学习的重新加权损失，动态调整对合成样本的重视，促使检测器专注于通用生成伪影。AFSS不依赖预收集假数据集，所有训练样本均从真实音频生成。</p>
+<h3>实验结果</h3>
+<p>在7个数据集上的广泛实验表明，AFSS实现了最先进的性能，平均等错误率（EER）为5.45%。具体地，在WaveFake数据集上EER为1.23%，在In-the-Wild数据集上为2.70%，显著优于现有方法如AASIST和SSL-based模型，并消除了对假数据集的依赖。</p>
+<h3>一句话评价</h3>
+<p>AFSS方法通过系统性地消除说话者身份等混淆因素，有效减轻了音频深度伪造检测中的偏差，实现了优异的跨域泛化能力和实用性。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-30</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-30 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.27011" target="_blank">Qwen-Audio-3.0-Gen-Preview Technical Report</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unified Audio Generation</span>
+                <strong>ID:</strong> <span class="tag">2607.27011</span>
+                <a href="../../pdfs/2607.27011.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Junyu Dai, Xiaoyue Duan, Xinyue Fan, Yihan Feng, Xiangang Li, Yunjia Li, Lejun Min, Yufei Shi, Xingchen Song, Yiran Wang, Cheng Wen, Menglin Wu, Bajian Xiang, Huaicheng Zhang, Han Zhao, Ruichen Zheng<br>
+                <div style="margin-top:5px"><span class="tag">Diffusion Transformer</span><span class="tag">Variational Autoencoder</span><span class="tag">Non-autoregressive Generation</span><span class="tag">Multi-domain Audio</span><span class="tag">Complex Audio Scene</span><span class="tag">Temporal Control</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<p>现有多领域音频生成模型通常针对单一类型声音（语音、音乐、音效）独立设计，无法直接生成包含多种声音成分并具有时间结构的复杂音频场景。传统多阶段流程（分别生成各成分后手动混音）耗时且难以保证整体一致性与成分间的精确控制。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>统一非自回归框架</strong>：提出Qwen-Audio-3.0-Gen-Preview，采用扩散Transformer（DiT）和共享变分自编码器（VAE），在连续潜在空间中直接生成完整混合波形，支持语音、音乐、音效及它们的时间组织混合。</li>
+<li><strong>提示增强</strong>：将自由形式用户请求转换为结构化时间记录，作为文本条件。</li>
+<li><strong>两阶段数据课程</strong>：预训练阶段建立单领域生成能力；后训练（丰富时间线监督微调）阶段学习多源组织，包括多说话人对话、持续环境音、音乐和本地化事件。</li>
+<li><strong>共享连续VAE</strong>：压缩48kHz立体声波形为25Hz潜在序列，并融入语义监督，统一表示不同音频类型。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在Seed-TTS-Eval上，说话人相似度在所有子集上表现最佳。</li>
+<li>在多说话人基准上，跨轮一致性优于Seed-Audio-1.0（双语）。</li>
+<li>在AudioCaps上，使用大型音频语言模型和AudioBox评估时优势明显，时间定位更强。</li>
+<li>仅使用约0.1倍内部专用音乐模型的数据，在SongBench七个指标上接近且在三项上领先，同时保持语音和通用音频能力。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该工作通过统一的非自回归生成框架，首次实现在单一模型中高效、高质量地生成包含语音、音效、音乐及复杂时间结构的音频场景，显著提升了多领域音频生成的一致性与可控性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.26742" target="_blank">Zero-Shot Face-to-Speech Synthesis via Latent Space Adaptation of a Style-Diffusion TTS Model</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Face-to-Speech Synthesis</span>
+                <strong>ID:</strong> <span class="tag">2607.26742</span>
+                <a href="../../pdfs/2607.26742.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Carlos Muñoz-Romero, Jose A. Gonzalez-Lopez<br>
+                <div style="margin-top:5px"><span class="tag">Zero-shot Face-to-Speech</span><span class="tag">StyleTTS 2</span><span class="tag">Latent Space Alignment</span><span class="tag">Freeze-Align</span><span class="tag">Cross-lingual Transfer</span><span class="tag">Hybrid Contrastive Loss</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统零样本文本到语音（TTS）克隆需要短音频作为参考，但当仅有人脸图像（如历史人物、游戏角色）时无法生成语音。现有Face-to-Speech（F2S）方法存在模式坍塌问题，且跨语言迁移尚未充分探索。</p>
+<h2>方法创新</h2>
+<p>提出 <strong>Freeze-Align</strong> 框架：
+- 冻结SOTA语音生成器StyleTTS 2（教师），仅训练轻量级Face Adapter（MLP，约1.7M参数）将人脸特征映射到StyleTTS 2的风格空间。
+- 对Face Encoder（InceptionResnetV1）的上层模块进行软调优（约18.3M参数），下层保持冻结。
+- 设计<strong>混合损失</strong>（Hybrid Loss）：包含监督对比损失（InfoNCE）实现身份判别、关系知识蒸馏（RKD）保持几何结构、方差正则化防止表示坍缩、以及辅助的人口统计损失（性别/年龄）。
+- 推理时<strong>解耦音色和韵律</strong>，通过参数α和β实现身份-自然度权衡（公式6）。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在LRS3（英语）测试集（24个未见身份）上：UTMOS得分3.7-4.0，匹配或超过真实语音的3.61；人脸到语音检索显著高于随机（chance）。</li>
+<li>零样本跨语言迁移：无需重新训练，英语训练的适配器可直接生成流畅西班牙语语音，表明人脸-风格映射是语言无关的。</li>
+<li>软调优与冻结编码器对比实验表明，人脸对语音身份的贡献是真实但适度的。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>基于冻结StyleTTS 2的轻量适配，首次实现从静态人脸图像生成自然、跨语言的语音，且通过解耦控制身份强度。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.26623" target="_blank">A Study on Online Mask-based Beamforming Using Per-channel Masking for Spatially Distributed Microphones</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2607.26623</span>
+                <a href="../../pdfs/2607.26623.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wiebke Middelberg, Svantje Void, Simon Doclo, Ryan Corey<br>
+                <div style="margin-top:5px"><span class="tag">Mask-based beamforming</span><span class="tag">multi-channel masking</span><span class="tag">distributed microphones</span><span class="tag">online implementation</span><span class="tag">MVDR</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统基于掩码的波束形成方法（如MVDR）通常对所有麦克风使用单一掩码来估计协方差矩阵。该方法在紧凑阵列中效果良好，但在空间分布麦克风阵列中，由于各通道信号功率、信噪比等差异显著，单一掩码无法充分利用空间多样性，导致性能下降。</p>
+<h2>方法创新</h2>
+<p>本文提出一种<strong>多通道掩码波束形成</strong>框架，为每个麦克风独立估计掩码并分别进行预滤波，再用于协方差矩阵估计。具体包括三种掩码策略：
+- <strong>参考掩码</strong>：使用参考麦克风的掩码应用于所有通道。
+- <strong>平均掩码</strong>：对所有麦克风掩码取平均。
+- <strong>多通道掩码</strong>：每个麦克风使用独立掩码。
+此外，采用<strong>帧因果在线滑动窗口</strong>机制（短时P帧）以适应时变声学场景，并利用秩2协方差矩阵更新提高效率。</p>
+<h2>实验结果</h2>
+<p>在模拟的紧凑阵列（CMA）和分布式麦克风场景中，分别测试了远距离噪声和近距离噪声条件：
+1. <strong>紧凑阵列</strong>：三种掩码策略性能相似，无明显差异。
+2. <strong>分布式麦克风</strong>：多通道掩码在近距离噪声场景下显著优于平均掩码，尤其在低输入SNR时优势更明显。
+3. <strong>鲁棒性</strong>：使用理想比率掩码（IRM）和DNN估计掩码均验证了多通道掩码的优越性，且DNN掩码下多通道方法仍保持增益。</p>
+<h2>一句话评价</h2>
+<p>本文证明了对分布式麦克风阵列采用每个通道独立掩码的多通道波束形成策略，能有效提升复杂声学环境中的语音增强性能，且具备在线处理能力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.26575" target="_blank">Unfolded Recursive Expectation-Maximization Neural Network For Speaker Tracking</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Tracking / Audio Source Localization</span>
+                <strong>ID:</strong> <span class="tag">2607.26575</span>
+                <a href="../../pdfs/2607.26575.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rina Veler, Sharon Gannot<br>
+                <div style="margin-top:5px"><span class="tag">Speaker tracking</span><span class="tag">Recursive Expectation-Maximization</span><span class="tag">Unfolding neural network</span><span class="tag">Pair-wise relative phase ratio</span><span class="tag">Feature-wise Linear Modulation</span><span class="tag">Positional Encoding</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统递归期望最大化（REM）算法在说话人跟踪中依赖固定步长衰减策略，无法适应动态轨迹，导致跟踪精度受限。</p>
+<h2>方法创新</h2>
+<p>提出深度展开递归EM网络（Unfolded CREM），将迭代步骤展开为可微层，并引入步长网络（Step Size Network），利用特征线性调制（FiLM）和位置编码（PE）基于时间上下文与收敛状态动态调整递归权重，实现自适应更新。</p>
+<h2>实验结果</h2>
+<p>在单说话人混响跟踪任务中，所提方法均方根误差（RMSE）低于经典Cappé and Moulines REM（CREM）基线，证明其有效性和潜在优势。</p>
+<h2>一句话评价</h2>
+<p>基于深度展开的REM网络通过学习自适应步长显著提升移动说话人跟踪的精度与鲁棒性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.26698" target="_blank">MPEcho: A Melody and Phoneme-Aware Generative Framework for Controllable Cover Song Generation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Generation / Music Generation</span>
+                <strong>ID:</strong> <span class="tag">2607.26698</span>
+                <a href="../../pdfs/2607.26698.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wei-Jaw Lee, Hsuan-Yu Yeh, Ting-Yi Hu, Chih-Pin Tan, Fang-Duo Tsai, Yi-Hsuan Yang<br>
+                <div style="margin-top:5px"><span class="tag">Cover Song Generation</span><span class="tag">Phoneme-level Conditioning</span><span class="tag">Length Regulator</span><span class="tag">Singing Voice Synthesis</span><span class="tag">Phonetic Transcription</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>总结</h2>
+<h3>核心痛点</h3>
+<p>现有的翻唱歌曲生成（CSG）模型SongEcho依赖F0序列和有声/无声（V/UV）标签进行条件控制，但V/UV标签隐含的语言信息无法保证歌词准确性，导致音素错误率（PER）高达45.62%。</p>
+<h3>方法创新</h3>
+<p>提出MPEcho框架，在SongEcho基础上引入两个关键模块：
+- <strong>音素编码器</strong>：对音素序列进行编码，提供显式的音素级条件。
+- <strong>长度调节器（LR）</strong>：根据音素时长序列扩展音素嵌入，实现精确的时间对齐。
+此外，开发了Phonsa，一个基于Whisper的自动转录模型，专门针对歌唱语音进行高精度音素级标注，解决了高质量音频-音素对稀缺的问题。Phonsa采用分块自注意力机制和专门的边界/呼吸标记，优于传统Montreal Forced Aligner（MFA）基线。</p>
+<h3>实验结果</h3>
+<ul>
+<li>在CSG任务上，MPEcho将PER从45.62%降至18.65%，同时保持有竞争力的旋律一致性。</li>
+<li>主观听测实验表明MPEcho显著优于SongEcho。</li>
+<li>消融实验验证了音素级条件与旋律条件的互补性，以及分解的多条件引导策略可有效解决条件冲突。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>MPEcho首次实现了端到端的旋律和音素感知的翻唱歌曲生成，通过引入歌唱语音合成（SVS）的先验知识，显著提升了歌词的准确性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.26410" target="_blank">Voice Memory for Agentic Speech Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.26410</span>
+                <a href="../../pdfs/2607.26410.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chao-Han Huck Yang, Zih-Ching Chen, Piotr Zelasko, Zhehuai Chen, Jagadeesh Balam, Boris Ginsburg<br>
+                <div style="margin-top:5px"><span class="tag">voice agents</span><span class="tag">memory modeling</span><span class="tag">on-device</span><span class="tag">language models</span><span class="tag">test-time adaptation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统的ASR-LM级联（如Generative Error Correction, GER）在低词错误率（WER）场景下，LLM会过度纠正（over-correct），导致正确词被改写，错误率反而上升（例如金融新闻中高达64%的编辑有害）。现有适应方法（微调、LoRA、软提示）需要训练、不可审计、不可跨模型迁移。</p>
+<h2>方法创新</h2>
+<p>提出<strong>Voice Memory</strong>，一种仅推理的适应方案。核心是<strong>listener-thinker</strong>架构：
+- <strong>Listener</strong>：冻结的校正器（frozen corrector）在推理时读取可读的文本记忆文件（memory.md），对每个话语决定是否执行纠正（act）或放弃（abstain）。
+- <strong>Thinker</strong>：异步的、基于验证分数的优化器（score-gated optimizer）通过有界编辑（add/delete/replace）改进记忆文件，只接受严格提升保留集分数的编辑。
+无需权重更新，记忆可审计（人类可读）、可跨校正器家族迁移、零参数增量。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在10个HyPoradise领域上，使用开放校正器，Voice Memory将加权WER从8.36%降至7.52%（加三个上下文示例后7.47%），且未导致任何数据集低于其1-best基线。</li>
+<li>最大增益出现在可恢复头寸最大的领域：航空旅行命令（8.40%→3.40%）、嘈杂远场语音CHiME-4（12.69%→10.46%）。</li>
+<li>有害编辑率从64%降至35%。</li>
+<li>记忆可跨校正器家族迁移，且对噪声具有鲁棒性（无需微调或噪声嵌入）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>一种轻量级、可审计、零训练的语音识别适应方法，通过文本记忆存储纠正策略，有效避免过度纠正，显著提升低错误率场景下的ASR表现。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

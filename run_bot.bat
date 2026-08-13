@@ -12,6 +12,10 @@ if %errorlevel% neq 0 (
 REM 运行 Python 脚本
 echo 正在运行 Daily Paper Bot...
 python daily_paper_bot/main.py
+if %errorlevel% equ 0 (
+    echo 正在更新归档首页...
+    python daily_paper_bot/merge_reports.py
+)
 
 REM 如果脚本执行出错，暂停以便查看日志
 if %errorlevel% neq 0 (

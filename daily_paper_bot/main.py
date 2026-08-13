@@ -17,10 +17,11 @@ load_dotenv()
 
 # 配置
 ARXIV_URL = "https://arxiv.org/list/eess.AS/recent"
-OUTPUT_DIR = "reports"
-PDF_DIR = "pdfs"
 # 获取当前脚本所在目录的绝对路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "reports")
+PDF_DIR = os.path.join(PROJECT_ROOT, "pdfs")
 # 确保 ID 文件始终在 daily_paper_bot 目录下，而不是运行目录
 HISTORY_FILE = os.path.join(BASE_DIR, "processed_ids.txt")
 MAX_TEXT_LENGTH = 15000  # 限制传给 LLM 的字符数（防止 token 溢出，约 3-5k tokens）
@@ -56,6 +57,10 @@ def save_processed_id(paper_id):
     norm_id = normalize_id(paper_id)
     with open(HISTORY_FILE, "a", encoding="utf-8") as f:
         f.write(f"{norm_id}\n")
+
+def get_monthly_report_dir(date_str):
+    """按 YYYY-MM 为日报创建月份目录。"""
+    return os.path.join(OUTPUT_DIR, date_str[:7])
 
 def get_recent_papers(url):
     """
@@ -253,13 +258,13 @@ def generate_report(processed_papers):
     """
     生成 Markdown 和 HTML 报告
     """
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-        
     date_str = datetime.now().strftime("%Y-%m-%d")
+    report_dir = get_monthly_report_dir(date_str)
+    if not os.path.exists(report_dir):
+        os.makedirs(report_dir)
     
     # --- 1. 生成 Markdown ---
-    md_filename = os.path.join(OUTPUT_DIR, f"Arxiv_Report_{date_str}.md")
+    md_filename = os.path.join(report_dir, f"Arxiv_Report_{date_str}.md")
     md_content = f"# Arxiv Daily Deep Report - {date_str}\n\n"
     md_content += f"**来源**: {ARXIV_URL}\n"
     md_content += f"**篇数**: {len(processed_papers)}\n"
@@ -278,7 +283,7 @@ def generate_report(processed_papers):
     print(f"Markdown 报告已生成: {md_filename}")
 
     # --- 2. 生成 HTML ---
-    html_filename = os.path.join(OUTPUT_DIR, f"Arxiv_Report_{date_str}.html")
+    html_filename = os.path.join(report_dir, f"Arxiv_Report_{date_str}.html")
     
     html_template = """
 <!DOCTYPE html>
@@ -383,6 +388,8 @@ def generate_report(processed_papers):
         summary_html = markdown.markdown(summary_md)
         category = p.get('category', 'Unknown')
         keywords = p.get('keywords', [])
+        pdf_path = os.path.join(PDF_DIR, f"{p['id']}.pdf")
+        pdf_href = os.path.relpath(pdf_path, start=report_dir).replace(os.sep, "/")
         
         keywords_html = "".join([f'<span class="tag">{k}</span>' for k in keywords])
         
@@ -394,7 +401,7 @@ def generate_report(processed_papers):
             <div class="paper-meta">
                 <span class="tag category-tag">{category}</span>
                 <strong>ID:</strong> <span class="tag">{p['id']}</span>
-                <a href="pdfs/{p['id']}.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <a href="{pdf_href}" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
                 <strong>Authors:</strong> {p['authors']}<br>
                 <div style="margin-top:5px">{keywords_html}</div>
             </div>

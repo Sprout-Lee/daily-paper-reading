@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-02-25</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-02-25 | 来源: eess.AS | 新增论文: 5 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.20967" target="_blank">Training-Free Intelligibility-Guided Observation Addition for Noisy ASR</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2602.20967</span>
+                <a href="../../pdfs/2602.20967.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Haoyang Li, Changsong Liu, Wei Rao, Hao Shi, Sakriani Sakti, Eng Siong Chng<br>
+                <div style="margin-top:5px"><span class="tag">Observation Addition</span><span class="tag">Noise-Robust ASR</span><span class="tag">Intelligibility-Guided</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>总结</h1>
+<p><strong>核心痛点</strong>：自动语音识别（ASR）在嘈杂环境中性能严重下降。语音增强（SE）前端能有效抑制背景噪音，但常引入伪影，损害识别准确性。Observation Addition（OA）通过融合嘈杂语音和SE增强语音来改善识别，但现有OA方法需要训练神经预测器来确定融合权重，增加了系统复杂性、依赖真实转录本，并可能导致泛化问题。</p>
+<p><strong>方法创新</strong>：本文提出了一种无训练、基于可懂度指导的OA方法。融合权重直接从后端ASR系统输出的置信度中派生（使用如Whisper、Parakeet、Wav2Vec2的置信度估计），避免了额外训练。方法包括置信度引导的OA（使用权重系数S'融合嘈杂和增强语音）、切换策略（基于置信度选择信号）和帧级OA扩展，旨在自适应平衡互补信息，以语音可懂度而非信号质量为导向。</p>
+<p><strong>实验结果</strong>：在多个SE模型（如Demucs和GR-KAN MP-SENet）和ASR系统（如Whisper、Parakeet、Wav2Vec2）上进行了广泛实验，覆盖in-domain（VoiceBank-DEMAND）和out-of-domain（CHiME-4）数据集。结果表明，提出的置信度引导OA在Word Error Rate（WER）上优于现有OA基线（如SNR-OA、DNSMOS-OA、Classifier-OA），特别是在真实噪音场景中显示出强鲁棒性和性能提升。例如，在CHiME-4真实数据集上，Conf-OA相比基线显著降低了WER。</p>
+<p><strong>一句话评价</strong>：该方法是一种简单、高效且泛化能力强的SE后处理技术，通过无训练方式利用ASR内部置信度，显著提高了嘈杂环境下的ASR性能，同时降低了部署复杂性和对真实转录本的依赖。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.20823" target="_blank">Geometric Analysis of Speech Representation Spaces: Topological Disentanglement and Confound Detection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Clinical Speech Analysis</span>
+                <strong>ID:</strong> <span class="tag">2602.20823</span>
+                <a href="../../pdfs/2602.20823.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bipasha Kashyap, Pubudu N. Pathirana<br>
+                <div style="margin-top:5px"><span class="tag">speech disentanglement</span><span class="tag">geometric analysis</span><span class="tag">clinical speech assessment</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>在临床语音工具中，多语言设置下病理语音标记与口音变异的几何可分离性不明确，系统可能误分类健康的非母语说话者或错过多语言患者的病理信号，缺乏几何特征化导致临床特征与口音变异在表示空间中可能不可分。</p>
+<h3>方法创新</h3>
+<p>提出一个四指标聚类框架（包括Silhouette Score、Davies–Bouldin Index、Calinski–Harabasz Index和Bootstrap Stability），结合t-SNE嵌入手工制作的声学特征（来源-滤波器模型），用于评估情感、语言和病理语音特征的几何解缠，并引入混淆检测方法量化病理-语言重叠与排列零基线比较。</p>
+<h3>实验结果</h3>
+<p>实验结果显示一致的层次：情感特征形成最紧密的聚类（平均Silhouette 0.250），其次是病理特征（0.141）和语言特征（0.077）。病理-语言重叠保持在0.21以下，高于排列零但有界，适合临床部署。信任度分析和Bootstrap稳定性确认嵌入的保真度和结论鲁棒性。</p>
+<h3>一句话评价</h3>
+<p>该框架为跨多样化人群提供公平可靠的语音健康系统提供了可行指南，突出了几何分析在临床语音AI中的关键作用。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.20592" target="_blank">Quantifying Dimensional Independence in Speech: An Information-Theoretic Framework for Disentangled Representation Learning</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Representation Learning</span>
+                <strong>ID:</strong> <span class="tag">2602.20592</span>
+                <a href="../../pdfs/2602.20592.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bipasha Kashyap, Björn W. Schuller, Pubudu N. Pathirana<br>
+                <div style="margin-top:5px"><span class="tag">disentangled representations</span><span class="tag">mutual information estimation</span><span class="tag">speech dimensions</span><span class="tag">Source-Filter model</span><span class="tag">MINE</span><span class="tag">CLUB</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>现有语音解纠缠方法缺乏对维度独立性的原理性量化，依赖下游任务性能作为分离的代理指标，无法直接评估情感、语言和病理维度之间的统计依赖性。</p>
+<h3>方法创新</h3>
+<p>引入一个信息理论框架，通过整合有界神经互信息（MI）估计器（MINE 和 CLUB）与非参数验证（KSG）来量化手工制作声学特征中的跨维度统计依赖性。框架包括源-滤波器归因分析，以分解每个语义维度的源和滤波器贡献，并使用自适应加权和集成训练提高估计稳定性。</p>
+<h3>实验结果</h3>
+<p>在六个语料库上，跨维度MI保持较低（&lt;0.15 nats），表明统计耦合弱，支持维度独立性假设；源-滤波器MI较高（0.47 nats）。归因分析显示，情感维度以源为主（80%），语言和病理维度以滤波器为主（分别为60%和58%）。</p>
+<h3>一句话评价</h3>
+<p>该论文提供了一个原理性框架，有效量化语音中维度的独立性，为解纠缠表示学习提供了理论基础和实用工具。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.20530" target="_blank">Memory-guided Prototypical Co-occurrence Learning for Mixed Emotion Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Mixed Emotion Recognition in Affective Computing</span>
+                <strong>ID:</strong> <span class="tag">2602.20530</span>
+                <a href="../../pdfs/2602.20530.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ming Li, Yong-Jin Liu, Fang Liu, Huankun Sheng, Yeying Fan, Yixiang Wei, Minnan Luo, Weizhan Zhang, Wenping Wang<br>
+                <div style="margin-top:5px"><span class="tag">Mixed-emotion recognition</span><span class="tag">associative memory</span><span class="tag">prototypical co-occurrence</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>当前混合情感识别方法存在局限性，主要痛点是现有模型在预测多个同时存在的情感状态时，往往忽略情感之间的价一致性（valence consistency）和结构化相关性（structured correlations）。大多数方法将情感类别视为独立，没有充分考虑相同价情感更可能共现、相反价情感相互排斥的心理学先验，导致在真实世界复杂情感场景中性能不足。</p>
+<h1>方法创新</h1>
+<p>本文提出了一种名为 Memory-guided Prototypical Co-occurrence Learning (MPCL) 的创新框架，以解决上述痛点。框架包括三个阶段：1) 多尺度关联记忆融合：通过多尺度关联记忆机制融合多模态生理和行为信号，捕获内在相关性；2) 原型对齐和共现学习：构建情感特异性原型记忆库，生成语义丰富的表示，并采用原型关系蒸馏确保跨模态对齐。此外，引入记忆检索策略提取语义级情感类别共现关联；3) 分层语义压缩和分布预测：通过自底向上的分层抽象过程，学习情感信息表示，实现精确的情感分布预测。该方法受人类认知记忆系统启发，结合心理学先验，提升了对混合情感中结构化关系的建模能力。</p>
+<h1>实验结果</h1>
+<p>论文在两个公共数据集上进行了综合实验，结果显示 MPCL 在混合情感识别任务中，在定量和定性方面均 consistently 优于 state-of-the-art 方法。具体性能数据未在提供的片段中详述，但摘要强调其在准确预测情感分布方面的优越性。</p>
+<h1>一句话评价</h1>
+<p>该框架创新性地整合了心理学先验和计算模型，通过原型学习和记忆机制有效提升了混合情感识别的准确性和解释性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.20163" target="_blank">Graph Modelling Analysis of Speech-Gesture Interaction for Aphasia Severity Estimation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multimodal Speech Analysis for Healthcare</span>
+                <strong>ID:</strong> <span class="tag">2602.20163</span>
+                <a href="../../pdfs/2602.20163.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Navya Martin Kollapally, Christa Akers, Renjith Nelson Joseph<br>
+                <div style="margin-top:5px"><span class="tag">Aphasia</span><span class="tag">Graph Neural Networks</span><span class="tag">Speech-Gesture Interaction</span><span class="tag">Severity Estimation</span><span class="tag">Multimodal Analysis</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>Aphasia是一种由脑损伤引起的语言障碍，传统评估工具如WAB-R测量孤立语言技能，不足以代表日常语言能力。</li>
+<li>自动化评估方法常依赖孤立语言或声学特征，缺乏对多模态交互（如语音和手势）的结构化建模。</li>
+<li>临床环境中，话语分析耗时且复杂，阻碍了高效评估。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出基于图神经网络（GNN）的框架，用于估计aphasia严重程度。</li>
+<li>使用有向多模态图表示参与者话语：节点代表词汇项（如名词、动词）和手势，边编码词-词、手势-词和词-手势转换。</li>
+<li>采用GraphSAGE学习参与者级别的嵌入，整合局部邻居和整体图结构信息。</li>
+<li>框架包括定量分析（如相关性分析、回归）和定性分析（如图可视化），以理解特征贡献。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>结果表明，aphasia严重程度并非编码在孤立词汇分布中，而是源于语音和手势的结构化交互。</li>
+<li>提出的架构提供可靠的自动化评估，可能用于床边筛查和远程监控。</li>
+<li>图结构结合手势、词性和paraphasia信息，提升了WAB-AQ分数预测的准确性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一个创新的多模态方法，利用图神经网络有效建模语音-手势交互，为aphasia评估提供了更全面和自动化的解决方案。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

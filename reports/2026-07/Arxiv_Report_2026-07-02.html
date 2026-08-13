@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-02</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-02 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.01161" target="_blank">Disentangling Speaker and Language Effects in Cross-Lingual Speaker Verification for Iberian Languages</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2607.01161</span>
+                <a href="../../pdfs/2607.01161.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Pol Buitrago, Javier Hernando<br>
+                <div style="margin-top:5px"><span class="tag">speaker verification</span><span class="tag">cross-lingual transfer</span><span class="tag">language-dependence</span><span class="tag">multilingual models</span><span class="tag">CLTM</span><span class="tag">Iberian languages</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>标准跨语言说话人确认评估中，语言不匹配与说话人差异性相互混淆，难以区分性能下降的真正原因。</p>
+<h2>方法创新</h2>
+<ol>
+<li>构建了针对五种伊比利亚语言（西班牙语、加泰罗尼亚语、加利西亚语、巴斯克语、葡萄牙语）的双语相同说话人测试集。</li>
+<li>应用跨语言转移矩阵（CLTM）框架，量化跨语言转移效果，并区分说话人变异和语言因素的影响。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>标准评估下，CLTM显示强语言依赖性，罗曼语族语言形成正转移簇，巴斯克语和葡萄牙语产生负转移。</li>
+<li>相同说话人评估时，语言不匹配仍是性能下降的主因，但说话人变异贡献了一部分退化。</li>
+<li>双语评估使极端离对角值减弱，双向交互更平衡（罗曼语对），而巴斯克语对变化有限。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过精心设计的实验，系统分离了说话人和语言因素在跨语言说话人确认中的影响，证实语言不匹配是性能退化的主导因素，为构建语言鲁棒模型提供了重要基准。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.00899" target="_blank">Positive-Incentive Noise Predictor for Adversarial Purification in Speaker Verification</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speaker Verification / Adversarial Defense</span>
+                <strong>ID:</strong> <span class="tag">2607.00899</span>
+                <a href="../../pdfs/2607.00899.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yibo Bai, Sizhou Chen, Michele Panariello, Hao Ma, Xiao-Lei Zhang, Xuelong Li, Massimiliano Todisco, Nicholas Evan<br>
+                <div style="margin-top:5px"><span class="tag">Speaker Verification</span><span class="tag">Adversarial Purification</span><span class="tag">Positive-Incentive Noise</span><span class="tag">Diffusion Model</span><span class="tag">Adversarial Attack</span><span class="tag">Noise Predictor</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<p>现代自动说话人验证（ASV）系统易受对抗性扰动影响。现有的基于扩散模型的净化方法虽有效，但其反向去噪过程需要迭代采样，导致推理延迟高。</p>
+<h2>方法创新</h2>
+<p>本文通过实验观察发现，扩散净化中的前向加噪过程提供了大部分鲁棒性增益。基于此，作者将对抗净化重新表述为一个可学习加噪问题，提出<strong>正激励噪声预测器（PnP）</strong>，这是第一个显式引入正激励噪声（π-noise）到净化任务的框架。PnP学习输入自适应的π-noise并将其与输入混合，以提升下游ASV系统的鲁棒性。框架包含两个变体：<strong>PnP-Gaussian</strong>（简单的加性形式）和<strong>PnP-Diff</strong>（扩散风格形式，与扩散模型的前向加噪过程对齐）。PnP-Diff还可与扩散去噪器级联以进一步提升净化语音的感知质量。</p>
+<h2>实验结果</h2>
+<p>在四个先进ASV骨干网络上进行实验，PnP在白盒、黑盒和防御者感知自适应攻击下均能有效防御，同时保持自然语音的性能。与代表性净化基线相比，PnP在防御效果、对真实语音的影响和推理效率之间取得了竞争性平衡，实时因子低至<strong>0.014</strong>。级联扩散去噪器后，WB-PESQ可达3.591，SI-SDR达21.14 dB。</p>
+<h2>一句话评价</h2>
+<p>本文提出了一种高效、轻量的对抗净化方法，通过学习前向加噪过程替代昂贵的反向去噪，在ASV领域实现了速度与鲁棒性的良好平衡。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.00548" target="_blank">AmbiDrop: Ambisonics-Based Array-Agnostic Neural Speech Enhancement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2607.00548</span>
+                <a href="../../pdfs/2607.00548.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Michael Tatarjitzky, Vladimir Tourbabin, Boaz Rafaely<br>
+                <div style="margin-top:5px"><span class="tag">Array-agnostic</span><span class="tag">Ambisonics</span><span class="tag">Speech enhancement</span><span class="tag">Deep learning</span><span class="tag">Dropout</span><span class="tag">Ambisonics Signal Matching</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有基于深度神经网络（DNN）的多通道语音增强方法通常依赖固定的麦克风阵列几何结构，导致在未见或不规则配置下泛化能力差。当前的阵列无关方法（如 TAC 层、注意力机制、元学习等）往往需要复杂架构或大规模多样化数据集，仍难以泛化到分布外（OOD）的阵列布局。</p>
+<h2>方法创新</h2>
+<p>本文深入分析 AmbiDrop 框架，其核心创新包括：
+- <strong>Ambisonics 输入</strong>：训练时使用理想 Ambisonics 信号，其通道固定且空间表示独立于传感器几何，简化学习过程。
+- <strong>通道级 Dropout</strong>：训练中引入通道级 dropout 层，模拟实际部署中 Ambisonics 编码误差（如由非球面或稀疏阵列引起的），增强模型对不完美估计的鲁棒性。
+- <strong>Ambisonics Signal Matching (ASM)</strong>：推理时，将任意阵列的麦克风信号通过 ASM 线性变换为 Ambisonics 系数，实现阵列无关处理。
+- <strong>通用性</strong>：框架可适配不同 DNN 骨干网络，并支持退化的传感器（如丢失近半麦克风）和缩小网络规模。</p>
+<h2>实验结果</h2>
+<p>在多种模拟（1D、2D、3D）和真实（Project Aria 眼镜）阵列上，AmbiDrop 显著优于基线阵列无关方法。即便在 OOD 阵列或传感器故障下，性能保持稳健。消融研究显示 dropout 配置、缺失通道和网络规模的影响。</p>
+<h2>一句话评价</h2>
+<p>AmbiDrop 通过 Ambisonics 表示与通道 dropout 的结合，实现了灵活、鲁棒且高效的阵列无关语音增强，适合边缘部署。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.00387" target="_blank">From Objectives to Applications: Aligning Architectural Biases in Audio Self-Supervised Learning</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Self-Supervised Learning</span>
+                <strong>ID:</strong> <span class="tag">2607.00387</span>
+                <a href="../../pdfs/2607.00387.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kele Xu, Yulu Fang, Boda Zhou, Yulin Sun, Qisheng Xu, Qiya Song, Jin Zhang, Cheng Yang, Huaimin Wang<br>
+                <div style="margin-top:5px"><span class="tag">Self-Supervised Learning</span><span class="tag">Audio Representation Learning</span><span class="tag">Architectural Inductive Bias</span><span class="tag">Pretraining Objectives</span><span class="tag">Large Audio Language Models</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>音频标注成本高昂，尤其在医疗、环境声等专业领域，且存在隐私风险。</li>
+<li>监督学习依赖预定义标签，易受数据集特定捷径影响，泛化性和鲁棒性不足。</li>
+<li>现有综述未全面覆盖统一音频模型、原生大音频语言模型（LALMs）及安全对齐等最新进展。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出以预训练目标-架构归纳偏差-下游应用对齐为核心的统一视角，而非按时间顺序罗列方法。</li>
+<li>将音频SSL目标分为五大范式：辅助任务、对比学习、生成式重建、离散令牌预测、多模态对齐，并分析每种目标对表示的要求及对架构的隐含约束。</li>
+<li>讨论CNN、循环/状态空间模型、Transformer及混合架构如何匹配不同目标的处理需求（局部结构敏感、序列状态传播、全局路由等）。</li>
+<li>将下游应用（语音、音乐、环境声、医疗等）作为表示泛化性的测试。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>本文为综述论文，无具体实验，但引用了大量现有工作并给出了论文框架图（Fig.2）和范式分类表（Table I）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>从目标到架构再到应用的系统对齐视角，为音频自监督学习提供了清晰的分类和设计指导，尤其适合理解当前及未来趋势。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.00260" target="_blank">Do Multimodal Large Language Models Need Reasoning to Classify Dementia from Speech?</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multimodal LLM for Dementia Classification</span>
+                <strong>ID:</strong> <span class="tag">2607.00260</span>
+                <a href="../../pdfs/2607.00260.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Liming Wang, Neguine Rezaii, Bradford C. Dickerson, James Glass<br>
+                <div style="margin-top:5px"><span class="tag">Multimodal LLM</span><span class="tag">Dementia Classification</span><span class="tag">Reasoning</span><span class="tag">Reinforcement Learning</span><span class="tag">Adaptor</span><span class="tag">Speech Biomarker</span><span class="tag">GRPO</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>多模态大语言模型（MLLMs）在自动痴呆分类（ADC）中展现出潜力，但存在两个关键问题：1) 直接依赖文本推理（如chain-of-thought）容易产生幻觉和不一致的理由，导致性能低于无LLM的基线；2) 在高风险的医疗场景中，不忠实的解释是不可接受的。</p>
+<h2>方法创新</h2>
+<p>本文提出<strong>DeTAiL</strong>框架，通过三个阶段的训练来利用MLLM的内部表示：
+1. <strong>理性蒸馏</strong>：使用教师LLM生成基于标签的解释，通过SFT训练学生模型生成理由和标签。
+2. <strong>RL后训练</strong>：采用GRPO优化模型，奖励包括正确性和格式，提高推理质量。
+3. <strong>非线性适配器</strong>：在调优后的MLLM隐藏表示上训练一个小型MLP分类器，利用池化后的隐藏特征进行最终分类，避免仅依赖文本理由的缺陷。
+此外，还引入了测试时强化学习（TTRL）用于跨域适应。</p>
+<h2>实验结果</h2>
+<p>在两个数据集（ADReSS和LEADS）上，DeTAiL在准确率、迁移性和可解释性方面均优于强基线方法（如LoRA微调、直接推理等）。结果表明，推理能力对迁移性有益，但在域内准确率和可解释性上取决于理由的质量和模态覆盖。</p>
+<h2>一句话评价</h2>
+<p>本文系统评估了MLLM推理在痴呆分类中的作用，并提出DeTAiL框架有效利用隐藏表示提升性能，揭示了推理的利弊。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.00418" target="_blank">Speech Playground: An Interactive Tool for Speech Analysis and Comparison</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Analysis Tools</span>
+                <strong>ID:</strong> <span class="tag">2607.00418</span>
+                <a href="../../pdfs/2607.00418.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Stephen McIntosh, Daisuke Saito, Nobuaki Minematsu<br>
+                <div style="margin-top:5px"><span class="tag">speech analysis</span><span class="tag">utterance comparison</span><span class="tag">interactive visualization</span><span class="tag">CAPT</span><span class="tag">representation validation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有语音分析工具（如Praat）难以集成现代深度学习表示，且用于语音比较时流程繁琐。</p>
+<h2>方法创新</h2>
+<p>Speech Playground 结合 Python 后端（FastAPI）和 Web 前端（SvelteKit），提供统一的交互环境，支持连续、离散、变长等多种特征类型。内置多种编码器（SSL、发音、音系特征等），支持 TextGrid 注释和强制对齐，可配置距离度量（如 DTW）与对齐模式（全局/半全局），实现可视化与听觉比较。</p>
+<h2>实验结果</h2>
+<p>（论文未提供定量实验，重点在工具设计与用例演示。）</p>
+<h2>一句话评价</h2>
+<p>一个面向语音研究、表示验证和 CAPT 实验的交互式语音分析与比较工具。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

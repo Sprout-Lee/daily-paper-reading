@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-02-18</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-02-18 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15519" target="_blank">Enroll-on-Wakeup: A First Comparative Study of Target Speech Extraction for Seamless Interaction in Real Noisy Human-Machine Dialogue Scenarios</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target Speech Extraction</span>
+                <strong>ID:</strong> <span class="tag">2602.15519</span>
+                <a href="../../pdfs/2602.15519.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yiming Yang, Guangyong Wang, Haixin Guan, Yanhua Long<br>
+                <div style="margin-top:5px"><span class="tag">Target speech extraction</span><span class="tag">seamless interaction</span><span class="tag">EoW-TSE</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>传统目标语音提取（TSE）方法依赖预录制的高质量注册语音，这破坏了用户体验并限制了在自发人机对话场景中的可行性，导致交互不流畅。</p>
+<h3>方法创新</h3>
+<p>论文提出Enroll-on-Wakeup（EoW）框架，利用唤醒词片段（如“Hi, Pandora”）作为自动注册参考，无需用户预录制语音，实现零努力注册。此外，研究了基于LLM的TTS（如IndexTTS2、xTTS、CosyVoice）进行注册增强，通过清洁再合成或扩展拼接来改善噪声环境下的目标说话人引导。</p>
+<h3>实验结果</h3>
+<p>在五个真实噪声场景（如距离、混响和SNR变化）中，评估了四种先进TSE模型（SEF-PNet、LExt、CIE-mDPTNet、SoloSpeech）。结果显示，当前TSE模型在EoW-TSE中面临性能下降，但TTS辅助显著增强了听觉体验；然而，在语音识别（ASR）准确性方面仍有差距，尤其是在短小、噪声注册片段下。</p>
+<h3>一句话评价</h3>
+<p>这是一个开创性的研究，首次系统探索EoW-TSE，为无缝人机交互提供了创新框架，但需进一步优化以克服注册片段短小和噪声污染带来的挑战。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15484" target="_blank">Bottleneck Transformer-Based Approach for Improved Automatic STOI Score Prediction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Assessment</span>
+                <strong>ID:</strong> <span class="tag">2602.15484</span>
+                <a href="../../pdfs/2602.15484.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Amartyaveer, Murali Kadambi, Chandra Mohan Sharma, Anupam Mondal, Prasanta Kumar Ghosh<br>
+                <div style="margin-top:5px"><span class="tag">Nonintrusive</span><span class="tag">Objective Intelligibility</span><span class="tag">STOI</span><span class="tag">Bottleneck Transformer</span><span class="tag">Speech Assessment</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>详细总结</h2>
+<h3>核心痛点</h3>
+<ul>
+<li>传统Short-Time Objective Intelligibility (STOI)计算方法需要干净的参考语音信号，这在现实世界中往往不可得，限制了其实用性。</li>
+<li>现有的深度学习非侵入式语音评估模型虽已取得进展，但在预测STOI分数方面仍有改进空间，尤其是在提升相关性和降低误差方面。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li>提出了一种基于瓶颈变压器(Bottleneck Transformer)的新架构，结合卷积块用于学习帧级特征和多头自注意力层以聚合信息，增强模型对输入数据关键方面的聚焦能力。</li>
+<li>模型输入包括三种特征：自监督学习模型（如Wav2Vec2、HuBERT）的潜在特征向量、频谱特征（通过512点STFT提取）以及通过卷积层进一步提取的特征（参考STOI-Net和QUAL-Net的卷积层）。</li>
+<li>整体架构由卷积块、瓶颈变压器和密集层组成，旨在捕获短期和长期上下文，同时减少冗余信息，从而提高预测准确性。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>在Indic TIMIT、LibriSpeech、RESPIN和Bhashini等数据集上进行了实验，使用5折交叉验证，并测试了已见和未见场景（包括未见说话者和语句）。</li>
+<li>与基于自监督学习和频谱特征的最先进模型相比，该模型在已见和未见条件下均显示出更高的相关性（与真实STOI分数）和更低的均方误差。</li>
+<li>实验结果表明，所提方法在STOI预测方面具有优越性，尤其是在处理复杂噪声环境时表现稳健。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该方法通过创新地结合瓶颈变压器和卷积特征提取，显著提升了非侵入式STOI预测的性能，为语音评估领域提供了更实用的解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15307" target="_blank">What Do Neurons Listen To? A Neuron-level Dissection of a General-purpose Audio Model</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Representation Learning</span>
+                <strong>ID:</strong> <span class="tag">2602.15307</span>
+                <a href="../../pdfs/2602.15307.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Takao Kawamura, Daisuke Niizumi, Nobutaka Ono<br>
+                <div style="margin-top:5px"><span class="tag">mechanistic interpretability</span><span class="tag">self-supervised learning</span><span class="tag">general-purpose audio representation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>自监督学习（SSL）通用音频表示模型在作为特征提取器时表现卓越，但其内部表示如何实现鲁棒泛化仍不明确，缺乏机制可解释性。</p>
+<h1>方法创新</h1>
+<p>应用机制可解释性框架，通过分析跨任务的条件激活模式来识别类别特异性神经元。引入Audio Activation Probability Entropy（AAPE），基于Language Activation Probability Entropy（LAPE）改编，用于量化神经元对声音类别的选择性。使用Transformer编码器架构的Vision Transformer（ViT）预训练模型（M2D）进行比较分析。</p>
+<h1>实验结果</h1>
+<p>实验在多个音频数据集（如ESC-50、VoxCeleb1、GTZAN）上进行，结果表明：
+- SSL模型在未见过任务中发展出类别特异性神经元，覆盖几乎100%的类别，而监督学习（SL）模型覆盖较少。
+- 这些神经元在跨任务和跨类别中共享响应，例如语音性别属性和音乐音高。
+- 通过引导消融实验，确认类别特异性神经元对分类性能有功能影响。
+- 神经元共享分析显示，SSL模型在跨类共享方面优于SL模型，特别是在语音和音乐属性上。</p>
+<h1>一句话评价</h1>
+<p>这篇论文首次对通用音频SSL模型进行了系统的神经元级分析，为理解其内部表示提供了新见解。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15749" target="_blank">A Generative-First Neural Audio Autoencoder</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Generation</span>
+                <strong>ID:</strong> <span class="tag">2602.15749</span>
+                <a href="../../pdfs/2602.15749.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jonah Casebeer, Ge Zhu, Zhepei Wang, Nicholas J. Bryan<br>
+                <div style="margin-top:5px"><span class="tag">neural audio codec</span><span class="tag">audio tokenization</span><span class="tag">audio generation</span><span class="tag">audio compression</span><span class="tag">music compression</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>Core Issues</h3>
+<p>Existing neural audio autoencoders are designed with a reconstruction-first approach, leading to high latent token rates (e.g., 75-150 Hz), slow encoding (constituting up to 30% of training time), and fragmented architectures that separate discrete vs. continuous latent representations and different audio channel formats (mono, stereo, mid/side). This hinders practical generative workflows from preprocessing to inference conditioning, especially for high-fidelity music at 44.1 kHz.</p>
+<h3>Method Innovations</h3>
+<p>The paper introduces the Generative-First Autoencoder (GenAE), a unified architecture optimized for generation. Key innovations include:
+- <strong>Architectural modifications</strong>: Efficient activations (SnakeLite), early downsampling, separable convolutions, aggressive temporal downsampling (increasing from 2048× to 3360×), mel-spectrogram fusion, windowed self-attention, and unified multi-format conditioning via audio channel format tokens.
+- <strong>Training optimizations</strong>: Multi-format data augmentation, auxiliary mel loss, and co-prime multi-resolution losses to enhance generalization and robustness.
+- <strong>Post-training step</strong>: Discretizes a trained continuous model (GenAE-KL) to support both continuous and discrete latents (GenAE-VQ) without retraining the backbone, using latent restructuring.</p>
+<h3>Experimental Results</h3>
+<p>GenAE achieves significant improvements:
+- <strong>Speed</strong>: 10× faster encoding compared to prior methods.
+- <strong>Compression</strong>: 1.6× lower latent rates, with a 60-second mono audio signal compressed to 788 tokens.
+- <strong>Unified design</strong>: Eliminates channel-format-specific variants while maintaining competitive reconstruction quality in metrics like SI-SDR and STFT loss.
+- <strong>Performance</strong>: Outperforms baselines such as SoundStream, EnCodec, DAC, Stable Audio Open, and CoDiCodec in balancing speed, quality, and compression, as shown in ablation studies and benchmark comparisons.</p>
+<h3>One-Sentence Review</h3>
+<p>GenAE is a unified and efficient neural audio autoencoder specifically designed for generative modeling, offering substantial gains in processing speed, compression rates, and architectural flexibility for diverse audio applications.</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15651" target="_blank">UniTAF: A Modular Framework for Joint Text-to-Speech and Audio-to-Face Modeling</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Joint Text-to-Speech and Audio-to-Face Modeling</span>
+                <strong>ID:</strong> <span class="tag">2602.15651</span>
+                <a href="../../pdfs/2602.15651.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Qiangong Zhou, Nagasaka Tomohiro<br>
+                <div style="margin-top:5px"><span class="tag">Text-to-Speech</span><span class="tag">Audio-to-Face Animation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>现有语音驱动面部表情生成系统采用多阶段管道（LLM、TTS、A2F），模块解耦导致高層情感和韵律信息在文本输出中丢失，TTS和A2F需重复推断相同属性，造成信息损失和冗余计算。</p>
+<h1>方法创新</h1>
+<p>提出UniTAF（UniTextAudioFace）框架，基于IndexTTS2和UniTalker，重用TTS中间表示（如语音时序和韵律变化）直接驱动A2F，实现文本到音频和面部表情的统一生成。采用模块化设计，冻结TTS主干，添加音频特征适配器和A2F解码模块，保持模型独立性和可替换性。探索情感控制机制从TTS转移到联合模型。</p>
+<h1>实验结果</h1>
+<p>论文从系统设计角度验证可行性，未提供定量生成质量结果。讨论了在UniTAF数据集上的训练挑战，如音频长度、语义密度和情感表达的对齐问题，并提出通过注入地面真实音频令牌等策略缓解。项目代码已开源，为后续语音-表情协同设计提供工程实践参考。</p>
+<h1>一句话评价</h1>
+<p>这是一个注重工程实践的创新框架，通过有效利用TTS中间表示，为解决语音和面部表情生成中的信息对齐问题提供了实用路径。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2602.15537" target="_blank">ZeroSyl: Simple Zero-Resource Syllable Tokenization for Spoken Language Modeling</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Language Modeling</span>
+                <strong>ID:</strong> <span class="tag">2602.15537</span>
+                <a href="../../pdfs/2602.15537.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nicol Visser, Simon Malan, Danel Slabbert, Herman Kamper<br>
+                <div style="margin-top:5px"><span class="tag">spoken language modeling</span><span class="tag">speech tokenization</span><span class="tag">syllable tokenization</span><span class="tag">zero-resource</span><span class="tag">WavLM</span><span class="tag">unsupervised learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>ZeroSyl 论文总结</h1>
+<h2>核心痛点</h2>
+<p>纯语音语言模型（pure speech language models）旨在直接从原始音频学习语言，不依赖文本资源。然而，自监督语音编码器提取的离散令牌序列过长，难以建模长距离依赖。现有音节分词方法（如Sylber和SyllableLM）依赖复杂多阶段训练管道，限制了实际应用。</p>
+<h2>方法创新</h2>
+<p>ZeroSyl提出一种无需训练的简单方法：
+- 使用冻结的WavLM模型，提取层13的特征L2范数，通过峰值检测（prominence-based peak detection）识别音节边界。
+- 在检测到的边界内，对层22的特征进行均值池化（mean-pooling），然后使用K-means聚类生成离散词汇。
+- 训练一个因果语言模型（基于OPT-125M架构）在生成的音节单元序列上。
+该方法避免了复杂训练，实现了高效音节分词。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>边界检测</strong>：在LibriSpeech测试集上，ZeroSyl实现R值75%、令牌F1分数54%，优于Sylber（R值71%，令牌F1 51%），与SyllableLM竞争，同时保持低过分割率（10%）。</li>
+<li><strong>语言建模性能</strong>：在词汇基准（sWUGGY）、句法基准（sBLIMP）和叙事基准（Topic StoryCloze）上，ZeroSyl超越Sylber和SyllableLM。</li>
+<li><strong>缩放行为</strong>：缩放实验显示，精细粒度单元对词汇任务更优，但ZeroSyl的音节单元在句法建模中表现出更好的缩放性能。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ZeroSyl通过简单设计实现了高性能音节分词，为口语语言建模研究提供了新的有效路径，展示了无需复杂训练即可获得竞争性结果的潜力。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

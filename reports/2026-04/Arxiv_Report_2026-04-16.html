@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-04-16</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-04-16 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.13605" target="_blank">SpeakerRPL v2: Robust Open-set Speaker Identification through Enhanced Few-shot Foundation Tuning and Model Fusion</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Open-set Speaker Identification</span>
+                <strong>ID:</strong> <span class="tag">2604.13605</span>
+                <a href="../../pdfs/2604.13605.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhiyong Chen, Shuhang Wu, Yingjie Duan, Xinkang Xu, Xinhui Hu<br>
+                <div style="margin-top:5px"><span class="tag">open-set speaker identification</span><span class="tag">few-shot learning</span><span class="tag">model fusion</span><span class="tag">reciprocal points learning</span><span class="tag">logit normalization</span><span class="tag">adaptive anchor learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结: SpeakerRPL v2</h1>
+<h2>核心痛点</h2>
+<p>该论文旨在解决开放集说话人识别中的关键挑战：在有限 enrollment 数据下，提高基础模型的利用效率，增强对未见说话人的鲁棒性，并减少 few-shot 调优过程中的随机性，以提升泛化能力。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>增强的开放集学习目标</strong>：结合 reciprocal points learning、logit normalization (LogitNorm) 和 adaptive anchor learning，以优化目标说话人表示并提升鲁棒性。</li>
+<li><strong>模型融合策略</strong>：通过分数级平均融合多个适配器模型，减少 few-shot 调优的随机性，稳定训练过程。</li>
+<li><strong>模型选择方法</strong>：基于中心点 (CPs) 和 reciprocal points (RPs) 的相似性矩阵特征值分布，自动选择最优候选模型进行融合，确保性能最优。</li>
+</ul>
+<h2>实验结果</h2>
+<p>在 VoxCeleb、3D-Speaker 和 ESD 等数据集上进行评估：
+- 在 Vox1-O–like 测试集上，将等错误率 (EER) 从 1.28% 降低至 0.09%，相对减少约 93%。
+- 在其他数据集上，EER 和 minDCF 指标均有显著改善，OSCR 和 ACC 也得到提升，证明了方法的有效性和泛化能力。</p>
+<h2>一句话评价</h2>
+<p>SpeakerRPL v2 通过集成多种学习目标和模型融合策略，显著提高了开放集说话人识别的鲁棒性和性能，是该领域的一个重要进展。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.13528" target="_blank">Few-Shot and Pseudo-Label Guided Speech Quality Evaluation with Large Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Quality Assessment</span>
+                <strong>ID:</strong> <span class="tag">2604.13528</span>
+                <a href="../../pdfs/2604.13528.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ryandhimas E. Zezario, Dyah A. M. G. Wisnu, Szu-Wei Fu, Sabato Marco Siniscalchi, Hsin-Min Wang, Yu Tsao<br>
+                <div style="margin-top:5px"><span class="tag">speech quality</span><span class="tag">large language models</span><span class="tag">pseudo-label</span><span class="tag">few-shot learning</span><span class="tag">GatherMOS</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Few-Shot and Pseudo-Label Guided Speech Quality Evaluation with Large Language Models</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>人类语音质量评估虽为黄金标准，但耗时昂贵，需大量听众以获取可靠分数。</li>
+<li>深度学习模型需要大量训练数据以实现稳健性能，限制了在低资源场景下的应用。</li>
+<li>现有大型语言模型（LLMs）如ChatGPT在直接处理音频时存在困难，且缺乏集成声学特征和辅助预测器的机制，导致鲁棒性不足。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出GatherMOS框架：利用LLMs（如GPT-5）作为元评估器，通过结构化提示集成轻量级声学描述符（如RMS、ZCR、MFCC）和伪标签（来自DNSMOS和VQScore），以预测感知平均意见分数（MOS）。</li>
+<li>支持零样本和少样本上下文学习设置：零样本GatherMOS依赖基本特征和伪标签，少样本版本额外加入标记示例作为上下文指导，提升在匹配条件下的性能。</li>
+<li>框架设计避免模型参数更新，仅通过输入上下文进行推理，提高了实用性和计算效率。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在VoiceBank-DEMAND数据集上评估：使用线性相关系数（LCC）和斯皮尔曼等级相关系数（SRCC）作为指标。</li>
+<li>零样本GatherMOS（GatherMOS-ZS）在有限数据条件下，性能优于基线方法DNSMOS、VQScore、朴素平均（NaiveEnsemble）以及基于学习的模型（CNN-BLSTM和MOS-SSL）。</li>
+<li>少样本GatherMOS（GatherMOS-FS）在测试条件与支持样本匹配时，性能显著提升（如SRCC达0.8473），但可能因样本不匹配导致泛化能力下降。</li>
+<li>实验还表明，加入更丰富的声学特征（如MFCC和频谱图统计）能进一步改进零样本性能。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>GatherMOS展示了LLMs作为元评估器在语音质量评估中的潜力，通过集成多源信息实现了低依赖标注数据的可扩展评估，为未来研究提供了实用策略。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.13400" target="_blank">Classical Machine Learning Baselines for Deepfake Audio Detection on the Fake-or-Real Dataset</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Deepfake Audio Detection</span>
+                <strong>ID:</strong> <span class="tag">2604.13400</span>
+                <a href="../../pdfs/2604.13400.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Faheem Ahmad, Ajan Ahmed, Masudul Imtiaz<br>
+                <div style="margin-top:5px"><span class="tag">deepfake audio detection</span><span class="tag">machine learning</span><span class="tag">acoustic features</span><span class="tag">speech synthesis</span><span class="tag">Fake-or-Real dataset</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>深度学习技术生成了高度逼真的合成语音，导致欺诈、冒充和虚假信息等安全威胁。当前深度伪造音频检测方法主要依赖深度神经网络，虽然性能强，但计算资源需求高且缺乏可解释性，难以揭示判别声学线索。</p>
+<h2>方法创新</h2>
+<p>本文采用经典机器学习方法，建立可解释的基线。关键创新包括：提取韵律（如音高变异性）、音质（如抖动和颤动）和频谱（如频谱质心和带宽）特征；使用ANOVA进行特征选择；训练多种分类器（逻辑回归、LDA、QDA、高斯朴素贝叶斯、SVM、GMM）；并在高保真（44.1 kHz）和电话质量（16 kHz）音频条件下评估。</p>
+<h2>实验结果</h2>
+<p>在Fake-or-Real数据集上，RBF SVM模型表现最佳：测试准确率约93%，EER约7%（44.1 kHz和16 kHz条件均如此）。线性模型（如逻辑回归、线性SVM）准确率约75%。特征分析表明，音高变异性（如f0_std_v）和频谱丰富度（如频谱质心、带宽）是关键判别线索。统计分析确认了模型性能的显著差异。</p>
+<h2>一句话评价</h2>
+<p>该论文提供了一个强大、可解释的基线，有助于未来深度伪造音频检测器的开发和声学线索理解。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2604.13229" target="_blank">ProSDD: Learning Prosodic Representations for Speech Deepfake Detection against Expressive and Emotional Attacks</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2604.13229</span>
+                <a href="../../pdfs/2604.13229.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Aurosweta Mahapatra, Ismail Rasim Ulgen, Kong Aik Lee, Nicholas Andrews, Berrak Sisman<br>
+                <div style="margin-top:5px"><span class="tag">Speech Deepfake Detection</span><span class="tag">Prosody</span><span class="tag">Emotional Attacks</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前语音深度伪造检测(SDD)系统在标准基准数据集（如ASVspoof）上表现良好，但在面对表达性和情感性欺骗攻击时泛化能力不足。这些系统往往过度依赖欺骗数据集中特定的伪影，而非学习自然语音的可转移线索，如韵律变化，导致在分布偏移下性能下降。人类则通过内化真实语音的韵律和说话人模式来检测合成语音的偏差。</p>
+<h2>方法创新</h2>
+<p>论文提出ProSDD，一个两阶段框架：第一阶段（仅使用真实语音）通过监督掩码预测学习说话人条件下的韵律表示，基于音高、语音活动和能量提取的结构化嵌入；第二阶段（使用真实和欺骗语音）联合优化欺骗分类和韵律学习，通过辅助损失保留韵律建模。该框架使用轻量级分类头，避免复杂架构依赖，强调通过韵律表示增强模型鲁棒性。</p>
+<h2>实验结果</h2>
+<p>ProSDD在多个数据集上显著提升性能：在ASVspoof 2024上，等错误率(EER)从25.43%降低到16.14%（基于2019训练）和从39.62%降低到7.38%（基于2024训练）；在EmoFake和EmoSpoof-TTS上实现约50%的相对性能提升。结果表明，该方法在标准基准和情感性攻击下均具有优越泛化能力。</p>
+<h2>一句话评价</h2>
+<p>ProSDD通过结合韵律表示和两阶段训练，有效增强了语音深度伪造检测对表达性和情感性攻击的鲁棒性，同时保持标准基准上的竞争力，为领域提供了新的泛化策略。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

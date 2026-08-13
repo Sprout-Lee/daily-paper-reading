@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-07-09</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-07-09 | 来源: eess.AS | 新增论文: 4 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.07579" target="_blank">Text-Independent Speaker Verification Using Discrete Audio Tokens</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Automatic Speaker Verification</span>
+                <strong>ID:</strong> <span class="tag">2607.07579</span>
+                <a href="../../pdfs/2607.07579.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zheng Liang, Junjie Li, Kong Aik Lee<br>
+                <div style="margin-top:5px"><span class="tag">Automatic Speaker Verification</span><span class="tag">Neural Audio Codec</span><span class="tag">Discrete Audio Tokens</span><span class="tag">Knowledge Distillation</span><span class="tag">Cross-Feature Distillation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>神经音频编解码器（NAC）生成的离散音频令牌在自动说话人验证（ASV）中性能显著低于传统频谱特征（如Fbank），尽管令牌保留了说话人信息。</p>
+<h2>方法创新</h2>
+<p>提出跨特征知识蒸馏（CFKD）框架：使用预训练的Fbank-based教师模型，通过余弦相似度损失在嵌入层指导基于离散令牌的学生模型，使学生模型有效利用令牌中蕴含的说话人判别信息。训练目标结合分类损失和蒸馏损失，权重λ控制正则化强度。</p>
+<h2>实验结果</h2>
+<p>在VoxCeleb1数据集上，ECAPA-TDNN1024学生模型在λ=40时EER从3.38%降至2.25%（相对改进35.3%），接近教师模型（2.21%）；ResNet34学生模型EER从7.55%降至4.03%（相对改进42.9%）。最优蒸馏权重λ=40显著大于传统同质蒸馏设置。</p>
+<h2>一句话评价</h2>
+<p>提出有效提升离散音频令牌在ASV中性能的知识蒸馏框架，缩小了与连续特征系统的差距。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.07148" target="_blank">Decoupling Conversational Dynamics in Full-Duplex Spoken Models through Reinforcement Learning</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Full-duplex Spoken Dialogue Models</span>
+                <strong>ID:</strong> <span class="tag">2607.07148</span>
+                <a href="../../pdfs/2607.07148.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuxin Li, Donghang Wu, Guan-Ting Lin, Hung-yi Lee, Chengwei Qin, Zhehuai Chen, Chen Chen<br>
+                <div style="margin-top:5px"><span class="tag">full-duplex</span><span class="tag">conversational dynamics</span><span class="tag">reinforcement learning</span><span class="tag">turn-taking</span><span class="tag">backchannel</span><span class="tag">barge-in</span><span class="tag">decoupling</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>全双工口语对话模型在提升交互动态（如低延迟、反馈、打断处理）时往往牺牲推理和指令跟随能力，存在"智能-动态"权衡。</p>
+<h2>方法创新</h2>
+<p>提出DuplexPO框架，通过强化学习将"何时说话"与"说什么"解耦。
+- <strong>动态关键窗口采样</strong>：仅从长对话中提取交互关键窗口（如轮换、反馈、打断）进行优化。
+- <strong>分解对话动态奖励（FCDR）</strong>：精细化的时间信用分配，针对轮次发起、反馈、让步和常规参与。
+- <strong>GRPO风格优化</strong>：限制策略漂移，保留语义能力。</p>
+<h2>实验结果</h2>
+<p>DuplexPO显著提升全双工行为（及时反馈、流畅轮换、打断处理），同时在事实QA、指令跟随、语音理解和推理基准上保持性能。用户感知的自然度和响应性提升。</p>
+<h2>一句话评价</h2>
+<p>首次系统性地将对话动态作为独立优化目标，通过强化学习分离"何时说"与"说什么"，实现交互流畅性与模型智能的同步提升。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.06892" target="_blank">UBG-Net: An Uncertainty-aware Bayesian Gating Network for Robust Audio-Visual Speech Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Visual Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.06892</span>
+                <a href="../../pdfs/2607.06892.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jinjie Fu, Hang Chen, Wu Guo, Zhijun Zhang, Kuiliang Li, Peng Gao<br>
+                <div style="margin-top:5px"><span class="tag">Robust Speech Recognition</span><span class="tag">Audio-Visual</span><span class="tag">Uncertainty Estimation</span><span class="tag">Bayesian Deep Learning</span><span class="tag">Gating Network</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>UBG-Net: An Uncertainty-aware Bayesian Gating Network for Robust Audio-Visual Speech Recognition</h1>
+<h2>核心痛点</h2>
+<p>现有音视频语音识别（AVSR）系统在现实场景中常因信号损坏和分布偏移而性能下降。传统融合方法（如注意力机制、门控模块）提供点估计，无法捕获模态可靠性。已有概率建模方法常将偶然不确定性和认知不确定性独立处理，忽略了两者的内在关联（例如数据噪声应影响模型置信度）。</p>
+<h2>方法创新</h2>
+<p>提出<strong>UBG-Net</strong>，包含两个关键模块：
+1. <strong>Modality Uncertainty-aware Bayesian Fusion (MUBF)</strong>：
+   - 显式建模输入分布的偶然不确定性（通过均值和方差），利用重参数化技巧生成随机嵌入。
+   - 将偶然不确定性参数（均值和方差）拼接为上下文向量，输入贝叶斯门控网络（包含贝叶斯线性层和Sigmoid门控），动态调制多模态特征融合。
+   - 贝叶斯门控网络通过变分推断学习权重后验，结合特征级KL散度损失和权重KL散度损失，统一建模两种不确定性。
+2. <strong>Distribution Uncertainty-aware Hierarchical Voting (DUHV)</strong>：
+   - 推理时采用蒙特卡洛采样生成多个假设序列。
+   - 首先应用多数投票选出频率最高的候选集；若出现平局，则选择其中推理分数（序列对数概率）最高的序列作为最终输出。</p>
+<p>此外，采用两阶段训练策略：第一阶段微调预训练AV-HuBERT，第二阶段冻结主网络，仅训练UBG-Net模块和插入解码器的DoRA（低秩适应）。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>LRS2数据集</strong>（模拟干扰）：在多个信噪比和干扰人数条件下，UBG-Net全面优于基线（如Whisper、Qwen3-Omni），平均WER 3.9% vs 基线4.1%。</li>
+<li><strong>AVCocktail数据集</strong>（真实场景）：在Gold分割、Fixed Chunk、ASD三种设置下，UBG-Net均取得最佳WER（17.4% ~ 36.1%），优于基线（18.2% ~ 39.2%）。</li>
+<li>消融实验：去除MUBF或DUHV导致性能下降，验证了各组件有效性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>通过将偶然不确定性注入贝叶斯网络以指导门控融合，并设计层次投票解码策略，UBG-Net在多个音视频语音识别基准上达到SOTA，显著提升了鲁棒性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2607.06827" target="_blank">Compress the Cache, Not the Speech Embedding: KV Compression for Efficient Speech LLMs</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2607.06827</span>
+                <a href="../../pdfs/2607.06827.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ke-Han Lu, Keqi Deng, Ruchao Fan, Rui Zhao, Jinyu Li<br>
+                <div style="margin-top:5px"><span class="tag">Speech LLM</span><span class="tag">KV cache compression</span><span class="tag">Automatic Speech Recognition</span><span class="tag">Efficient Inference</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<p>Speech LLM中，语音序列长度远大于文本（约4倍），导致自回归解码时KV缓存增长，造成显著效率瓶颈。现有方法在适配器层提前下采样，但会丢失难以恢复的细粒度信息。</p>
+<h1>方法创新</h1>
+<p>提出SpeechKV，在LLM内部第5层开始对语音token的KV缓存应用可学习池化（learned pooling），将相邻R个键/值向量加权合并为一个，保留全分辨率查询和残差流，实现压缩到文本级粒度。该方法与模型联合训练，避免训练-测试不匹配。</p>
+<h1>实验结果</h1>
+<p>在71K小时ASR数据上训练Qwen3-1.7B模型，SpeechKV在R=4时性能与未压缩基线持平甚至更优：实体识别错误率相对降低6.6%，OpenASR上降低2.3%，解码速度提升至少1.49倍（随音频长度增加可达2倍）。注意力分析表明，压缩后深层注意力更聚焦。</p>
+<h1>一句话评价</h1>
+<p>SpeechKV通过推迟压缩到LLM内部，在几乎不损失性能的情况下大幅加速语音LLM解码，是一种简洁高效的方法。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    

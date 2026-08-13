@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-05-28</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-05-28 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.28618" target="_blank">Comprehensive Benchmarking of Long-Form Speech Generation in Diverse Scenarios</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech (TTS) Evaluation / Speech Generation Benchmark</span>
+                <strong>ID:</strong> <span class="tag">2605.28618</span>
+                <a href="../../pdfs/2605.28618.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Changhao Pan, Rui Yang, Han Wang, Zhuan Zhou, Xuming He, Wenxiang Guo, Ziyue Jiang, Ruiqi Li, Yu Zhang, Chenyuhao Wen, Ke Lei, Xiang Yin, Jingyu Lu, Zhiyuan Zhu, Zhou Zhao<br>
+                <div style="margin-top:5px"><span class="tag">Long-form speech generation</span><span class="tag">Benchmark</span><span class="tag">Evaluation metrics</span><span class="tag">Acoustics</span><span class="tag">Semantics</span><span class="tag">Expressiveness</span><span class="tag">Text-to-Speech</span><span class="tag">Prosodic coherence</span><span class="tag">Expressive hierarchy</span><span class="tag">SwanBench-Speech</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有长语音生成评测局限于有限场景（多为单人、短句），缺乏对多说话人、长上下文、动态表达等复杂场景的系统评估。</li>
+<li>传统指标（如WER、MOS）在长文本中趋于饱和，与人类感知相关性差；人工评测成本高且不可扩展。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>SwanBench-Speech</strong>基准：包含1101个样本，覆盖17个下游场景（如客服、播客、辩论、讲课、脱口秀等），涵盖声音、语义、表达三大挑战。</li>
+<li>设计<strong>7个解耦的自动评估指标</strong>：音色一致性、混响一致性、声音保真度（声学）；内容准确性、韵律连贯性（语义）；表达丰富性、表达层次（表达性）。通过人类对齐实验验证指标可靠性。</li>
+<li>数据来源包括在线文本语料、在线音频媒体和LLM生成，经多阶段清洗、去重、质量评估和隐私审查。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>现有模型在声学保真度和内容准确性上接近真实录音，但在<strong>混响一致性、韵律连贯性和表达层次</strong>上仍有显著差距。</li>
+<li>在高表达性场景（如戏剧、体育解说）中性能下降明显，表明长期依赖和动态风格建模仍是挑战。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>SwanBench-Speech为长语音生成提供了迄今为止最全面、细粒度的评测基准，有效揭示了当前模型的短板并推动了研究方向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.28480" target="_blank">Audio-Mind: An Auditable Agentic Framework for Audio Understanding</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Understanding</span>
+                <strong>ID:</strong> <span class="tag">2605.28480</span>
+                <a href="../../pdfs/2605.28480.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yucheng Wang, Jing Peng, Hanqi Li, Chenghao Wang, Wenming Tu, Yu Xi, Zhaokai Sun, Kai Yu, Shuai Wang<br>
+                <div style="margin-top:5px"><span class="tag">Audio-Mind</span><span class="tag">Auditable Agentic Framework</span><span class="tag">Conditional Evidence Acquisition</span><span class="tag">Large Audio-Language Models</span><span class="tag">Tool-Augmented Reasoning</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>随着大型音频语言模型（LALMs）能力的增强，传统音频代理的“先分解再调用工具”策略可能不再有效，甚至成为瓶颈（orchestration bottleneck）。关键问题不再是能不能使用工具，而是何时需要获取外部证据来补充模型自身的判断。</p>
+<h2>方法创新</h2>
+<p>提出 <strong>AUDIO-MIND</strong>，一个可审计、可插拔的音频理解框架：
+- <strong>条件性证据获取</strong>：动态结合强前端模型与规划器引导的工具使用，仅在存在证据缺口时调用外部工具或重听操作。
+- <strong>工具分类与边界</strong>：将工具分为感知工具（提取观测）和变换工具（修改音频），并为每个工具定义明确的证据支持范围（tool boundaries），避免将局部测量误用为全局结论。
+- <strong>可审计推理轨迹</strong>：显式记录前端观测、规划器决策、工具输出、重听结果和最终理由，便于错误分析和质量提升。</p>
+<h2>实验结果</h2>
+<ul>
+<li>在 <strong>MMAR</strong> 和 <strong>MSU-Bench</strong> 上分别达到 <strong>80.4%</strong> 和 <strong>82.8%</strong> 准确率，优于先前所有音频代理基线。</li>
+<li>匹配骨干网络（matched-backbone）对比显示，传统代理工作流在强前端下会损失整体性音频判断，而 AUDIO-MIND 在保留前端判断的同时按需获取证据。</li>
+<li>生成的推理轨迹质量更高，且更易于审计。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>AUDIO-MIND 通过条件性证据获取和显式审计设计，解决了强 LALM 下代理工具的过度使用问题，在准确性和可解释性上均有显著提升。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.28064" target="_blank">I Hear, Therefore I Trust: A Socio-Technical Investigation of Humans as Synthetic Speech Detectors</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Synthetic Speech Detection / Audio Deepfake Detection</span>
+                <strong>ID:</strong> <span class="tag">2605.28064</span>
+                <a href="../../pdfs/2605.28064.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Lelia Erscoi (1), Tomi Kinnunen (1) ((1) Computational Speech Group, University of Eastern Finland)<br>
+                <div style="margin-top:5px"><span class="tag">synthetic speech</span><span class="tag">voice deepfakes</span><span class="tag">trust and artificial intelligence</span><span class="tag">socio-technical systems</span><span class="tag">human detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>当前语音深度伪造检测研究多集中于自动化系统，而人类在实际社会技术环境中检测合成语音的能力被低估。人类检测性能常受限于孤立实验室条件，忽略日常交流中的多模态线索（如情感、信任标签等），导致对检测能力的系统性高估。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>定位任务替代二分类</strong>：设计片段定位任务，让参与者标记可疑合成片段，提供更细粒度的决策过程洞察。</li>
+<li><strong>三种信任线索操控</strong>：同时操控指令框架（积极/消极情境）、情感启动（正/负面情绪图像）、出处标签（有/无可信来源声明），探究环境因素对检测的影响。</li>
+<li><strong>生态效度提升</strong>：使用包含部分合成的真实数据集（LlamaPartialSpoof），并混入环境噪音模拟现实场景。</li>
+<li><strong>多维度评估</strong>：除检测准确率外，收集机械性、表达性等主观质量评分。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>话语真实性（真实/全合成/部分合成）是检测准确率和感知质量的主要决定因素。</li>
+<li>信任线索无主效应，但会激发检测行为（如积极指令或消极情感提高怀疑倾向）。</li>
+<li>完全合成语音的检测准确率低于随机水平（~50%），表明人类难以区分。</li>
+<li>主观质量评分能隐式区分语音类型，即使显式检测失败。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究首次在社会技术框架下系统探究人类检测合成语音的上下文影响因素，揭示了听觉感知与信任机制的非对称性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.27840" target="_blank">LoSATok: Low-dimensional Semantic-Acoustic Tokenizer for Cross-Domain Audio Understanding and Generation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Representation Learning / Unified Audio Understanding and Generation</span>
+                <strong>ID:</strong> <span class="tag">2605.27840</span>
+                <a href="../../pdfs/2605.27840.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhisheng Zhang, Xiang Li, Yixuan Zhou, Jing Peng, Guoyang Zeng, Zhiyong Wu<br>
+                <div style="margin-top:5px"><span class="tag">低维语义-声学分词器</span><span class="tag">语义瓶颈</span><span class="tag">跨域音频</span><span class="tag">扩散变换器</span><span class="tag">统一理解和生成</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>现有音频统一分词器通常使用高维连续表示（如&gt;768维）联合编码语义和声学信息，导致下游扩散变换器（DiT）建模负担重，需要更宽的模块或更多参数才能有效收敛。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>语义瓶颈（SemBo）</strong>：分析高维语义表示（如MiDashengLM的1280维）的低秩结构，通过可学习的压缩-恢复网络将语义特征压缩至128维，并引入时间关系损失保持帧间语义一致性。</li>
+<li><strong>LoSATok：低维语义-声学分词器</strong>：在紧凑的128维潜空间中，采用双层语义监督（高维完整语义+低维紧凑语义）联合捕获语义和声学细节，实现跨域统一表示。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>理解</strong>：在15个跨域任务上平均性能与HuBERT、WavLM等SSL表示相当，甚至在部分任务上更优。</li>
+<li><strong>生成</strong>：在文本到音频（TTA）、文本到音乐（TTM）、文本到语音（TTS）任务中，使用LoSATok作为分词器的DiT模型在相同或更小配置下生成性能优于高维统一分词器，且收敛更快。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>LoSATok通过语义瓶颈将音频表示压缩至128维，同时支持高效理解和生成，为跨域音频统一建模提供了轻量级解决方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.28456" target="_blank">Diffusion Large Language Models for Visual Speech Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Visual Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2605.28456</span>
+                <a href="../../pdfs/2605.28456.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jeong Hun Yeo, Chae Won Kim, Hyeongseop Rha, Yong Man Ro<br>
+                <div style="margin-top:5px"><span class="tag">Visual Speech Recognition</span><span class="tag">Diffusion Large Language Model</span><span class="tag">Masked Denoising</span><span class="tag">Flexible-order Decoding</span><span class="tag">Length-guided Candidate Decoding</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统VSR系统采用从左到右的自回归解码，对视觉模糊的token（如不易区分的视素）可能过早做出错误决策，且无法利用后续上下文进行修正。</p>
+<h2>方法创新</h2>
+<ul>
+<li><strong>DLLM-VSR框架</strong>：首次将扩散大语言模型（DLLM）应用于VSR，将转录过程建模为迭代掩码去噪，支持柔性顺序解码。</li>
+<li><strong>置信度解掩码</strong>：优先解码高置信度位置，利用已提交token作为双向上下文逐步澄清模糊位。</li>
+<li><strong>两阶段训练策略</strong>：第一阶段仅预测转录token及紧跟的EOS，实现视觉-文本内容对齐；第二阶段额外预测EOS后的填充token，进行长度建模。</li>
+<li><strong>长度引导候选解码</strong>：利用视频时长构建合理的转录长度假设，解码多个候选，并根据长度合理性与解码置信度重排序。</li>
+</ul>
+<h2>实验结果</h2>
+<p>在LRS3数据集上（仅使用其标注训练数据）达到19.5%的WER，刷新当时SOTA。</p>
+<h2>一句话评价</h2>
+<p>首个将DLLM用于VSR的工作，通过灵活解码顺序和长度建模有效提升视觉语音识别性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2605.00025" target="_blank">MoDAl: Self-Supervised Neural Modality Discovery via Decorrelation for Speech Neuroprosthesis</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Neuroprosthesis, Brain-Computer Interfaces</span>
+                <strong>ID:</strong> <span class="tag">2605.00025</span>
+                <a href="../../pdfs/2605.00025.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuanhao Chen, Peter Chin<br>
+                <div style="margin-top:5px"><span class="tag">Speech neuroprosthesis</span><span class="tag">self-supervised learning</span><span class="tag">multimodal learning</span><span class="tag">decorrelation</span><span class="tag">Broca's area</span><span class="tag">contrastive alignment</span><span class="tag">brain-computer interface</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>MoDAl: Self-Supervised Neural Modality Discovery via Decorrelation for Speech Neuroprosthesis</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>当前语音神经假体系统几乎只解码运动皮层信号，忽略了如Broca区（area 44）等可能编码补充语言信息的脑区。由于这些信号与运动皮层信号高度相关且缺乏明确模态标签，直接融合导致冗余，反而降低性能。</li>
+<li>传统多模态对比学习假设模态预定义且物理上不同，但神经信号来自相邻皮层区域，模态发现是自监督的挑战。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>MoDAl框架</strong>：结合对比对齐与解相关损失，在共享投影空间中发现互补神经模态。</li>
+<li>对比损失：将多个并行脑编码器与预训练LLM的文本嵌入对齐。</li>
+<li>解相关损失：惩罚编码器对之间的特征相关性，防止表示塌缩。</li>
+<li>理论证明：对比对齐会导致传递性模态融合，解相关损失必须抵消这种趋势以促进互补专业化。</li>
+<li>两阶段训练：第一阶段预训练一个区域6v的脑编码器用于音素解码；第二阶段端到端训练三个并行编码器（6v、44、6v+44），并通过MoDAl空间进行多模态发现。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在Brain-to-Text Benchmark '24上，MoDAl将词错误率（WER）从26.3%降至21.6%，比先前的端到端方法提升4.7个百分点，接近级联系统性能。</li>
+<li>添加area 44信号（MoDAl-1 → MoDAl-Full）带来0.8个百分点的显著提升，且完全源于解相关机制。</li>
+<li>线性探测表明，area 44编码器捕捉结构性和句法属性（句子长度、语法语态、wh-词），与Broca区的神经语言学功能一致。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>MoDAl通过自监督的对比-解相关双目标学习，成功发现并利用了被先前工作丢弃的Broca区互补语言信息，显著提升了语音神经假体的解码性能。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
