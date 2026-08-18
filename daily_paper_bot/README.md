@@ -58,7 +58,7 @@ python daily_paper_bot/main.py
 name: Daily Arxiv Bot
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 时间 0点 (北京时间 8点) 运行
+    - cron: '0 3 * * *' # 每天 UTC 时间 3点 (北京时间 11点) 运行
   workflow_dispatch: # 允许手动触发
 
 jobs:
