@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-09-03</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-09-03 | 来源: eess.AS | 新增论文: 6 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.02812" target="_blank">VibeVoice-ASR-Streaming Technical Report</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition / Streaming Speaker-Attributed ASR</span>
+                <strong>ID:</strong> <span class="tag">2609.02812</span>
+                <a href="../../pdfs/2609.02812.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yujie Tu, Zhiliang Peng, Jianwei Yu, Li Dong, Songchen Xu, Yaoyao Chang, Wenhui Wang, Zilong Wang, Zehua Wang, Yan Xia, Jiajun Zhang, Xie Chen, Furu Wei<br>
+                <div style="margin-top:5px"><span class="tag">streaming speaker-attributed ASR</span><span class="tag">LLM-based ASR</span><span class="tag">end-to-end diarization</span><span class="tag">low-latency</span><span class="tag">speech-language model</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>传统说话人属性ASR将语音识别和说话人日志分离，且现有端到端统一模型主要支持离线识别，难以满足实时语音助手和智能体的低延迟需求。流式ASR需要保留历史信息以维持说话人身份一致性，但此前方法多用于单说话人场景，多说话人流式识别仍需额外组件。</p>
+<h2>方法创新</h2>
+<p>本文提出 <strong>VIBEVOICE-ASR-STREAMING</strong>，一种基于LLM的端到端流式说话人属性ASR方法。核心思路是将音频块与生成的说话人标注文本交错输入模型（格式为 [X1,Y1,X2,Y2,...]），并采用固定大小音频块（2.0s或2.9s）加0.5s lookahead，使模型能在语音到达时直接输出“谁说了什么”，无需独立日志模块。模型复用了VibeVoice的预训练双tokenizer（声学tokenizer和语义tokenizer），并基于Qwen2.5作为LLM骨干。训练时保留完整的历史上下文，说话人标签按首次出现顺序分配并在后续引用中复用。发布1.5B和7B模型权重及推理代码。</p>
+<h2>实验结果</h2>
+<p>7B模型在五个评测集（AliMeeting, AISHELL-4, AMI-SDM, AMI-IHM, MLC-Challenge）上平均WER/CER最低；在13个评估设置中的12个取得最好或并列最好的说话人属性错误。相比Gemini 3.5 Transcribe Live、GPT Realtime Whisper、GPT Live Transcribe、ElevenLabs Scribe v2 Realtime等系统，识别错误率显著降低。</p>
+<h2>一句话评价</h2>
+<p>本文率先探索了基于LLM的流式说话人属性ASR，通过交错音频块与文本生成，实现了高准确率低延迟的实时多人对话转录，并开源权重与代码。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.02474" target="_blank">VAANI Noise Event Dataset: A curated spontaneous speech dataset annotated with timestamps for noise events</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Sound Event Detection</span>
+                <strong>ID:</strong> <span class="tag">2609.02474</span>
+                <a href="../../pdfs/2609.02474.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Pavan Kumar J, Agneedh Basu, Pranav Bhat, Sujith Pulikodan, Suryansh Shukla, Nihar Desai Prasanta K. Ghosh<br>
+                <div style="margin-top:5px"><span class="tag">noise-robust ASR</span><span class="tag">sound event detection</span><span class="tag">timestamped annotation</span><span class="tag">spontaneous speech</span><span class="tag">Indian languages</span><span class="tag">dataset</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有噪声/声音事件数据集多为合成混合或仅含弱标签，缺乏真实环境下自发语音与背景噪声重叠、且带事件级精确时间戳的注释。</li>
+<li>尚无资源在同一数据中同时满足：真实情境语音与噪声同现、多层噪声事件时间戳（可重叠）、以及大规模自发多语言语音。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>基于Project VAANI自发的多语言现场录音，添加细粒度的噪声事件时间戳注释。</li>
+<li>构建紧凑的7类语义分类：动物、交通、婴儿/儿童、音乐、信号/警报、家电、非语音人声。</li>
+<li>采用双层注释结构：片段级多标签（NoiseCategory）和事件级{类别,标签,开始秒,结束秒}，支持重叠噪声事件。</li>
+<li>制定了注释协议与质量控制流程，包含人工初标注、内部复核及10%独立验收，发布已验证和未验证两个层级。</li>
+</ul>
+<h2>数据集规模与特征（类似实验结果）</h2>
+<ul>
+<li>共72,756个语音片段，总计122.17小时，来自38,541名说话人；片段时长0.79–23.49秒，平均6.05秒。</li>
+<li>覆盖58种语言、30个邦、162个地区，包含大量不同印度声学环境。</li>
+<li>每个片段转录语音，并带有一个或多个噪声事件的时间戳。</li>
+<li>与现有语料相比，VAANI首次将真实环境、自发多语言语音、重叠事件时间戳三项结合。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>VAANI噪声事件时间戳数据集填补了真实情境下自发多语言语音与噪声事件本身级时间标注的空白，为噪声鲁棒ASR、声音事件检测及语音增强提供了高匹配度的资源。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.02165" target="_blank">Sensing Bone-Conducted Speech with Earbuds</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Bone-Conducted Speech Sensing</span>
+                <strong>ID:</strong> <span class="tag">2609.02165</span>
+                <a href="../../pdfs/2609.02165.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Christoph Weyer, Peter Jax<br>
+                <div style="margin-top:5px"><span class="tag">bone-conducted speech</span><span class="tag">earbud vibration</span><span class="tag">accelerometer</span><span class="tag">spectral characteristics</span><span class="tag">spatial characteristics</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>详细总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>无线耳塞在通话、语音助手等场景中需要清晰捕获佩戴者自身语音，但环境噪声和风噪严重恶化空气传导麦克风的信号。</li>
+<li>骨导(BC)振动信号的频带和振动空间方向此前未被系统分析，导致传感器选型（带宽、轴数）和安装位置缺乏可靠依据。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>使用两对具有代表性的商用耳塞：Anker P3i（带柄式）与Anker A20i（圆钮式），分别将三轴加速度计LIS25BA内置于或外置于耳塞壳体，并用参考麦克风与头戴式追踪器采集同步数据。</li>
+<li>设计校准-文本-倾斜三步测量流程，可估计耳塞与头部的相对姿态，进而将所有受试者振动信号转换到统一的头部坐标系中进行分析。</li>
+<li>模拟了单轴加速度计相对于三轴方案的功率损失，评估低成本单轴传感的可行性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>频谱特性：OV引起的耳塞振动呈低通曲线，400 Hz以上滚降达 -93 dB/decade，说明高于1 kHz的振动很微弱，需低噪声传感器。</li>
+<li>空间特性：耳塞主要在耳道口进/出方向上振动，且不同受试者和重复佩戴之间方向一致性高，有利于固定单轴传感器。</li>
+<li>单轴传感仿真：在400 Hz以下主要振动功率带上，单轴传感器平均衰减小于1.5 dB，表明使用单轴加速度计即可高效捕获关键振动。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究精细刻画了耳塞骨导语音振动的频谱与空间结构，为耳塞硬件设计、传感器选型和信号处理算法提供了扎实的工程指导。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.02657" target="_blank">ARFT: A Synchronized Multimodal RF-Acoustic Dataset for Positioning in Distributed Environments</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Indoor Positioning</span>
+                <strong>ID:</strong> <span class="tag">2609.02657</span>
+                <a href="../../pdfs/2609.02657.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Daan Delabie, Jarne Van Mulders, Bert Pyck, Gustav Nilsson Gisleskog, Gilles Callebaut<br>
+                <div style="margin-top:5px"><span class="tag">dataset</span><span class="tag">localization</span><span class="tag">RF</span><span class="tag">acoustics</span><span class="tag">multimodal sensing</span><span class="tag">CSI</span><span class="tag">ultrasonic</span><span class="tag">distributed positioning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>ARFT Dataset Paper Summary</h1>
+<h2>Core Pain Point</h2>
+<p>Existing public datasets rarely provide synchronized RF and acoustic measurements acquired at identical indoor positions with accurate ground-truth, which limits the development and benchmarking of multimodal indoor positioning algorithms.</p>
+<h2>Method Innovation</h2>
+<p>This work presents ARFT (acoustic-radio fusion in Techtile), a synchronized multimodal dataset collected in the Techtile testbed. An ultrasonic speaker and an RF antenna are co-located on a rover, while 42 ceiling-mounted antennas capture RF CSI and 91 distributed microphones record ultrasonic chirps. The dataset spans 5011 spatial positions over a 5.57 m × 2.89 m area, with each cycle containing synchronized ground-truth position, acoustic waveform, and RF snapshot. The release includes acquisition scripts, parsing code, and a notebook-based analysis pipeline to support RF-only, acoustic-only, and joint positioning workflows.</p>
+<h2>Experimental Results</h2>
+<p>The paper reports detailed acquisition settings and coverage statistics. A static acoustic positioning pipeline involving anchor selection, pulse-compression ranging, and least-squares localization is elaborated as a usage example. The dataset is designed to enable reproducible benchmarking, though specific positioning accuracy results are not presented in the excerpt.</p>
+<h2>One-sentence Evaluation</h2>
+<p>ARFT provides a valuable synchronized RF-acoustic dataset for indoor positioning, facilitating research on multimodal fusion and distributed sensing.</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.02343" target="_blank">SonicCaps: Large-Scale Diverse and Fine-Grained Captioning for Improved Audio-Retrieval</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Language Modeling</span>
+                <strong>ID:</strong> <span class="tag">2609.02343</span>
+                <a href="../../pdfs/2609.02343.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zineb Lahrichi, Marc Ferras, Gaël Richard, Geoffroy Peeters<br>
+                <div style="margin-top:5px"><span class="tag">audio captioning</span><span class="tag">audio-text retrieval</span><span class="tag">CLAP</span><span class="tag">multi-modal large language model</span><span class="tag">dataset generation</span><span class="tag">human evaluation</span><span class="tag">contrastive learning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>核心痛点</h1>
+<ul>
+<li>现有音频-语言数据集存在语义多样性低、描述过于通用、缺乏细粒度声学细节、音频-字幕映射单一等问题。</li>
+<li>手动标注成本高且不一致，LLM自动标注容易重复、幻觉、有偏。</li>
+<li>数据集分布差异导致模型泛化差。</li>
+</ul>
+<h1>方法创新</h1>
+<ul>
+<li>提出SonicCaps，约15M字幕配700k音频，使用Qwen3-Omni多模态大模型，通过三阶段流程：fidelity-focused recaptioning, diversity-focused recaptioning, post-processing。</li>
+<li>对每个音频生成约24个字幕，涵盖主描述、改写风格和语义标签，以捕捉听觉感知的一对多特性。</li>
+<li>引入人类评估框架，进行成对比较，沿多个质量维度评估。</li>
+</ul>
+<h1>实验结果</h1>
+<ul>
+<li>人类评估表明SonicCaps比现有数据集得分更高，字幕感知更具描述性和精确性。</li>
+<li>在CLAP模型上训练，采用多字幕采样策略，一致提升音频检索和zero-shot分类，在公共和商业基准上泛化。</li>
+<li>发布两个专用CLAP模型：SonicCLAP AR 和 SonicCLAP MOS。</li>
+</ul>
+<h1>一句话评价</h1>
+<ul>
+<li>通过大规模、多样、细粒度的音频字幕生成，显著提升音频检索和相关任务性能，为音频语言建模提供更强数据基础。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2609.01723" target="_blank">Hearing the Whispers: Black-Box Membership Inference Attacks on Finetuned TTS Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech (TTS) Model Security & Privacy</span>
+                <strong>ID:</strong> <span class="tag">2609.01723</span>
+                <a href="../../pdfs/2609.01723.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kunlin Cai, Kaiyuan Zhang, Zihang Xiang, Jinghuai Zhang, Abeer Alwan, Fnu Suya, Yuan Tian<br>
+                <div style="margin-top:5px"><span class="tag">Membership Inference Attack</span><span class="tag">Privacy</span><span class="tag">Text-to-Speech</span><span class="tag">Black-Box Attack</span><span class="tag">Fine-tuning</span><span class="tag">Voice Cloning</span></div>
+            </div>
+            <div class="summary-section">
+                <h4>核心痛点</h4>
+<p>该论文针对现代文本到语音（TTS）基金会模型在微调过程中可能泄露私有语音数据的隐私风险，首次系统性地研究了针对微调TTS模型的黑盒成员推理攻击（MIA）。主要挑战有两方面：
+- <strong>查询生成（Query Generation）</strong>：TTS模型通过文本和参考语音双重条件生成语音，导致查询空间大且缺乏设计标准。
+- <strong>表征工程（Representation Engineering）</strong>：语音具有多层级特征和时序可变性，单一低层声学表示（如Mel谱、MFCC）无法捕捉成员信号，且生成音频与目标音频长度不一，难以直接比较。</p>
+<h4>方法创新</h4>
+<ul>
+<li>提出了第一个针对现代生成式TTS模型的黑盒MIA框架，同时在说话人级别（speaker-level）和记录级别（record-level）进行审计。</li>
+<li>系统性地设计了查询空间，将查询分为五种代表性类型，并提出两个准则：<strong>scorable extent</strong> 和 <strong>memorization elicitation</strong>，证明 <strong>recitation</strong>（在训练条件下让模型复述目标记录）是最强的查询策略。</li>
+<li>设计了两种定制的表征提取器：</li>
+<li>使用说话人验证编码器提取全局身份声纹（voiceprint）用于说话人级别审计。</li>
+<li>使用多层级WavLM嵌入保留帧级记忆痕迹用于记录级审计。</li>
+<li>引入改进的动态时间规整（Dynamic Time Warping）对齐可变长语音，再通过轻量级LSTM分类器聚合非线性相似度向量，计算成员分数。</li>
+</ul>
+<h4>实验结果</h4>
+<ul>
+<li>在三个SOTA TTS模型（CosyVoice2、F5-TTS、XTTS-v2）和两个基准数据集（VCTK、British Dialect）上进行评估。</li>
+<li>说话人级别AUC在最强设置下接近1.0，且始终高于0.80；记录级别AUC在0.80到0.90之间，即使在成员和非成员来自同一说话人的困难场景下依然有效。</li>
+<li>进一步分析了语音特性（低静音比、密集音素结构、丰富高频内容）与记忆泄露脆弱性之间的关联。</li>
+</ul>
+<h4>一句话评价</h4>
+<p>这是首个针对细粒度TTS模型的黑盒成员推理攻击系统，创新地对双条件查询和多层级语音表征进行联合设计，揭示了微调TTS模型存在严重的隐私泄露风险。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
