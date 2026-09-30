@@ -2,15 +2,16 @@
 
 按月份倒序归档，越新的月份越靠上。
 
-共 8 个月，159 份日报。
+共 8 个月，160 份日报。
 
 - [完整论文归档](All_Papers_Archive.html)
 
 ## 2026-09
 
 - 目录: [2026-09/](2026-09/)
-- 日报数量: 15
+- 日报数量: 16
 
+- 2026-09-30: [Markdown](2026-09/Arxiv_Report_2026-09-30.md) / [HTML](2026-09/Arxiv_Report_2026-09-30.html)
 - 2026-09-28: [Markdown](2026-09/Arxiv_Report_2026-09-28.md) / [HTML](2026-09/Arxiv_Report_2026-09-28.html)
 - 2026-09-25: [Markdown](2026-09/Arxiv_Report_2026-09-25.md) / [HTML](2026-09/Arxiv_Report_2026-09-25.html)
 - 2026-09-24: [Markdown](2026-09/Arxiv_Report_2026-09-24.md) / [HTML](2026-09/Arxiv_Report_2026-09-24.html)
