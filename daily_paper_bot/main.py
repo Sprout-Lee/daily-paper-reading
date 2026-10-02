@@ -16,7 +16,11 @@ import merge_reports # 导入合并脚本
 load_dotenv()
 
 # 配置
-ARXIV_URL = "https://arxiv.org/list/eess.AS/recent"
+ARXIV_URLS = [
+    "https://arxiv.org/list/cs.SD/recent",
+    "https://arxiv.org/list/eess.AS/recent",
+]
+ARXIV_SOURCE_LABEL = ", ".join(ARXIV_URLS)
 # 获取当前脚本所在目录的绝对路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
@@ -150,6 +154,21 @@ def get_recent_papers(url):
         print(f"网页抓取失败: {e}")
         return []
 
+def get_recent_papers_from_sources(urls):
+    """从多个 arXiv 列表抓取，并按标准化 ID 合并去重。"""
+    combined_papers = []
+    seen_ids = set()
+
+    for url in urls:
+        for paper in get_recent_papers(url):
+            norm_id = normalize_id(paper.get("id", ""))
+            if not norm_id or norm_id in seen_ids:
+                continue
+            seen_ids.add(norm_id)
+            combined_papers.append(paper)
+
+    return combined_papers
+
 def download_and_parse_pdf(paper_info):
     """
     直接通过 URL 下载 PDF 并解析
@@ -266,7 +285,7 @@ def generate_report(processed_papers):
     # --- 1. 生成 Markdown ---
     md_filename = os.path.join(report_dir, f"Arxiv_Report_{date_str}.md")
     md_content = f"# Arxiv Daily Deep Report - {date_str}\n\n"
-    md_content += f"**来源**: {ARXIV_URL}\n"
+    md_content += f"**来源**: {ARXIV_SOURCE_LABEL}\n"
     md_content += f"**篇数**: {len(processed_papers)}\n"
     md_content += "---\n\n"
     
@@ -369,7 +388,7 @@ def generate_report(processed_papers):
     <div class="header">
         <h1>Arxiv Daily Deep Report</h1>
         <div class="meta">
-            日期: {date} | 来源: eess.AS | 新增论文: {count} 篇
+            日期: {date} | 来源: cs.SD + eess.AS | 新增论文: {count} 篇
         </div>
     </div>
     
@@ -425,7 +444,7 @@ def generate_report(processed_papers):
 
 def main():
     # 1. 直接从网页获取论文列表（跳过 API）
-    all_papers = get_recent_papers(ARXIV_URL)
+    all_papers = get_recent_papers_from_sources(ARXIV_URLS)
     
     # 加载历史记录并过滤
     processed_ids = load_processed_ids()
