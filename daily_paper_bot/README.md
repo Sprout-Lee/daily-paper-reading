@@ -1,6 +1,6 @@
 # Arxiv Daily Paper Bot
 
-这个工具每天自动抓取指定 Arxiv 页面（如 eess.AS）的最新论文，使用 AI 生成中文摘要，并保存为 Markdown 报告。
+这个工具每天自动抓取多个 Arxiv 页面（cs.SD 和 eess.AS）的最新论文，使用 AI 生成中文摘要，并保存为 Markdown 报告。
 
 ## 目录结构
 
@@ -40,7 +40,7 @@ python daily_paper_bot/main.py
 ```
 
 程序将：
-1. 访问 `https://arxiv.org/list/eess.AS/recent`。
+1. 访问 `https://arxiv.org/list/cs.SD/recent` 和 `https://arxiv.org/list/eess.AS/recent`。
 2. 获取最新论文的 ID 和详细摘要。
 3. 调用 AI 进行总结。
 4. 在 `reports/YYYY-MM/` 目录下生成 `Arxiv_Report_YYYY-MM-DD.md` 和对应 HTML。
@@ -58,7 +58,7 @@ python daily_paper_bot/main.py
 name: Daily Arxiv Bot
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 时间 0点 (北京时间 8点) 运行
+    - cron: '0 3 * * *' # 每天 UTC 时间 3点 (北京时间 11点) 运行
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -96,6 +96,6 @@ jobs:
 
 ## 自定义
 
-- **修改抓取源**: 在 `main.py` 中修改 `ARXIV_URL` 变量。
+- **修改抓取源**: 在 `main.py` 中修改 `ARXIV_URLS` 列表。
 - **修改总结风格**: 在 `main.py` 的 `summarize_paper` 函数中修改 `prompt`。
 
