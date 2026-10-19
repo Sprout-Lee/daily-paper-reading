@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-10-19</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-10-19 | 来源: eess.AS | 新增论文: 8 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.22936" target="_blank">AcousticAgent: A Floorplan-Centric Simulation Platform for Distributed Multi-Room Speech Processing</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Acoustic Simulation / Distributed Multi-Room Speech Processing</span>
+                <strong>ID:</strong> <span class="tag">2610.22936</span>
+                <a href="../../pdfs/2610.22936.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhiqi Ai, Han Cheng, Shiyi Mu, Yongjin Zhou, Shugong Xu<br>
+                <div style="margin-top:5px"><span class="tag">floorplan-centric acoustic simulation</span><span class="tag">room impulse response</span><span class="tag">distributed microphone</span><span class="tag">multi-room speech processing</span><span class="tag">FP-RIR</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有声学仿真工具主要分为两类：一类面向参数化房间，能高效生成 RIR，但场景构造能力有限；另一类依赖预构建的三维场景资产，难以大规模创建和编辑住宅多房间环境。</li>
+<li>真实测量语料虽然能保留真实传播与设备效应，但每个采集活动只覆盖有限空间、拓扑和设备部署，扩展成本高。</li>
+<li>住宅语音接口常处于远场、跨房间、家具遮挡和墙体隔断条件下，接收信号强依赖房间拓扑、源-接收器几何、房间连通性和表面声学属性，单麦克风难以全屋覆盖。</li>
+<li>因此，大规模住宅多房间声学仿真需要一种既具有声学意义、又易于构建、编辑和系统变化的场景表示。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 AcousticAgent，一个以平面图为中心的多房间声学仿真平台，将结构化平面图转换为可编辑、声学连通的多房间场景。</li>
+<li>场景统一建模房间几何与连通性、墙体/门窗/开口、家具、声学材料、声源和麦克风配置；将可复用场景内容与动态源-接收器配置解耦。</li>
+<li>引入面向场景的 Acoustic Materials Database，包含 20 类场景元素、3,741 条归一化记录，整合 PTB、ODEON、Pyroomacoustics、SoundSpaces 2.0 和 Acoustic Supplies 等来源，将语义元素映射为倍频程吸收、散射和传输参数。</li>
+<li>设计平面图感知的混合几何声学求解器，结合确定性传播、蒙特卡洛射线追踪和参数化晚期混响；利用房间连通图指导跨房间路径搜索，并用三维场景验证可见性、遮挡和几何交互。</li>
+<li>支持方向性声源、移动声源、麦克风阵列、分布式麦克风，以及基于 VLM/LLM 辅助的平面图图像和文本场景构建。</li>
+<li>构建 FP-RIR 数据集，覆盖 15,376 个住宅平面图，具有多样房间拓扑、房间内与跨房间传播条件、灵活的源-接收器和分布式麦克风布局。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>使用真实测量 RIR 验证 AcousticAgent 的声学保真度。</li>
+<li>建立分布式多房间语音处理基准，评估全屋声源定位、语音增强和远场语音处理，在单设备与分布式麦克风设置下进行比较。</li>
+<li>摘要与引言指出结果表明：平面图感知建模对大规模住宅声学仿真有效，分布式空间处理在多房间环境中具有优势。由于提供的论文片段被截断，具体数值指标、对比基线和消融结果未完整给出。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>AcousticAgent 将平面图作为大规模住宅多房间声学仿真的核心表示，提供了可编辑、可扩展且支持分布式麦克风评测的基础设施，具有推动住宅多房间语音系统研究的潜力，但仍需结合完整实验指标和真实场景泛化验证来全面评估其声学保真度与下游任务收益。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.22910" target="_blank">Bridge, Distill, Refine: High-Fidelity One-Step Generation for Multi-Bandwidth Speech Extension</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Bandwidth Extension (Speech Super-Resolution)</span>
+                <strong>ID:</strong> <span class="tag">2610.22910</span>
+                <a href="../../pdfs/2610.22910.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhiqi Ai, Xu Shen, Mou Wang, Yongjin Zhou, Shugong Xu<br>
+                <div style="margin-top:5px"><span class="tag">speech bandwidth extension</span><span class="tag">flow matching</span><span class="tag">consistency distillation</span><span class="tag">adversarial refinement</span><span class="tag">one-step generation</span><span class="tag">multi-bandwidth speech</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文信息</h2>
+<ul>
+<li>标题：Bridge, Distill, Refine: High-Fidelity One-Step Generation for Multi-Bandwidth Speech Extension</li>
+<li>方法名：BDR-BWE</li>
+<li>任务：多带宽语音带宽扩展（BWE）/语音超分辨率</li>
+</ul>
+<h2>核心痛点</h2>
+<ul>
+<li>多数生成式BWE针对固定输入带宽设计，难以用单一模型处理不同截止频率。</li>
+<li>扩散/流匹配通常依赖多步迭代采样，推理效率低。</li>
+<li>重建型方法易产生过平滑高频；对抗型方法需在单阶段同时平衡频谱保真与感知真实感。</li>
+<li>BWE需保留已观测低频信息，同时为缺失高频生成合理内容。</li>
+</ul>
+<h2>方法创新</h2>
+<p>BDR-BWE提出三阶段解耦生成框架：
+1. <strong>Cutoff-Aware Flow Bridge（阶段1）</strong>：在压缩复数STFT域学习截止频率感知的条件流桥。采用复数功率压缩 C(Z)=0.3|Z|^0.3 e^{j∠Z} 并按频点RMS归一化；设计随频率从观测带0.05平滑升至缺失带1的噪声剖面 a(f,fc)，构造 q0=qy+a⊙z、q1=qx 的桥，弱扰动已观测频带、保留缺失带生成不确定性。生成器预测干净端点 q1_hat=Gθ(qt,qy,t,fc)，用L_RI、强调缺失带的L_miss和多尺度log-mel损失训练；采样时由端点预测诱导速度场并用Euler积分。
+2. <strong>Progressive Consistency Distillation（阶段2）</strong>：将多步流轨迹渐进压缩为1步/2步生成器，NFE按16→8→4→2→1递减；学生每两次教师更新对应一次更新，共享随机初始化q0与对齐时间网格，以停止梯度的教师状态做L2一致性蒸馏，不引入对抗/感知目标。
+3. <strong>Adversarial Refinement（阶段3）</strong>：对蒸馏后的固定NFE生成器进行对抗微调，使用MPD和多尺度子带CQT判别器CQT-D，hinge对抗目标，并结合L_adv、L_feat、L_mel和截止频率掩蔽的高频log幅度损失L_HF；梯度穿过完整少步求解器，提升高频细节与谐波一致性。</p>
+<p><strong>共享生成器</strong>：频谱编码器 + 5个TF-GridNet块组成的U-Net式骨干 + 残差解码器；BiLSTM替换为80隐单元BiGRU；时间和截止频率经Fourier嵌入注入每个GridBlock；解码器预测相对观测谱qy的复数残差并加回qy。模型仅1.80M参数，每次网络评估16.8 GMACs/秒音频。</p>
+<h2>实验结果</h2>
+<ul>
+<li>数据：VCTK约44小时48kHz语音，100说话人训练/8评估；训练输入采样率{4,6,...,32}kHz，滤波器阶数2-10；评估8阶滤波，输入8/12/16/24kHz。EARS做跨数据集泛化，仅评估4/8kHz，不参与训练或模型选择。</li>
+<li>指标：LSD、LSD-LF、LSD-HF、ViSQOL、FAD。</li>
+<li>VCTK上BDR-BWE在所有评估带宽取得SOTA LSD：8kHz NFE=1 LSD 0.755（FlowHigh 0.820）；12kHz 0.690（0.763）；16kHz 0.632（0.715）；24kHz 0.524（0.612）。NFE=2进一步略优（0.748/0.685/0.627/0.519）。LSD-LF与LSD-HF也明显优于基线。</li>
+<li>感知指标：ViSQOL具竞争力，8/12/16kHz略低于FlowHigh但高于多数基线，24kHz NFE=1为4.216略高于FlowHigh 4.212；FAD在8/12/16/24kHz分别为0.135/0.045/0.027/0.008，整体为最佳或接近最佳。</li>
+<li>EARS上表现出强跨数据集泛化，具体数值因片段截断未完整给出。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>BDR-BWE通过截止频率感知流桥、渐进一致性蒸馏和对抗精炼三阶段解耦，在仅1-2次网络评估下实现多带宽语音扩展的SOTA LSD，兼具轻量模型与有竞争力的感知质量。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.23539" target="_blank">ConvexLLM: Scaling Convex-Hull Speech Interfaces to General-Purpose Audio Intelligence</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech and Audio Language Models</span>
+                <strong>ID:</strong> <span class="tag">2610.23539</span>
+                <a href="../../pdfs/2610.23539.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ming-Hao Hsu, Shujie Liu, Yuxuan Hu, Yuxiang Wang, Yingda Shen, Jinyu Li, Zhizheng Wu<br>
+                <div style="margin-top:5px"><span class="tag">Convex Hull</span><span class="tag">C-GATE</span><span class="tag">Speech and Audio Language Model</span><span class="tag">Text Embedding Interface</span><span class="tag">Knowledge Retention</span><span class="tag">VoiceBench</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>ConvexLLM 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>语音与音频语言模型需要把连续声学表示接入以文本预训练为主的解码器。</li>
+<li>现有 MLP、Q-Former 等接口把声学特征映射到解码器输入空间，解码器必须自行学习解释这些表示；无约束表示可能远离文本嵌入，音频适配还可能削弱原有文本能力。</li>
+<li>基于词汇的接口能让声学表示与文本嵌入建立更显式联系，但已有 C-GATE 仅在受控语音识别和情感识别场景中验证，尚未证明能支撑通用语音与音频能力。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 ConvexLLM，一个基于凸输入接口的通用语音与音频语言模型。</li>
+<li>模型结构为：Whisper-large-v3 声学编码器 → 时间平均池化（×4）→ C-GATE 接口 → Qwen3.5 解码器；文本输入嵌入表与语言建模头全程冻结。</li>
+<li>C-GATE 将每个音频位置表示为冻结文本嵌入的连续凸组合：查询投影生成 query，与所有文本嵌入的 key 计算相似度，Top-K 选择后经 softmax 得到非负且和为 1 的混合系数，再对所选嵌入加权求和。因此每个接口输出都位于冻结文本嵌入的凸包内。路由选择本身不可微，梯度通过所选嵌入的分数回传。</li>
+<li>训练目标包括响应 token 上的教师强制交叉熵；对于有对应文本转写的音频样本，使用文本教师蒸馏损失，使语音条件输出对齐文本解码器输出。模型采用分阶段多任务训练：后续阶段训练声学编码器和解码器块，而文本嵌入表与 LM head 保持冻结。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在 VoiceBench 十一任务上取得 75.36 的聚合成绩，在可比规模的开放权重音频与全模态模型中最高；MMAU Test-mini 准确率为 62.50%。</li>
+<li>相比 MiniCPM-o 4.5、Kimi-Audio、MiMo-Audio 等基线，ConvexLLM 的聚合性能更高，优势主要来自口语知识与推理任务；最强基线则在音频理解和转录任务上更准确。</li>
+<li>在 2B 参数解码器上的接口对比中，C-GATE 的口语语言聚合性能高于 MLP 和 Q-Former，文本任务性能接近 MLP，但在转录和非语音音频理解上存在任务相关权衡。</li>
+<li>适配训练使用少于 0.3M 小时音频，比 Kimi-Audio 和 MiMo-Audio 报告的训练规模低一个数量级以上。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ConvexLLM 通过把音频输入约束在冻结文本嵌入的凸包内，为通用语音与音频语言模型提供了一种兼顾文本能力保留和口语知识推理的接口方案，但在转录与部分音频理解任务上仍需权衡。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.23066" target="_blank">PromptSep-Speaker: Generative Target Speaker Extraction via Multimodal Prompting and Semantic Alignment</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target Speaker Extraction (Generative Speech Separation)</span>
+                <strong>ID:</strong> <span class="tag">2610.23066</span>
+                <a href="../../pdfs/2610.23066.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yutong Wen, Ke Chen, Prem Seetharaman, Haonan Chen, Oriol Nieto, Paris Smaragdis, Justin Salamon, Zeyu Jin<br>
+                <div style="margin-top:5px"><span class="tag">Target Speaker Extraction</span><span class="tag">Latent Diffusion</span><span class="tag">Multimodal Prompting</span><span class="tag">Semantic Alignment</span><span class="tag">WavLM</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>PromptSep-Speaker 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li><strong>目标说话人提取（TSE）</strong>需要从多人混合语音中仅分离出目标说话人，已有方法多依赖单一线索族：enrollment audio、文本描述、说话人描述等。单一线索往往既不具备广泛可用性，也难以稳定区分目标。</li>
+<li>文本类线索常只能识别<strong>类别</strong>而非<strong>具体实例</strong>，例如多个说话人可能符合同一描述；enrollment audio 在音色相似或片段过短时也容易混淆。</li>
+<li>多数 TSE 系统采用<strong>mask-prediction</strong>模型，可能存在可听伪影，并对不同声学条件泛化较差。</li>
+<li>现有生成式分离研究多集中在通用声源分离或依赖视觉线索，TSE 中的生成式方法仍主要局限于 enrollment audio 条件。</li>
+<li>TSE 评测常以完全重叠混合为主，但真实会话包含部分重叠、轮流说话和插话，模型可能在单说话人区域产生抑制。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>生成式 TSE 框架</strong>：提出 PromptSep-Speaker，基于条件 latent diffusion，将混合语音波形和条件线索映射到目标语音。48 kHz 混合语音与 enrollment audio 由冻结的 DAC-VAE 编码为 latent，DiT 生成目标 latent，再由 DAC-VAE 解码为波形。</li>
+<li><strong>四类可互换多模态 prompt</strong>：统一支持四种目标线索：</li>
+<li><strong>speaker id</strong>：按开始说话的时间顺序标识目标，如 spk-1、spk-2；</li>
+<li><strong>transcript</strong>：目标说话人说出的词句；</li>
+<li><strong>enrollment audio</strong>：最长 8 秒的目标说话人参考音频；</li>
+<li><strong>caption</strong>：对目标说话人的自由文本描述。
+   用户可按场景提供任意一种线索，而不是被迫依赖系统指定线索。</li>
+<li><strong>双路径条件注入</strong>：caption 文本 token 与 enrollment audio latent 和 diffusion latent 序列拼接，由 DiT 通过 self-attention 联合处理；speaker id 与 transcript 则进入对齐模块，以 WavLM 表示的混合语音为 query、线索 token 为 key/value 进行 cross-attention，输出经 MLP 投影后加到 diffusion latent 上作为条件。</li>
+<li><strong>对齐模块</strong>：使用 2 层双向 Transformer，将序列级线索 token 转换为帧级目标图；引入可学习的 null token 表示无目标，使无目标帧关注 null token，从而定位目标说话人的时间足迹。</li>
+<li><strong>辅助对齐损失</strong>：在不增加额外标注的情况下监督 query-mixture cross-attention。利用 oracle target 的 RMS 能量池化得到目标活跃帧；对 speaker id 使用 tag mass 约束目标帧关注标签、非目标帧关注 null；对 transcript 使用强制对齐得到的词级时间跨度，约束目标词帧关注对应词 token。总损失为 L_total = L_mse + λ L_align，实验中 β=0.5、λ=0.2。</li>
+<li><strong>训练与推理</strong>：模型约 0.8B 参数，从 PromptSep 微调，AdamW、学习率 1e-4、v-prediction；推理使用 DPM-Solver++(2M) SDE 采样器、Karras schedule、24 步。训练混合数据由 4.8M speech、1.1M sound effects、10K music、2K ambient noise 等合成，覆盖 partial overlap、turn-taking、full overlap 三类时间布局。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>评测集</strong>：CapSpeech-Mix、Libri2Mix（clean/noisy）、LibriTTS-R-Mix、内部英文语料，共四个评测集；每个任务 5k mixtures，按说话人枚举后为 10k 或 15k extraction instances，且均与训练源严格不相交。</li>
+<li><strong>主要结果</strong>：在 transcript 线索下，PromptSep-Speaker 在四个集合上 SI-SDRi 为 8.73/6.15/11.41/12.47，显著优于 DAE-TSE 的 2.13/11.13/2.41/1.21（其中 Libri2Mix 的对比需注意基线 DA E-TSE 数值为 11.13），并在 mel-L2、DNSMOS 和 F1/决策指标上整体更优。</li>
+<li><strong>enrollment 线索</strong>：在 LibriTTS-R 和 Internal 上 SI-SDRi 达 11.79/13.30，优于 SoloSpeech 与 WeSep；在 CapSpeech/Libri2Mix 上 SI-SDRi 并非所有指标最高，但 mel-L2 与 DNSMOS 等感知质量指标更好。</li>
+<li><strong>speaker id 线索</strong>：在 CapSpeech、LibriTTS-R、Internal 上 SI-SDRi 为 8.32/10.60/11.37，展示时间顺序线索的有效性。</li>
+<li><strong>caption 线索</strong>：在 CapSpeech 和 Internal 上 SI-SDRi 为 3.64/4.99，明显优于 PromptSep、FlowSep、SAM-Audio 等通用分离基线（这些基线在该任务上出现大幅负 SI-SDRi）。</li>
+<li><strong>消融</strong>：去除对齐损失（na）后 transcript 平均 SI-SDRi 从 10.87 降至 -21.43；反转 cross-attention 方向（td）降至 -14.21；speaker id 上也出现类似大幅下降，说明辅助对齐损失是决定性组件。三说话人、部分重叠、完全重叠等变体也进行了评估。</li>
+<li><strong>听测</strong>：论文报告在四个评测集和 listening study 上达到 TSE 与通用声源分离基线之上的 SOTA 表现。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>PromptSep-Speaker 将 latent diffusion、多模态可互换 prompt 与无需额外标注的注意力对齐损失结合，把 TSE 从单一线索、mask 预测范式推进到更灵活、更高质量的生成式多线索目标说话人提取。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.23021" target="_blank">Semantic-Critical Regions for Video-to-Audio Generation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Video-to-Audio Generation</span>
+                <strong>ID:</strong> <span class="tag">2610.23021</span>
+                <a href="../../pdfs/2610.23021.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yun Fang, Wei Guo, Zhuonan Liang, Heng Wang, Weidong Cai<br>
+                <div style="margin-top:5px"><span class="tag">Video-to-Audio Generation</span><span class="tag">Semantic-Critical Regions</span><span class="tag">Class Activation Maps</span><span class="tag">Adapter-based Conditioning</span><span class="tag">Latent Diffusion Model</span><span class="tag">Sound-Related Visual Localization</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Semantic-Critical Regions for Video-to-Audio Generation</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>真实视频中的声音事件通常与局部、细粒度的视觉线索相关，例如物体运动、物体部件动态、接触事件以及物体之间的交互。</li>
+<li>现有 Video-to-Audio（V2A）方法主要采用两类条件方式：一是基于全局视觉表征的隐式条件，二是基于时序或空间线索的显式控制。</li>
+<li>这些方法对细微的“声音产生”与“声音指示”交互仍捕捉不足，导致声音事件语义和时序动态的视觉条件不够精确。</li>
+<li>因此，论文提出应显式定位并编码与声音相关的视觉证据，即 Semantic-Critical Regions（SCRs），为音频生成提供更细粒度的视觉引导。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 SCR-V2A 框架，将语义关键区域作为 V2A 生成的控制表示，并注入下游音频生成模型。</li>
+<li>整体包含三个阶段：</li>
+<li><strong>声音相关视觉定位</strong>：使用 MotionFormer-based 编码器预测声音事件标签，编码器由 SynchFormer 初始化，仅微调最后一个 Transformer 块，并接轻量多标签分类头；采用二元交叉熵训练。随后利用梯度加权类激活图（CAM）定位每个预测声音事件对应的判别性视觉区域，阈值 0.65 最多保留 5 个预测标签；将各标签响应图插值、归一化后逐元素取最大聚合，并着色叠加到 RGB 视频上生成 SCR-guided heatmap video，叠加权重 λ=0.5。</li>
+<li><strong>Adapter-based 双视觉编码</strong>：分别编码原始视频与 SCR 热力图视频，得到全局视觉上下文表示 F_v 和局部声音相关证据表示 F_m，再通过特征拼接融合为 V2A 控制表示 F_f。</li>
+<li><strong>Control-guided 音频生成</strong>：将融合表示 F_f 通过 control adapter 多尺度注入预训练音频潜在扩散模型的 U-Net；预测的声音事件标签作为辅助语义条件，最终生成音频波形。</li>
+<li>方法强调参数高效：通过 adapter 和部分微调实现细粒度视觉条件，而不需要全量微调生成骨干。</li>
+<li>论文还消融了用于建模 SCR 的视觉先验，表明 CAMs 能有效捕捉与声音产生事件相关的细粒度视觉线索；并进一步探索时序声音事件组合与声源感知，展示框架在时序结构化音频合成和声源局部推理方面的可扩展性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在域内基准 VGGSound 上，SCR-V2A 在分布匹配和音频质量方面取得领先表现，在跨模态对齐方面与近期 state-of-the-art V2A 方法相比具有竞争力。</li>
+<li>相比若干大规模竞争方法，SCR-V2A 所需可训练参数显著更少。</li>
+<li>在域外基准 CountixAV 上表现强，说明其在分布偏移下具有鲁棒性和泛化能力。</li>
+<li>定性结果与 Diff-Foley、Seeing &amp; Hearing、MMAudio 等方法对比，通过蓝色框突出代表性时间段的频谱能量模式，并用黄色标记表示生成音频中是否存在对应声音事件。</li>
+<li>消融实验表明 CAMs 是建模 SCR 的有效视觉先验，可捕捉声音产生事件的细粒度视觉线索。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>SCR-V2A 通过显式定位并编码声音相关的细粒度语义关键区域，以轻量 adapter 条件潜在扩散模型，在 V2A 生成保真度、参数效率和域外泛化方面表现出较强优势。</p>
+<h2>备注</h2>
+<p>以上总结基于论文前部分片段；完整实验数值、更多消融细节和后续章节未在给定片段中展开。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.22535" target="_blank">D-Composer: Language Modeling for Simultaneous Drum Transcription and Sound Event Decomposition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Information Retrieval - Drum Transcription and Sound Event Decomposition</span>
+                <strong>ID:</strong> <span class="tag">2610.22535</span>
+                <a href="../../pdfs/2610.22535.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Patrick O'Reilly, Saumya Pailwan, Annie Chu, Jason Smith, Bryan Pardo<br>
+                <div style="margin-top:5px"><span class="tag">Drum Transcription</span><span class="tag">Sound Event Decomposition</span><span class="tag">Language Modeling</span><span class="tag">Analysis-by-Synthesis</span><span class="tag">Audio Codec</span><span class="tag">One-Shot Extraction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>鼓录音通常由重复的单鼓音色事件或 one-shot 组成，但录制和混音后的音频难以直接访问、编辑单个声音事件。</li>
+<li>传统鼓转录、鼓源分离、one-shot 提取通常是任务专用模型，只能恢复潜在结构的一部分，难以完整分解为可操作的 piano roll 式排列。</li>
+<li>现有 Analysis-by-Synthesis（AbS）方法虽能统一多任务，但存在三类问题：对电子鼓等多样音色泛化不足；依赖高质量成对音频-转录训练数据；通常每个鼓类只生成一个 one-shot，无法建模同一鼓类内部的音色变化。</li>
+<li>领先 AbS 方法预测密集的采样级转录，需要后处理稀疏化，且训练数据音色范围较窄。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 D-Composer：一个自回归语言建模框架，将鼓录音完整分解为带标签的声音事件序列。</li>
+<li>输出为交错的 token 流，每个声音事件包含：起始时间（10ms 量化）、鼓类（MIDI note）、以及孤立声音事件的声学 token。</li>
+<li>声学 token 可通过专用低码率鼓 one-shot 编解码器 DOC 映射回音频，从而把任意鼓录音转化为可播放、可编辑的 piano roll。</li>
+<li>与 AbS 先分析再合成不同，D-Composer 将分析和合成组织为单一交错过程，直接生成符号-声学联合输出。</li>
+<li>提出 DOC：将 44.1kHz 立体声鼓 one-shot 压缩到约 0.1kbps，3 秒音频仅用 32 个 token 表示，显著缩短序列长度，便于在消费级 GPU 上训练。</li>
+<li>DOC 使用冻结预训练 VAE、可学习 register 池化、FSQ 量化、上采样模块和 flow-matching 解码器；选用 MelodyFlow VAE 以兼顾编码速度和 48kHz 立体声渲染能力。</li>
+<li>由于真实鼓数据的真值分解稀缺，方法利用 MIDI 鼓谱和 one-shot 数据合成训练录音与目标分解，覆盖更广泛的声学和电子鼓音色。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在真实和合成录音上的鼓转录与 one-shot 提取实验中，D-Composer 与最先进 AbS 系统和任务专用基线表现相当或更优。</li>
+<li>方法能泛化到更广泛的鼓音色范围。</li>
+<li>实验表明，其分解结果能够准确定位并重建鼓录音中的组成声音事件。</li>
+<li>摘要和引言未给出具体数值指标，但强调在统一转录与声音事件分解方面，语言建模配合充足合成数据和紧凑声学 token 表示是一种简单有效的方案。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>D-Composer 将鼓录音分解转化为“符号+声学 token”的自回归语言建模问题，在统一鼓转录、one-shot 提取和音色建模方面提供了有前景的新范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.22499" target="_blank">JAVIS: Joint Audio-Visual Interaction and Streaming for Real-Time Conversational Agents</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Visual Conversational Agents</span>
+                <strong>ID:</strong> <span class="tag">2610.22499</span>
+                <a href="../../pdfs/2610.22499.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Junseok Ahn, Jaehyun Park, Jeongsoo Choi, Joon Son Chung, Ji-Hoon Kim<br>
+                <div style="margin-top:5px"><span class="tag">audio-visual conversational agent</span><span class="tag">joint speech-motion generation</span><span class="tag">streaming generation</span><span class="tag">talking face video</span><span class="tag">Joint Refined Head</span><span class="tag">conditional flow matching</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<ul>
+<li>人类交流本质上是多模态的，除了语言和声音，还依赖面部表情、头部运动和注视等视觉信号；但现有对话系统主要沿文本或语音轴发展，缺少视觉通道，限制了表达力和自然度。</li>
+<li>常见级联方案包括「文本 LLM + 文本到音视频生成」以及「语音对话系统 + 语音驱动说话脸生成」。这类流程存在中间模态瓶颈：文本丢失韵律细节，合成语音只保留声学线索，下游面部生成器无法访问上游对话上下文；同时模块串行导致延迟累积、误差传播并损害音视频同步。</li>
+<li>已有端到端工作如 X-Streamer、Ex-Omni-2D 仍依赖时空视频潜变量的迭代生成，视觉合成计算负担重，实时流式生成真实视觉响应仍是开放问题；表达性音视频对话数据也较稀缺。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li>提出 JAVIS：一个面向实时音视频对话智能体的端到端流式框架。给定用户语音、对话历史和参考肖像，JAVIS 联合生成语音回复与同步面部视频，而不是先合成语音再驱动面部。</li>
+<li>基于 Fun-Audio-Chat 的 5 Hz 共享 LLM 与 25 Hz speech refined head，通过 LoRA 将 speech refined head 改造为 Joint Refined Head（JRH），产生统一音视频表示 H_t ∈ R^{5×d}。JRH 将每个 5 Hz LLM 输出展开为五个条件向量并自回归处理，采样五个语音 token；五个隐藏状态堆叠为 H_t，既用于语音 token 预测，也直接作为运动分支条件，跳过波形解码与再编码。</li>
+<li>双流分支设计：语音分支使用冻结的 CosyVoice 3 flow-matching 语音解码器与 vocoder，chunk-aware 因果结构支持增量流式解码；运动分支由 Motion Decoder 基于 H_t、H_{t+1} 单块前瞻、上一运动块 M_{t-1} 和参考面部状态 g 自回归生成 5 帧运动块 M_t ∈ R^{5×20}，对应 FLOAT 的 20 维运动基系数，25 FPS 下覆盖 0.2 秒，再由 Motion Renderer 用参考肖像渲染视频。</li>
+<li>运动分支条件为 c_t=(H_t, H_{t+1}, M_{t-1}, g)，使用双向 Transformer 和 conditional flow matching 目标训练，总损失 L=L_speech+L_motion；训练时冻结共享 LLM，联合优化 LoRA 适配的 JRH 与 Motion Decoder。</li>
+<li>流式推理中，一旦 H_{t+1} 可用，即用 Euler ODE 从高斯噪声采样 M_t，第一块以零运动为条件；固定输入窗口使每块计算成本不随回复长度增长，低维面部运动也降低了生成延迟。</li>
+<li>构建 JAVIS-Syn：334.13 小时、225,780 条视频话语、39,647 段对话的合成音视频对话语料，覆盖 DailyTalk、ShareChatX-Emotion 和 VoiceAssistant-400K；使用 InfiniteTalk 按情感提示渲染视频，参考肖像来自 1,220 张由 Gemini 3.1 Flash Image 生成的中性正面肖像，并用 SyncNet 进行唇同步过滤。</li>
+</ul>
+<h3>实验与结果</h3>
+<ul>
+<li>训练分为两阶段；第一阶段使用 Talker-T2AV 数据集中 940,497 条单话语片段进行 monologue 训练（提供片段后续内容被截断）。</li>
+<li>Table 1 客观评测显示：JAVIS 的 LSE-C=9.59，与 FAC(s2s)+InfiniteTalk 并列最高；LSE-D=6.74，为表中最低即最佳；SpkSIM=0.701，为最高。其 IQ=0.744、SC=0.993、MS=0.9935、WER=0.44%、UTMOS=4.29，视频与语音质量具有竞争力，但并非所有指标均第一。</li>
+<li>摘要与引言报告：JAVIS 初始延迟相较强基线约降低 200×；在唇同步和面部表情适当性上优于基线；人类评估进一步确认其能生成自然音视频回复，具有准确唇同步和符合情境的面部表情。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>JAVIS 通过共享 LLM 上的 Joint Refined Head 将语音 token 与低维面部运动统一到同一表示，并以双流式分支实现低延迟、紧同步的音视频对话生成，是用统一表示替代级联瓶颈的有前景方案；同时以 334 小时合成语料缓解数据稀缺，但部分语音/视频质量指标仍与强基线互有胜负，实时性与表情适当性仍需结合完整实验和人类评测细节综合判断。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.22416" target="_blank">From Individual Songs to Music Corpora: Evaluating Explainable Harmonic Decision-Making on HookTheory</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Explainable Automatic Melody Harmonization</span>
+                <strong>ID:</strong> <span class="tag">2610.22416</span>
+                <a href="../../pdfs/2610.22416.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Josef Pavlíček, Martin Pelikán<br>
+                <div style="margin-top:5px"><span class="tag">automatic melody harmonization</span><span class="tag">explainable AI</span><span class="tag">harmonic decision-making</span><span class="tag">Viterbi algorithm</span><span class="tag">HookTheory</span><span class="tag">computational music</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：From Individual Songs to Music Corpora: Evaluating Explainable Harmonic Decision-Making on HookTheory</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>自动旋律配和声（automatic melody harmonization）的评估常依赖单曲案例或数据驱动语料模型，容易把“与参考和弦不同”一律视为错误。</li>
+<li>单个旋律可有多种合理配和声，因此与人工标注和弦一致并不等价于音乐质量，也不能直接证明算法重建了作曲家决策。</li>
+<li>神经网络等生成模型可产生看似合理的输出，但往往无法解释某个和声选择为何被做出；需要区分“模型无法表示该和弦”与“模型可表示但选择了别的和弦”。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文使用一个冻结的 Explainable Melody Harmonizer（EMH v0.12），在不调整规则、权重和候选词表的情况下，从单曲案例迁移到独立收集的 HookTheory 语料片段评估。</li>
+<li>严格“参考和声防火墙”：生成阶段只输入单旋律事件和必要结构时序信息，人工和弦标注仅在生成后用于评估；检测调性也仅由旋律推断，避免参考和弦泄漏。</li>
+<li>EMH 使用显式准则：旋律兼容性、和声功能、和声持续性、终止式偏好、 Meter-aware 分段和类 Viterbi 全局动态规划优化。评分权重固定为旋律-和弦兼容 0.50、功能转换 0.25、持续性 0.10、终止式偏好 0.15。</li>
+<li>冻结候选词表包含 7 个自然音三和弦功能（I、ii、iii、IV、V、vi、vii°）和 3 个七和弦功能（ii7、V7、viiø7），并有意排除许多半音、扩展、加音和声、次级属和弦及九/十一/十三和弦。</li>
+<li>提出决策级诊断：把每个评估片段分为精确匹配、参考和弦不在候选词表、参考和弦可选但未被选中三类，从而把“表示限制”与“选择差异”分开。</li>
+<li>评估流程可复现：使用 tagged release emh-v0.12.1-hooktheory，提供 HookTheory loader、adapter、evaluator 和 audit scripts，并公开代码与 manifest。</li>
+</ul>
+<h2>实验设置与结果</h2>
+<ul>
+<li>数据来自公开 HookTheory JSON archive 的 TEST partition；确定性筛选 manifest 选出 20 个候选片段，最终处理 19 个；1 个因复合拍时间基映射未验证而被排除。共得到 439 个可评估和声片段。</li>
+<li>主要指标：</li>
+<li>精确和弦一致率：20.50%（90/439）</li>
+<li>和弦根音一致率：31.66%（139/439）</li>
+<li>和声功能一致率：47.62%（200/420，相对于 EMH 推断调性）</li>
+<li>候选和弦覆盖率：53.76%（236/439）</li>
+<li>候选根音覆盖率：95.67%（420/439）</li>
+<li>在候选覆盖条件下的和弦一致率：38.14%（90/236）</li>
+<li>非混合参考片段上的根音一致率：31.33%（125/399）</li>
+<li>决策级分解：</li>
+<li>精确和弦匹配：90 段，20.50%</li>
+<li>人工参考和弦不在候选集合：203 段，46.24%</li>
+<li>参考和弦可用但未被选中：146 段，33.26%</li>
+<li>根音覆盖率高（95.67%）而完整和弦覆盖率低（53.76%），说明主要限制来自和弦性质与扩展音，而非根音不可用。</li>
+<li>功能一致率高于精确和弦一致率，说明具体和弦不同时，功能层面仍可能对应；但该结果依赖 EMH 推断的调性上下文。</li>
+<li>评估中每个片段按最大时间重叠分配参考和弦；40 个片段含混合参考和声，4 个参考覆盖不完整，作为诊断限制保留。</li>
+</ul>
+<h2>讨论与贡献</h2>
+<ul>
+<li>RQ1：冻结的可解释 harmonizer 在独立语料上精确和弦一致率不高，但这是有意冻结模型且人工参考只是多种可能配和声之一。</li>
+<li>RQ2：主要信息来自 203 个“结构上不可用”的参考和弦与 146 个“可用但未选中”的和弦；前者是候选表示限制，后者需要进一步研究旋律兼容性、功能上下文、持续性和全局优化。</li>
+<li>RQ3：决策级诊断比单一相似度分数更有解释价值，可帮助音乐家和研究者区分词表限制与真实和声选择差异，并形成后续可控实验问题，如扩大候选词表、改进调性推断或调整分段。</li>
+<li>贡献是一个带严格参考和声防火墙、可复现的语料评估流程，以及显式的分歧分解方法。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文提出了一种可复现、可解释的旋律配和声语料评测框架，用冻结的 EMH 在 HookTheory 上把“模型不能表示”与“模型能表示但未选中”明确区分开；虽然精确和弦一致率不高，但其决策级诊断比单一准确率更能揭示和声生成系统的限制与选择行为。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
