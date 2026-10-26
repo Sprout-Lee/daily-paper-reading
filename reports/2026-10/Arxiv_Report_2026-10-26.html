@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arxiv Daily Report - 2026-10-26</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .header h1 { margin-bottom: 10px; color: #2c3e50; }
+        .meta { color: #7f8c8d; font-size: 0.9em; }
+        
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .paper-title { 
+            margin-top: 0; 
+            color: #2c3e50; 
+            font-size: 1.4em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .paper-title a { text-decoration: none; color: inherit; }
+        .paper-title a:hover { color: #3498db; }
+        
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .summary-section { margin-top: 15px; }
+        .summary-section h3 { 
+            font-size: 1.1em; 
+            color: #34495e; 
+            margin-top: 20px; 
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .category-tag {
+            background: #e8f6f3;
+            color: #1abc9c;
+            border: 1px solid #a3e4d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arxiv Daily Deep Report</h1>
+        <div class="meta">
+            日期: 2026-10-26 | 来源: eess.AS | 新增论文: 16 篇
+        </div>
+    </div>
+    
+    
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32981" target="_blank">SEMAC: Spherical Energy Matching Ambisonics Codec for Efficient Higher-Order Ambisonics Compression</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Coding / Ambisonics Compression</span>
+                <strong>ID:</strong> <span class="tag">2610.32981</span>
+                <a href="../../pdfs/2610.32981.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Christoph Hold, Jan Buethe, Jean-Marc Valin, Jan Skoglund, Toni Hirvonen, Nils Peters<br>
+                <div style="margin-top:5px"><span class="tag">Higher-Order Ambisonics</span><span class="tag">Spatial Audio Coding</span><span class="tag">Directional Energy Envelope</span><span class="tag">CELT</span><span class="tag">Opus CMF 3</span><span class="tag">MUSHRA</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>高阶 Ambisonics（HOA）能提供沉浸式空间音频，但通道数随阶数 N 呈 C=(N+1)^2 增长，传统逐通道编码的码率随阶数平方增长。Opus 通过 Channel Mapping Families 2/3 支持 HOA：CMF 2 独立编码各 Ambisonics 通道，CMF 3 用固定线性变换/波束形成后仍编码全部 C 个通道。二者在低码率下若降低精度，会损害感知质量；若做阶数截断，则丢失全阶方向信息。论文提出应优先保留声场的全阶方向能量分布这一关键感知特征，而不是直接编码所有 HOA 通道。</p>
+<h2>方法创新</h2>
+<p>SEMAC 将 HOA 信号表示为「量化后的全阶方向能量包络」加「少量 CELT 编码的传输通道」。其核心思想类比 CELT 将频带能量包络与归一化波形形状分离编码，并把该原则推广到方向域：</p>
+<ol>
+<li><strong>方向分析与包络提取</strong>：在 MDCT 域对球谐系数 χ 用 max-rE 波束形成矩阵 A 分解为 D 个方向波束，A 由临界采样球面网格上的实 SH 基函数与模态权重构成，B=A† 为合成伪逆。对每个波束和 CELT 频带提取带内幅度 γ_c(t,b)，形成方向能量包络。该包络不显式估计声源数或 DOA，只记录方向上的带能量。</li>
+<li><strong>包络编码</strong>：复用 CELT 的能量编码结构，对每个波束的 log 能量做前后帧/前后频带预测，残差在 6 dB 网格上熵编码，再用精细比特 refinement；低码率模式降低包络精度，避免边信息压倒传输码率。边信息码率随输入阶数增长，而非传输阶数。</li>
+<li><strong>降维传输</strong>：用投影 T∈R^{Ctp×C} 提取 Ctp</li>
+</ol>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32950" target="_blank">CoupleFlow: Null-Calibrated Auditory Attention Decoding With Time-Locked Brain-Speech Coupling and Flow-Matching Likelihood Ratios</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Auditory Attention Decoding (EEG/MEG)</span>
+                <strong>ID:</strong> <span class="tag">2610.32950</span>
+                <a href="../../pdfs/2610.32950.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ali Alavi, Donald S. Williamson<br>
+                <div style="margin-top:5px"><span class="tag">Auditory Attention Decoding</span><span class="tag">EEG/MEG</span><span class="tag">Flow Matching</span><span class="tag">Null Calibration</span><span class="tag">Brain-Speech Coupling</span><span class="tag">Likelihood Ratio</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>CoupleFlow 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li><strong>听觉注意解码（AAD）目标</strong>：从简短、非侵入式脑记录（EEG/MEG）中，在多个竞争语音流中识别听者注意的说话人，面向神经引导助听设备等应用。</li>
+<li><strong>现有高准确率不可泛化</strong>：近期EEG解码器报告1秒数据可达95–97%准确率，但论文指出其性能主要来自<strong>试次泄漏、眼动/注视方向、声学线索</strong>，而非语音诱发的神经活动；训练与测试窗口来自同一试次时，分类器可能是在识别试次而不是解码注意。</li>
+<li><strong>刺激重建方法受限</strong>：线性回溯模型和CCA较稳健，但通常需要数十秒信号才能高准确率；深度非线性重建提升有限，例如VLAAI包络重建相关仅约r≈0.19，且部分增益来自训练/测试重叠。</li>
+<li><strong>评测协议不统一且存在捷径</strong>：不同研究预处理不同，结果难比较；多数只报告一两个窗口长度；部分数据集重复播放相同故事，测试窗口可能来自训练试次；NJU数据集中EEG与音频在任何偏移下都未时间对齐，不能反映语音跟踪。</li>
+<li><strong>需要严格零校准与泄漏无关基准</strong>：解码器应只利用脑对语音的时间锁定响应，并且在EEG不包含语音信息时严格处于随机水平，避免响度、音色、试次身份等捷径。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>CoupleFlow总体结构</strong>：神经路径嵌入EEG记录，声学路径嵌入每个候选说话人的语音，二者仅在<strong>时间中心化耦合分数</strong>处相交并做决策；另设条件流匹配头提供第二决策规则。</li>
+<li><strong>神经路径</strong>：包括听者校正（低秩调整吸收头形、电极帽位置等个体差异）、虚拟传感器（学习空间滤波器降维）、滞后窗口编码器。嵌入在时刻t只看到声音后δ∈{0,125}ms起始的约0.98秒EEG，符合皮层响应必须发生在声音之后；声音前EEG作为滞后控制。</li>
+<li><strong>声学路径</strong>：候选特征包括包络、起始点、子带包络，以及可获得的glimpsed/masked通道；训练时用量化匹配使候选包络取值分布一致，去除响度和电平线索。共享因果膨胀卷积编码器对所有候选使用相同权重，且只看到过去音频。</li>
+<li><strong>时间中心化耦合评分</strong>：对神经与声学嵌入逐维计算沿时间的Pearson相关，加权求和并带温度参数；候选分数减去所有候选平均分。由于相关去除各维时间均值，若神经嵌入无时间变化，则所有候选得分相同为0，从而在EEG无信息时保证随机水平（Proposition 1 零校准）。</li>
+<li><strong>流匹配PMI似然比决策</strong>：条件流匹配头学习从神经嵌入生成被注意包络；训练中部分窗口丢弃条件，使同一网络也能在无脑信号时生成包络。测试时每个候选分别在有/无EEG条件下通过流头，用记录降低生成误差的程度近似点互信息PMI(ak;x)=log p(ak|x)-log p(ak)。选择最大PMI为第二决策规则，在记录仅依赖被注意说话人的标准假设下Bayes最优；先验log p(ak)相消，候选不能因“更像典型语音”而获胜。</li>
+<li><strong>抗捷径训练目标</strong>：总损失包括交叉熵与对比学习解码项、流匹配密度项、零校准项、音频仅 adversary 与VICReg抗捷径项、侧边头和包络读出辅助项。抗捷径项包括：要求被注意语音与自身记录配对时得分高于与其他窗口记录配对；通过反转梯度训练仅音频分类器以剥离共享编码器中的声学线索；VICReg防止神经嵌入坍缩。</li>
+<li><strong>模型选择与评测</strong>：验证集按“贡献度”选择检查点，即准确率减去跨试次零校准准确率，奖励脑信号真正带来的增益；使用内容不相交划分和零测试（不同试次、时间移位、随机噪声）区分真实时间耦合与试次识别。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在<strong>九个公开EEG/MEG数据集</strong>上使用统一预处理管线评估，覆盖四种语言、高密度EEG、听障听者以及多说话人房间场景。</li>
+<li><strong>内容不相交划分</strong>下，测试语音在训练中从未出现；CoupleFlow优于在相同数据上训练的线性和深度基线。</li>
+<li><strong>所有零测试保持随机水平</strong>，说明解码依赖脑-语音时间锁定耦合而非试次、声学或身份捷径；同时揭示了此前高准确率可能来自泄漏与捷径。</li>
+<li>提出<strong>证据累积定律</strong>：用每个数据集一个参数预测不同窗口长度下的准确率，并可由神经语音跟踪强度预测该参数；该定律将记录信噪比识别为解码速度与可靠性的限制因素，并可估计达到目标准确率所需窗口长度。</li>
+<li>片段未给出具体数值结果表，但摘要和引言明确报告了上述定性/定量结论。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>CoupleFlow通过时间锁定脑-语音耦合、零校准耦合评分和流匹配PMI似然比，为AAD提供了抗捷径、可泛化且可预测窗口长度性能的严格解码框架与泄漏无关基准。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32211" target="_blank">Melody Guidance for Audio Diffusion Models Without Retraining</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Generation / Melody-Controlled Audio Diffusion</span>
+                <strong>ID:</strong> <span class="tag">2610.32211</span>
+                <a href="../../pdfs/2610.32211.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Cristobal Andrade, Sebastian J. Schlecht, Ben Maman, Meinard Müller<br>
+                <div style="margin-top:5px"><span class="tag">audio diffusion models</span><span class="tag">melody guidance</span><span class="tag">diffusion posterior sampling</span><span class="tag">differentiable F0 estimation</span><span class="tag">warm initialization</span><span class="tag">training-free control</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Melody Guidance for Audio Diffusion Models Without Retraining</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有旋律控制方法通常需要在训练阶段使用音频与音高曲线或MIDI配对数据，训练或微调一个条件生成模型；这依赖旋律专属条件数据，并且难以直接复用到已有的无条件音频扩散模型上。</li>
+<li>论文希望在<strong>不重训练、不修改预训练模型</strong>的前提下，对已有的无条件音频扩散模型进行推理时旋律控制。</li>
+<li>关键难点在于：目标F0轨迹可被视为音频的退化观测，但F0估计是<strong>非线性、严重欠定</strong>的映射，且DPS常用的高斯似然近似并不严格成立；许多不同音色和发音的波形可以共享同一条F0轮廓。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>推理时逆问题建模</strong>：将旋律条件生成建模为逆问题，把目标F0轨迹 y 视为音频 x0 经过可微分音高估计器 A 后的退化测量，并用扩散后验采样DPS结合扩散先验与似然引导。</li>
+<li><strong>使用dSWIPE作为可微分F0观测算子</strong>：dSWIPE是SWIPE的可微分版本，通过softmax将音高候选相关性转为可微的期望音高输出；论文用其构造旋律似然分数，使梯度可从F0条件反传到扩散采样变量。</li>
+<li><strong>热初始化</strong>：不是从纯高斯噪声开始反向扩散，而是根据目标F0合成三角波 x_init，再在时刻 t_init 启动反向扩散；对latent扩散模型编码为 z_init = E(x_init)，对波形域模型直接令 z_init = x_init。三角波比纯正弦包含更丰富的谐波结构，可提供更有信息量的起点，减少后续引导负担。</li>
+<li><strong>引导采样与噪声自适应步长</strong>：每个去噪步用解码后的去噪估计 D(ẑ0) 估计F0，与目标 y 比较，并以 −ζ_t ∇ ||y − dSWIPE(D(ẑ0))||² 形式构造引导梯度；步长 ζ_t = λ t √N / ||∇L||_2，其中 λ 为引导强度，N为 z_t 维度。</li>
+<li><strong>目标音高高斯模糊</strong>：对目标音高表示做以音分计的标准差 ς 的高斯模糊，以保留颤音等表现性旋律特征。</li>
+<li><strong>模型无关、免训练</strong>：方法不需要旋律配对数据，也不需要任务特定重训练，可同时用于波形域和latent域扩散模型。作者称据其所知，此前没有工作以这种方式为无条件扩散模型形式化旋律引导生成。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在四个扩散模型上评估：两个波形域钢琴模型和两个分别用于歌声与吉他的latent扩散模型；基线限定为公开可用且有预训练检查点的条件方法。</li>
+<li>分析引导强度 λ 与初始化时刻 t_init 的影响：λ=0 表示禁用旋律引导，λ越大越偏向目标F0但可能损害音质；t_init 越大，扩散模型有更多时间重塑信号但更易偏离 x_init 的旋律，t_init 越小则更保留初始旋律但音色细化空间更小。</li>
+<li>论文报告单独依赖引导项会产生不自然的旋律，且高 λ 会把输出推离参考音频分布；热初始化可减少反向扩散中的纠正性引导需求，从而使用较小 λ 仍保持F0贴合。实验表明引导与热初始化结合对于获得旋律准确且自然的结果是必要的。</li>
+<li>在钢琴、吉他和歌声上，该方法取得与专门训练用于旋律控制的条件模型相当的旋律准确率，同时保持有前景的感知质量；摘录中未给出完整数值结果。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文提出了一种实用且模型无关的免训练旋律引导方案，将可微分F0估计与热初始化结合到扩散后验采样中，在多种乐器与歌声上取得与专用条件模型有竞争力的旋律准确率，但仍需在F0逆问题的强欠定性与音质自然度之间进行权衡。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32202" target="_blank">ICASSP 2026 Radar Acoustic Speech Enhancement (RASE) Challenge</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2610.32202</span>
+                <a href="../../pdfs/2610.32202.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhi-Wei Tan, V. G. Reju, Ritesh C. Tewari, Ruotong Ding, Patrick A. Naylor, Andy W. H. Khong<br>
+                <div style="margin-top:5px"><span class="tag">Radar Vibrometry</span><span class="tag">Speech Enhancement</span><span class="tag">mmWave Radar</span><span class="tag">Through-Glass Sensing</span><span class="tag">Speech Acquisition</span><span class="tag">Benchmark Challenge</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>传统麦克风在隔着玻璃、隔障碍物等场景下失效或难以部署，因此需要借助屏障来采集语音。</li>
+<li>毫米波雷达振动测量（mmWave radar vibrometry）可以非接触式穿透玻璃，获取语音引起的表面微振动；但雷达衍生信号存在带宽受限、信噪比低、受反射面机械特性与传感几何影响等问题，会引入与传统语音增强不同的失真。</li>
+<li>此前研究多依赖定制硬件原型，缺乏标准化数据集、成对干净参考和统一评测协议，导致可复现性与公平比较困难，语音增强社区缺少公开基准。</li>
+</ul>
+<h2>方法创新（挑战赛设计）</h2>
+<ul>
+<li>提出 ICASSP 2026 RASE Grand Challenge：首个面向毫米波雷达振动测量语音增强的社区挑战赛与公开基准。</li>
+<li>数据集：使用成对的雷达–干净语音录音，涵盖两种真实场景：(a) 直接振膜振动；(b) 二次表面振动（靠近扬声器的薄铝箔间接振动，信号更弱）。</li>
+<li>硬件与信号：采用 77 GHz mmWave FMCW 雷达（TI AWR2243BOOST），chirp rate 为 8 kHz；通过估计 IF 相位变化，将接收到的 IF 雷达信号映射为振动派生语音；最终提供 8 kHz 采样率的标准 .wav 音频。</li>
+<li>数据划分：训练集与验证集来自 LibriSpeech，测试集来自未公开语料；采用跨语料评估来检验泛化性并防止过拟合。</li>
+<li>公平规则：要求所有队伍从零开始训练，禁止使用预训练权重、外部数据与数据增强；测试阶段最多提交 3 次，验证阶段最多提交 30 次。</li>
+<li>评测平台：基于 Codabench 的安全服务端执行，并提供统一模板与单行执行命令，以确保标准化与防篡改。</li>
+<li>基线系统：提供基于 WaveEar/WavVoiceNet 的可复现基线实现与代码库。</li>
+<li>统一指标：采用 PESQ（归一化）、ESTOI、DNSMOS（归一化）和 CS-MFCC；总体得分 = (PESQ_n + ESTOI + CS-MFCC + DNSMOS_n)/4；直接振膜场景权重为 40%，二次表面场景权重为 60%。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>排行榜亮点（平均总分）：</li>
+<li>第1名 WHU IASP：PESQ 1.541、ESTOI 0.248、DNSMOS 2.650、CS-MFCC 0.598，总分为 0.3431</li>
+<li>第2名 ZJU ShulinZhu：1.478、0.262、2.338、0.624，总分为 0.3304</li>
+<li>第3名 USTC NERCSLIP：1.318、0.194、1.673、0.625，总分为 0.2612</li>
+<li>第4名 Team Quantz：1.306、0.183、1.580、0.627，总分为 0.2526</li>
+<li>第5名 Origin Research：总分 0.2520</li>
+<li>第6名 SSSL：总分 0.2474</li>
+<li>第7名 Augmented Listening Lab：总分 0.2401</li>
+<li>基线（WaveVoiceNet）：总分 0.2324</li>
+<li>第8名 SRIB Language AI：总分 0.1565</li>
+<li>前五名队伍（WHU IASP、ZJU ShulinZhu、USTC NERCSLIP、Quantz、Origin Research）均超过基线，证明其有效性；其中基线在 DNSMOS 上偏低（1.436），但总体加权得分仍被超越。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>RASE 2026 建立了首个基于毫米波雷达振动测量的隔玻璃语音增强公开基准（数据集 + 可复现基线 + 统一评测），并通过跨语料测试、严格公平规则和 Codabench 安全评测，推动了这一新兴方向的可复现研究。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32198" target="_blank">SURE-Tagger: Structured Speech Representations for Compositional Evaluation and Targeted Data Selection</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Understanding & Rich Speech Annotation</span>
+                <strong>ID:</strong> <span class="tag">2610.32198</span>
+                <a href="../../pdfs/2610.32198.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jing Peng, Huifei Wang, Weihan Chen, Shuo Gao, Bicheng Zhang, Junhao Du, Hanqi Li, Chaolei Liu, Wen Wen, Tao Liu, Xu Li, Yu Xi, Shuai Wang, Kai Yu<br>
+                <div style="margin-top:5px"><span class="tag">半结构化语音表示</span><span class="tag">语音描述/字幕</span><span class="tag">组合评测</span><span class="tag">定向数据选择</span><span class="tag">ASR 适配</span><span class="tag">Tag-Bench</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>SURE-Tagger 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有语音 captioning 模型用自然语言描述语言内容、说话人特征、时间交互、副语言线索和声学环境，但不同录音的属性覆盖不一致、措辞变化大，遗漏含义模糊：未提及不等于不存在，可能是未观察到、被忽略或不确定，因此难以直接作为样本级一致属性记录。</li>
+<li>聚合数据集分数会掩盖共现语音条件下的模型性能差异；组合评测需要多个属性同时被确认，例如多说话人且重叠语音。</li>
+<li>需要一种表示能够区分确认属性值（包括确认不存在）与证据不足，并支持跨数据集联合查询，以诊断条件相关错误并指导数据选择。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出半结构化样本级语音表示 S*(x) = ({(k_i, v_i(x))}, d(x))。表示分为五层：词汇内容、说话人特征、时间交互、副语言与非语言信息、声学场景与事件。每个属性 k_i 有预定义值空间 V_i，并允许 null；null 表示证据不足，确认存在或不存在则由对应值表示；d(x) 保留开放描述。</li>
+<li>证据 grounded 构建：专门感知模型产生带来源的 observations O(x)，不作为直接 schema 赋值。FireRedLID 初判语言并决定 diarization 模型：中英使用 MOSS-Diarize，其他语言使用 DiariZen；FireRedAED 与 ASR 提供声学事件和语言内容观察。用 ASR transcript 做语言一致性检查：若超过 90% 的转写词属于与初判不同的单一语言，且两种语言属于同一 diarization 模型组，则修正语言值；若需要不同组，则置为 null。LLM 在 schema 定义与约束 C 下一次性整合证据，调和冲突，证据不足时保留 null，并生成补充描述。</li>
+<li>组合评测：查询 q 对若干属性指定谓词，评测子集 D_q 仅包含所有指定条件均被显式属性确认的录音；可将异构数据集重组为共享语音条件下的评测子集，并得到条件级 WER 画像。</li>
+<li>定向数据选择：利用条件级错误画像从独立候选池选择训练数据，在有限微调预算下适配 ASR 模型。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>提出 Tag-Bench：结合真实录音、agentically synthesized 且约束验证的语音场景和已验证属性标注，用于评估标注质量与覆盖。在 29 个评估维度上，SURE-Tagger 在真实语音中 25/29 取得最高分，在合成语音中 24/29 取得最高分，在结构与描述属性上优于 caption 基线。</li>
+<li>通过语音重建考察属性保持情况（片段提及但未展开细节）。</li>
+<li>使用十个异构数据集构建基于 schema 的评测子集，分析多个 ASR 模型的条件级错误。数据选择实验中，SURE-Tagger 引导选择使 Qwen3-ASR-1.7B 在留出集上的整体 ASR 错误率相对未适配模型降低 14.3%；caption 引导选择与随机采样在同样一小时微调设置下反而增加错误。</li>
+</ul>
+<h2>主要贡献</h2>
+<ol>
+<li>半结构化语音表示：显式、可联合查询的语音属性，弃权状态与补充开放描述，并通过 SURE-Tagger 从专门语音观察构建。</li>
+<li>Tag-Bench：真实与合成结合的可控 rich speech annotation 评测基准。</li>
+<li>组合评测与诊断引导数据选择：支持跨数据集联合条件评测、条件级错误分析，并指导 ASR 适配的定向数据选择。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>SURE-Tagger 将自由语音描述转化为带 null 弃权的可查询半结构化属性记录，打通丰富标注、组合评测与定向数据选择，实验显示其标注覆盖和下游 ASR 数据选择均有效。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32187" target="_blank">Uni-Stream: A Unified Streaming Speech Language Model for Speech Synthesis and Recognition</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unified Streaming Speech Language Model (ASR + TTS)</span>
+                <strong>ID:</strong> <span class="tag">2610.32187</span>
+                <a href="../../pdfs/2610.32187.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xuan Shi, Chang Zeng, Tiantian Feng, Ye Zhang, Jun Liu, Shih-Heng Wang, Lie Lu, Shrikanth Narayanan<br>
+                <div style="margin-top:5px"><span class="tag">Unified Speech Language Model</span><span class="tag">Streaming ASR</span><span class="tag">Streaming TTS</span><span class="tag">Speech-Text Interleaving</span><span class="tag">Time-Aligned Interleaving</span><span class="tag">Two-Stage Training</span><span class="tag">Knowledge Distillation</span><span class="tag">Representation Probing</span><span class="tag">VibeVoice</span><span class="tag">Speech Tokenizer</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>Uni-Stream: 统一的流式语音语言模型（语音合成 + 语音识别）</h2>
+<p><strong>作者/机构</strong>: Xuan Shi, Chang Zeng, Tiantian Feng, Ye Zhang, Jun Liu, Shih-Heng Wang, Lie Lu, Shrikanth Narayanan（USC、日本国立情报学研究所 NII、MIT、Dolby Laboratories）；arXiv:2610.32187v1。</p>
+<h3>1. 核心痛点（Problem）</h3>
+<ul>
+<li><strong>统一与流式长期被分开研究</strong>：已有的统一语音语言模型（Yan et al. 2025；Guan et al. 2025；Li et al. 2026；Cai et al. 2026）虽然共享骨干同时做 ASR 与 TTS，但<strong>大多离线运行</strong>，需要完整的语音或文本输入；而流式识别/流式合成系统（Du et al. 2024；Bai et al. 2025；Tu et al. 2026；Défossez et al. 2024；Zeghidour et al. 2025）虽然增量处理，但<strong>每个任务各训一个模型</strong>。</li>
+<li><strong>联合训练会互相拖累</strong>：识别与合成对语音表征的需求相互竞争（Yan et al. 2025）；从合成 checkpoint 初始化生成模块能提升合成质量，却可能降低识别准确率（Li et al. 2026）。</li>
+<li><strong>早期尝试受限</strong>：基于 neural transducer 的统一流式 TTS/ASR 模型 Speech-T（Chen et al. 2021b）仅在<strong>单说话人</strong>数据上评估。</li>
+<li>作者指出：<strong>此前没有工作证明「单一共享 decoder-only LM 骨干」能在流式输入下同时完成识别与合成</strong>（这是本文最核心的空白）。</li>
+<li>概念澄清：论文强调 <em>streaming</em> 指「输入到达即处理、前瞻（lookahead）有界」，而非仅仅「输出渐进生成」。</li>
+</ul>
+<h3>2. 方法创新（Method）</h3>
+<p>围绕三个设计维度构建 Uni-Stream：</p>
+<p><strong>(a) 流式语音-文本交织格式（Streaming Speech–Text Interleaving）</strong>
+- 记 $m$ 为语音帧步长、$n$ 为文本步长（token 或词）、$\ell$ 为前瞻量。
+- <strong>ASR</strong>：序列为 $[S_1,T_1,S_2,T_2,\dots]$；首步读入 $m+\ell$ 帧（$S_1=s_{1:m+\ell}$），后续每步新增 $m$ 帧且不重复前瞻帧（$S_i=s_{(i-1)m+\ell+1:\,im+\ell}$），$T_i$ 为结束时间落在第 $i$ 个 $m$ 帧区间内的词；音频结束后模型补出剩余文本。
+- <strong>TTS</strong>：在 voice prompt 之后序列为 $[T_1,S_1,T_2,S_2,\dots]$。
+  - <em>Fixed-ratio</em>（Du et al. 2024）：固定 $n$ 个 text token 配 $m$ 帧语音，与词边界无关。
+  - <em>Time-aligned</em>（Bai et al. 2025，本文采用）：文本按 <strong>词</strong> 推进，窗口 $T_i=w_{(i-1)n+1:\,in+\ell}$，带 $\ell$ 个词的前瞻上下文；$S_i$ 只对应窗口前 $n$ 个词的语音；训练时由对齐确定语音块边界，推理时由模型预测边界。
+  - 实验发现 <strong>time-aligned 交织在流式适配中 TTS 词错误率更低</strong>，因此统一模型采用该格式。</p>
+<p><strong>(b) 预训练骨干选择（Unified Streaming Backbone）</strong>
+- 选用 <strong>VibeVoice 家族</strong>（VibeVoice-TTS, Peng et al. 2025；VibeVoice-ASR, Peng et al. 2026；VibeVoice-ASR-Streaming, Tu et al. 2026），因其 TTS/ASR 变体架构相近、<strong>共享同一语音 tokenizer</strong>。
+- 具体结构：Qwen2.5-1.5B 因果 Transformer（28 层，ASR/TTS 共享）；声学 + 语义双 tokenizer 将 24 kHz 语音编码为 7.5 latent frames/s（64-d 声学、128-d 语义）；文本头与 embedding 绑定；TTS 侧使用 next-token diffusion（4 层 diffusion head、10 步去噪）；TTS 反馈时生成的 latent 会经语义编码器重编码进入下一 slot。</p>
+<p><strong>(c) 两阶段训练（Two-Stage Training）</strong>
+- <strong>Stage I 流式适配</strong>：分别把离线 VibeVoice-1.5B(TTS) 与 VibeVoice-ASR-Streaming-1.5B(ASR) SFT 到本文流式格式（TTS：$\mathcal{L}<em>{diff}+\mathcal{L}</em>{TTS\text{-}CE}$；ASR：$\mathcal{L}<em>{ASR\text{-}CE}$；ASR 步长由 $m{=}22,\ell{=}4$ 调整为 $m{=}4,\ell{=}3$），得到 $\theta_T$、$\theta_A$。
+- <strong>Stage II 统一训练</strong>：从适配后的 <strong>TTS 模型 $\theta_T$ 初始化</strong>，在 TTS 与 ASR 两任务上联合训练，得到一套共享权重 $\theta$；并引入 <strong>任务特定蒸馏目标</strong>：TTS 行上的 <em>synthesis anchoring</em>（$\mathcal{L}</em>{vel}$、$\mathcal{L}<em>{stop}$）以保住合成能力，ASR 行上的 <em>recognition distillation</em>（$\mathcal{L}</em>{ASR\text{-}KD}$）以促进识别学习，再加 $\mathcal{L}_{SFT}$；通过消融检验各目标贡献。</p>
+<p><strong>(d) 数据标注流水线（可复现贡献）</strong>
+- 构建 <strong>transcript voting + 词级时间对齐</strong> 流水线，为 time-aligned 格式提供监督；过滤后保留约 <strong>40,000 小时 Emilia-EN</strong> 用于训练。
+- 承诺公开：Emilia-EN 的投票转写文本，以及 Emilia-EN / GigaSpeech / LibriSpeech 的<strong>词级时间戳</strong>。</p>
+<h3>3. 实验结果与发现（Results）</h3>
+<ul>
+<li><strong>性能可比</strong>：统一模型（一套共享权重）在 <strong>TTS 与 ASR 两个任务上均达到与各自任务专用流式模型相当（comparable）</strong> 的性能，回答了「联合训练是否必然掉点」的疑问。</li>
+<li><strong>低延迟</strong>：ASR 平均发射延迟约 $(\ell+m/2)/7.5\,\text{Hz}\approx 0.67\,$s；TTS 在 $n+\ell=4$ 个词之后即可输出首个音频，符合实时交互需求。</li>
+<li><strong>表征探测（representation probing）</strong>——本文另一大发现：</li>
+<li>即使在同一模型中双向联合训练（speech→text 与 text→speech），<strong>语音与文本仍驻留在彼此分离的隐空间</strong>，跨层均不收敛；</li>
+<li><strong>同一模态内部</strong>，表征在<strong>较深层变得更依赖具体任务</strong>；</li>
+<li>跨任务看，<strong>ASR 与 TTS 表征在低层相似、在高层分叉</strong>。</li>
+<li>这些结果呼应 2.2 节文献脉络：跨模态「语义重叠/功能兼容」并不等于共享表征结构（Koepke et al. 2026；Smith et al. 2025），且信息可解码不等于被有效使用（Jo et al. 2026）。</li>
+<li>注：所给片段截止于第 3 节方法部分，<strong>具体数值指标（WER/MOS 等）与消融表格未包含在片段中</strong>，仅给出「与专用模型相当」的定性结论。</li>
+</ul>
+<h3>4. 三点主要贡献</h3>
+<ol>
+<li>提出 <strong>Uni-Stream</strong>：首个在<strong>流式输入</strong>下用<strong>单套共享权重、单一 decoder-only LM 骨干</strong>同时完成 ASR 与 TTS，性能与任务专用流式模型相当。</li>
+<li>通过表征探测揭示：语音/文本表征保持分离，而 TTS/ASR 表征低层相似、高层分化。</li>
+<li>完成 <strong>40,000 小时</strong>英文数据的转写与词级时间对齐分割，并将数据公开以促进 time-aligned 流式建模研究。</li>
+</ol>
+<h3>5. 一句话评价</h3>
+<p>Uni-Stream 用「时间对齐的语音-文本交织 + VibeVoice 同源预训练骨干 + 先分后合的两阶段训练（含合成锚定与识别蒸馏）」这一务实组合，首次证明了单一 decoder-only 语音语言模型可以在<strong>真正的流式输入</strong>下同时做好识别与合成而不牺牲任务性能，并通过表征探测给出了「统一架构 ≠ 统一表征空间」的重要实证结论。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32161" target="_blank">MG-REPA: Multi-Granularity Representation Alignment for Generative Target Speaker Extraction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target Speaker Extraction</span>
+                <strong>ID:</strong> <span class="tag">2610.32161</span>
+                <a href="../../pdfs/2610.32161.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Dohwan Kim, Jung-Woo Choi<br>
+                <div style="margin-top:5px"><span class="tag">representation alignment</span><span class="tag">target speaker extraction</span><span class="tag">multi-granularity alignment</span><span class="tag">flow matching</span><span class="tag">MeanFlow</span><span class="tag">diffusion transformer</span><span class="tag">self-supervised learning</span><span class="tag">speaker verification</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>MG-REPA: 多粒度表征对齐用于生成式目标说话人提取</h1>
+<h2>1. 核心痛点</h2>
+<ul>
+<li><strong>生成式 TSE 训练收敛极慢</strong>：基于扩散/流匹配的单步 TSE 模型（如 MeanFlow-TSE）虽然推理只需一步且感知质量高，但训练往往需要多达 <strong>2000 个 epoch</strong>，训练成本成为主要瓶颈。</li>
+<li><strong>现有 REPA 在语音/音频领域只做单一粒度对齐</strong>：</li>
+<li><em>帧级对齐</em>（如用 WavLM/ATST-Frame 等 SSL 教师）只显式监督<strong>时变的细粒度语音内容</strong>，把目标语音<strong>全局、时不变的特性</strong>（如说话人身份）留在隐式表示中；</li>
+<li><em>话语级对齐</em>（如 AG-REPA 的时间池化对齐）只监督全局特性，<strong>丢失时变内容</strong>；</li>
+<li>即使使用多个教师（A-DMA、ImmersiveTTS），每个分支仍各自是单一粒度。</li>
+<li>而 TSE 任务本身同时需要这两类信息（内容 + 说话人身份），因此单粒度对齐对 TSE 而言不充分。</li>
+</ul>
+<h2>2. 方法创新</h2>
+<h3>2.1 总体框架</h3>
+<p>MG-REPA 在生成器（DiT）某一个中间层 $H^{(l)}\in\mathbb{R}^{T\times D}$ 上挂接<strong>两个解耦的对齐分支</strong>，各自拥有独立的教师与适配器，共同以余弦相似度对齐冻结教师从<strong>干净目标语音</strong>中提取的表征：
+$$\mathcal{L}=\mathcal{L}<em>{gen}+\beta_f\mathcal{L}</em>{frame}+\beta_u\mathcal{L}<em>{utt}$$
+其中 $\mathcal{L}</em>{gen}$ 可以是任意生成损失（如 flow matching 或 α-Flow），本文用 MeanFlow-TSE 的 $\mathcal{L}_\alpha$。<strong>推理时两个分支与教师全部丢弃，推理开销与骨干完全相同</strong>。</p>
+<h3>2.2 帧级 REPA（内容粒度）</h3>
+<ul>
+<li>教师：冻结的 <strong>WavLM</strong> 第 k 层特征 $f^*=E^{(k)}<em>{SSL}(s)\in\mathbb{R}^{T'\times D</em>{SSL}}$（帧率低于 STFT）。</li>
+<li>预测侧：MLP 适配器 $h_\psi$ 升维到教师维度 + 时间轴自适应平均池化 $ds$ 下采样到教师帧率。</li>
+<li><strong>时序归一化（Temporal Normalization, TN）</strong>：对教师特征逐通道在时间维做实例归一化（减均值除标准差），<strong>显式抹去话语级统计量</strong>，从而抑制全局时不变信息，使帧级分支专注于局部细粒度结构，并与话语级分支形成明确分工（借鉴 voice conversion 中去说话人信息的做法）。</li>
+<li>损失：归一化目标与预测之间的逐帧负余弦相似度平均：$\mathcal{L}_{frame}=-\mathbb{E}[\frac{1}{T'}\sum_n \text{sim}(\text{TN}(f^*)_n,\hat{f}_n)]$。</li>
+</ul>
+<h3>2.3 话语级 REPA（全局粒度）</h3>
+<ul>
+<li>教师：冻结的说话人确认模型 <strong>CAM++</strong>，其统计池化天然产生时不变说话人嵌入 $g^*=E_{SV}(s)\in\mathbb{R}^{D_{SV}}$；该嵌入恰好监督被 TN 从帧级目标中移除的全局说话人信息。</li>
+<li>适配器：<strong>门控线性单元（GLU）</strong>，用沿时间轴的 1-D 卷积计算 sigmoid 门控乘到逐帧 MLP 输出上；随后时间平均池化 + 线性投影得到 $\hat{g}$。</li>
+<li>损失：单对向量的负余弦相似度 $\mathcal{L}_{utt}=-\mathbb{E}[\text{sim}(g^*,\hat{g})]$。</li>
+</ul>
+<h3>2.4 与骨干的结合</h3>
+<ul>
+<li>骨干 MeanFlow-TSE 基于 AD-FlowTSE 路径（$z_0=B,z_1=S$，混合位于路径上 $Y=z_\lambda$），用 MeanFlow 平均速度场实现一步推理：$\hat{S}=Y+(1-\hat{\lambda})u_\theta(Y,\hat{\lambda},1,E)$；训练采用 α-Flow 混合目标（真值方向与自一致性目标插值，α 从 1 退火到 0）与自适应加权。</li>
+</ul>
+<h2>3. 实验结果</h2>
+<ul>
+<li><strong>数据集</strong>：Libri2Mix（train-100 + train-360 合并训练，dev 验证，test 评估），16 kHz、6 秒片段、3 秒注册语音；含 Noisy 条件。</li>
+<li><strong>收敛加速（核心结果）</strong>：MG-REPA 仅用 <strong>750 epoch</strong> 即达到同配方重训基线在 <strong>250 epoch（OVRL）与 350 epoch（PESQ）</strong> 的水平，相当于 <strong>3.0× / 2.1× 更少 epoch</strong>（论文 Fig.1 展示 OVRL 与 PESQ 的收敛曲线）。</li>
+<li><strong>与已发表基线对比</strong>：训练 750 epoch 的 MG-REPA 在<strong>侵入式指标（intrusive, 如 PESQ/OVRL 等）上与已发表 2000 epoch 基线相当</strong>，在<strong>非侵入式指标上更优</strong>。</li>
+<li><strong>消融</strong>：多粒度（帧级 + 话语级，含 TN）优于任一单粒度对齐，验证了“分工式双分支 + 时序归一化”的必要性。</li>
+<li>代码开源：https://github.com/rlaehghks5/MG-REPA</li>
+</ul>
+<h2>4. 一句话评价</h2>
+<p>MG-REPA 用「帧级 SSL 内容对齐 + 话语级说话人嵌入对齐 + 帧级目标时序归一化」这一简洁的双粒度正则，在<strong>不增加任何推理开销</strong>的前提下把单步生成式 TSE 的训练收敛速度提升约 2–3 倍，为生成式语音模型的高效训练提供了一个可即插即用的通用思路。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32133" target="_blank">NECTAR: Automatic Negative Clue Estimation via Centroid-Space Mapping for Target Speaker Extraction</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target Speaker Extraction (Speech Enhancement)</span>
+                <strong>ID:</strong> <span class="tag">2610.32133</span>
+                <a href="../../pdfs/2610.32133.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Hyungjun Yoo, Yongjoon Lee, Jung-Woo Choi<br>
+                <div style="margin-top:5px"><span class="tag">Target Speaker Extraction</span><span class="tag">Negative Clue</span><span class="tag">Centroid-Space Mapping</span><span class="tag">Speaker Embedding</span><span class="tag">Speech Separation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>目标说话人提取（TSE）通常仅用目标注册语音作为正线索，提取器主要被条件化到目标说话人；已有研究表明干扰者注册语音可作为负线索抑制干扰者，但实际推理时通常没有干扰者注册语音，如何从混合语音和目标注册中自动推导干扰者相关负线索是关键问题。</p>
+<h2>方法创新</h2>
+<ol>
+<li><strong>质心空间关系发现</strong>：作者分析说话人嵌入几何，发现混合语音质心近似位于目标说话人与干扰说话人质心的中点，即 c_mix≈(c_s1+c_s2)/2，因此 c_s2≈2c_mix-c_s1；该关系直接用于单条语音嵌入时不可靠。</li>
+<li><strong>Centroid-Space Mapper (CSM)</strong>：从单个输入片段估计质心空间表示，结构包括深度可分离卷积、多头自注意力（MHSA）和注意力统计池化（ASP）；注册分支与混合分支共享参数，训练目标为单说话人质心或两说话人质心和（≈2c_mix），使用平方ℓ2损失。</li>
+<li><strong>NECTAR 推理流程</strong>：用目标注册估计目标质心，用混合估计两倍混合质心，再按 ĉ_s2=2ĉ_mix-ĉ_s1 得到干扰者质心作为负线索；与目标说话人嵌入正线索拼接后送入 BSRNN 提取器。</li>
+<li><strong>无需干扰者注册</strong>：负线索完全由混合语音和目标注册自动估计，计算开销小，CSM训练约1小时。</li>
+</ol>
+<h2>实验结果</h2>
+<p>在 LibriSpeech train-clean-100 上训练并在 Libri2Mix 评估时，NECTAR 达到 <strong>SI-SDRi 16.18 dB</strong> 和 <strong>提取准确率 97.1%</strong>，优于 sDPCCN、TD-SpeakerBeam+PL+PF、MC-SpEx、X-T-TasNet、SSL-TD-SpeakerBeam、SHuBERT-BSRNN、Multi-Level BSRNN 等对比系统；在域内、域外（VCTK-2Mix）和含噪设置中均有效。CSM 在仅使用单条混合和目标注册时显著降低干扰者质心偏差，接近 N=100 质心参考。</p>
+<h2>一句话评价</h2>
+<p>NECTAR 利用混合与说话人质心的中点几何关系，从混合语音中自动估计干扰者负线索而无需干扰者注册，方法简洁有效并在 Libri2Mix 上取得领先的 SI-SDRi 与提取准确率。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32061" target="_blank">Concentrated Causal Influence, Distributed Diagnostic Information: Cognitive Impairment Decisions in Large Audio-Language Models</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Language Model Interpretability (Speech-based Cognitive Impairment Assessment)</span>
+                <strong>ID:</strong> <span class="tag">2610.32061</span>
+                <a href="../../pdfs/2610.32061.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xiutian Zhao, Luqi Sun, Björn Schuller, Berrak Sisman<br>
+                <div style="margin-top:5px"><span class="tag">Large Audio-Language Models</span><span class="tag">Cognitive Impairment Detection</span><span class="tag">Neuron-level Interpretability</span><span class="tag">Causal Ablation</span><span class="tag">Activation Frequency Contrast</span><span class="tag">Speech-based Dementia Assessment</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Concentrated Causal Influence, Distributed Diagnostic Information: Cognitive Impairment Decisions in Large Audio-Language Models</h1>
+<p><strong>作者与机构</strong>: Xiutian Zhao, Luqi Sun, Björn Schuller, Berrak Sisman（Johns Hopkins University CLSP；Imperial College London GLAM）</p>
+<h2>1. 核心问题与研究动机</h2>
+<p>大型音频语言模型（LALMs）已被用于从语音中评估认知障碍（Cognitive Impairment, CI），但现有工作只关注“模型预测了什么”，而无法回答两个关键的机制问题：</p>
+<ul>
+<li><strong>控制问题</strong>：模型内部究竟是哪些部件在控制 CI 决策？</li>
+<li><strong>信息问题</strong>：模型的表征中究竟可获取多少 CI 诊断信息？</li>
+</ul>
+<p>论文明确指出，输出准确率既不能说明模型使用了哪些输入来源（语音、文本，或捷径如访谈者话轮、转写约定、录音质量），也不能说明内部表征如何控制决策。现有 CI 检测可解释性工作大多停留在<strong>输入层面</strong>（特征重要性、显著性、注意力、SHAP 等事后归因），只回答“预测与哪些输入相关”，不回答“哪些内部计算产生了预测”。多模态神经元研究也多聚焦于模态或领域特异性单元，其在临床语音决策中的作用几乎未被探索。</p>
+<p>论文的切入点是区分两个概念：<strong>模型“可获取的信息”（information available）</strong> 与 <strong>模型“对决策的因果影响”（causal influence）</strong>。</p>
+<h2>2. 方法与技术创新</h2>
+<h3>2.1 探测任务（Probe Task）</h3>
+<ul>
+<li>每个样本是一位被试对 Cookie Theft 图片的描述。</li>
+<li>固定提示模板：不包含临床框架，声明两个选项等概率，提供 “The speaker is cognitively healthy (NC)” 与 “The speaker is cognitively impaired (CI)” 两个选项。</li>
+<li>每个样本在<strong>两种选项顺序</strong>下各跑一次，以抵消字母/位置偏好；取首个解码步的两个选项字母 logit 并重归一化，得到 P_o(c)，项目级概率为两序平均 P(c) = ½ Σ_o P_o(c)，预测取其 argmax；同时记录 margin 与首步 log-odds ℓ。</li>
+<li>解码为贪心确定性解码。</li>
+<li>类别定义：痴呆患者定义 CI 类（用于神经元识别与评估），MCI 被<strong>留出</strong>以检验干预是否可迁移到更轻度损害。</li>
+</ul>
+<h3>2.2 四种输入条件</h3>
+<ul>
+<li><strong>T</strong>：纯转写文本；</li>
+<li><strong>A</strong>：纯语音；</li>
+<li><strong>AT</strong>：语音 + 干净转写（主设置）；</li>
+<li><strong>AT-chat</strong>：语音 + 标注转写（保留填充词、词片段，并把停顿、重复、不可懂语音按固定约定转成可读文本），用于检验显式呈现不流畅与时间线索是否改变联合决策。</li>
+</ul>
+<p>在 Pitt 上只使用被试语音（访谈者话轮在损害者中更频繁，会泄漏标签）；PROCESS-2 无时间信息、整段输入，并剔除转写中出现其他说话人的记录。</p>
+<h3>2.3 神经元识别：CI-Contrast Neurons (CICNs)</h3>
+<ul>
+<li><strong>激活记录</strong>：所研究的 decoder 均使用门控 MLP，MLP(x) = W_down(σ(W_gate x) ⊙ W_up x)，σ 除 Gemma-4-12B 用 GELU 外均为 SiLU（SwiGLU）。挂钩门控非线性，记录第 l 层、第 t 个位置的坐标 a_{l,n,t}。只记录 prefill 前向（产生首步 logits 的那次前向）。对 Qwen3-Omni-30B 的 MoE decoder，每个专家的每个单元算一个神经元。</li>
+<li><strong>识别池</strong>：每个类、条件、span 只汇集“未修改模型在两种选项顺序下都预测正确、且每序 margin ≥ 0.1”的记录，固定随机种子抽 balanced pool，每类 N=15。即围绕模型稳定的决策区间定义类别画像。</li>
+<li><strong>激活概率</strong>：P(c)<em>{l,n} = 记录中该神经元门控激活为正的位置比例（式 1）。该统计量只用于神经元选择，功能重要性由干预实验确立。另保留类均值激活 µ(c)</em>{l,n} 用于 steering。</li>
+<li><strong>选择器</strong>：对比激活边际 ConAct（Zhao et al., 2026a），二分类下为 ConAct(c) = |P(NC) − P(CI)| × I[c = argmax P]，即神经元只能进入其放电更频繁的那个类的 mask；两类频率接近的神经元得分近零、不进入任何 mask。</li>
+<li><strong>Mask 规模</strong>：每个类、每个条件取全模型 decoder MLP 神经元中<strong>跨层全局排名前 0.5%</strong> 作为 mask。</li>
+</ul>
+<h3>2.4 干预设计</h3>
+<ul>
+<li>对每层 MLP 前向打补丁，只改被 mask 的坐标；干预施加于 prefill 的所有位置（位置受限消融除外）。</li>
+<li><strong>消融（因果影响）</strong>：将 mask 坐标置零，g̃_{l,t,n} = 0 for n ∈ I(c)_l。若该 mask 支持类 c，消融应使预测<strong>远离</strong> c：去掉 NC 神经元应升高 P(CI)，去掉 CI 神经元应降低之。</li>
+<li><strong>对照基线</strong>：尺寸与层级分布匹配的随机 mask，以及<strong>活动匹配（activity-matched）</strong> 神经元集合，作为特异性基线。</li>
+<li>辅助分析：steering、说话人属性控制、token 级分析、跨条件与跨语料迁移、位置受限干预。</li>
+</ul>
+<h3>2.5 诊断读出（Readout）分析</h3>
+<p>对<strong>冻结</strong>的 CICN 激活训练监督线性读出，与模型直接答案对比，并比较随机 mask 读出与全神经元读出，以区分“因果集中”与“信息集中”。</p>
+<h2>3. 实验设置与结果</h2>
+<ul>
+<li><strong>模型</strong>：8 个开源 LALMs（含 Gemma-4-12B、Qwen3-Omni-30B 等）。</li>
+<li><strong>语料</strong>：DementiaBank Pitt（Becker et al., 1994）与 PROCESS-2（Tao et al., 2025; Pahar et al., 2026）。</li>
+</ul>
+<h3>主要发现</h3>
+<ol>
+<li><strong>资格筛选</strong>：8 个模型中有 5 个满足神经元识别的资格标准（§4）。</li>
+<li><strong>因果集中</strong>：在这 5 个中的 3 个里，消融<strong>很小的 CICN 集合</strong>即造成大幅、类别定向的预测偏移，且超出尺寸/层级匹配的随机 mask 与活动匹配对照。</li>
+<li><strong>跨条件迁移</strong>：由语音识别出的 mask 同样能控制<strong>仅转写</strong>条件下的决策，说明控制是共享而非模态专属的。</li>
+<li><strong>跨语料迁移</strong>：4 个主要 Pitt mask 中有 3 个在 PROCESS-2 上仍保持特异性。</li>
+<li><strong>位置定位</strong>：位置受限干预把影响定位在<strong>最终答案位置之前</strong>；在字母标注选项下，最强效应出现在内容之后的问题与选项位置；效应<strong>主要是决策方向（decision-direction）的偏移</strong>，而非对诊断判别力的改变。</li>
+<li><strong>信息分散</strong>：冻结 CICN 激活的监督线性读出在 Pitt 内达到 <strong>0.92–0.97 AUC</strong>，而模型直接答案为 <strong>0.67–0.84</strong>；但匹配随机 mask 读出与全神经元读出达到<strong>相当</strong>性能；排名最靠前的 CICN 仅在<strong>极小特征预算</strong>下显示探索性优势。这说明更大 MLP 特征集中存在<strong>冗余的 CI 信息</strong>。</li>
+</ol>
+<h3>核心结论</h3>
+<blockquote>
+<p><strong>集中的因果控制（concentrated causal control）与分散的诊断信息（distributed diagnostic information）在 LALMs 中并存。</strong> 少量神经元即可左右输出决策，但 CI 诊断信息广泛分布于表征之中，并非集中于这些因果关键单元。</p>
+</blockquote>
+<h2>4. 论文贡献</h2>
+<ol>
+<li>据作者所知，<strong>首个针对 LALMs 中 CI 决策的因果神经元级分析</strong>，并以匹配随机 mask 与活动匹配神经元集作为特异性基线；</li>
+<li>证明所识别干预具有<strong>跨条件与跨语料的可移植性</strong>；</li>
+<li>给出其对提示式决策影响的<strong>位置级刻画</strong>；</li>
+<li>在实证上区分 <strong>causal concentration</strong> 与 <strong>informational concentration</strong>。</li>
+</ol>
+<h2>5. 一句话评价</h2>
+<p>该论文以严谨的匹配对照消融与位置受限干预，首次在音频语言模型内部把“谁在控制认知障碍判断”与“信息在哪里”这两件事拆开，得出“控制集中、信息分散”的重要结论；其方法论（ConAct 选择器 + 多重特异性基线 + 跨语料迁移 + 线性读出对照）对多模态模型可解释性研究具有可复用价值，同时也对“神经元级解释即特权预测特征”这一常见假设提出了有力反证。</p>
+<h2>6. 局限与注意点</h2>
+<ul>
+<li>只有 8 个模型中的 5 个满足资格标准、其中 3 个出现显著因果效应，结论的普适性受模型覆盖限制；</li>
+<li>读出优势仅在极小特征预算下显现，说明 CICN 作为“特权特征”的证据是探索性而非决定性的；</li>
+<li>片段中方法章节（§3.5 之后）与实验细节被截断，具体数值与统计检验需参阅原文。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.31796" target="_blank">DRAMA-Eval: A Benchmark for Context-Aware, Multi-Turn, Multi-Speaker Speech Generation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech (TTS) Evaluation Benchmark</span>
+                <strong>ID:</strong> <span class="tag">2610.31796</span>
+                <a href="../../pdfs/2610.31796.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jingbin Hu, Zihang Yang, Xiaoge Peng, Haoyu Zhang, Ziyu Zhang, Qirui Zhan, Huakang Chen, Zhao Guo, Wenjie Tian, Kangxiang Xia, Wenkang Hou, Ruonan You, Zihan Liu, Chenyi Liao, Hongyu Lyu, Zihao Bai, Jinrui Liang, Shengming Lin, Yunxiang Chen, Houdun Liu, Su Feng, Bengu Wu, Liumeng Xue, Lei Xie<br>
+                <div style="margin-top:5px"><span class="tag">DRAMA-Eval</span><span class="tag">context-aware TTS</span><span class="tag">multi-turn multi-speaker speech generation</span><span class="tag">LLM-as-a-Judge</span><span class="tag">script-driven synthesis</span><span class="tag">long-range speaker consistency</span><span class="tag">benchmark</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音生成正从传统 zero-shot TTS 转向<strong>上下文感知、多轮、多说话人</strong>的剧本驱动合成，典型应用包括有声书、广播剧、影视配音等。</li>
+<li>现有评测存在割裂：指令可控 TTS 多关注单句或短音频；多轮对话 TTS 多依赖 plain transcript 和 speaker ID，缺少结构化剧本上下文；音视频生成模型的音频分支评测仍偏重音质、可懂度、基础表现力。</li>
+<li>缺少统一评估<strong>上下文建模、指令遵循、多说话人一致性、长程场景连贯性</strong>的 benchmark，尤其是隐式指令遵循和长时说话人身份保持。</li>
+</ul>
+<h2>方法与创新</h2>
+<ul>
+<li>提出 <strong>DRAMA-Eval</strong>，面向结构化剧本条件下的多轮、多说话人语音生成评测。</li>
+<li>任务形式化：结构化剧本表示为 (S=(c,R,{(r_t,x_t,u_t)}<em>{t=1}^T))，其中 (c) 为场景上下文，(R) 为角色描述，(r_t) 为第 (t) 轮说话人，(x_t) 为目标文本，(u_t) 为轮级局部指令；系统可结合可选参考音频 (A</em>{ref}) 生成整场景音频 (Y\sim p_\theta(Y|S,A_{ref}))。</li>
+<li>评测对象是<strong>完整场景音频</strong>，既可是原生对话生成，也可由单句拼接，从而同时考察局部合成质量与跨轮不连续性。</li>
+<li>提出 <strong>objective / local / global</strong> 三层整体评测框架：客观声学保真度、句子级执行质量、长程连贯性。</li>
+<li>引入 <strong>LLM-as-a-Judge</strong> 与 ground-truth 音频进行 A/B 偏好比较并计算 win rate，并通过人类一致性研究验证该协议可靠性。</li>
+<li>与 InstructTTSEval、MINT-Bench、CEAEval、SwanBench-Speech 等相比，DRAMA-Eval 同时覆盖 instruction-following、cross-utterance identity 和 complete multi-speaker scene 评测。</li>
+</ul>
+<h2>数据与评测设置</h2>
+<ul>
+<li>发布 <strong>12 小时中英双语测试集</strong>，包含人工校正的真实世界剧本与 ground-truth 音频，来源覆盖影视剧、播客、访谈、新闻/广播、纪录片/旁白、有声书/讲故事等。</li>
+<li>场景覆盖正常、情绪升级、对比、丰富情绪等类型；每场景包含 1–4 名说话人，轮次覆盖 2–20 轮。</li>
+<li>同时发布评测代码、benchmark 结果与相关链接，支持可复现研究。</li>
+</ul>
+<h2>实验结果与发现</h2>
+<ul>
+<li>对多个领先<strong>开源与商业模型</strong>进行了系统评测。</li>
+<li>结果揭示当前系统在<strong>长程说话人一致性</strong>和<strong>需要深度上下文理解的隐式指令遵循</strong>方面存在关键弱点。</li>
+<li>LLM-as-a-Judge 与人类一致性研究用于验证自动偏好评测的可靠性。</li>
+<li>注：所给论文片段未展示具体分数表、模型排名和完整实验数值，因此此处仅总结片段中明确给出的结论。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>DRAMA-Eval 将剧本级结构化上下文、多轮多说话人生成与 LLM-as-a-Judge 偏好评测统一起来，是面向有声书/广播剧等生产级叙事语音生成的重要评测基准，尤其补足了长程一致性与隐式上下文指令遵循的评测空白。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32870" target="_blank">Noisy Target Training Meets Drifting for Weakly-Supervised Speech Enhancement</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2610.32870</span>
+                <a href="../../pdfs/2610.32870.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yoshiki Masuyama, Dominik Klement, Christoph Boeddeker, Julius Richter, Kohei Saijo, Gordon Wichern, Takahiro Edo, Jonathan Le Roux<br>
+                <div style="margin-top:5px"><span class="tag">weakly-supervised speech enhancement</span><span class="tag">noisy target training</span><span class="tag">Sinkhorn drifting</span><span class="tag">optimal transport</span><span class="tag">mean teacher</span><span class="tag">speech quality assessment</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>标准监督语音增强（CTT）需要成对的含噪语音与干净语音；真实场景中干净语音难以获得，通常用人工加噪合成训练对，导致合成数据与真实录音之间存在域不匹配，模型在真实录音上性能下降。</li>
+<li>噪声目标训练（NyTT）通过把额外噪声加到观测语音上构造更噪输入，并让模型预测原始含噪语音，从而利用域内含噪数据；但训练目标本身含噪，增强输出容易残留噪声。</li>
+<li>现有 NyTT 变体（如 mean-teacher、迭代细化）可提供更清晰的伪目标，但没有显式约束增强语音分布与干净语音分布匹配。</li>
+<li>仅使用非配对干净语音的 DriftSE 能提升感知质量，但在 VoiceBank-DEMAND 上 SI-SDR 与 WER 甚至可能劣于原始含噪语音，说明单独的非配对 drifting 不足以保持语音内容。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li>提出将 Sinkhorn drifting loss 引入 NyTT，用分布级弱监督抑制残余噪声并提升增强语音感知质量。</li>
+<li>Sinkhorn drifting 在潜空间中构造吸引-排斥漂移场：将增强语音特征吸引到干净语音分布的高密度区域，同时排斥当前增强语音分布，从而匹配增强语音分布与未配对干净语音分布。</li>
+<li>干净语音样本独立于含噪输入采样，不需要每个含噪录音对应的干净副本，保留 NyTT 的弱监督特性。</li>
+<li>相比原始 DriftSE 的 mean-shift 漂移场，采用由 Sinkhorn divergence 梯度流诱导的漂移场，具有更好的理论保证与训练稳定性。</li>
+<li>在 NyTT 框架下，用来自噪声分布的额外噪声替代 DriftSE 中的高斯噪声来引入随机性，增强特征为 z_hat = h(f_theta(x + n_tilde))。</li>
+<li>进一步提出用语音质量评估（SQA）模型 UrgentMOS 作为语音编码器 h，提取其最终层之前的 utterance-level embedding，使潜空间距离更能反映感知自然度，而不是仅使用 DistillHuBERT 等自监督模型。</li>
+<li>最终目标为 L_Proposed = L_NyTT+ + λ L_Drift：第一项通过 mean-teacher 框架保证对观测含噪语音的样本级保真，第二项进行增强语音与干净语音之间的分布级匹配。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>在 VoiceBank-DEMAND 合成混合数据和 CHiME-3 真实录音上验证所提组合的有效性。</li>
+<li>摘要指出实验结果表明 NyTT 的波形级弱监督与 Sinkhorn drifting 的分布级监督可互补。</li>
+<li>文中提到 DriftSE 在 VoiceBank-DEMAND 上 DNSMOS P.808 为 3.61，但 SI-SDR 与 WER 相对原始含噪信号退化，这构成提出方法的重要动机。</li>
+<li>由于提供的论文片段在实验部分前被截断，具体 SI-SDR、DNSMOS、WER 等数值结果未在片段中给出。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文把 NyTT 的样本级含噪目标监督与 Sinkhorn drifting 的分布级非配对干净语音监督结合，在保持弱监督设定的同时针对 NyTT 残余噪声问题提出了一种有理论依据且感知导向的语音增强训练方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32572" target="_blank">Pseudo-Labels as Rewards, Not Targets: Group-Relative Policy Optimization for Semi-Supervised ASR</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2610.32572</span>
+                <a href="../../pdfs/2610.32572.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Shashi Kumar, Yanis Labrak, Sergio Burdisso, Esaú Villatoro-Tello, Petr Motlicek, Kadri Hacioglu, Andreas Stolcke<br>
+                <div style="margin-top:5px"><span class="tag">伪标签 (Pseudo-Labeling)</span><span class="tag">组相对策略优化 (GRPO)</span><span class="tag">强化学习后训练</span><span class="tag">半监督语音识别</span><span class="tag">标签噪声鲁棒性</span><span class="tag">领域自适应</span><span class="tag">自训练 (Self-training)</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>伪标签作为奖励而非监督目标：面向半监督ASR的组相对策略优化</h1>
+<h2>核心痛点</h2>
+<p>在仅有未转写音频的领域适配场景中，主流做法是<strong>伪标签自训练</strong>：用强教师模型（如 Whisper）转写音频，再用监督微调（SFT）把学生模型拟合到这些伪标签上。作者指出该范式存在<strong>结构性缺陷</strong>：</p>
+<ul>
+<li>交叉熵损失对伪标签中的<strong>每一个 token 一视同仁地最大化似然</strong>，无论其是否正确；</li>
+<li>教师的每一个错误都会被当成有监督目标，深度网络很容易将其记忆（memorization），于是学生<strong>复现甚至放大</strong>教师的错误分布；</li>
+<li>现有改进（迭代伪标签、slimIPL、Kaizen、Noisy Student、多系统融合、基于 WER 预测/命名实体/多模型共识的数据筛选、软标签蒸馏）<strong>都在“改标签”，却不动交叉熵目标本身</strong>，因此学生仍被训练去复现教师输出。</li>
+</ul>
+<p>作者的切入点是：<strong>保留全部伪标签不变，只改变优化目标</strong>——把伪标签从“监督目标”改为“奖励参考”。</p>
+<h2>方法创新</h2>
+<h3>1. 将伪标签用作 WER 奖励的参照</h3>
+<p>对每条 utterance，从旧策略采样 G=4 条假设 {y(i)}，用伪标签 ỹ_n 作为参考计算奖励：</p>
+<p>r_i = 1 − WER(y(i), ỹ_n)</p>
+<p>随后在组内做归一化得到优势：Â_i = (r_i − μ_r) / (σ_r + ε)，再用 GRPO 的裁剪代理目标 + KL 惩罚（β=0.04，ε=0.2）更新策略，π_ref 取 RL 阶段起始策略。<strong>关键在于：伪标签只出现在奖励里，从不作为教师强制的目标 token 进入损失。</strong></p>
+<h3>2. 理论解释：on-policy 采样构成“噪声过滤器”</h3>
+<p>假设伪标签在某个位置把正确词 w* 错写成 w，rollout 复现 w 的概率为 p：</p>
+<ul>
+<li><strong>SFT</strong>：损失无条件作用于 ỹ_n 的每个 token，错误的 w 是“目标”，梯度质量 O(1)，无法抵消；</li>
+<li><strong>GRPO</strong>：梯度只作用于学生自己生成的序列。若组内所有 rollout 都输出 w<em>（即都不复现该错误词），它们在该位置受到</em><em>相同惩罚</em><em>，而这一常数偏移在减去 μ_r 时被</em><em>完全抵消</em><em>——优势只取决于 rollout 之间</em><em>有差异</em><em>的位置。只有当至少一条 rollout 复现 w 时才会产生差异，这在 p 很小时很少发生；错误词的梯度质量仅为 </em><em>O(p)</em>* 而非 O(1)。</li>
+</ul>
+<p>作者强调该机制是 <strong>self-limiting（自限）而非 self-correcting（自纠）</strong>：它只要求 p 初始较小，并不要求学生模型本身准确——高 WER 的模型常常错，但<strong>很少和教师错得一模一样</strong>（不同模型的错误模式不同）。这与“网络先拟合干净模式再记忆噪声”的传统噪声鲁棒性解释不同：这里的噪声过滤来自<strong>每一步采样分布的支撑集</strong>，而非训练动力学的时间演化。</p>
+<h3>3. 实验配置</h3>
+<ul>
+<li><strong>学生模型</strong>：冻结 WavLM-Large 编码器 + 可训练两层线性投影（ReLU，5 倍下采样）+ 冻结 Llama-3.2-1B-Instruct 上的 LoRA（r=16, α=32），仅在 LibriSpeech 960h 上预训练，只训练投影层与 LoRA。</li>
+<li><strong>目标领域</strong>：DefinedAI 银行客服电话（54h 训练 / 6.55h 测试），医疗（11.51h / 1.11h）、保险（27.60h / 3.24h）。</li>
+<li><strong>多语种</strong>：Common Voice 26 的印地语、希伯来语、越南语、塞尔维亚语。</li>
+<li><strong>教师</strong>：Whisper Tiny/Small/Medium/Large-V3（伪标签 WER 分别为 26.42 / 17.23 / 16.61 / 14.61，跨度 11.81 点，构成可控的“质量阶梯”）；另有 Qwen3 ASR 1.7B、Phi-4 Multimodal IT、Audio Flamingo 3。</li>
+<li><strong>训练</strong>：G=4，采样温度 0.8，最多 128 新 token，β=0.04，ε=0.2；AdamW + BF16，batch 16，5 epoch，学习率 SFT 1e-4 / GRPO 2e-5，单卡 H100 80GB；测试用贪心解码（beam 1，256 token 上限）。</li>
+</ul>
+<h2>实验结果</h2>
+<h3>主结果（银行域，Table 1）</h3>
+<p>| 伪标签来源 | SFT | GRPO | SFT→GRPO |
+|---|---|---|---|
+| Tiny (PL WER 26.42) | 32.11 | <strong>14.06</strong> | 22.77 |
+| Small | 20.23 | <strong>12.71</strong> | 17.39 |
+| Medium | 18.11 | <strong>12.58</strong> | 17.17 |
+| Large-V3 (14.61) | 17.21 | <strong>12.17</strong> | 16.31 |
+| Gold（上界参考） | 10.27 | 10.78 | <strong>9.49</strong> |</p>
+<ul>
+<li>伪标签 WER 从 Large-V3 到 Tiny 恶化 11.81 点，GRPO 学生仅恶化 <strong>1.89</strong> 点（12.17→14.06），而 SFT 恶化 <strong>14.90</strong> 点（17.21→32.11）。</li>
+<li>伪标签 WER 每增加 1 点带来的学生 WER 增量：SFT <strong>1.31</strong>、SFT→GRPO <strong>0.56</strong>、直接 GRPO 仅 <strong>0.16</strong>。</li>
+<li><strong>GRPO 用最弱教师（Tiny）甚至优于 SFT 用最强教师（Large-V3）</strong>：14.06 vs 17.21，领先 3.15 点——换言之，“换目标函数”的收益大于“换更好的教师”。</li>
+<li>相对 WER 提升为 <strong>29.3%~56.2%</strong>；并且在四个 Whisper 规模、四个教师家族、三个领域、四种语言上一致成立。</li>
+</ul>
+<h3>关键反直觉发现：先 SFT 再 GRPO 反而有害</h3>
+<p>有噪声标签时，SFT→GRPO（Tiny 下 22.77）只弥补了 SFT（32.11）与直接 GRPO（14.06）之间的一部分差距，<strong>颠倒了 LLM 后训练“先 SFT 后 RL”的常规配方</strong>；而在 gold 标签下常规顺序再次成立（SFT→GRPO 最佳，9.49）。这说明<strong>标签噪声是差异的唯一原因</strong>：SFT 在目标正确时是良好初始化，在目标错误时则是“负债”。例外情况：低资源语言中当学生无法产出目标文字脚本时，仍需先做 SFT 使 RL“可用”。</p>
+<h3>误差结构：GRPO 抑制插入</h3>
+<p>GRPO 大幅降低插入错误（Tiny 下 INS 15.17→1.87），代价是删除略增（4.91→5.69）。基于 WER 的奖励直接惩罚幻觉内容，策略倾向于保守输出。</p>
+<h3>教师无关性（Table 2）</h3>
+<p>Qwen3 ASR 1.7B：13.83→<strong>11.35</strong>；Phi-4 Multimodal IT：14.34→<strong>11.81</strong>；Audio Flamingo 3：14.96→<strong>11.83</strong>。三个新教师家族的伪标签质量（WER 11.05 / 12.46 / 12.44）均优于 Whisper Large-V3（14.61），GRPO 依然全面胜出。</p>
+<h3>跨领域与“收益来源”的对照（Table 3）</h3>
+<p>医疗 18.72→<strong>14.64</strong>（gold 参考 12.28），保险 19.59→<strong>15.70</strong>（gold 参考 14.02）。<strong>在 gold 标签下 GRPO 反而略逊于 SFT</strong>，说明该优势<strong>特属于噪声参考</strong>，而非目标函数的普遍性质。用伪标签替代真实转写的性能损失：SFT 在银行/医疗/保险分别为 6.94 / 6.44 / 5.57 点，而 GRPO 仅 1.39 / 2.04 / 1.35 点。</p>
+<h3>错误传递率</h3>
+<p>SFT 几乎 <strong>100% 逐字复现</strong>教师错误，而 GRPO 仅传递 <strong>27%</strong>；rollout 统计显示错误伪标签词极少出现在 on-policy 采样中，因此组相对优势始终与干净转写对齐，而 SFT 把错误强行塞进策略支撑集，并破坏 GRPO 依赖的奖励方差。</p>
+<h2>一句话评价</h2>
+<p>本文用一个极简却切中要害的视角转换——“伪标签是奖励参照而非监督目标”——把 GRPO 引入无转写数据的半监督 ASR 适配，在标签噪声容忍度、跨教师/领域/语言泛化性与错误传递率上全面优于 SFT，并给出基于组内优势抵消与 O(p) 梯度质量的可信机制解释，是半监督语音识别后训练范式的一次有说服力的重新定向。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32310" target="_blank">Supervised Source Separation of Electric Vehicle Interior Noise Using a Hybrid Transformer Architecture</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Source Separation</span>
+                <strong>ID:</strong> <span class="tag">2610.32310</span>
+                <a href="../../pdfs/2610.32310.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Philipp Diel, Zhuo Cao, Arne Hildenbrand, Marco Günther, Stefan Pischinger, Hanno Scharr, Steffen Marburg<br>
+                <div style="margin-top:5px"><span class="tag">Electric Vehicle Interior Noise</span><span class="tag">Supervised Source Separation</span><span class="tag">Hybrid Transformer</span><span class="tag">Binaural Source Separation</span><span class="tag">Domain Randomization</span><span class="tag">Transfer Path Analysis</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>电动汽车车内噪声由风噪、胎噪、动力总成（电驱单元与逆变器）噪声、附件驱动噪声叠加而成；这些贡献的相对平衡决定总响度和主观音品质。</li>
+<li>将实测车内信号分解为各源贡献是定向声学工程、掩蔽关系量化和设计变更评估的前提，但传统 TPA/OTPA 需要大量传感器、整车测量与传递路径建模，成本高且对强相关指示信号敏感。</li>
+<li>既有基于图像处理和霍夫变换的方法擅长检测逆变器、胎腔模态、电驱阶次等线谱成分，但宽带风噪与胎噪的分离仍较困难。</li>
+<li>数据驱动分离通常依赖已知源参考，而真实车内噪声的孤立参考极难获取；同时存在合成数据训练到实测数据的仿真到现实鸿沟。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>将 EV 车内噪声分解建模为监督式双耳源分离问题，目标为四类贡献：风噪、胎噪、动力总成（电驱与逆变器）噪声、附件驱动噪声。</li>
+<li>改造原用于音乐分离的混合时域-频谱图 Transformer 架构，利用时域分支与 STFT 频谱图分支并行建模，并通过跨域 Transformer/注意力机制交互融合。</li>
+<li>引入工况条件信息以消歧源贡献：电驱转速、电驱负载、车速、附件驱动转速。</li>
+<li>为解决真实参考缺失，构建基于物理的参数化数据生成器，从随机化虚拟车辆硬件配置与驾驶场景合成带标签的分源声音，使各源真值按构造已知；通过域随机化缩小仿真到实测差距。</li>
+<li>在合成与实测车内声音上验证分离性能与工程可行性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>截取片段未给出具体数值指标、消融实验或表格；摘要仅说明在合成和实测车内声音上评估了分离性能，并强调该方法用于技术系统声学贡献分析的可行性。</li>
+<li>论文核心验证问题包括：仅用物理合成数据训练的模型能否迁移到实测车内噪声；以及是否值得为监督训练开展昂贵的实测参考数据采集。</li>
+</ul>
+<h2>一句话评价</h2>
+<ul>
+<li>这是一项将音乐分离中的混合 Transformer 架构迁移到 EV 车内噪声贡献分析的前沿可行性研究，其关键在于工况条件化与物理合成数据域随机化，但片段的实验细节和定量结论尚待全文验证。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32214" target="_blank">DIAL-S2ST: Learning Latency Control for Simultaneous Speech-to-Speech Translation</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Simultaneous Speech-to-Speech Translation</span>
+                <strong>ID:</strong> <span class="tag">2610.32214</span>
+                <a href="../../pdfs/2610.32214.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jeongsoo Choi, Junseok Ahn, Joon Son Chung<br>
+                <div style="margin-top:5px"><span class="tag">同声语音到语音翻译</span><span class="tag">推理时延迟控制</span><span class="tag">自蒸馏</span><span class="tag">LoRA</span><span class="tag">多流模型</span><span class="tag">质量-延迟权衡</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li><strong>同声语音到语音翻译（SimulS2ST）需要在“继续读源语音”和“开始写译语音”之间权衡</strong>：读得更多可提升翻译质量，但会增加延迟，因此理想系统应在推理时按应用需求调节质量-延迟平衡。</li>
+<li><strong>多流模型（如 Hibiki、Hibiki-Zero）难以显式控制延迟</strong>：它们将目标文本和目标语音作为并行流联合生成，生成流同时编码“说什么”和“何时说”，没有独立的 read/write policy；训练完成后难以在推理时单独调整发射时机。</li>
+<li><strong>现有推理时调节方法存在不足</strong>：对 PAD、<s> 等特殊 token 做 logit bias 虽简单，但实验显示质量-延迟权衡较差；对时间平移后的目标对齐做监督微调则只能适配单一预设时序，每个工作点都需单独训练。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文提出 <strong>DIAL-S2ST（Distillation for Inference-time Adjustable Latency）</strong>，一种面向预训练多流 SimulS2ST 模型的后训练自蒸馏方法，用源语音自蒸馏学习推理时延迟控制。</li>
+<li><strong>Lookahead on-policy self-distillation</strong>：冻结的预训练模型作为教师，可看到额外源语音 lookahead；同一模型加 LoRA 作为因果学生，只看到当前源语音。学生在自己生成的轨迹上采样，并匹配教师在额外上下文下的文本预测，从而被鼓励更早发射翻译内容。</li>
+<li><strong>语音锚定正则</strong>：由于 LoRA 也会改变 Temporal Transformer 输出并影响 Depth Transformer 生成的语音，方法用无 lookahead 教师对学生的语音 codebook 预测做 KL 正则，权重为 λ，以稳定语音生成。</li>
+<li><strong>遮蔽大文本 KL 以处理模仿差距</strong>：教师部分预测依赖学生尚未听到的源语音，因此对超过阈值 c 的文本 KL 项进行 mask，降低不可模仿监督的影响。</li>
+<li><strong>单个 LoRA 适配器实现推理时延迟控制</strong>：训练时采样 lookahead k∼U[0,kmax]，并令适配器尺度 α(k)=k/kmax，将较大尺度与较长 lookahead 配对，显式学习“发射时机如何随 α 变化”。推理时仅调节 α：α 越大输出越早，α=0 精确恢复预训练模型。</li>
+<li>方法仅需源语音数据，不需要配对目标数据或奖励计算。</li>
+</ul>
+<h2>实验设置与结果</h2>
+<ul>
+<li>在 <strong>CVSS French→English</strong> 测试集上评估，基础模型为 <strong>Hibiki</strong>；后训练主要使用约 <strong>10 小时 FLEURS 法语源语音</strong>（域外），也在 CVSS 训练集子集上做域内后训练。</li>
+<li>评价指标包括 <strong>ASR-BLEU、LAAL、End Offset、Speaker Similarity、UTMOS</strong>；基线包括 StreamSpeech、Seamless、Hibiki、Hibiki-Zero，以及 Hibiki 上的 PAD/BOS logit bias。</li>
+<li>实现细节：LoRA rank 16，应用于 Temporal Transformer 全部线性层，约 <strong>16M 可训练参数</strong>；500 步、每步 16 rollouts、AdamW、lr 5×10^-5；λ=0.02，c=10 nats，kmax=2 s；三个随机种子并做 uniform model soup。</li>
+<li>主结果：DIAL-S2ST 在较宽延迟范围内取得更高翻译质量，形成优于 logit bias 的质量-延迟 Pareto 前沿；单个适配器即可支持多个推理时延迟工作点。</li>
+<li>匹配 LAAL 的对比（Table 1）：在 LAAL 约 1.8/2.3/2.8 s 时，DIAL-S2ST 的 ASR-BLEU 为 32.5/34.8/35.6，高于 self-training 的 32.0/33.2/34.3 和 off-policy 蒸馏的 31.1/34.6/35.5，低延迟时优势更明显。</li>
+<li>消融（α=0.5，Table 2）：完整模型 ASR-BLEU 34.4、LAAL 2.16、End Offset 1.73、Speaker Sim. 0.391、UTMOS 3.41；去掉文本 KL masking 降至 33.1；去掉 speech KL 降至 32.7 且说话人相似度降至 0.337；reverse KL 会崩溃为静音；使用 CVSS 训练数据为 34.0 BLEU、LAAL 2.06、End Offset 1.51。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>DIAL-S2ST 用源语音上的 lookahead 自蒸馏和单个 LoRA 适配器，把“更早说”学成可调推理时变量，在仅约 10 小时源语音下实现了优于 logit bias 的质量-延迟权衡，是同声 S2ST 推理时延迟控制的一项实用后训练方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.32042" target="_blank">X-Dubbing: Speech-to-Speech Translation under Temporal and Visual Constraints</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-to-Speech Translation / Cross-lingual Dubbing</span>
+                <strong>ID:</strong> <span class="tag">2610.32042</span>
+                <a href="../../pdfs/2610.32042.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jeongsoo Choi, Ji-Hoon Kim, Junseok Ahn, Joon Son Chung<br>
+                <div style="margin-top:5px"><span class="tag">Cross-lingual Dubbing</span><span class="tag">Speech-to-Speech Translation</span><span class="tag">Time-Aware Translation</span><span class="tag">Video-Aware TTS</span><span class="tag">Preference Optimization</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>X-Dubbing 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>跨语言配音要求译文既忠实原意，又能在源视频的时长、节奏和口型约束下自然说出；不同语言在时长、韵律和发音上的差异使该任务非平凡。</li>
+<li>固定视频配音包含两个互补方面：time-aware translation 与 video-aware speech synthesis。前者生成时长接近源语音的译文，后者在源视频视觉约束下合成语音。</li>
+<li>仅做时间感知翻译并接视觉盲 TTS：翻译孤立优化，忽略细粒度视觉边界，导致局部对齐差、语速不自然。</li>
+<li>仅做视频感知 TTS 并接普通翻译：局部对齐可保障，但为补偿译文长度失配会严重扭曲语速。</li>
+<li>端到端 S2ST 未显式建模源视频视觉约束，且固定视频配音的配对数据稀缺，监督适配受限。先生成唇动再配音还可能破坏头部/身体动态一致性，并需为每种语言生成单独视频。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>将 fixed-video cross-lingual dubbing 形式化为 time-aware S2TT 与 video-aware TTS 的联合问题，二者共享 language-agnostic timing budget。</li>
+<li>框架包含 Dubbing Translator 与 Voice Actor：前者生成带 <pause> 标记的目标语言脚本，按源语音时间结构分段；后者以源音频为说话人参考，并利用时间与帧级视觉线索控制合成时序。</li>
+<li>时序预算由 VAD 从源语音提取：总时长与有序语音段起止，段间空隙定义源侧停顿，形成跨语言通用时间结构。</li>
+<li>用合成语音反馈优化翻译器：候选译文不仅按文本标准评估，还经 Voice Actor 合成后按多模态标准评估，实现 dubbing-aware training，且无需配对配音数据。</li>
+<li>训练分两阶段：Stage 1 监督微调；Stage 2 偏好优化/DPO。翻译器可训练，Voice Actor 冻结；多模态准则包括 translation、lip-sync、syllable rate、pause。</li>
+<li>基础组件：多模态 LLM（如 Qwen2.5-Omni）用于直接语音到文本翻译；X-Voice 基于 conditional flow matching 与 DiT 做零样本跨语言语音克隆和长度可控 TTS。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>摘要称 extensive experiments 表明 X-Dubbing 在 isochrony、audio-visual correspondence 等多类指标上优于近期基线。</li>
+<li>作者贡献声明涵盖翻译质量、音视频同步和感知配音质量三个方面均有较强表现。</li>
+<li>当前片段未给出具体数据集、数值结果和消融实验细节，需查阅全文。</li>
+</ul>
+<h2>一句话评价</h2>
+<ul>
+<li>X-Dubbing 通过“时间感知翻译 + 视频感知 TTS + 合成语音反馈”的闭环，在无需配对配音数据的情况下统一固定视频跨语言配音中的局部对齐与自然语速，思路清晰且具有较强实用价值。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.30869" target="_blank">When Do Self-Supervised Representations Help Speech Restoration?</a>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Restoration / Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2610.30869</span>
+                <a href="../../pdfs/2610.30869.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yongjoon Lee, Younghoo Kwon, Jung-Woo Choi<br>
+                <div style="margin-top:5px"><span class="tag">自监督学习表征 (SSL)</span><span class="tag">语音修复 (Speech Restoration)</span><span class="tag">SSL 特征清洗 (SSL Feature Cleansing)</span><span class="tag">感知相关性崩塌 (Perceptual Correlation Collapse)</span><span class="tag">早期修复注入 (Early Restoration Injection)</span><span class="tag">WavLM</span><span class="tag">SEMamba++</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文基本信息</h2>
+<ul>
+<li><strong>标题</strong>：When Do Self-Supervised Representations Help Speech Restoration?</li>
+<li><strong>作者</strong>：Yongjoon Lee, Younghoo Kwon, Jung-Woo Choi（韩国科学技术院 KAIST，电气工程学院 / AI 系统系）</li>
+<li><strong>发表</strong>：arXiv:2610.30869v1 [cs.SD]</li>
+<li><strong>关键词</strong>：语音修复（SR）、自监督学习（SSL）、SSL 特征清洗（SSL feature cleansing）</li>
+</ul>
+<h2>核心痛点</h2>
+<p>现有语音修复（Speech Restoration, SR）主流范式是 <strong>SSL 特征清洗</strong>：先微调 SSL 模型，使其从退化语音中重建“干净”特征，再以这些清洗后的特征作为条件驱动修复模型（代表工作 Miipher、SIDON、PASE、StuPASE；基于语言模型的做法有 GenSE、SenSE）。</p>
+<p>然而，作者指出该范式建立在<strong>未经检验的假设</strong>之上——“SSL 特征距离越小 ⇒ 修复后语音感知质量越高”。论文通过如下分析提出了关键发现：</p>
+<ol>
+<li><strong>t-SNE 可视化发现</strong>：在 WavLM 特征空间中，部分语音在低信噪比（约 0 dB，甚至语音仍可听清时）会<strong>丢失说话内容身份</strong>，向噪声嵌入区域聚拢，而另一些语音则始终锚定在其干净样本附近——说明 SSL 对退化语音的编码存在不稳定性。</li>
+<li><strong>感知相关性崩塌（Perceptual Correlation Collapse）</strong>：在 Easy / Moderate / Difficult / Extreme 四档退化强度下，计算干净语音与退化语音 SSL 特征的余弦距离，并与感知质量分数求 Spearman 相关。结果显示：<strong>轻度退化时相关性很强，但超过某个临界严重度后相关性急剧崩塌</strong>。也就是说，在重度退化区间，最小化 SSL 特征损失不再能可靠地提升感知质量，因而 SSL 特征清洗在 SR 最需要处理的恶劣场景下提供的梯度“方向不对”。</li>
+</ol>
+<p><strong>鲁棒性验证</strong>：作者排除了三类可能的设计伪影。
+- 非单一 SSL 特性：WavLM、HuBERT、SPEAR、Wav2Vec 2.0（均为 large）四种编码器上现象一致；
+- 非采样噪声：每组相关系数做 1000 次 bootstrap，崩塌幅度远超标准差带；
+- 非质量指标伪影：用无模型的 LSD（对数谱距离）替代神经质量预测器，崩塌依旧出现。</p>
+<p>分析设置：m=100 条 LibriTTS-R 干净英文语音；退化管线包含噪声、带宽限制、削波、混响、丢包，且严重度越高越苛刻（噪声 SNR 从 [12.5, 20] dB 降至 [−10, −2.5] dB；带宽截止从 [5750, 7000] Hz 降至 [2000, 3250] Hz；削波阈值从 [0.00, 0.02]/[0.98, 1.00] 收紧至 [0.06, 0.08]/[0.92, 0.94]；丢包时长从 5 ms 增至 20 ms）；质量代理包括 VQScore、SCOREQ（无参考版）、DNSMOS 与 LSD。</p>
+<h2>方法创新</h2>
+<p><strong>朴素解法</strong>：在 SSL 之前串一个预修复模型，使 SSL 永远看不到严重退化语音——但这需要额外模型，代价高。</p>
+<p><strong>核心洞察（假设）</strong>：SR 主干网络自身的中层特征<strong>本就已是部分修复的特征</strong>，若把这些特征暴露给 SSL，SSL 就不会“直面”重度退化输入，从而缓解感知相关性崩塌——即不引入额外预修复模型也能获得“预修复”的收益。</p>
+<p><strong>ERI（Early Restoration Injection，早期修复注入）</strong>：
+- 骨干配置：SR 模型用 SEMamba++（编码器 + 4 层时频处理模块构成的瓶颈 + 解码器，解码出幅度/相位谱并转波形）；SSL 用 WavLM（特征提取器 + 24 层 Transformer）。
+- 注入流程：取 SEMamba++ 瓶颈处的隐特征（形状 T×F×D）→ reshape 为 T×(F·D) → 线性层映射到 WavLM 的通道维 C → LayerNorm + LeakyReLU → 自适应平均池化 → 送入 WavLM。
+- 即以一个<strong>轻量条件网络</strong>把 SR 骨干的中层修复线索“回灌”给 SSL，使特征清洗在重度退化下依然对齐 SR 目标。</p>
+<p><strong>贡献归纳</strong>：(1) 发现并系统验证了感知相关性崩塌现象（跨多个 SSL 与多种质量代理）；(2) 提出简单而新颖的 ERI，把 SR 网络中间特征注入 SSL 特征清洗流程。</p>
+<h2>实验结果</h2>
+<ul>
+<li>ERI 在<strong>同等参数量</strong>条件下优于<strong>无条件基线（unconditioned baseline）</strong>，收敛到更高的感知质量，说明向 SSL 注入部分修复特征确实能缓解感知相关性崩塌。</li>
+<li>在 <strong>VoiceFixer 基准</strong>上，ERI 在多个基线方法中取得<strong>有竞争力（competitive）</strong>的表现。</li>
+<li>（注：论文截取片段止于方法描述与结论性陈述，具体数值表格与消融细节未包含在给定内容中。）</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这篇论文用一个反直觉的实证发现——“SSL 特征距离与感知质量的相关性会在重度退化下崩塌”——质疑了当下流行的 SSL 特征清洗范式的隐含前提，并给出一个几乎零额外模型开销的优雅对策（把 SR 骨干的中层修复特征回注 SSL），为 SSL 条件化语音修复提供了更可靠的信息通路设计思路。</p>
+            </div>
+        </div>
+        
+    
+    <div style="text-align: center; color: #999; font-size: 0.8em; margin-top: 50px;">
+        Generated by AI Daily Bot
+    </div>
+</body>
+</html>
+    
