@@ -3,8 +3,8 @@ name: Daily Arxiv Bot
 # Trigger update
 on:
   schedule:
-    # 每天 UTC 时间 0点 (北京时间 8点) 运行
-    - cron: '0 0 * * *'
+    # 每天 UTC 时间 3点 (北京时间 11点) 运行
+    - cron: '0 3 * * *'
   workflow_dispatch: # 允许手动点按钮触发
 
 permissions:
