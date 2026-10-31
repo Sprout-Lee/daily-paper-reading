@@ -108,11 +108,1790 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 2502 篇论文 | 涵盖 176 天的数据
+            共收录 2551 篇论文 | 涵盖 177 天的数据
         </div>
     </div>
     
-    <h2 class="month-divider">2026-10</h2><h2 class="date-divider">📅 2026-10-28</h2>
+    <h2 class="month-divider">2026-10</h2><h2 class="date-divider">📅 2026-10-31</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.40505" target="_blank">Discovering Interpretable Acoustic Features in Autoregressive Voice-Cloning TTS Models</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech (零样本语音克隆 TTS 的可解释性研究)</span>
+                <strong>ID:</strong> <span class="tag">2610.40505</span>
+                <a href="pdfs/2610.40505.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Anuj Diwan, David Harwath, Eunsol Choi<br>
+                <div style="margin-top:5px"><span class="tag">voice cloning TTS</span><span class="tag">sparse autoencoder (SAE)</span><span class="tag">mechanistic interpretability</span><span class="tag">sparse probing</span><span class="tag">activation steering</span><span class="tag">auto-interpretability</span><span class="tag">autoregressive TTS</span><span class="tag">Qwen3-TTS</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文信息</h2>
+<p><strong>标题</strong>：Discovering Interpretable Acoustic Features in Autoregressive Voice-Cloning TTS Models
+<strong>作者</strong>：Anuj Diwan、David Harwath（UT Austin）、Eunsol Choi（NYU）</p>
+<h2>核心痛点</h2>
+<ol>
+<li><strong>零样本语音克隆 TTS 的「黑箱」问题</strong>：这类模型（如 Qwen3-TTS、CosyVoice2、Fish、Higgs 等）只需几秒参考语音就能合成未见说话人的音色，但学界并不清楚它们内部究竟表征、并依赖了哪些声学属性（音高、能量、噪声、口音、情绪、录音条件……）。</li>
+<li><strong>已有可解释性研究存在空白</strong>：此前的语音 SAE 工作（如 AudioSAE）主要分析语音<strong>编码器</strong>，且只做定性标签检查；此前的 TTS 可解释性工作主要研究<strong>非语音克隆</strong>模型中的<strong>已知概念</strong>；可控 TTS 系统依赖显式风格标签或监督式 steering 方向。</li>
+<li><strong>缺乏定量、可泛化的评测框架</strong>：现有工作很少回答三个关键问题——概念能否被<strong>少量特征稀疏预测</strong>？这些特征能否<strong>因果性地操控生成语音</strong>？特征本身是否<strong>超越预定义标签</strong>、捕获新概念？同时缺少跨架构的泛化验证。</li>
+</ol>
+<h2>方法创新</h2>
+<h3>1. 统一的「特征级」可解释性框架（Figure 1）</h3>
+<p>把 TTS 模型自回归主干（residual stream）的激活转换为<strong>话语级特征</strong>，对比四类特征集：
+- <strong>TopK SAE</strong>（稀疏字典，M 个特征、每 token 至多 K 个激活）
+- <strong>PCA</strong>（稠密主成分）
+- <strong>随机方向</strong>（random directions）
+- <strong>未训练 SAE</strong>（untrained SAE，作为对照基线）</p>
+<h3>2. 三条评测流水线</h3>
+<ul>
+<li><strong>稀疏探测（Sparse Probing）</strong>：对每个概念按「正负样本均值差」排序特征，取 top-k（k∈{1,2,5,10,all}）训练 L2 正则逻辑回归探针，在验证集调阈值、测试集报 F1；同时报告 Recoverability（全特征归一化 F1）与 Sparse Recoverability（Top-2 归一化 F1）。</li>
+<li><strong>生成时操控（Steering）</strong>：用 top-2 排序特征构造 steering 向量，注入生成过程某一层，评测 <strong>目标概念变化量</strong>、<strong>非目标概念偏移量</strong>，以及内容/质量指标（WER、UTMOS）。覆盖全部 55 个 extractor 概念。</li>
+<li><strong>定量自动可解释性（Auto-Interpretability）</strong>：对每个特征找高激活/低激活话语，用音频 LLM（Gemini）生成自然语言标签，并用三个量化指标检验：<strong>Coherence</strong>（能否找出 outlier）、<strong>Label Fit</strong>（给定标签能否预测留出音频）、<strong>Label Stability</strong>（重命名后标签是否稳定）；用于新概念发现。</li>
+</ul>
+<h3>3. 跨架构泛化验证</h3>
+<p>以 <strong>Qwen3-TTS-12Hz-0.6B-Base</strong> 为主模型（28 层、d=1024、16 码本@12Hz、5 层 MTP 模块），研究层 {3, 9, 14, 19, 26}；再将 probing 与 steering 扩展到 5 个模型：<strong>Fish S1-mini、Fish S2 Pro、Higgs TTS 2、Higgs TTS 3、CosyVoice2-0.5B</strong>（各取约相同相对深度的一层），共 6 个模型。</p>
+<h3>4. 数据与实验设置</h3>
+<ul>
+<li>主语料 <strong>3.3k 小时 / 1.5M 话语 / 151.2k 说话人</strong>（LibriTTS-R、MSP-Podcast、Emilia、VoxCeleb 等），按说话人 85%/15% 切分为特征拟合集与分析集。</li>
+<li><strong>ParaSpeechCaps</strong> 标签概念集：102.4k 话语、566 说话人，筛出 21 个人工标注概念（音质、清晰度、响度、情绪、口音等）。</li>
+<li>Steering 评测集：32 说话人的 100 条源语音 + 100 条目标文本（LibriTTS-R test-clean）。</li>
+<li>共探测 <strong>55 个 extractor 概念 + 21 个人工标注概念</strong>。</li>
+</ul>
+<h2>实验结果</h2>
+<ol>
+<li><strong>模型确实编码了丰富概念</strong>：音高（pitch）、能量（energy）、噪声（noise）、口音（accent）、情绪（emotion）等都能被探测到。</li>
+<li><strong>稀疏预测与操控并非「全或无」</strong>：只有部分概念能被少量特征有效预测或有效操控；<strong>强 probing 不必然带来强 steering，反之亦然</strong>——说明「可读出」与「可因果操控」是两种不同性质。</li>
+<li><strong>SAE vs PCA 的权衡</strong>：在人工标注概念的<strong>稀疏预测</strong>上 SAE 平均优于 PCA；但 <strong>PCA 在稠密探测与 steering 上具有竞争力</strong>，随机方向也是不可忽视的强基线（说明部分「可解释性」可能来自激活空间的低维结构而非 SAE 本身）。</li>
+<li><strong>可操控性</strong>：特征方向可有效操控音高、能量、噪声与频谱属性，效果随模型与概念而异。</li>
+<li><strong>新概念发现</strong>：自动可解释性在 Qwen3-TTS 中找出 <strong>684 个自动验证通过的 SAE 特征</strong>，覆盖说话人聚类、说话风格、录音条件等超出预定义标签的概念。</li>
+<li><strong>实用价值</strong>：该 probing 框架可用于追踪微调过程中的表征变化；发现的特征有助于排查参考语音中背景音乐/混响的「 unwanted transfer」问题。</li>
+</ol>
+<h2>一句话评价</h2>
+<p>本文构建了一个覆盖 6 个自回归语音克隆 TTS 模型、贯穿「稀疏探测—因果操控—定量自动可解释」的统一特征级可解释性框架，首次系统揭示这类模型「读得出 ≠ 控得住」的表征—因果鸿沟，并用 684 个自动验证特征打开了预定义标签之外的新概念空间。</p>
+<h2>局限与展望（从片段推断）</h2>
+<ul>
+<li>除 Qwen3-TTS 外，其余模型仅分析单层、且仅用 20% 数据子集（算力限制），跨层与跨规模结论尚不完整。</li>
+<li>人工标注概念只做 probing、未做 steering（需人工听测标注生成音频）。</li>
+<li>Steering 信号只取 top-2 特征，可能低估可操控上限。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39898" target="_blank">Ambisonics: Introducing an Accessible, Distributed Approach</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio / Immersive Audio (Higher Order Ambisonics, Distributed Embedded Audio)</span>
+                <strong>ID:</strong> <span class="tag">2610.39898</span>
+                <a href="pdfs/2610.39898.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Thomas A Rushton (EMERAUDE), Romain Michon (EMERAUDE, UJM EPE), Tanguy Risset (EMERAUDE, INSA Lyon), Clemens Wegener (EMERAUDE), Pierre Lecomte (LMFA, ECL)<br>
+                <div style="margin-top:5px"><span class="tag">Higher Order Ambisonics (HOA)</span><span class="tag">Distributed Audio Processing</span><span class="tag">IEEE 1588 PTP Time Synchronization</span><span class="tag">Embedded / MCU-based Audio (Teensy 4.1)</span><span class="tag">Faust</span><span class="tag">Frugal Spatial Audio</span><span class="tag">Networked Audio (UDP multicast)</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文基本信息</h2>
+<p><strong>标题</strong>：Ambisonics: Introducing an Accessible, Distributed Approach<br />
+<strong>作者</strong>：Thomas A. Rushton, Romain Michon, Tanguy Risset, Clemens Wegener（Inria / INSA Lyon, CITI EA3720）、Pierre Lecomte（École Centrale de Lyon）<br />
+<strong>关键词领域</strong>：空间音频（Spatial Audio）、高阶 Ambisonics（HOA）、嵌入式与分布式音频系统</p>
+<hr />
+<h2>一、核心痛点（Problem）</h2>
+<p>大规模空间／沉浸式音频系统（波场合成 WFS、高阶 Ambisonics HOA）长期是“奢侈品”：</p>
+<ol>
+<li><strong>硬件成本高</strong>：除扬声器本身外，还需高通道数的多通道音频接口与高性能集中式 DSP 系统，对研究者、艺术家与 DIY 爱好者而言价格难以承受。</li>
+<li><strong>集中式架构的可扩展性差</strong>：覆盖大听音区需要大量扬声器（小规模 WFS 就需 64 路输出；五阶 HOA 至少需 (5+1)²=36 路且理想上更多），传统上必须依赖极高通道数的集中式接口。</li>
+<li><strong>多设备同步难</strong>：即便购买多块商用多通道接口（如约 €150 的 Behringer UMC1820，10 路输出），也无法在多接口之间实现采样级同步；不同设备的晶振存在制造公差，采样率不可能完全一致。</li>
+<li><strong>FPGA 方案的门槛</strong>：已有的低成本 FPGA 波场合成方案虽并行性佳，但开发板成本仍偏高、编程复杂度大（即便有 SyFaLa 之类的高层工具链），学习曲线陡峭。</li>
+</ol>
+<hr />
+<h2>二、方法创新（Method / Contribution）</h2>
+<p>提出一种<strong>“易得、分布式”的 HOA 架构</strong>：</p>
+<blockquote>
+<p><strong>DAW 插件（声场设计） + 低成本的 MCU（微控制器）节点网络（声场解码与输出） + PTP 精确时间同步</strong></p>
+</blockquote>
+<h3>1. 利用 Ambisonics 解码的可并行性</h3>
+<ul>
+<li>HOA 将声场分解到截断的球谐基上，阶数 M 对应 (M+1)² 个通道（如三阶 = 16 通道）。</li>
+<li>解码矩阵 <strong>D</strong> 在扬声器数 = (M+1)² 时即 <strong>D = Y⁻¹</strong>，更多扬声器时用伪逆 <strong>D = (YᵀY)⁻¹Yᵀ</strong>。</li>
+<li>第 i 个扬声器输出为 <strong>sᵢ(t) = Dᵢ · b(t)</strong>，即解码矩阵第 i 行与 16×1 的 ACN 通道向量的点积。</li>
+<li><strong>关键洞察</strong>：负责扬声器 i、j 的 DSP 模块只需知道解码矩阵的第 i、j 行，因此整个解码过程可按行切分、天然并行、模块化、冗余度极低。</li>
+</ul>
+<h3>2. 分布式硬件架构</h3>
+<ul>
+<li><strong>时间权威（Time Authority）</strong>：一块 Teensy 同时充当 USB 音频设备与 PTP 时钟权威，使笔记本（USB 连接）与整个 MCU 网络处于同一时间基准。</li>
+<li><strong>交换机作为 PTP 边界时钟</strong>：MikroTik CRS326-24G-2S+IN 先同步到时间权威，再由各 Ambisonics 模块（dAmbi）同步到交换机。</li>
+<li><strong>dAmbi 模块</strong>：8 块 Teensy 4.1，每块负责 <strong>2 只扬声器</strong> 的输出（三阶 16 扬声器示范系统）。</li>
+</ul>
+<h3>3. 音频插件侧（声场设计）</h3>
+<ul>
+<li>采用 <strong>CLAP</strong> 插件格式（通道布局比 VST3 更灵活），宿主为 Reaper（Linux / macOS）。</li>
+<li>通过 IP 地址选择/分配模块，并以 <strong>UDP 单播</strong> 向对应模块发送其解码系数（D 的第 i、j 行）。</li>
+<li>以 <strong>UDP 组播</strong> 在 <code>224.4.224.4</code>（IANA 第二段 ad-hoc 组播块）端口 <code>49152</code>（IANA 动态端口范围首端口）发送 ACN 格式的编码声场。</li>
+<li>包结构：64 位时间戳 + 8 位通道数 + 16 位帧计数（头 11 字节），16 帧 × 16 通道 × 16 bit，总包长 <strong>523 字节</strong>，远低于 1500 字节 UDP MTU。</li>
+</ul>
+<h3>4. 亚微秒级同步：混合自适应时钟校正</h3>
+<ul>
+<li>基于 <strong>IEEE 1588 PTP</strong> 的媒体时钟恢复 + 呈现时间恢复。</li>
+<li>额外措施：模块每秒检查一次音频子系统相对 PTP 时间的偏移，并做相应的<strong>采样率微调</strong>。</li>
+<li>硬件基础：Teensy 4.1 的 NXP IMXRT1062（600 MHz ARM Cortex-M7）具备 PTP 定时器、硬件时间戳、以及高分辨率 PLL 分子/分母寄存器，可在运行时实现<strong>纳秒量级</strong>的采样率调整。</li>
+<li>结果：模块间呈现同步误差维持在 <strong>约 200 ns</strong> 以内。</li>
+</ul>
+<h3>5. 成本与可编程性</h3>
+<ul>
+<li>单块 Teensy 4.1（含音频与以太网扩展）<strong>低于 €50</strong>，仅 1024 KB RAM，可用廉价 PSRAM 扩至 16 MB。</li>
+<li>支持 <strong>Faust</strong> 高级音频 DSP DSL 编程，可直接复用 <strong>AmbiTools</strong> 这一 Faust 编写的 Ambisonics 工具集。</li>
+</ul>
+<hr />
+<h2>三、实验与验证（Results）</h2>
+<ul>
+<li>搭建并运行了一套<strong>三阶 HOA</strong> 示范装置（16 只扬声器、8 个 dAmbi 模块 + 1 个时间权威 + 交换机 + 笔记本 DAW）。</li>
+<li>同步性能：混合式自适应时钟校正使网络内模块的呈现同步稳定在约 <strong>200 ns</strong> 量级（亚微秒）。</li>
+<li>生成的声场已通过初步测试以确认其合理性（论文截断处仅提及“preliminary tests”，未给出完整的主客观评测数据）。</li>
+<li>可扩展性：论证该架构在原理上可扩展至<strong>至少五阶</strong> HOA（≥36 通道）及更大规模阵列；文中亦坦承在<strong>配置管理</strong>与<strong>通道数扩展</strong>方面仍存在挑战。</li>
+<li>通用性：原则上任何可并行的空间音频算法（不止 HOA）都能部署于该平台。</li>
+</ul>
+<hr />
+<h2>四、局限与展望</h2>
+<ul>
+<li>结果仍以可行性演示与初步测试为主，缺乏系统性的客观声场测量与主观听感评估。</li>
+<li>模块配置（IP 分配、系数下发）与大规模通道数下的网络带宽/管理开销仍是待解问题。</li>
+<li>仅验证三阶实现，五阶及以上为“潜在可扩展”的推断。</li>
+</ul>
+<hr />
+<h2>五、一句话评价</h2>
+<p>本文将“高阶 Ambisonics = 昂贵集中式多通道 DSP”的固有印象，用 <strong>DAW 插件 + €50 级 MCU 节点 + PTP 亚微秒同步</strong> 的组合拆解为可并行、模块化、低成本的分布式方案，为“节俭型（frugal）”沉浸式音频的普及提供了一条务实且可扩展的工程路径。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39885" target="_blank">AKDQ: Adaptive Key-Delta Quantization for Low-Bitrate RVQ-based Neural Speech Codecs</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Neural Speech Coding</span>
+                <strong>ID:</strong> <span class="tag">2610.39885</span>
+                <a href="pdfs/2610.39885.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Xiao-Hang Jiang, Yang Ai, Zhen-Hua Ling, Ji Wu<br>
+                <div style="margin-top:5px"><span class="tag">Neural Speech Codec</span><span class="tag">Residual Vector Quantization</span><span class="tag">Adaptive Key-Delta Quantization</span><span class="tag">Low-Bitrate Speech Coding</span><span class="tag">Bit Bank</span><span class="tag">Causal Scheduling</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：AKDQ 自适应 Key-Delta 量化</h1>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39828" target="_blank">SpeakerTurn: Target-Speaker Semantic Turn Detection in Multi-Speaker Environments</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target-Speaker Speech Recognition & Semantic Turn Detection (Speech LLM)</span>
+                <strong>ID:</strong> <span class="tag">2610.39828</span>
+                <a href="pdfs/2610.39828.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nan Li, Hetao Shan, Jintao Liang, Jiahao Yan, Longbiao Wang, Tubin Huang, Min Xu<br>
+                <div style="margin-top:5px"><span class="tag">target-speaker enrollment</span><span class="tag">semantic turn detection</span><span class="tag">multi-speaker environments</span><span class="tag">speech language models</span><span class="tag">low-rank adaptation</span><span class="tag">chain-of-thought supervision</span><span class="tag">interruption detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>SpeakerTurn: Target-Speaker Semantic Turn Detection in Multi-Speaker Environments</h1>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39755" target="_blank">Towards Multilingual End-of-Turn Detection using Frozen Speech Encoders</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">End-of-Turn Detection</span>
+                <strong>ID:</strong> <span class="tag">2610.39755</span>
+                <a href="pdfs/2610.39755.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rini Sharon, Kadri Hacioglu, Andreas Stolcke<br>
+                <div style="margin-top:5px"><span class="tag">multilingual end-of-turn detection</span><span class="tag">frozen speech encoders</span><span class="tag">cross-lingual transfer</span><span class="tag">turn-taking</span><span class="tag">streaming ASR</span><span class="tag">decision threshold</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>口语对话系统需要在用户让出话轮时及时判断 EoT/endpointing；判晚造成不自然停顿，判早会打断用户。</li>
+<li>固定静音超时不可靠，因为话轮内停顿常见且可能长于话轮间间隔。</li>
+<li>现有 EoT 检测器多按语言单独训练与调阈值；新语言需要标注话轮边界并逐语言扫阈值以满足误报预算，扩展成本高。</li>
+<li>跨语言 EoT 研究少，且多依赖 ASR 文本/识别器；声学 turn-taking 信号本身能否跨语言迁移尚不清楚。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出基于冻结多语言语音编码器 + 小型固定尺寸头的 EoT 检测框架，只训练轻量头，编码器不微调。</li>
+<li>使用 Whisper-small 编码器作为固定特征提取器：768 维、50 Hz、20 ms 帧；按源数据逐层扫描选择读出层；比较 oracle（双向全上下文）与 causal（因果）两种读取模式。</li>
+<li>在 CALLHOME 五语种（英语、西班牙语、德语、普通话、日语）上保持语料/领域、标注规则、编码器、头、训练预算固定，仅改变语言，以隔离表征贡献。</li>
+<li>用统一 Algorithm 1 从带说话人时间戳生成 EoT 标签：合并同说话人短间隔、跳过活跃重叠、将边界吸附到 Silero VAD 语音偏移，并定义帧级 collar 正样本、guard 带和未评分尾随上下文。</li>
+<li>数据按说话人不相交划分为 50% 训练头、25% 调阈值/模型选择、25% 测试。</li>
+<li>围绕三个 RQ：单语头零样本跨语言迁移；目标语言少量音频适配能恢复多少损失；单语校准阈值能否跨语言保持误报率与延迟。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>数据：CALLHOME 五语种电话对话，660 段对话、约 99 h 原始音频，经标签规则得到 74,646 个标注样本、59.5 h。</li>
+<li>标签统计显示各语言正帧比例 0.206–0.302，边界类型以 shift 为主，hold 次之，final 约 0.01；作者以正帧比例差异 &lt;0.10 作为可比性容忍度。</li>
+<li>摘要报告的核心发现：单语训练的头可较好地零样本迁移到其他语言，甚至可在声调语言（普通话）与音高重音语言（日语）之间迁移；少量目标语言音频（数小时）即可恢复几乎全部损失，接近目标语言内训练；冻结多语言编码器加单一轻量头可作为实用、语言无关的 EoT 基线。</li>
+<li>引言还强调实时系统在固定工作点评估，需同时报告延迟与误报率，并检验单一决策阈值跨语言是否成立。</li>
+<li>注：所给片段在模型部分后被截断，未包含完整数值结果表；以上结果主要来自摘要与引言陈述。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该工作以冻结多语言编码器加小型 EoT 头的低成本方案，系统检验了声学话轮结束信号的零样本跨语言迁移、少量目标语言适配和阈值复用问题，为多语言实时 EoT 提供了有实践价值的语言无关基线。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39754" target="_blank">Toward Complete Speaker Anonymization: a Streaming Cascaded System for Voice Privacy and PII Removal</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice Privacy / Speech Anonymization</span>
+                <strong>ID:</strong> <span class="tag">2610.39754</span>
+                <a href="pdfs/2610.39754.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Stanisław Kacprzak, Thomas Thebaud, Najim Dehak<br>
+                <div style="margin-top:5px"><span class="tag">voice privacy</span><span class="tag">speech anonymization</span><span class="tag">streaming cascaded system</span><span class="tag">PII removal</span><span class="tag">ASR-NLP-TTS</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：Toward Complete Speaker Anonymization: a Streaming Cascaded System for Voice Privacy and PII Removal</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有语音匿名化主要有两类：语音转换（VC）方法可流式、效用保留较好，但隐私保护通常较弱；级联 ASR+TTS 方法隐私强，但多为离线系统且效用下降明显。</li>
+<li>已有工作分别探索了 ASR+TTS 去除说话人身份、ASR+NER 删除 PII，但将二者结合并面向流式/低延迟场景的系统仍很少。</li>
+<li>远程治疗、支持热线等隐私敏感场景需要同时保护说话人身份和文本中的个人可识别信息（PII），并尽可能降低延迟。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出一个级联式近流式语音隐私系统：ASR → NLP/PII 检测 → TTS，实现语音匿名化与 PII 去除的统一处理。</li>
+<li>ASR 模块：使用 Whisper turbo 与 Silero VAD，自研流式分块算法；初始 700 ms 音频块，仅处理含语音块；在语音结束后若尾随静音不足 100 ms，则每次增加最多 200 ms 并重复 VAD，直到找到至少 100 ms 尾随非语音或达到 1.3 s 最大识别块；对可能被边界截断的词进行回传处理。</li>
+<li>NLP/PII 模块：比较 Qwen2.5-Instruct 1.5B/0.5B、GLiNER 类模型和 spaCy en_core_web_trf；在 SLURP 训练文本上微调，Qwen 使用 LoRA；模拟流式时将文本切成 2–4 词块并保留左侧上下文；关注 person、email_address、date/time、place_name、relation 等实体，并合并相邻同类型实体。</li>
+<li>TTS 模块：采用 VoxCPM 2.0 与 NanovLLM-VoxCPM 推理引擎，利用 continuation cloning 和原生流式支持；设置 cfg=2.0、10 个推理步、温度 0.9、最多 10 个生成步（约 1.6 s 音频）；在静音、连续两句或已生成超过 10 s 后重启 continuation 模式，以减少误差累积；参考音频由 ElevenLabs 合成。</li>
+<li>系统定位为“几乎流式”的基线系统，为后续全流式完全匿名化系统铺路，并支持超出声学身份之外的文本内容保护。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>延迟：ASR 中位延迟 669 ms，TTS 首音频时间 TTFA 41 ms，端到端 utterance-onset 延迟 711 ms（摘要中为 717 ms），输出/输入音频时长比 1.33；NLP 延迟方面 Qwen 1.5B 约 46 ms、Qwen 0.5B 约 39 ms、spaCy 约 6 ms。</li>
+<li>语音内容保持：LibriSpeech dev/test WER 为 11.11%/11.44%，高于离线基线 T30 的 5.02%/4.78% 和 T8-4 的 3.74%/3.75%；ASR 单独 WER 为 7.83%，TTS 在真实文本上 WER 为 10.38%，说明流式 ASR 与 TTS 均有改进空间。</li>
+<li>情感保持：IEMOCAP UAR dev/test 为 29.37%/29.22%，与 T30 的 28.45%/29.44% 和 T8-4 的 30.10%/30.59% 接近，但远低于原始语音 69.08%/71.06%。</li>
+<li>语音质量：UTMOS 为 3.21±0.44，原始语音为 3.35±0.28，生成语音质量退化较小。</li>
+<li>隐私保护：对半知情攻击者的 EER 在 LibriSpeech dev-f/dev-m/test-f/test-m 上分别为 44.18/47.66/44.37/45.25，显著高于原始语音，且与 T30、T8-4 等离线强隐私系统可比；摘要报告最高 47.66% EER。</li>
+<li>PII 检测：Qwen 1.5B 在 SLURP clean transcript 上 Entity F1/SLU F1 为 87.50/89.10，ASR chunks 下为 51.48/66.51；DialogPII 上为 56.27/64.22；Qwen 0.5B 对应为 83.92/85.42、48.33/62.73、46.55/56.62；spaCy 在 clean transcript 上为 87.19/88.98，在 ASR chunks 上为 54.82（后续截断）。摘要报告 PII 检测约 69% SLU F1。</li>
+<li>主要发现：系统在隐私保护上接近 SOTA 离线级联系统，同时具备可控 PII 去除能力；但流式 ASR 导致 WER 明显升高，PII 检测在 ASR 分块文本上性能下降，TTS 和流式识别仍是关键瓶颈。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文提出并评估了一个 ASR+NLP+TTS 的近流式级联语音隐私系统，在较低延迟下实现与离线强匿名化系统可比的隐私保护，并增加 PII 去除能力，但在语音内容保持和流式 PII 检测准确性上仍有明显提升空间。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39742" target="_blank">The Importance of Speech Genre for End-of-Turn Detector Training</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue Systems (End-of-Turn Detection)</span>
+                <strong>ID:</strong> <span class="tag">2610.39742</span>
+                <a href="pdfs/2610.39742.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Rini Sharon, Kadri Hacioglu, Jeena Prakash, Andreas Stolcke<br>
+                <div style="margin-top:5px"><span class="tag">End-of-Turn Detection</span><span class="tag">Turn-taking</span><span class="tag">Speech Genre</span><span class="tag">Streaming ConvLSTM</span><span class="tag">Conversational Speech</span><span class="tag">Voice Activity Detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：The Importance of Speech Genre for End-of-Turn Detector Training</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>端到端轮次结束（End-of-Turn, EoT）检测已有研究主要集中在特征、模型架构和信号模态上，而训练数据的语音体裁（speech genre）长期缺乏系统研究。</li>
+<li>多数工作只在单一语料、单轮语音或干净语音上训练和评估，跨体裁对比不足，导致性能提升难以归因于模型本身还是训练数据差异。</li>
+<li>固定静音阈值无法区分句中停顿、犹豫与真正轮次结束；单轮人机语音缺少句中停顿、填充停顿和反馈信号，可能掩盖对话式训练数据的价值。</li>
+<li>帧级检测与话段级检测的决策机制不同，而话段级系统多在单轮或干净语音上测试，对话训练是否对其有效仍未知。</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>控制变量式体裁对比</strong>：使用同一套可复现标注流水线构建两个规模匹配的 10K 训练集：Conv-10K 为多轮人-人呼叫中心对话，ST-10K 为单轮人-机完整话语；用相同架构和超参数训练同一流式 EoT 检测器，从而隔离训练语音体裁这一变量。</li>
+<li><strong>全通话 EoT 标注流水线</strong>：包括分通道 VAD 与平滑、同说话人相邻语音段合并、过滤过短片段与重叠反馈片段、在对手接话或通话结束时放置 EoT、静音扩展（最多 1.3 s，且至少保留 0.3 s 干净尾静音），并以 10 ms 分辨率生成帧级二值标签。</li>
+<li><strong>紧凑流式模型</strong>：每 10 ms 帧使用 85 维特征（80 维 log-Mel 加 5 个韵律特征：归一化 F0、F0 差分、浊音标志、语音标志、累计静音时长）；Conv1D（kernel=33，256 通道）提供约 320 ms 前视，经 LayerNorm 和 GELU 后送入 2 层单向 LSTM（256 隐藏单元，dropout 0.25），再由 3 层 MLP 输出每帧 EoT logit，sigmoid 得到概率；模型约 1.8M 参数，LSTM 状态跨块传递，可流式使用无界左上下文。</li>
+<li><strong>效应范围检验</strong>：不仅在帧级解码下比较，还在话段级 complete-or-not 判定下，跨两个独立预训练编码器、跨对话与单轮测试体裁，验证对话训练效应成立的条件与边界。</li>
+<li><strong>统一基准与显著性检验</strong>：与开源 VAD 和学习型基线在同一协议下比较，采用单侧容忍窗口、静音匹配话段测试和显著性检验。</li>
+</ol>
+<h2>实验设置与结果</h2>
+<ul>
+<li><strong>训练数据</strong>：Conv-10K 来自真实多轮人-人客服通话；ST-10K 来自 SmartTurn v3 训练划分中的单轮人-机完整话语，包含真实与合成语音，并与评测话语不重叠。两者使用相同标注规则、相同模型和超参数。</li>
+<li><strong>测试数据</strong>：四个测试集覆盖人-人对话、人-机对话和命令式单轮交互，包括 Internal 5K（多轮客服通话，Conv-10K 域内）、CASPER（独立双人英语对话，含犹豫、反馈和句中停顿）、ST-Complete（SmartTurn v3 真实完整轮次，ST-10K 域内）和 SLURP（短语音命令，域外）。</li>
+<li><strong>主要结果</strong>：在四个测试集上，对话式训练模型最高取得 +0.45 的 F1 提升，主要来自对句中停顿和犹豫的误报减少；该对话训练效应不只存在于帧级解码，在话段级 complete-or-not 测试中也出现，并可跨两个编码器观察到，但仅在对话式测试数据上明显。仅在单轮语音上测试会隐藏对话训练数据的收益。与开源基线相比，1.8M 参数的模型在每个测试集上均取得最高 F1。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该文首次将训练语音体裁作为受控变量，系统证明多轮对话数据对 EoT 检测的关键价值，并给出可复现标注流程、紧凑流式模型和统一基准，对该领域的数据选择与评测设计具有重要参考意义。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39566" target="_blank">Conformal Prediction-Aware DOA Tracking</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Direction-of-Arrival Tracking</span>
+                <strong>ID:</strong> <span class="tag">2610.39566</span>
+                <a href="pdfs/2610.39566.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Maya Veisman Barness, Sharon Gannot, Bracha Laufer Goldshtein<br>
+                <div style="margin-top:5px"><span class="tag">Conformal Prediction</span><span class="tag">DOA Tracking</span><span class="tag">Uncertainty Quantification</span><span class="tag">Direction of Arrival</span><span class="tag">Temporal Smoothing</span><span class="tag">Burst Noise</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>深度神经网络（CNN、ResNet、注意力模型等）在 DOA 估计上精度较高，但其输出的后验概率通常未校准，在噪声或混响条件下可能过度自信。</li>
+<li>仅依赖逐帧神经后验会导致 DOA 轨迹不稳定，尤其在混响和突发方向性噪声下容易出现伪峰或跳变。</li>
+<li>传统时序跟踪虽可利用时间连续性，但若固定平滑权重，可能在低混响时过度平滑，或在噪声帧错误信任不可靠后验。</li>
+</ul>
+<h2>方法创新</h2>
+<p>论文提出一个三阶段、不确定性感知的 DOA 跟踪框架：
+1. <strong>基于 iRTF 的 U-Net 后验估计</strong>：从多麦克风 STFT 信号构造瞬时相对传递函数 iRTF，将其实部与虚部作为输入张量，使用 2D U-Net 将 DOA 估计建模为 32 类分类问题，角度网格为 10° 到 165°、步长 5°，并排除端射附近 10° 范围。
+2. <strong>Conformal Prediction 校准</strong>：以负对数后验作为非一致性分数，在静态校准集上计算阈值 τ_α，构造每帧 conformal set C_t(α)，从而给出有限样本、分布无关的覆盖保证。CP 集在不确定或噪声条件下扩张，在模型自信时收缩。
+3. <strong>CP 感知的自适应时序平滑</strong>：使用高斯行随机转移矩阵描述 DOA 类间转移，先传播上一帧 belief，再与当前神经后验加权融合。平滑权重 w_t 由 CP 集的三个描述量决定：集合内相邻角度差的方差 var_t、集合大小 size_t、集合跨度 span_t。集合小且连续时提高神经后验权重，集合大或不规则时降低神经后验权重、增强时序先验。</p>
+<h3>关键流程</h3>
+<ul>
+<li>信号模型：z_m(t,f)=s(t,f)h_m(t,f)+v_m(t,f)，iRTF 由麦克风信号比值估计。</li>
+<li>网络输出逐帧 softmax 后验，基础 DOA 估计为 argmax。</li>
+<li>CP 集定义为 C_t(α)={θ∈Θ: s(θ,R_t)≤τ_α}，其中 s(θ,R_t)=−log p̂_t(θ|R_t)。</li>
+<li>跟踪更新：b_t=(1−w_t)·T b_{t−1}+w_t·p̂_t，最终取 belief 最大类。</li>
+<li>权重：w_t=exp[−(λ_sp·var_t+λ_sz·size_t+λ_span·span_t)]，实验中 λ_sp=1、λ_sz=2、λ_span=1，α=0.1。</li>
+</ul>
+<h2>实验结果</h2>
+<p>实验使用 5 麦克风线性阵列，房间混响时间 RT60 为 0.2、0.5、0.8 s。静态数据用于训练与校准，动态移动说话人数据用于评估跟踪。测试中加入 0 dB 局部 SNR 的方向性突发噪声，突发持续时间 300–500 ms，每段 1–5 次。</p>
+<p>| RT60 (s) | 无噪声 MAE（平滑前/后） | 有突发噪声 MAE（平滑前/后） |
+|---|---:|---:|
+| 0.2 | 5.81 / 6.36 | 17.24 / 14.18 |
+| 0.5 | 6.34 / 5.63 | 12.79 / 9.29 |
+| 0.8 | 7.35 / 6.67 | 10.92 / 8.38 |</p>
+<ul>
+<li>无噪声条件下，U-Net 本身已较准确，平滑收益有限，低混响 0.2 s 时甚至略有退化。</li>
+<li>在突发方向性噪声下，所提 CP 感知平滑在所有 RT60 条件下均降低 MAE，说明其能有效抑制瞬态方向性干扰。</li>
+<li>定性结果显示，CP 集在不确定帧扩张，平滑后能压制突发噪声造成的伪 DOA，同时保留移动声源的真实轨迹。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该工作将 conformal prediction 的校准不确定性直接转化为 DOA 跟踪的平滑权重，在突发方向性噪声下显著提升跟踪鲁棒性；但在无噪声低混响场景中收益有限，且动态测试下 CP 的交换性假设仅近似成立。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39427" target="_blank">EmpDPO: Enabling Emphasis Control in TTS via Direct Preference Optimization</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech (Controllable Speech Synthesis)</span>
+                <strong>ID:</strong> <span class="tag">2610.39427</span>
+                <a href="pdfs/2610.39427.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Haonan Chen, Yunyun Wang, Megan Wei, Zeyu Jin<br>
+                <div style="margin-top:5px"><span class="tag">Text-to-Speech</span><span class="tag">Emphasis Control</span><span class="tag">Direct Preference Optimization</span><span class="tag">Diffusion Models</span><span class="tag">Multilingual TTS</span><span class="tag">Zero-shot Voice Cloning</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>EmpDPO: 通过直接偏好优化为 TTS 引入强调控制</h1>
+<p><strong>论文</strong>: EmpDPO: Enabling Emphasis Control in TTS via Direct Preference Optimization（Adobe Research &amp; Brown University，投稿 IEEE）</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39185" target="_blank">Array-Agnostic High-Order Ambisonics Encoding via Diffusion Posterior Sampling</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio (Ambisonics Encoding & Upscaling)</span>
+                <strong>ID:</strong> <span class="tag">2610.39185</span>
+                <a href="pdfs/2610.39185.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Amit Milstein, Nir Shlezinger, Boaz Rafaely<br>
+                <div style="margin-top:5px"><span class="tag">Ambisonics</span><span class="tag">High-Order Ambisonics (HOA)</span><span class="tag">Diffusion Posterior Sampling</span><span class="tag">Microphone Array Encoding</span><span class="tag">Ambisonics Upscaling</span><span class="tag">Array-Agnostic</span><span class="tag">Score Blending</span><span class="tag">Inverse Problem</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结：Array-Agnostic High-Order Ambisonics Encoding via Diffusion Posterior Sampling (ADEUPS)</h2>
+<h3>1. 研究背景与核心痛点</h3>
+<ul>
+<li><strong>Ambisonics</strong> 是一种与采集设备无关的三维声场表示（基于球谐函数，spherical harmonics, SH），在沉浸式通信、媒体与 XR 中非常关键。但从实际麦克风阵列录音中获取理想的高阶 Ambisonics（HOA）系数非常困难。</li>
+<li>传统流水线被拆成两个独立任务：</li>
+<li><strong>Encoding（编码）</strong>：从阵列录音中重建物理上可分辨的空间分量，并抑制采集失真；</li>
+<li><strong>Upscaling（升阶）</strong>：推断阵列无法可靠观测的高阶分量。</li>
+<li>具体挑战被归纳为四类（C1–C4）：</li>
+<li><strong>C1 噪声放大</strong>：低频时径向函数 B(k) 在高阶迅速衰减，导致直接求逆严重病态，麦克风噪声被极度放大；</li>
+<li><strong>C2 非均匀灵敏度</strong>：不规则或非理想阵列布局使 Y_Neff 的条件数恶化，产生方向与通道相关的重建误差；</li>
+<li><strong>C3 高频空间混叠</strong>：空间采样不足时引入频率与几何相关的失真；</li>
+<li><strong>C4 高阶欠定恢复</strong>：目标阶数超过阵列可支撑维度（如 Q &lt; (Np+1)^2）时问题欠定。</li>
+<li>现有方法各自的局限：</li>
+<li>经典的基于转向矩阵求逆/正则化的方法依赖物理模型，但在病态或欠定时精度骤降；</li>
+<li>参数化方法（参数化空间分析再合成）物理可解释性强，但在混响、多源场景下退化；</li>
+<li>数据驱动的编码器（阵列特定线性变换或直接映射）与采集接口强耦合（麦克风数量、阵列相关训练数据），难以跨阵列泛化；条件化于麦克风位置或 ATF 的方法虽提升泛化，但仍与采集设置绑定；</li>
+<li>升阶侧方法（稀疏平面波分解、压缩感知、多级/层次化网络、波形域网络、物理引导学习、生成模型）通常假设输入是“理想低阶 Ambisonics”，忽略了前级编码引入的阵列相关失真、混叠与估计误差，导致误差累积。</li>
+<li>作者前作 <strong>ADEPS</strong> 已用扩散后验采样（DPS）做联合建模，但<strong>阶数越高，高阶分量恢复质量在客观与主观上急剧下降</strong>。本文正是针对这一瓶颈提出 ADEUPS。</li>
+</ul>
+<h3>2. 方法创新（ADEUPS 框架）</h3>
+<ul>
+<li><strong>总体思路</strong>：把 HOA 重建（编码+升阶）统一为一个从麦克风测量直接求解的<strong>单一逆问题</strong>，用<strong>与阵列无关的 Ambisonics 扩散先验 + 显式物理采集模型</strong>在推理阶段耦合，实现零样本（zero-shot）跨阵列编码与升阶。</li>
+<li><strong>关键设计 1：阵列无关的扩散先验 + 阶数掩码（order-masking）训练策略</strong></li>
+<li>在理想 HOA 信号上训练扩散模型，通过阶数掩码迫使模型学习<strong>阶间/通道间依赖关系</strong>，得到不依赖采集硬件的鲁棒声场先验；</li>
+<li>由于使用由麦克风信号线性编码得到的 Ambisonics 作为观测域表示，先验与阵列几何解耦，可零样本泛化到任意麦克风数量与构型，无需重训。</li>
+<li><strong>关键设计 2：物理引导的后验推断（DPS + score blending）</strong></li>
+<li>推理时用声学前向模型（在真实麦克风位置采样目标声场、再重编码为 Ambisonics）刻画具体阵列配置；</li>
+<li>将该测量算子嵌入 DPS 反向过程，并采用 <strong>score blending（得分融合）</strong>，作者强调其对求解该逆问题至关重要；</li>
+<li>效果：把解约束在“理想 HOA 信号流形”上，从而抑制测量噪声、空间混叠与阵列物理非理想性，同时外推超出阵列可分辨阶数的空间分量。</li>
+<li><strong>关键设计 3：定制的噪声调度器（tailored noise scheduler）</strong> 配合融合得分使用（细节在正文第三节）。</li>
+<li><strong>统一编码与升阶</strong>：单一逆问题求解，规避级联架构的误差累积与性能瓶颈。</li>
+<li><strong>信号模型基础</strong>：麦克风压力 p(k) = V(k) a_Neff(k) + ν(k)，其中 V(k)=Y_Neff B(k) 为模态转向矩阵（SH 矩阵 × 径向项对角阵）；有效阶数由 N_eff ≥ ⌈k·max_q r_q⌉ 截断。目标算子 R 需从 p(k), V(k) 估计 â_Np(k)，且 Np 不受阵列可分辨阶限制。</li>
+</ul>
+<h3>3. 实验与结果</h3>
+<ul>
+<li><strong>数值评估</strong>：覆盖多种麦克风几何与数量、多种重建阶数，同时考察 encoding 与 upscaling 两种设定，与任务专用（task-specific）和阵列专用（array-specific）/半无关（semi-agnostic）基线对比。</li>
+<li><strong>结论</strong>：ADEUPS 一致优于任务与阵列特定基线，达到 state-of-the-art。</li>
+<li><strong>主观听测</strong>：进行了主观听力测试，确认重建 Ambisonics 信号的感知有效性。</li>
+</ul>
+<h3>4. 主要贡献（原文四条）</h3>
+<ol>
+<li><strong>阵列无关框架</strong>：在 Ambisonics 域内完成精化与升阶，先验与阵列几何解耦，零样本泛化到任意麦克风数量与构型；</li>
+<li><strong>统一的编码与升阶</strong>：单一逆问题，消除级联误差累积；</li>
+<li><strong>物理引导的后验推断</strong>：测试时后验采样引入归纳偏置，抵抗噪声、混叠与阵列缺陷；</li>
+<li><strong>充分实验验证</strong>：多几何、多通道数、多阶数，客观空间/信号保真指标 + 主观听测。</li>
+</ol>
+<h3>5. 一句话评价</h3>
+<p>ADEUPS 用“理想 HOA 扩散先验 + 物理测量算子 + 融合得分 DPS”把 Ambisonics 编码与升阶统一成一个阵列无关的生成式逆问题，在无需重训的前提下实现跨阵列零样本高阶重建，并显著改善了前作 ADEPS 在高阶恢复上的性能塌陷。</p>
+<h3>6. 备注（片段截断）</h3>
+<p>给出的文本止于挑战 C4，第三节的方法细节（阶数掩码的具体形式、score blending 的数学表达、噪声调度设计）与第四、五节实验数据未包含在片段中，需阅读全文补充。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39168" target="_blank">Reading-Level Verification of Kanji Words in Japanese Financial Speech Synthesis</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2610.39168</span>
+                <a href="pdfs/2610.39168.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Cheng Zhang<br>
+                <div style="margin-top:5px"><span class="tag">Japanese speech synthesis</span><span class="tag">kanji reading disambiguation</span><span class="tag">pronunciation verification</span><span class="tag">CTC likelihood scoring</span><span class="tag">voice cloning quality gate</span><span class="tag">financial domain TTS</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文概要</h2>
+<p><strong>标题</strong>：Reading-Level Verification of Kanji Words in Japanese Financial Speech Synthesis（日语金融语音合成中汉字词的读音级校验）</p>
+<p><strong>作者</strong>：Cheng ZHANG（Best AI Co., Ltd., Tokyo, Japan）</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.39004" target="_blank">How Architecture, Typology, and Adaptation Strategies Shape ASR for Low-Resource African Languages: A Controlled Empirical Study</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2610.39004</span>
+                <a href="pdfs/2610.39004.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mercy Muchai (1), Kevin Chege (1), Nick Mumero Mwangi (1), Samuel Chege Maina (1), Felermino Ali (1), Elizabeth Ankrah (1), Ignatius Ezeani (2) ((1) Microsoft Research Africa, Nairobi, (2) Lancaster University)<br>
+                <div style="margin-top:5px"><span class="tag">low-resource ASR</span><span class="tag">African languages</span><span class="tag">multilingual fine-tuning</span><span class="tag">adapter transfer</span><span class="tag">domain adaptation</span><span class="tag">data sufficiency</span><span class="tag">Whisper</span><span class="tag">MMS</span><span class="tag">Phi-4</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>低资源语言的 ASR 面临标注数据稀缺，仅靠扩充数据无法解决。研究者和工程实践者必须在若干关键设计决策上做出选择：</p>
+<ul>
+<li>选哪个预训练模型或哪种架构最匹配给定的数据预算；</li>
+<li>需要多少标注语音才能达到可用性能（数据充分性与收益递减点）；</li>
+<li>应单语独立微调还是多语言联合微调；</li>
+<li>对基座模型不支持的语言，adapter 应如何初始化（从零训练还是借用近亲语言）；</li>
+<li>稀缺的标注预算应投入通用域还是特定领域数据。</li>
+</ul>
+<p>论文指出，现有文献存在两个空白：一是多语言微调评估常随语言数增加而同步增加总训练数据，混淆了多语言迁移的真实收益，保持每语言训练时长恒定的受控比较很少；二是 adapter 在低资源非洲语言上的迁移证据稀疏。错误选择会浪费大量数据与算力。</p>
+<h2>方法创新（实验设计与受控变量）</h2>
+<p><strong>语言与数据</strong>：6 种非洲语言，覆盖 3 个语系，提供类型学多样性——Nilo-Saharan：Dholuo（luo, 513.2h）、Kalenjin（kln, 386.7h）、Maasai（mas, 235.5h）；Niger-Congo：Kikuyu（kik, 967.8h）、Swahili（swa, 280.0h，作为中等资源对照）；Afro-Asiatic：Somali（som, 341.9h）。luo、kik、kln、mas、som 来自 Africa Next Voices–Kenya（ANV-KE，覆盖 11 个内容域），kik 额外补充农业域数据（DigiGreen），swa 来自 Mozilla Common Voice。另用一个不公开的农业域 Kikuyu 测试集评估域外泛化（与训练数据无重叠）。</p>
+<p><strong>预处理</strong>：统一重采样至 16 kHz；文本小写化、合并重复空白、去标点、保留语言特定变音符号；在原始测试集上评测，WER/CER 做长度归一化以便跨不同规模测试集比较。</p>
+<p><strong>三模型对照（每种架构一个代表）</strong>：</p>
+<p>| 模型 | 语音参数 | 语言数 | 架构 |
+|---|---|---|---|
+| Phi-4-multimodal-instruct | 920M（另有 5.6B 共享 LM） | 8 | LLM 多模态 |
+| Whisper-large-v3-turbo | 809M | 99 | Encoder–Decoder |
+| MMS-1B-all | 1.0B | 1,162 | Encoder-only（Wav2Vec2.0） |</p>
+<p><strong>差异化微调策略</strong>：Whisper 扩展 tokenizer 加入语言 token 并相应调整输入 embedding（swa 原生支持故排除）；Phi-4 只解冻音频相关组件（音频 embedding、音频编码器、音频投影层）并配合 speech LoRA，冻结语言模型主体；MMS 冻结骨干、只微调语言专属 adapter，对基座不支持语言的 kln 与 mas 按谱系邻近选择代理 adapter（Maasai←Samburu saq，Kalenjin←Sabaot spy）。</p>
+<p><strong>算力</strong>：全部采用 DDP 分布式数据并行；MMS 与 Whisper 用 8×A100 40GB，Phi-4 用 4×A100 80GB；各模型内部超参在全部实验中保持恒定以保证可比性，并沿用各自官方推荐配置。</p>
+<p><strong>四组受控实验</strong>：(1) 数据充分性与收益递减；(2) 单语 vs 多语言联合微调（MMS 因按语言路由 adapter 不适用，仅覆盖 Phi-4 与 Whisper）；(3) 新 adapter vs 代理语言 adapter；(4) 域内微调对域内性能与同域未见数据泛化的影响。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>整体精度</strong>：Phi-4 综合表现最好；MMS 的 CER 与之可比；Whisper 的 CER 明显偏高，并出现已知的幻觉与重复循环现象。</li>
+<li><strong>数据充分性</strong>：性能在不同数据规模处饱和，给出了可操作的数据效率目标区间（前若干小时增益大，之后趋于平台）。</li>
+<li><strong>类型学影响</strong>：语言类型学复杂度持续影响错误率，是跨语言差异的稳定解释因素。</li>
+<li><strong>域适配</strong>：领域微调对 Phi-4 与 Whisper 有增益，却会损害 MMS，暴露出基于 adapter 的适配方式的局限。</li>
+<li><strong>adapter 初始化</strong>：代理语言 adapter 优于从零训练 MMS adapter。</li>
+<li><strong>作者自陈的边界</strong>：由于每种架构只取一个模型，各系统在参数量、预训练数据、可训练组件与适配目标上均不同，因此结论应解读为模型级比较，而非架构的孤立因果效应。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一项以受控变量为特色的实证研究：在匹配的每语言数据预算下横跨三种架构与六种非洲语言，把架构选择、数据量、单/多语微调、adapter 代理迁移与域适配这些工程决策放在同一坐标系里量化，为低资源 ASR 的数据采集与训练策略提供了可直接落地的经验指南，而非追求单一最优系统。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38960" target="_blank">Efficient Agentic Audio-Visual Question Answering through Toolset Pruning and Modality Consolidation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio-Visual Question Answering (Agentic Multimodal LLM)</span>
+                <strong>ID:</strong> <span class="tag">2610.38960</span>
+                <a href="pdfs/2610.38960.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yi Wang, Tianzi Wang, Peter Bell<br>
+                <div style="margin-top:5px"><span class="tag">Agentic AVQA</span><span class="tag">Toolset Pruning</span><span class="tag">Modality Consolidation</span><span class="tag">Omni-modal LLM</span><span class="tag">Tool-use Efficiency</span><span class="tag">Long Video Understanding</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li><strong>细粒度 AVQA 本身很难</strong>：需要同时依赖音频与视觉两条流，证据在时间上稀疏分布，模型必须做时间对齐、定位事件并解决跨模态对应关系。</li>
+<li><strong>Agentic 方案精度高但代价大</strong>：以 OmniAgent 为代表的 omni-modal agent 通过 ReAct 式「规划—调用感知工具—更新推理」的主动感知循环取得 SOTA，但把规划器暴露给一大批功能专用工具（全局音频描述、ASR、音频事件定位、全局视频 QA、片段级视频 QA 等）。</li>
+<li><strong>由此带来的效率问题</strong>：工具集过宽导致执行轨迹过长、冗余推理与冗余观察、上下文消耗与推理成本显著上升。</li>
+<li><strong>未回答的关键问题</strong>：在 OmniLLM 自身能力持续演进的背景下，(1) 能否在不损失精度的前提下大幅剪枝专用工具集？(2) 在确定必要能力后，能否把音频专用与视觉专用工具合并为 omni-modal 工具以提升效率？</li>
+</ul>
+<h2>方法创新</h2>
+<p><strong>最终系统：两工具紧凑智能体</strong></p>
+<ul>
+<li><strong>Omni Captioning Tool</strong>：对整段视频的音视频联合描述，每个事件句附带时间戳，提供全局上下文（broad context）。</li>
+<li><strong>Omni QA Tool</strong>：回答规划器提出的定向 QA 查询，实现问题导向的证据获取（question-directed evidence acquisition）。</li>
+<li><strong>文本-only 规划器</strong>：不直接接触原始音视频，只处理问题、选项和工具返回的文本观察；每步在 {调用描述工具, 调用 QA 工具, 给出答案} 中选择动作，并把查询与观察追加进交互历史。</li>
+<li><strong>Caption-first 软约束</strong>：规划指令要求先调用描述工具获取全局上下文，之后动态决定再次调用哪个工具或直接作答；设有有效调用预算，预算耗尽必须基于已收集证据作答。这样既保证初始全局视野，又不固定后续证据获取轨迹。</li>
+</ul>
+<p><strong>分阶段受控实验设计（核心贡献）</strong></p>
+<ol>
+<li><strong>能力移除研究（capability removal）</strong>：把专用工具按功能分为五类——C 全局音频描述、Q 问题导向音视频问答（audio_qa / video_global_qa / video_clip_qa）、E 音频事件列举与定位、A 语音识别、M 视频元数据。从完整的 C+Q+E+A+M 出发，在固定 125 题验证子集上逐组移除，并额外测试去掉 A+E 以及最小化 C+Q 配置。按功能分组可以检验「看似需要很多工具」究竟反映的是不同感知能力，还是获取证据的冗余路径。</li>
+<li><strong>工作流与模态合并研究</strong>：从保留的 C+Q+M 出发，先在同一执行框架内复现该配置并保留原工具角色与指令，以分离 workflow 变化与 tool 变化；随后去掉鼓励跨工具交叉验证的指令、改用更简单的证据驱动策略；再把全局音频描述替换为 Omni Captioning（并加入 caption-first 指令以隔离「先获全局上下文」的效应）；再把三个模态专用 QA 替换为 omni-modal 的全局与片段级 QA；最后检验元数据与片段级 QA 是否仍必要，从而得到仅含两个工具的配置。所有配置共享同一规划器、历史管理与最终作答流程，确保比较匹配。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>精度</strong>：在 Daily-Omni、AVUT、WorldSense 三个基准上分别达到 <strong>78.86%、80.57%、58.39%</strong>，一致优于对应的直接推理基线 Gemini-2.5-Flash，并与全专用工具的 OmniAgent 相当或更好。</li>
+<li><strong>效率</strong>：工具调用次数减少 <strong>72–79%</strong>，估计推理成本降低 <strong>72–75%</strong>。</li>
+<li><strong>三点实证结论</strong>：</li>
+<li>强 agentic AVQA 并不需要广谱的模态专用工具集，全局音视频描述 + 问题导向感知已覆盖大部分必要能力；</li>
+<li>把这些能力合并进 omni-modal 工具可进一步压缩工具调用；</li>
+<li>即使以强 OmniLLM 作为共享感知骨干，agentic 流程依然有增益，且增益在长视频上更明显。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文用一组干净、变量隔离的分阶段受控消融证明 agentic AVQA 中的「少即是多」：把专用工具集砍到两个 omni-modal 工具仍保持甚至超过原有精度，同时把工具调用与推理成本削减约七成，为多模态 agent 的工具集与工作流设计提供了可复用的效率分析范式。</p>
+<blockquote>
+<p>注：以上基于论文前部分（摘要、引言、方法、实验设置开头）；具体消融数值表、实现细节与限制讨论在截断部分未包含。</p>
+</blockquote>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38768" target="_blank">Structured Pruning of Feedback Delay Networks</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Artificial Reverberation</span>
+                <strong>ID:</strong> <span class="tag">2610.38768</span>
+                <a href="pdfs/2610.38768.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Facundo Franchino, Karolina Prawda<br>
+                <div style="margin-top:5px"><span class="tag">Feedback Delay Networks</span><span class="tag">Structured Pruning</span><span class="tag">Orthogonal Matrix Factorization</span><span class="tag">Artificial Reverberation</span><span class="tag">Real-time Audio Processing</span><span class="tag">SIMD Optimization</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>反馈延迟网络（FDN）是人工混响的核心结构，其反馈矩阵同时决定能量混合、模态激发与每采样计算量。密集正交矩阵能提供无色散、平滑的混响，但逐采样应用成本高；稀疏矩阵虽降低计算，却可能阻碍能量交换，导致频谱染色和时域混合缓慢。现有方法要么直接优化小规模FDN（难以获得平滑无染色响应），要么使用Householder/Hadamard/循环等特定矩阵族（声学特性受结构限制）。如何在保留密集参考FDN声学特性的同时获得低成本实现，是核心问题。</p>
+<h3>方法创新</h3>
+<p>论文提出一种FDN专用的结构化剪枝：不减少延迟线，而是将密集反馈矩阵A投影到由固定置换和独立小正交块级联组成的结构化正交族S。每层包含Q=N/b个b×b正交块，通过固定gather索引将状态分组混合，层间置换实现远距离通道交换。理论证明任意固定双射gather和任意正交块均使S保持正交。对于b=2，采用Givens旋转与完美洗牌；b=4对应radix-4 Pease常几何数据流。利用经典Procrustes解得到精确的条件块更新，再对完整FDN幅度响应进行联合精调。实现上提供专用C++ kernel，乘积S不在音频路径中显式形成，算术成本和系数存储随网络规模线性增长（固定b和L）。</p>
+<h3>实验结果</h3>
+<p>在Apple M2上，所选分阶段kernel相对密集BLAS的反馈乘法加速约3倍到20倍以上，同时大幅降低系数存储。客观指标和听音测试表明，分阶段近似能较好保持密集参考的频谱与时域特征。处理器利用率和寄存器复用分析解释了执行时间不仅取决于运算量。块大小b和深度L为响应保真度、存储和实时成本提供实用控制。</p>
+<h3>一句话评价</h3>
+<p>该工作将FDN反馈矩阵设计视为结构化正交算子拟合问题，在保持声学质量的同时实现了显著的实时计算与存储收益，为声学设计先于高效实现选择提供了可行路径。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38739" target="_blank">Streaming Speech Recognition on a Microcontroller: a 65.7M-Parameter Transducer in 2 and 4 Bits on the ESP32-P4</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2610.38739</span>
+                <a href="pdfs/2610.38739.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Billal Boumedine<br>
+                <div style="margin-top:5px"><span class="tag">Post-Training Quantization</span><span class="tag">Streaming Transducer</span><span class="tag">Microcontroller / Edge Inference</span><span class="tag">Zipformer2 / Kroko</span><span class="tag">GPTQ</span><span class="tag">Hadamard Rotation</span><span class="tag">SIMD (RISC-V PIE)</span><span class="tag">ESP32-P4</span><span class="tag">Mixed-Precision 2/4-bit</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>在微控制器（MCU）上做连续流式语音识别长期受限于两个瓶颈：</p>
+<ol>
+<li><strong>内存瓶颈</strong>：能写任意语音的模型通常需要数千万参数（数十 MB），远超大多数 MCU 的片内 SRAM 与 Flash。作者实测 Lossless 压缩后的权重仍有约 24.7MB，装不进开发板的 16MB Flash，只能开机时从 microSD 卡读入 PSRAM（9.3MB/s，耗时 2.87s，另有 1.2s 卡初始化）。</li>
+<li><strong>算力瓶颈</strong>：以往工作（如 Oído 在 ESP32-S3 上跑 13M 参数 Conformer-CTC）只能做到 1.97× 实时（即比实时慢），且是单核、非流式为主；ESP-SR MultiNet 则仅限于 200 条固定命令词。</li>
+</ol>
+<p>论文要回答：<strong>能否在无神经网络加速器的 MCU 上，以超过实时的速度、流式地运行一个 65.7M 参数的 transducer？</strong></p>
+<h2>方法创新</h2>
+<p>论文的核心是"训练后、免重训"（training-free / post-training）的一整套压缩 + 推理工程方案，针对 Kroko（icefall Zipformer2 medium transducer，65.7M 参数，650 BPE，编码器 6 个 stack、16 层、帧率呈 U 形 50/25/12.5/6.25/12.5/25 Hz，每 stack 5.12s 左上下文，无 lookahead，状态定长）。</p>
+<h3>1. 2/4-bit 混合精度存储格式（Cactus Quants 布局 + 自研取整）</h3>
+<ul>
+<li>每行按 G=128 分组（少数宽度用 64/32/16），对每组做 Sylvester–Hadamard 正交旋转 u = H_G w，使权重近似高斯（实测峰度 2.97，高斯为 3），从而可用标准高斯 2^b 级 Lloyd-Max 电平量化；每组存一个 float16 范数 ν 与 G 个 b∈{2,4} bit 索引。</li>
+<li>实际开销 b + 16/G = 2.125 或 4.125 bit/权重。旋转每组只需对输入做一次，可服务该组所有行（式 2），因此推理时可复用。</li>
+</ul>
+<h3>2. 基于敏感度的比特分配（bit plan）</h3>
+<ul>
+<li>编码器路径共 290 个矩阵（63.72M 参数）。逐一"单独"把某矩阵量化到 2bit / 4bit、其余保持原样，用式(3) 的相对输出误差衡量敏感度。</li>
+<li>从全部 2bit 起步（小于 32 的分组即 42 个小矩阵直接给 4bit），按"每增加一字节所换回的误差下降 (e2−e4)/params"从大到小升级到 4bit，直到文件逼近 25MB 预算。</li>
+<li>结果高度非均匀：290 个矩阵中 193 个为 4bit（25.35M/63.72M 参数）；靠近输出的 stack 4、5 全 4bit；占近一半参数的 stack 3（30.22M）仅 13.8% 在 4bit；最敏感的单个矩阵是第一层 self-attention 的输入投影。</li>
+</ul>
+<h3>3. 顺序化取整（Algorithm 1）</h3>
+<p>按前向传播顺序逐矩阵量化，每个矩阵看到的是"已部分量化模型"的真实输入：
+- <strong>向原模型校正</strong>：先求使新输入下输出最接近原模型输出的浮点权重 W<em> = W + W(C−S)(S+λI)^{-1}，其中 S=X_q^T X_q、C=X^T X_q、λ=0.01·diag(S)；上游未变时 W</em>=W。
+- <strong>范数搜索</strong>：在 ν0·{0.70,…,1.15} 的候选里，按 diag(S) 加权误差挑选每组最优范数。
+- <strong>GPTQ 逐列取整</strong>：在旋转后的基上做 Cholesky 分解，把每列量化误差按 U 传播到尚未量化的列。</p>
+<h3>4. 整型推理与 PIE 向量化引擎</h3>
+<ul>
+<li>矩阵乘之间激活为 int16、进入乘加为 int8；先用 GPU 模拟器验证整型算术本身不掉点，再写 C。</li>
+<li>手写 PIE（128-bit SIMD，8 个向量寄存器，QACC 宽累加器，16 对 int8 一次 MAC）kernel；PC 构建与芯片<strong>逐比特一致（bit-exact）</strong>，因此所有精度指标都是在完整测试集上测得、且等同于芯片上的结果。</li>
+<li>端到端：麦克风 → 1.28s 音频（128 帧 80 维 log-mel，前端带上下文共 141 帧）→ 32 帧输出 → decoder+joiner(int8) → beam search + 短语偏置（shallow fusion + Aho–Corasick trie）→ 屏幕显示。</li>
+</ul>
+<h2>实验结果</h2>
+<p>| 项目 | 结果 |
+|---|---|
+| 模型体积 | 71MB int8 → <strong>26.65MB</strong> 的 2/4-bit 文件 |
+| 速度 | 每 1.28s 音频块需 <strong>0.90s</strong>（双核，含 beam search），即快于实时 |
+| 编码器耗时演进 | 51.3s → <strong>0.62s</strong>/块（每步设计改动都在同一构建中重测） |
+| LibriSpeech test-clean | <strong>4.34%</strong> WER（原模型 sherpa-onnx 3.94%），beam=4 |
+| LibriSpeech test-other | <strong>10.26%</strong>（原模型 9.17%） |
+| FLEURS / Common Voice | 差距扩大到 <strong>2.3 / 1.1</strong> 个百分点 |
+| 延迟 | 词在说出后约 <strong>2s</strong> 定稿 |
+| 整型算术代价 | GPU 模拟器显示 <strong>为零</strong>，全部精度损失来自权重 |
+| 消融（全 test-clean） | <strong>GPTQ 贡献最大</strong> |</p>
+<p>其他发现：
+- 换芯片修订版（PIE 2.1→2.2）后 1188 条指令字中 689 条编码变化，但重编译后 kernel <strong>首次即比特一致</strong>。
+- 尝试用 slimming + 量化感知训练（QAT）把模型压到 16MB，最终<strong>停在 19.63MB 未成功</strong>；论文专门记录了"什么没work"。
+- 作者未测能耗。</p>
+<h2>局限</h2>
+<ul>
+<li>未测量能耗，难以评估电池场景的可行性。</li>
+<li>权重仍需 microSD→PSRAM 的启动加载（约 4s），且 16MB 目标未达成。</li>
+<li>未重训模型，2-bit 占多数导致在域外真实语音（FLEURS / Common Voice）上掉点明显（1–2 点）。</li>
+<li>转换代码未开源，仅以 Algorithm 1 与第 4 节描述保证可复现。</li>
+<li>模型选型对比仅基于作者本人 169 词的 4 段录音，样本极小。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一篇工程含量极高的"系统论文"：它把"大模型 + 无 NPU 的 MCU"之间看似不可能的鸿沟，用敏感度驱动的 2/4-bit 混合精度 + Hadamard/GPTQ 免重训练后量化 + 手写 PIE 整型 kernel 填平，在 ESP32-P4 上实现了 65.7M 参数流式 transducer 的实时（0.90s / 1.28s）推理，代价仅为 LibriSpeech test-clean 上 0.4 个点的 WER，并罕见地公开了从 51.3s 到 0.62s 的完整提速史与失败记录，对端侧 ASR 落地具有很高的参考价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38696" target="_blank">Personalising Parametric Audio Effect Recommendation for Vocals from Parameter-only Style Priors</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Automatic Mixing / Audio Effect Recommendation</span>
+                <strong>ID:</strong> <span class="tag">2610.38696</span>
+                <a href="pdfs/2610.38696.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Soumya Sai Vanka, Hayato Yamakawa, Kazunobu Kondo, Yu Takahashi, György Fazekas<br>
+                <div style="margin-top:5px"><span class="tag">parametric audio effects</span><span class="tag">personalisation</span><span class="tag">style modelling</span><span class="tag">label shift</span><span class="tag">vocal mixing</span><span class="tag">parameter estimation</span><span class="tag">audio effect recommendation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结：Personalising Parametric Audio Effect Recommendation for Vocals from Parameter-only Style Priors</h2>
+<h3>1. 核心痛点</h3>
+<ul>
+<li><strong>现有做法偏重“音频相似”</strong>：混音、母带与音频效果推荐的研究大多通过参考音频建模风格，并用 MRSTFT、MIR 描述子等音频域损失来评估。</li>
+<li><strong>参数到音频的映射是多对一</strong>：对于参数化效果链，可以找到多组参数产生相同的音频。因此，仅以音频为优化目标，系统可能匹配了参考音频的听感，却完全不反映某位工程师的工作习惯；而推荐结果本质上是<strong>可编辑的起点</strong>，其参数是否贴合工程师习惯，直接决定实用性。</li>
+<li><strong>现实数据是非对称的</strong>：风格通常只以“调音台 recall / 场景快照”的形式保存为效果链参数，而不附带音频；因为会话音频常属于客户财产，很少共享，而 DAW、插件和调音台则独立保存参数。</li>
+<li><strong>单侧数据都不够</strong>：只用 recall 估计的<strong>先验</strong>能刻画工程师倾向，却无法说明设置应如何随输入变化；只用配对语料学习的<strong>内容模型</strong>能刻画内容依赖，却不含身份信息。作者希望在<strong>没有该工程师配对音频、也没有调参权重</strong>的条件下把两者结合。</li>
+</ul>
+<h3>2. 方法创新</h3>
+<p><strong>问题建模</strong>：设 θ∈Θ⊆R^d 为固定人声链（EQ、动态、delay、reverb）的参数，a 为干声特征，目标是求 p_e(θ|a)。数据提供两个可估对象，但从不提供它们的联合：recall 给出无音频的 p_e(θ)，公开配对语料给出 p(θ|a) 及其边缘 p(θ)。</p>
+<p><strong>标签漂移（label-shift）假设</strong>：由于 recall 无音频，p_e(a|θ) 不可辨识，故假设它对所有工程师共享，即 p_e(a|θ)=p(a|θ)。该假设约束的是 a|θ 的耦合，而非决策 θ|a，因此不同工程师仍可有不同的偏好配置 p_e(θ)≠p(θ)。</p>
+<p><strong>闭式组合规则</strong>（贝叶斯 + 标签漂移）：
+ p_e(θ|a) ∝ [p(θ|a)/p(θ)] · p_e(θ)。
+其中 p(θ|a)/p(θ) 为“内容更新项”，除以 p(θ) 以剔除内容模型中已含的通用偏好，避免在重锚定到 p_e(θ) 时被重复计数；令 p_e(θ)=p(θ) 即退化为通用推荐。</p>
+<p><strong>高斯实例化</strong>：取 p(θ|a)=N(m(a),S)、p(θ)=N(μ_θ,Σ_θθ)、p_e(θ)=N(μ_e,Σ_e)，则
+ Λ = S⁻¹ − Σ_θθ⁻¹ + Σ_e⁻¹，Λμ = S⁻¹m(a) − Σ_θθ⁻¹μ_θ + Σ_e⁻¹μ_e。
+即一个<strong>精度加权估计</strong>，无任何需要调参的插值权重：Σ_e 小则跟随工程师先验，S 小则跟随音频。</p>
+<p><strong>数据与实现细节</strong>：
+- <strong>参数空间</strong>：使用 MedleyDB（52 首歌）中 70 对干湿人声及 DiffVox 拟合出的 70 条人声效果链；链共 151 个参数，掩蔽后得到 <strong>130 维非冗余</strong>坐标（去掉 FDN 混合矩阵的 21 个冗余下三角项）。全部建模在该原生坐标下进行，而非物理单位（dB/Hz/ms），因为部分参数有界，raw/logit 坐标更接近无约束高斯。
+- <strong>内容模型 p(θ|a)</strong>：在响度归一化干声上做 12 s 窗、5 s 重叠的特征提取；三组特征为 37 维手工统计描述子、128 维 Fx-Encoder++ 嵌入、1024 维 AfxRep 嵌入，各取均值与标准差（动态对时间变异性敏感），再 PCA 降至 6 个主成分（均值 3 + 标准差 3），构成 18 维表示。用 PLS 回归，rank 1–6 由<strong>按歌曲分组的留一歌交叉验证</strong>的 held-out R² 选取。残差协方差 S 由 held-out 残差估计（而非训练拟合，以免高估置信度）并做 Ledoit-Wolf 收缩，强制 S 与 Σ_θθ 正定且 S⪯Σ_θθ（音频不应让人比总体先验更不确定），从而保证 Λ≻0。
+- <strong>分块建模</strong>：按 EQ、压缩器、delay、FDN、pan/send 分别训练 5 个 PLS 模型（各自 rank），而不是在 130 维上做单一联合模型；因此 S 跨块为零（表示“未建模”，而不是“不相关”），组合时逐块进行。
+- <strong>总体模型 p(θ)</strong>：70 条 130 维样本协方差奇异，用 Ledoit-Wolf 收缩估计 μ_θ、Σ_θθ；留一歌对比中，Ledoit-Wolf 在 70 个 held-out preset 中的 58 个上优于 PCA 截断，且保留全部 130 维（式 (3) 需对 Σ_θθ 求逆）。
+- <strong>合成风格先验</strong>：基于真实 recall 中观察到的方向构造 13 个 profile（谱、动态、跨块目标），另加 3 个“模糊版”（沿用同一 μ_e，但把 Σ_e 放大 25×），以在 μ_e 固定时隔离 Σ_e 的作用；每个 profile 在 4–10 个参数上用物理单位设定目标，Σ_e 取对角。作者明确声明这些只是受控实验探针，并未拟合真实 recall（两者 DSP 不同），且不声称建模 delay/reverb 的个体偏好。</p>
+<h3>3. 实验结果</h3>
+<p><strong>内容信号弱但真实可检测</strong>：130 维汇总 held-out R²（非逐维平均）为：Fx-Encoder++ 与组合特征 +0.016，AfxRep +0.006，手工统计特征 −0.008；分块结构下组合特征升至 +0.019，RMSE 相对 θ̄ 基线最多改善 0.80%。作者用<strong>置换检验</strong>（打乱歌曲音频与参数的配对，重拟合 200 次，并对 rank 也取最大化以匹配比较）验证：四种特征集均优于全部 200 个零分布（最好零样本仅 −0.029 至 −0.035），说明该效应不是噪声。</p>
+<p><strong>信号分布</strong>（按处理器阶段）：高架 +0.050、压缩器 +0.035、高通 +0.034、FDN 混响 +0.020、peak 2 边际 +0.007；低架、低通、peak 1、delay、pan/send 均为负。把 6 个 EQ 阶段合并成单一目标会掩盖该结构（负的低/中频段抵消正的高频段）。<strong>内容能预测的是高频塑形、动态与混响，而非低/中频 EQ 决策</strong>。消融实验支持“均值+标准差特征 + 分块结构 + 6 个 PCA 成分”；主要瓶颈是 rank：rank-r PLS 只在 r 维子空间内预测，m(a) 在跨轨变化仅为 θ 真实散布的 1.4%–4.6%（中位维度）。</p>
+<p><strong>参数空间组合行为符合预期</strong>：定义 pull（结果落在工程师目标与内容预测之间的位置，0=工程师，1=内容）、方向性（组合结果沿工程师方向的占比）、Mahalanobis 离群标记与可分性（cosine）。加宽 Σ_e 使结果从风格目标滑向内容预测：carver 的 pull 由 1.0%→22.0%，surgical carver 由 2.5%→51.2%，heavy leveller 由 2.9%→63.9%。<strong>方向性平均 97.5%</strong>，即内容模型把推荐往回收但不反转工程师意图；结果平均距 content-only 3.49 个 raw 单位，说明个性化未被内容淹没；分布内检查标记 20.5% 的推荐（无论特征集或结构，总是同样三个 profile），说明是 profile 目标本身异常而非内容模型。</p>
+<p><strong>κ 扫描暴露合成先验的主要弱点</strong>：置信 profile 落在 κ≈0.04（不足总体自身方差的 5%，更像固定点而非可信的人为范围），模糊版接近 κ≈1；要把结果拉到 75% 偏向内容，需要 κ 在 0.69–5.15 之间。也就是说，<strong>在如此弱的内容模型下，风格先验必须几乎和总体一样宽，音频才能与工程师自身方向竞争</strong>。灵敏度跨 profile 相差约 5×，且不能由 profile 触及哪个效果块来预测（块无关性）。</p>
+<p><strong>感知实验</strong>：参数空间正确不等于可听。作者用 Mixing Secrets 库的 10 条主唱 stem（每首一条），在 14 种条件（content-only 预测 m(a) + 13 个风格 profile）下渲染 5 s 片段，按 EBU R128 统一到 −24.4 LUFS、−1 dBTP 上限以消除响度线索；共收到 15 份会话（其中 1 份因 69% 的…被排除）。<strong>14 名听者的强制选择测试显示，风格先验推荐与 content-only 推荐可被区分（89.3%）</strong>，结果与“先验宽度影响风格/内容平衡”一致；而<strong>参数空间余弦不能预测感知差异</strong>。</p>
+<h3>4. 局限</h3>
+<ul>
+<li>标签漂移假设在工程师素材与语料系统性不同时（如曲风、嗓音类型）会失效。</li>
+<li>内容信号本身很弱（R² 仅约 0.02），rank 与 PLS 子空间限制显著。</li>
+<li>合成风格先验并非拟合真实 recall，且只约束部分 EQ/动态参数，不覆盖 delay/reverb 的个体偏好；置信先验过窄（κ≈0.04）不现实。</li>
+<li>参数空间距离（cosine）与感知差异不一致，说明需要感知层面的评估与优化。</li>
+</ul>
+<h3>5. 一句话评价</h3>
+<p>本文把“工程师风格”从参考音频转移到<strong>纯参数分布</strong>上，借助标签漂移假设给出一个无配对音频、无调参权重的闭式精度加权组合，为“只能拿到调音台 recall”这一现实约束下的个性化效果推荐提供了干净且可解释的贝叶斯解法，并用感知实验诚实地指出参数距离并不等于听感差异。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38656" target="_blank">Wav2Aug: A Drop-In Speech Augmentation Policy</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Augmentation</span>
+                <strong>ID:</strong> <span class="tag">2610.38656</span>
+                <a href="pdfs/2610.38656.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Gianfranco Dumoulin Bertucci, Mirco Ravanelli<br>
+                <div style="margin-top:5px"><span class="tag">speech augmentation</span><span class="tag">waveform augmentation</span><span class="tag">drop-in augmentation policy</span><span class="tag">multi-view augmentation</span><span class="tag">SpecAugment</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ol>
+<li><strong>SpecAugment 一家独大但适用面窄</strong>：SpecAugment 是语音领域事实上的标准增强策略，已被 Whisper、Qwen-Audio 等大规模系统采用，但它是<strong>在频谱图（spectrogram）上操作</strong>的时频掩蔽 + 时间扭曲，因此对直接输入原始波形的模型（wav2vec 2.0、HuBERT、WavLM 等自监督编码器）无法直接使用，只能退而求其次地在隐层特征上做掩蔽。</li>
+<li><strong>只在 ASR 上被充分验证</strong>：大量工作（含 [16]、[17]）直接沿用 LibriSpeech Basic / Switchboard Mild 这类“冻结”配置，作者复现后发现：在非 ASR 任务上，SpecAugment 带来的增益远小于 ASR 上报告的水平。</li>
+<li><strong>超参调优成本高</strong>：作者假设“冻结策略”的普遍流行正是因为增强超参搜索代价太大，说明社区实际需要一个<strong>开箱即用（drop-in）、任务无关</strong>的默认策略。</li>
+</ol>
+<h2>方法创新</h2>
+<p><strong>Wav2Aug</strong>：一个在<strong>特征提取之前、直接作用于原始波形</strong>的固定增强策略。每个 batch 从增强池中<strong>随机采样 K=2 个不同的增强</strong>，并对 batch 内每条语音<strong>顺序施加</strong> a₂(a₁(x))。</p>
+<p><strong>增强池（9 种操作，按单独校准时的有效性排序）</strong>：</p>
+<p>| 排名 | 增强 | 固定超参范围（16 kHz） |
+|---|---|---|
+| 1 | 加噪 Noise Add.（OpenRIR 点源噪声子集） | SNR [0, 10] dB |
+| 2 | 频域丢弃 Freq. Dropout（notch 滤波器） | 丢弃边界 [0,1]，频带数 [1,8]，带宽 0.1 |
+| 3 | 时域丢弃 Time Dropout（置零连续片段） | 块数 [1,8]，块长 [0,250] ms |
+| 4 | 语速扰动 Speed Perturbation | 速度因子 {0.9, 1.0, 1.1} |
+| 5 | 幅度削波 Amp. Clip. | 阈值 [0, 0.75] |
+| 6 | 块交换 Chunk Swap. | 块数 4，块大小 1% 长度 |
+| 7 | 混响/嘈杂人声 Babble Add.（用同 batch 其他语句求和构造） | SNR [0, 20] dB |
+| 8 | 幅度缩放 Amp. Scale | 增益 [0.05, 0.5] |
+| 9 | 极性反转 Polarity Inv. | 概率 0.6 |</p>
+<p><strong>一次性校准流程</strong>：对每种增强定义候选配置集合，网格搜索数百种组合；先在 3 个 ASR 校准设置（LibriSpeech-100h + Transformer、CommonVoice Italian + wav2vec 2.0 CTC、VoiceBank + CRDNN-Transducer）上计算相对无增强的误差改进 Δ，再对每个数据集做标准化（减均值除标准差）后跨数据集取平均得到评分 Z_c,a，选 Z 最大的配置；用同样方式确定操作数 K=2。<strong>校准一次后完全冻结</strong>，跨所有数据集与架构复用，不做任务特定调参——这是与 AudRandAug（需调操作数与幅度）的关键区别。</p>
+<p><strong>池大小选择</strong>：默认用 <strong>top-6</strong>（加噪到块交换），另提供 <strong>top-9</strong>（全部 9 种）作为更大替代。</p>
+<p><strong>多视图增强（Multi-view）</strong>：把一个 batch 内同一条语音的多个独立增强版本<strong>拼接</strong>起来，让模型在一次更新中见到多种扰动。</p>
+<h2>实验结果</h2>
+<ul>
+<li><strong>评测协议</strong>：10 个语音基准；基线为 SpecAugment 的 LB 与 SM 两种固定配置，对 wav2vec 2.0 / HuBERT 改用其原论文推荐的隐层时域 + 通道掩蔽（HuggingFace 实现）；每个策略独立做 3×3 学习率/权重衰减网格搜索（AdamW），关闭 recipe 自带的其他增强以隔离策略本身；报告 5 个随机种子的均值与标准差。</li>
+<li><strong>ASR（5 个基准，均未参与校准）</strong>：TED-LIUM2 + BranchFormer、TIMIT + CRDNN、AISHELL-1 + Transformer、CommonVoice Arabic + 微调 Whisper、CommonVoice German + Conformer。top-6 相对无增强<strong>平均相对误差降低 14.9%</strong>；与 SpecAugment LB 相比在 Arabic 与 TIMIT 上更好，其余三个稍差，WER 类数据集上最大差距仅 <strong>0.16 个绝对百分点</strong>；SM 在 Arabic / TIMIT / AISHELL-1 上分别领先 0.49 WER、0.20 PER、0.28 CER。结论：Wav2Aug 在 ASR 上“打不赢但基本打平”。</li>
+<li><strong>非 ASR（5 个任务）</strong>：在全部 5 个非 ASR 任务上平均误差均低于<strong>最强的兼容 SpecAugment 基线</strong>，<strong>平均相对误差降低 12.8%</strong>——这是论文的主卖点。</li>
+<li><strong>多视图</strong>：两个拼接增强视图在性能与算力之间取得最佳折中，相对无增强训练<strong>平均提升 19.6%</strong>。</li>
+<li><strong>开源</strong>：参数范围、代码与可安装 Python 库已发布（github.com/gfdb/wav2aug）。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>Wav2Aug 用「波形域 + 一次性校准 + 冻结超参 + 随机二操作」的组合，把增强从“需要按任务调参的频谱技巧”变成“可直接插入的通用默认策略”，在非 ASR 任务上稳定超越 SpecAugment（12.8% 相对误差下降）而在 ASR 上与之打平，配合双视图训练还能再涨 19.6%，工程价值大于理论新颖性。</p>
+<h2>值得注意的细节与局限</h2>
+<ul>
+<li>校准是在 <strong>ASR 任务</strong>上做的，却主要面向<strong>非 ASR 任务</strong>推销，作者也坦承这一“错位”是事后发现的；策略的跨任务迁移性论证因此偏经验性。</li>
+<li>加噪依赖外部噪声语料 OpenRIR；babble 用 batch 内其他语句构造，效果强依赖 batch 组成与大小。</li>
+<li>摘要/正文片段未给出非 ASR 任务的逐项数字与池大小消融（III-D 被截断），只能看到均值层面的结论。</li>
+<li>与 SpecAugment 的差距在部分 ASR 基准上仍存在，说明波形域增强不能完全替代时频掩蔽。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38624" target="_blank">SelectSep: Target-Selective Video Queries for Audio Source Separation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Source Separation (Video-Queried Sound Separation)</span>
+                <strong>ID:</strong> <span class="tag">2610.38624</span>
+                <a href="pdfs/2610.38624.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Suyeon Lee, Doyeop Kwak, Joon Son Chung<br>
+                <div style="margin-top:5px"><span class="tag">video-queried sound separation</span><span class="tag">target-selective query</span><span class="tag">click conditioning</span><span class="tag">visual encoder distillation</span><span class="tag">audio-visual source separation</span><span class="tag">on-screen interference benchmark</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文信息</h2>
+<ul>
+<li><strong>标题</strong>：SelectSep: Target-Selective Video Queries for Audio Source Separation</li>
+<li><strong>作者</strong>：Suyeon Lee, Doyeop Kwak, Joon Son Chung（KAIST）</li>
+<li><strong>任务</strong>：Video-Queried Sound Separation (VQSS)，即用视频作为查询条件，从音频混合中分离出目标声源</li>
+</ul>
+<h2>核心痛点</h2>
+<ol>
+<li><strong>场景级视频查询（scene-level video query）存在歧义</strong>：传统 VQSS 直接把整段视频的视觉特征当作 query。当画面中同时出现目标与干扰源时，视觉特征会混入两者的信息，导致语义线索（semantic cue）和音视频同步线索（synchronization cue）都变模糊；当目标和干扰源<strong>语义相似</strong>（例如同属一个类别）时，歧义尤其严重。</li>
+<li><strong>现有两类“选择性”方案各有短板</strong>：</li>
+<li><strong>语义条件</strong>（文本查询，如 VAST）能说明要关注“哪个源（what source）”，但在杂乱场景中区分同类实例时，往往需要越来越细的描述；</li>
+<li><strong>空间条件</strong>（分割掩码，如 SAM-Audio、SAGANet）能直接指定“哪个实例（which instance）”，但推理时必须额外运行分割模型，代价高且流程重。</li>
+<li>因此理想方案需要同时满足三点：<strong>具备语义选择性、能以极简交互指定目标实例、且推理阶段不需要分割模型</strong>。</li>
+</ol>
+<h2>方法创新</h2>
+<p>SelectSep 采用<strong>两阶段训练</strong>，核心思想是把「文本（语义）+ 单次点击坐标（空间）」联合作为目标选择性条件注入视觉编码器。</p>
+<h3>Stage 1：点击条件化的视觉编码器适配</h3>
+<ul>
+<li>建立在 SelVA 的<strong>文本条件 Synchformer 适配</strong>之上：保留 teacher–student 蒸馏框架，只扩展条件机制。</li>
+<li><strong>点击条件编码</strong>：把目标物体上的点击坐标 <code>c = (x, y) ∈ [0,1]²</code> 通过 MLP <code>φ</code> 映射到与文本相同的嵌入空间，得到 <code>e_c = φ(c)</code>，并将其前插到条件序列中：
+  <code>t_cond = [e_c ⊕ [SUP] ⊕ t̄]</code>，其中 <code>t̄ = Proj(E(T))</code> 是投影后的文本特征，<code>[SUP]</code> 是可学习 token。由此视觉编码器可以同时利用文本给出的语义信息和点击给出的空间信息。</li>
+<li><strong>三种条件模式</strong>：TEXT（仅文本）、CLICK（仅点击）、BOTH（两者）；推理时可按需选择。</li>
+<li><strong>条件 dropout</strong>：为了让两种线索都能单独使用，训练时做互斥丢弃——文本以 <code>p_txt = 0.3</code> 被去掉，点击以 <code>p_clk = 0.15</code> 被去掉；两者<strong>从不同时丢弃</strong>，<code>[SUP]</code> token 始终保留。</li>
+<li><strong>坐标一致的视频混合（coordinate-consistent video mixing）</strong>：以 <code>p_mix = 0.75</code> 的概率把目标视频与干扰视频横向拼接（目标以等概率放在左或右），并把点击坐标随目标裁剪一起做几何变换：对占据宽度比例 <code>λ</code> 的目标，其水平坐标按比例缩放并平移，垂直坐标保持不变，从而保证点击始终与同一物体对齐。</li>
+<li><strong>蒸馏目标</strong>：冻结的 Synchformer teacher <code>F_T</code> 编码干净目标片段，student <code>F_S</code> 接收混合视频与可用的文本、点击条件，优化
+  <code>L_dist = || F_S([V_tar ⊕ V_pair], t_cond) − F_T(V_tar) ||₂²</code>。
+  训练时<strong>时空主干（spatio-temporal trunk）保持冻结</strong>，只更新 cross-attention 模块、文本/坐标投影、<code>[SUP]</code> token 与空间注意力池化层。</li>
+</ul>
+<h3>Stage 2：用适配后编码器微调分离器</h3>
+<ul>
+<li>冻结 Stage 1 的编码器 <code>F_S</code>，替换 MMAudioSep 中的 Synchformer 编码器；从预训练的 MMAudio-S-16k 权重出发，微调多模态 DiT 模块，并微调同步特征投影器以适配新编码器特征；视觉输入只用单段视频。</li>
+<li>保留 MMAudioSep 的 CLIP 视觉与文本条件，沿用其 <strong>conditional flow matching</strong> 目标；在 mel 频谱的 VAE 隐空间上工作，用 BigVGAN 合成波形。</li>
+<li><strong>混合中心先验（mixture-centered prior）</strong>：借鉴 SGMSE，把 MMAudioSep 的零中心源分布替换为 <code>q(x₀|y) = N(y, σ²I)</code>（<code>y</code> 为归一化混合隐变量），实测取 <code>σ = 0.5</code>，<code>t ~ U[0.03, 1]</code>。</li>
+</ul>
+<h3>新评测设定：on-screen interference</h3>
+<ul>
+<li>把原本用于选择性视频到音频生成的 <strong>VGG-MonoAudio</strong> 基准改造成分离基准：将 560 对<strong>类间（inter-class）</strong>视频与 511 对<strong>类内（intra-class）</strong>视频横向拼接，使目标与干扰源<strong>同时出现在查询画面中</strong>；音频以 0 dB SNR 混合并裁剪到 8 s。类内子集专门考察<strong>超越粗粒度语义的实例级选择性</strong>。</li>
+</ul>
+<h2>实验设置</h2>
+<ul>
+<li><strong>数据</strong>：视觉编码器仅在 VGGSound 上预训练与微调；分离器微调使用 MMAudioSep 的数据组合，并额外加入 AudioCaps、Clotho 以及 WavCaps 的 AudioSet-SL、BBCSound、FreeSound 子集；两条音频以 <code>[−15, 15] dB</code> 的随机 SNR 混合。</li>
+<li><strong>点击监督</strong>：用 SAGANet 式视频掩码在首帧从掩码内半区域采样伪点击；VGG-MonoAudio 则人工标注真实点击，以隔离坐标条件与伪掩码误差。可用点击比例为 VGGSound-Clean 82.7%、MUSIC-Clean 58.9%、VGG-MonoAudio 类间 98.2% / 类内 99.4%；目标不在首帧时退化为纯文本模式。</li>
+<li><strong>标准基准</strong>：AudioSep 评测集（限 YouTube 仍可获取的样本），VGGSound-Clean 980 条、MUSIC-Clean 4,943 条，均 0 dB SNR。</li>
+<li><strong>训练</strong>：两阶段均用 AdamW（β=(0.9,0.95)，weight decay 1e-6，梯度裁剪 1.0），1k 步线性 warmup 后恒定学习率 1e-4，bfloat16，post-hoc EMA；Stage 1 训练 50k 步，Stage 2 训练至多 100k 步，有效 batch size 512。</li>
+<li><strong>推理</strong>：25 步 Euler，CFG scale γ = 4.5；VGGSound 系数据集用类别标签、MUSIC-Clean 用乐器标签作为文本查询。</li>
+<li><strong>指标</strong>：FAD↓、IS↑、CLAP↑、CLAP-A↑、ImageBind Score↑、DeSync↓（av-benchmark 工具包）。</li>
+<li><strong>对比基线</strong>：MMAudioSep（同骨干，重训 16 kHz）、OmniSep（文本+图像+音频查询）、FlowSep（文本查询）、DAVIS-Flow（视频查询）。</li>
+</ul>
+<h2>主要结果</h2>
+<p>| 基准 | SelectSep 表现 |
+|---|---|
+| VGGSound-Clean | FAD 2.83 / IS 9.85 / CLAP 25.28 / CLAP-A 83.91 / IB 26.09 / DeSync 0.756；在 CLAP、CLAP-A、DeSync 上最优，IS 与 IB-Score 次优；<strong>六项指标全部优于同骨干的 MMAudioSep</strong>（3.54 / 8.59 / 21.71 / 76.88 / 22.51 / 0.769） |
+| MUSIC-Clean | FAD 3.82 / IS 2.87 / CLAP 33.59 / CLAP-A 90.23 / IB 39.67 / DeSync 0.212；<strong>六项指标全部最优</strong>，且训练时未使用任何 MUSIC 数据（OmniSep、DAVIS-Flow 则包含 MUSIC 训练数据） |
+| VGG-MonoAudio 类间 | FAD 7.98 / IS 9.42 / CLAP 23.76 / CLAP-A 77.59 / IB 28.33 / DeSync 0.537，明显优于 MMAudioSep（15.92 / 7.10 / 16.49 / 63.62 / 20.56 / 0.677）与 DAVIS-Flow |
+| VGG-MonoAudio 类内 | FAD 3.61 / IS 7.95 / CLAP 24.34 / CLAP-A 79.40 / IB 30.20 / DeSync 0.488，在同类干扰下仍保持优势 |</p>
+<p><strong>结论</strong>：目标选择性适配不仅在 on-screen interference 设定下有效，在标准场景下同样带来一致提升；MUSIC-Clean 的跨域结果说明该增益并非来自数据重合，而是来自更好的目标指定与视觉特征质量。</p>
+<h2>局限与备注</h2>
+<ul>
+<li>依赖目标在<strong>视频首帧可见</strong>；否则退化为纯文本模式，实例级选择性下降。</li>
+<li>伪点击依赖外部掩码模型，覆盖率不完整（MUSIC-Clean 仅约 59%）。</li>
+<li>需人工或半自动提供点击，属于轻量交互（single click），但仍非全自动。</li>
+<li>原文实验结果部分在后文被截断，可能还有消融实验（条件模式 TEXT/CLICK/BOTH、点击精度敏感性等）未纳入本总结。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>SelectSep 用「文本 + 单次点击」这一极轻量的组合，把视频查询式音源分离从场景级提升到实例级，在不引入推理期分割模型的前提下，显著改善了同类干扰条件下的分离质量与目标选择性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38619" target="_blank">MiDiff: MIDI-Conditioned Diffusion Models for Drum Audio Enhancement</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2610.38619</span>
+                <a href="pdfs/2610.38619.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Elad Aspis, Sharon Gannot<br>
+                <div style="margin-top:5px"><span class="tag">MIDI-conditioned diffusion</span><span class="tag">drum audio enhancement</span><span class="tag">score-based generative models</span><span class="tag">audio restoration</span><span class="tag">automatic drum transcription</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>MiDiff 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>鼓录音质量对现代音乐制作至关重要，但专业级鼓声通常依赖专门声学环境、多麦克风、高端前级和工程师，独立音乐人和家庭工作室难以获得。</li>
+<li>鼓组是空间分布的复合声源，存在麦克风串音、相位一致性、鼓面共振、房间反射等问题；单设备录音还常受混响、瞬态削波、驻极体麦克风染色和有损压缩影响。</li>
+<li>传统判别式增强以 MSE 等逐点误差为目标，容易出现回归到均值、瞬态模糊、相位不一致和高频细节丢失，对打击乐尤其不利。</li>
+<li>现有扩散增强多依赖退化音频或视觉线索；严重退化时纯音频条件结构引导模糊，可能产生谱幻觉或噪声抑制不完整。</li>
+<li>MIDI 是独立符号流，包含 onset、乐器类别和力度，不受声学退化影响，可作为无噪声结构先验；但如何有效注入扩散 score network、以及推理时缺少真值 MIDI 时如何处理，仍是研究空白。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 MiDiff：在复数 STFT 域扩展 SGMSE 框架，将时间对齐的 MIDI piano roll 作为条件注入反向扩散过程。</li>
+<li>输入退化鼓音频 y 与干净音频 x0 的复数 STFT；采用幅度弯曲压缩 T(s)=β|s|^α e^{i∠s}，默认 α=0.5、β=0.15，以缓解鼓频谱重尾分布。</li>
+<li>MIDI 表示为 m∈R^{Nc×T} 的 piano roll，Nc=9 类鼓乐器；力度值从 0 到 127 归一化到 [0,1]。</li>
+<li>使用预训练 MIDI 编码器和多尺度时间对齐模块，并比较三种互补条件策略：early injection、FiLM、cross-attention；三者组合效果最佳。</li>
+<li>将 ADT 网络适配为噪声感知分类器，用 classifier guidance 仅通过梯度向 audio-only score 提供 piano roll；结果显示该方式无可测增益，说明符号先验在直接条件化 score network 时才有效。</li>
+<li>提出混合反向调度以放宽推理时对真值 MIDI 的要求：用同一噪声感知 ADT 在线转写扩散状态，在可调切换时间 t_sw 从 audio-only score 切换到 MiDiff。</li>
+<li>使用非加性退化管线训练：房间混响与回声、驻极体胶囊频响、软削波饱和并叠加噪声；训练数据为 StemGMD。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>评估指标包括 FAD、Mel Spectral Distance MSD、Transient Timing Error TTER；在 StemGMD 验证集和留出测试集上评估。</li>
+<li>MiDiff 在验证集和留出测试集的 FAD 上显著优于 SGMSE 基线。</li>
+<li>消融表明：三种条件策略组合优于任一单一策略；真实 MIDI 力度动态对有效符号条件化至关重要。</li>
+<li>损坏 MIDI 的表现差于 audio-only 基线，说明增益与符号内容真实相关。</li>
+<li>混合反向调度在无任何符号输入时，相对 audio-only 基线将测试 FAD 降低 47%（切换时间在测试集上选择）。</li>
+<li>提供定性评估、音频演示和源代码。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>MiDiff 首次系统地将时间对齐 MIDI 符号先验以多策略条件注入方式融入复数 STFT 扩散增强框架，在严重非加性退化的鼓音频上显著优于 audio-only SGMSE，并通过混合反向调度缓解推理时对真值 MIDI 的依赖，展示了符号先验用于高保真打击乐修复的强潜力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38316" target="_blank">DRC-TTS: A Dual-Resolution Codec-Based Architecture for Lexicon-Free Malay Speech Synthesis</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2610.38316</span>
+                <a href="pdfs/2610.38316.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tianhui Su, Tien-Ping Tan<br>
+                <div style="margin-top:5px"><span class="tag">Malay speech synthesis</span><span class="tag">Discrete neural audio codec</span><span class="tag">Dual-resolution architecture</span><span class="tag">Character-level modeling</span><span class="tag">Duration-based non-autoregressive synthesis</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结</h2>
+<p><strong>论文</strong>：DRC-TTS: A Dual-Resolution Codec-Based Architecture for Lexicon-Free Malay Speech Synthesis</p>
+<p><strong>作者/单位</strong>：Tianhui Su, Tien-Ping Tan*，Universiti Sains Malaysia。</p>
+<h3>核心痛点</h3>
+<ul>
+<li>Malay 低资源 TTS 常依赖发音词典；字符级输入可减少词典依赖，但会带来字符到 codec token 的对齐问题。</li>
+<li>低帧率离散神经音频 codec（12.5 Hz，约 80 ms/帧）与字符级时序对齐冲突：短于一个 codec 帧的字符/辅音（如 &lt;40 ms）在时长量化后可能被分配 0 帧，导致长度调节时字符表示丢失、发音遗漏。</li>
+<li>现有 Malay TTS 与神经 codec 结合研究较少，尤其缺少对非自回归、基于时长预测的 TTS 与低帧率 codec token 时序对齐问题的系统研究。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li>提出 DRC-TTS：双分辨率（dual-resolution）codec-based 架构，用于无词典 Malay 语音合成。</li>
+<li>先在 50 Hz 高时间分辨率上扩展字符表示，再通过 strided convolution 下采样到 12.5 Hz，用于离散 codec-token 预测；在保持与低帧率 codec 兼容、且不增加 codec 帧数的同时，保留中间时序表示，缓解零帧量化问题。</li>
+<li>构建直接从字母/字符预测音频 codec token 的合成流程，不依赖发音词典，简化低资源语言数据处理流程。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>客观评价：CER 从 baseline 的 27.11% 降至 21.86%，绝对降低 5.25 个百分点。</li>
+<li>主观评价：MOS 从 baseline 的 4.12 提升至 4.30。</li>
+<li>结果说明：双分辨率设计在所评估条件下可能改善字符级对齐和感知语音自然度。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>DRC-TTS 针对字符级输入与低帧率离散 codec 的时序对齐瓶颈，提出 50 Hz→12.5 Hz 的双分辨率建模方案，在无词典 Malay TTS 上同时降低 CER 并提升 MOS，具有面向低资源语言的实用价值。</p>
+<blockquote>
+<p>注：以上总结基于所提供的论文前部分与摘要；完整实验设置、基线细节和消融结果需参考论文全文。</p>
+</blockquote>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38276" target="_blank">MixCards: Evaluating Structured Descriptions of Multi-Source Sound Scenes</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Captioning / Audio-Language Model Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2610.38276</span>
+                <a href="pdfs/2610.38276.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sripathi Sridhar, Yujin Kim, Giovana Morais, Liang-Yuan Wu, Mehmet Atilay Kucukoglu, Prem Seetharaman, Lloyd May, Mark Cartwright, Magdalena Fuentes<br>
+                <div style="margin-top:5px"><span class="tag">structured audio captioning</span><span class="tag">polyphonic sound scenes</span><span class="tag">multi-source audio</span><span class="tag">audio-language model evaluation</span><span class="tag">MixCardBench</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>现有音频描述（audio captioning）基准通常只评估一条无结构的自由文本描述，难以揭示模型在复调音频理解中的具体失败模式。</li>
+<li>在复调场景中，模型可能遗漏某个声源、把多个声源混为一个，或把某个声源的属性错误绑定到另一个声源；传统 n-gram、embedding 或 LLM-judged 指标通常只给出整体分数，无法定位错误来源和错误字段。</li>
+<li>多项选择式音频理解/推理基准同样只能说明“答错”，不能定位是声源识别、动作识别还是属性判断失败。</li>
+<li>音频描述还服务于无障碍描述、声音设计等不同消费者；现有模型要么词表有限，要么使用无明确受众和目的的通用描述，难以支持可个性化、结构化的非语音信息（NSI）描述。</li>
+<li>在 caption-to-LLM 级联和音频工具智能体中，音频推理性能受限于音频描述质量，因此需要更细粒度的诊断型基准。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 <strong>MixCardBench</strong>：面向复调音频结构化描述（structured captioning）的基准，评测分为两阶段：先识别并时间定位场景中的声源，再为每个声源生成结构化 <strong>MixCard</strong>，描述其语义、时间和声学属性。</li>
+<li>为语音、音乐和音效分别设计领域相关字段模式，包含自由文本描述、对象/动作标签、响度、时间信息、频率特征，以及 genre、mood、instruments、tempo 等类别特定属性。</li>
+<li>构建可扩展的数据生成流水线：以 <strong>AudioSet Strongly-Labeled</strong> 为参考，使用高质量开放语音、音乐和音效数据重建生态上合理的声景；流程包括源分离、语音克隆、音乐相似性检索、本体映射和声音事件检测，并经过多阶段自动质量过滤。</li>
+<li>由于每个声景由孤立 stem 构建，可自动从每个声源提取详细标注并形成参考 MixCard，从而支持源级和字段级监督。</li>
+<li>评测协议按字段数据类型采用合适指标，并可按 card、sound-category 和 benchmark 层级聚合，实现从整体模型比较到细粒度失败定位的诊断分析。</li>
+<li>数据规模：4884 个 10 秒合成声景，总计 13.6 小时；复调源数 1–9；52.5% 为单源，47.5% 含两个及以上源，27.7% 至少三个源，13.6% 至少四个源；共 9618 个 MixCards。</li>
+<li>通过人类验证、分布匹配和听测评估基准质量与生态效度；合成声景比“源引导但随机”的 Scaper 合成更接近真实 YouTube 视频。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>评估了六个 state-of-the-art 大型音频语言模型（LALMs）。</li>
+<li>当前模型存在显著局限，尤其在语音和音效的时序判断与检测方面表现困难；最强模型仅达到约 <strong>60% mean card-field score</strong>。</li>
+<li>不同属性上的性能差异明显，揭示了聚合 caption 分数会掩盖的能力差异。</li>
+<li>人工修正对模型排名影响很小，说明基准结论较稳健；生成标注上的评测与人工编辑子集上的评测高度接近。</li>
+<li>基准对所有被评估 LALM 均具有挑战性，能够定位传统描述指标和音频理解指标无法暴露的感知失败。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该工作将复调音频描述从单一自由文本评分推进到源级、字段级、可定位的结构化评测，为诊断大型音频语言模型的细粒度听觉理解失败提供了重要基准，但当前模型在语音/音效检测与时序理解上仍显著不足。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38252" target="_blank">A Tutorial on Generative Models for Music Audio</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Audio Generation</span>
+                <strong>ID:</strong> <span class="tag">2610.38252</span>
+                <a href="pdfs/2610.38252.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Mateusz Modrzejewski, Joanna Kurkowska, Dorien Herremans<br>
+                <div style="margin-top:5px"><span class="tag">Music Audio Generation</span><span class="tag">Neural Audio Codecs</span><span class="tag">Autoregressive Token Models</span><span class="tag">Diffusion and Flow Matching</span><span class="tag">Preference Optimization</span><span class="tag">Evaluation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>音乐音频生成并非只追求听起来合理，还涉及歌词到歌曲的词语、演唱与伴奏协同，编辑时只改目标属性并保留其余内容，以及现场表演所需的低延迟交互响应。</li>
+<li>相关方法分散在大量论文中，术语、训练目标和采样流程不统一，新进入者难以整体把握。</li>
+<li>评估方法发展慢于生成方法，Fréchet Audio Distance 等自动指标对嵌入和参考集敏感，且与人类音乐偏好相关性弱，尤其缺少面向完整歌曲和歌词的标准协议。</li>
+<li>训练数据来源、记忆化、归因、输出检测和版权诉讼等问题复杂，商业协议不能自动证明数据来源合规或创作者获得公平补偿。</li>
+</ul>
+<h2>方法创新与内容范围</h2>
+<ul>
+<li>这是一篇教程型专著，而非提出单一新模型的实验论文。目标是用统一符号介绍音乐音频生成的基础与系统设计。</li>
+<li>系统讲解神经音频编解码器与自编码器、自回归与掩码 token 模型、扩散与 flow matching、采样加速、偏好优化等生成范式。</li>
+<li>通过实例把训练目标和采样过程连接到已发表系统，并比较表示、方法、输入、任务和发布信息。</li>
+<li>按应用组织内容：器乐 text-to-music、带人声和歌词的歌曲生成、编辑与指令跟随、分轨与伴奏、实时与交互式生成、神经音频合成作为乐器。</li>
+<li>讨论评估与证据：自动指标、学习型评委、听测设计、数据来源、记忆化、水印与合成音乐检测，并区分公司公告、法律指控和法院裁决。</li>
+<li>涉及符号作曲、语音和音效等相邻领域，但仅在与音乐音频生成相关时纳入。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>论文本身不报告新的实验结果，主要整合和解释已有系统与评估证据。</li>
+<li>文中指出当前跨系统比较受数据、规模、评估协议差异限制，难以据已有报告确定性能增益来源。</li>
+<li>评估部分强调 FAD 等指标的局限，并介绍经人类偏好验证的指标、专家标注基准、现场偏好竞技场和学习型美学预测器，但认为尚未形成标准协议。</li>
+</ul>
+<h2>一句话评价</h2>
+<ul>
+<li>一篇面向研究生、研究者和工程师的音乐音频生成系统性教程，贯通生成范式、应用需求、评估方法与法律证据，适合建立领域地图，但不是提出新方法或新实验的论文。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.38050" target="_blank">Improving the Dependency on Fine-Tuning Data in Transfer Learning for Speech Emotion Recognition</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Recognition</span>
+                <strong>ID:</strong> <span class="tag">2610.38050</span>
+                <a href="pdfs/2610.38050.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ricardo García, Rodrigo Mahu, Carlos Busso, Néstor Becerra Yoma<br>
+                <div style="margin-top:5px"><span class="tag">Speech Emotion Recognition</span><span class="tag">Transfer Learning</span><span class="tag">fMLLR</span><span class="tag">Wav2vec 2.0</span><span class="tag">Autoencoder</span><span class="tag">Human-Robot Interaction</span><span class="tag">Acoustic Compensation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>在真实人机交互（HRI）场景中，语音情感识别（SER）会受到说话人差异、混响、加性噪声和时变声学信道等训练-测试失配影响，导致性能下降。</li>
+<li>迁移学习中，为缓解声学失配通常需要大量微调数据；论文目标是降低 SER 模型微调对标注数据的依赖。</li>
+<li>经典 fMLLR 可做说话人和环境补偿，但其通常依赖低维特征空间和 HMM-GMM/语言模型；而自监督学习模型（如 Wav2vec 2.0）的隐空间维度很高（常超过 500），直接应用 fMLLR 会因矩阵求逆不稳定和参数过多而困难。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出在 Wav2vec 2.0 架构中嵌入 fMLLR 补偿模块，位置在 CNN 卷积层与 Transformer 层之间。</li>
+<li>在卷积特征提取器后加入自编码器，将高维表示压缩到 40 维隐空间，再在该低维 latent space 上执行 fMLLR，从而避免高维矩阵奇异/求逆不稳定，并减少可训练参数。</li>
+<li>fMLLR 采用仿射线性变换 x' = Ax + b，用于补偿特征空间中的旋转和平移；实现上基于单个 GMM，以无监督方式估计变换，不需要语言模型。</li>
+<li>训练阶段将干净训练分布向带混响和加性噪声的模拟 HRI 条件偏移；推理阶段用 fMLLR 将 HRI 测试条件向模拟空间偏移，使训练和测试分布靠近共同表示空间。</li>
+<li>整体流程为：Wav2vec 2.0 预训练特征提取器 → 自编码器编码到 40 维 latent → fMLLR 补偿 → 解码器 → Wav2vec 2.0 Transformer → MLP 回归 arousal/dominance/valence。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在 MSP-Podcast 语料上进行实验，任务为 HRI 场景下的 SER。</li>
+<li>与未加入补偿策略的原始 Wav2vec 2.0 方案相比，所提架构性能更优。</li>
+<li>仅使用 12.9% 训练集时，平均 CCC 提升 16.8%；使用 50% 训练集时，平均 CCC 提升 14.4%。</li>
+<li>结果表明，在非理想声学条件和有限微调数据下，将经典 fMLLR 补偿嵌入 Wav2vec 2.0 隐空间能够有效减少训练-测试失配，并降低对微调数据的依赖。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>论文将经典 fMLLR 声学补偿与自监督 Wav2vec 2.0 及自编码器降维结合，在 HRI 场景 SER 中以较少微调数据取得显著 CCC 提升，为高维 SSL 表征中的无监督环境/说话人补偿提供了可部署思路。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.37959" target="_blank">ODAQ-Collection: Expanding the Open Dataset of Audio Quality with a Focus on Spatial Distortions</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Quality Assessment / Spatial Audio Dataset</span>
+                <strong>ID:</strong> <span class="tag">2610.37959</span>
+                <a href="pdfs/2610.37959.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chih-Wei Wu, Matteo Torcoli, Mhd Modar Halimeh, Pablo M. Delgado, Sascha Dick, Christoph Thompson, Phillip A. Williams, Emanuël A. P. Habets<br>
+                <div style="margin-top:5px"><span class="tag">音频质量评估</span><span class="tag">空间失真</span><span class="tag">开放数据集</span><span class="tag">MUSHRA</span><span class="tag">双耳线索编码</span><span class="tag">对话增强</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>音频质量评估研究缺乏公开、可复现、带主观听音评分的数据集；许多数据因版权或成本限制不公开或仅有限共享。</li>
+<li>既有 ODAQ 及后续扩展主要覆盖音色/音质失真，空间处理仅限基础 mid-side 与 left-right 立体声条件，缺少多样化的空间失真数据。</li>
+<li>随着贡献增多，资源逐渐碎片化，贡献者难以把握整体问题，用户也难以跨子集聚合结果。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 ODAQ-Collection 的新增子集，聚焦立体声空间失真，包含高质量音乐与语音录音、多样化立体声图像、受控空间失真及实验室 MUSHRA 主观评分。</li>
+<li>音频素材：18 个独特语音/音乐源，在混响时间约 2.5 s 的音乐厅录制，96 kHz/24 bit 录制后混为立体声并导出 48 kHz/24 bit；包含对白、对白+音乐、男/女声、动画对白、独奏/复调/弦乐四重奏/流行乐等；立体声图像包括移动声源、硬左/右声像、中心声源与自然扩散场。处理后子集含 148 对音频，平均时长 11.8 s。</li>
+<li>三类处理方法：两类受控双耳线索失真（ICC、ILD）和一类对话增强（DE）。</li>
+<li>BCC 空间失真：修改 Binaural Cue Coding 的边信息，使用 21 ms 分析窗、10.7 ms 重叠、48 kHz 采样率，逐帧生成 ICC/ILD 失真。ILD 方面，Q4 将 ±24 dB 均匀量化为 100 级（步长 0.48 dB），Q3 为 7 级，Q2 为 5 级，Q1 将所有频带 ILD 置 0 dB 导致声源坍缩到中心。ICC 方面，基于 ICC 敏感度心理测量模型引入感知距离 d：Q4 d=0，Q3 d=0.99≈1 JND，Q2 将 ICC 强制为 1 导致立体声像坍缩，Q1 使用负 d 触发 overflow，产生最大去相关与空间不稳定。主观实验中参考信号为 BCC 无失真重建，而非原始音频。</li>
+<li>DE 处理：定义立体声混合 y_i=s_i+v_i，增强信号为 y_DE,i=ŝ_i+α v̂_i，α 对应 16 dB 衰减；质量级由前景估计方法区分，包括 qPSM（3 bit 均匀中升量化）、qmsPSM(a,b)（mid/side 分别 b/a bit 量化并加均匀噪声，配置含 (4,2)、(3,3)、(3,5)）、qPSM，以及分别对 mid/side 应用预训练 DeepFilterNet 与 Bandit-v2。所有条件响度归一化至 -23 LUFS。</li>
+<li>数据集整合：新增后 ODAQ 总计 688 对处理/未处理音频、17 类处理方法、18,984 条原始主观评分；发布数据与代码，并提供跨子集结果聚合脚本。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>片段未给出完整主观得分表或客观指标相关性结果，主要报告了数据构建与听音测试设计。</li>
+<li>双耳线索失真实验：23 名受试者（平均年龄 21.0 岁，标准差 1.3，平均 2.7 年专业音频经验），14 个 MUSHRA trial，每个含 7 个条件：4 个质量级、3.5 kHz 低通 anchor、mono anchor 和 reference。</li>
+<li>DE 实验：12 名受试者（平均年龄 21.3 岁，标准差 1.6，平均 3.3 年专业音频经验），8 个 MUSHRA trial，每个含 9 个条件：6 个质量级、3.5 kHz 低通 anchor、mono anchor 和 reference（片段在此处截断）。</li>
+<li>数据集统计：新增 148 对立体声样本；总集合扩展至 688 对、17 类处理、18,984 条原始评分。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>这是一项面向空间音频质量评估的重要开放数据资源扩展，系统补充了受控 ICC/ILD 空间失真与对话增强条件，并强化了 ODAQ 的统一聚合能力；但片段尚未展示完整的客观指标基准与主观得分分析。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.37912" target="_blank">Beyond Utterance-Level Speaker Similarity: Perception-Aligned Segmental Evaluation of Accent in Speech Generation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech / Speech Generation Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2610.37912</span>
+                <a href="pdfs/2610.37912.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jinzuomu Zhong, Alice Ross, Catherine Lai, Korin Richmond<br>
+                <div style="margin-top:5px"><span class="tag">segmental evaluation</span><span class="tag">accent evaluation</span><span class="tag">speaker similarity</span><span class="tag">zero-shot TTS</span><span class="tag">listening test</span><span class="tag">subword annotation</span><span class="tag">objective metrics</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>传统的<strong>utterance-level speaker similarity</strong>评分只能给出整句层面的相似度，无法揭示生成语音中<strong>口音差异具体出现在哪些片段</strong>。</li>
+<li>现有口音评估（如 CodecMOS-Accent 的 accent SMOS）多由美国听者评分，目标口音社区听者是否认同并不明确。</li>
+<li>增强型 XAB 测试虽加入字符级口音差异标注，但标注仅作为辅助任务，未被系统分析；且成对比较随系统数量增加成本迅速上升。</li>
+<li>因此，需要一种更贴近目标口音听者感知、能定位局部发音差异的评估协议，并检验客观指标是否与人类片段级感知一致。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出<strong>片段级口音评估协议</strong>：将 utterance-level 的 speaker SMOS、accent SMOS 与<strong>subword-level 口音差异标注</strong>结合。</li>
+<li>听者来自目标口音地区，对<strong>content-matched reference–candidate pairs</strong>进行评分并高亮显示感知到口音差异的转写片段。</li>
+<li>采用三阶段数据收集：录制自然语音、合成候选语音、收集听者评分与片段标注；新录音可控制口音变体与录音时效，并降低与 TTS 训练数据重叠风险。</li>
+<li>在听测设计中显式要求听者<strong>分离说话人身份与口音判断</strong>；使用 subword 作为比字符更粗的标注单元，近似音节且无需音标训练；引导听者通常选择 3–7 个片段，最多 10 个。</li>
+<li>引入基于发音的 voice conversion 系统 SPARC 作为参考系统：预期在口音相似度上较高、在说话人相似度上较低，用于校准评分。</li>
+<li>将 7 种客观距离扩展到片段级比较：说话人嵌入（ECAPA-TDNN、WavLM-SV）、口音嵌入（GenAID、Voxlect）、PPG、formant、F0；通过 DTW 对齐、帧级距离计算，并用 MFA 与 G2P 将帧映射到 subword 标注片段，再以 Max、Mean、Midpoint 三种方式聚合。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>47 名保留听者评估了 200 个 content-matched reference–candidate pairs，覆盖 4 个苏格兰与澳大利亚声音、2 个 zero-shot TTS 系统（MaskGCT、F5-TTS）以及 SPARC。</li>
+<li>subword 标注能够定位显著的发音差异，并且有时会给出与 utterance-level 相似度评分<strong>不同的系统排名</strong>。</li>
+<li>speaker 与 accent 评分仍强相关（ρ= 0.71），说明两者有关联，但局部感知证据仍值得单独考察。</li>
+<li>7 种客观距离与听者 subword 选择之间的对应关系较弱，相关性最高仅约 ρ= 0.22。</li>
+<li>作者发布代码、数据和交互式 demo，以支持可复现的感知对齐片段级口音评估研究。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文提出了一种将整句评分与目标口音听者的 subword 感知标注结合的片段级评估协议，揭示了 utterance-level 指标会掩盖局部口音差异，且现有客观距离与人类片段级感知相关性很弱。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2610.37795" target="_blank">Universal Short-Time Fourier Transform: Data-Adaptive Window-Length Selection for Time-Frequency Analysis</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Adaptive Time-Frequency Analysis</span>
+                <strong>ID:</strong> <span class="tag">2610.37795</span>
+                <a href="pdfs/2610.37795.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Manan Mittal, Kanad Sarkar, Ryan M. Corey, John R. Buck, Andrew C. Singer<br>
+                <div style="margin-top:5px"><span class="tag">Universal Short-Time Fourier Transform</span><span class="tag">adaptive window length</span><span class="tag">time-frequency resolution</span><span class="tag">Rényi entropy</span><span class="tag">Bayesian mixture</span><span class="tag">regret bounds</span><span class="tag">exact reconstruction</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Universal Short-Time Fourier Transform (U-STFT) 论文总结</h1>
+<h2>论文信息</h2>
+<ul>
+<li>标题：Universal Short-Time Fourier Transform: Data-Adaptive Window-Length Selection for Time-Frequency Analysis</li>
+<li>作者机构：Stony Brook University、University of Illinois Urbana Champaign、University of Illinois Chicago、University of Massachusetts Dartmouth</li>
+<li>领域：自适应时频分析、短时傅里叶变换、序列预测与贝叶斯混合</li>
+</ul>
+<h2>核心痛点</h2>
+<p>传统 STFT 使用固定分析窗长，受 Gabor–Heisenberg 不确定性原理约束，存在固有时频分辨率权衡：
+- 短窗：时间定位好，但频谱主瓣宽，频率分辨率差，难以分辨邻近谐波。
+- 长窗：频率分辨率好，但时间平均强，瞬态和快速频率变化被抹平。
+- 实际信号常同时在多个时间尺度上变化，单一固定窗长无法兼顾。</p>
+<p>现有缓解方法各有局限：
+- 重分配（reassignment）和同步压缩（synchrosqueezing）等非线性后处理可锐化谱图，但破坏 STFT 的线性投影结构，成分交叠时合成复杂。
+- 自适应窗长选择或梯度下降调窗可优化局部集中度，但逐帧贪婪选择易受噪声扰动，导致稳定区间内窗长虚假波动。
+- 非平稳 Gabor 框架可做非均匀时频格上的精确重建，但通常需要离线结构指定或不规则频格上的对偶框架反演。
+- 在线序列预测和贝叶斯变点检测提供稳定框架，但传统 run-length 模型每步只允许“增长或重置”二元操作，无法表示固定有限时长滑动窗；保持恒定分辨率还需要“维持窗长并前移支撑”的第三类操作。</p>
+<h2>方法创新</h2>
+<p>论文提出 Universal Short-Time Fourier Transform（U-STFT），将自适应时频分辨率建模为有限候选窗长库上的序列决策问题。</p>
+<h3>1. 因果多分辨率候选窗库</h3>
+<ul>
+<li>以 hop 长度 H 推进，帧 m 终止于样本 n_m = mH。</li>
+<li>定义离散记忆状态 s ∈ {0,1,...,s_max}，s_max = floor(N/H)-1。</li>
+<li>状态 s 表示当前 hop 外保留的历史 hop 数，物理窗长为 L_s = (s+1)H。</li>
+<li>s=0 只用最新 H 个样本，时间定位最强、频谱主瓣最宽；s 增大则窗更长、频率分辨率更高但时间平均更强。</li>
+<li>所有候选 taper 对齐到当前帧末端 n_m，保证因果性，并共享统一 N 点频格，便于直接线性组合复数 DFT 系数。</li>
+</ul>
+<h3>2. 基于三阶 Rényi 熵的联合时频集中度评分</h3>
+<ul>
+<li>对每个候选窗计算归一化时间能量分布 p_{m,s} 和频谱能量分布 q_{m,s}。</li>
+<li>使用时域与频域三阶 Rényi 熵的归一化和作为损失：</li>
+<li>时间项 H3(p)/log2(L_s)</li>
+<li>频率项 H3(q)/log2(F)</li>
+<li>该双域准则同时惩罚长窗造成的瞬态时间抹平和短窗造成的频谱主瓣展宽。</li>
+<li>三阶 Rényi 熵强调尖锐峰值，抑制弥散背景噪声。</li>
+<li>Theorem 1 证明由离散不确定性原理，联合分辨率损失存在严格正下界。</li>
+</ul>
+<h3>3. 三态窗长转移与贝叶斯混合</h3>
+<ul>
+<li>相邻帧之间窗状态允许三种操作：</li>
+<li>maintain：s→s，窗长不变并向前滑动，保持当前时频权衡。</li>
+<li>grow：s→s+1，保留窗起点并追加新 hop，提高频率分辨率。</li>
+<li>reset：s→0，丢弃历史 hop，回到单 hop 基线以隔离瞬态。</li>
+<li>使用对称三元 Dirichlet-multinomial 先验维护所有候选状态的 posterior 分布。</li>
+<li>不贪婪选择单一窗长，而是对所有候选窗的谱做 posterior expectation，得到一个复数时频面。</li>
+<li>由 DFT 线性性，该混合谱等价于用数据自适应有效窗评估的标准 STFT。</li>
+</ul>
+<h3>4. 高效 trellis 与理论保证</h3>
+<ul>
+<li>不同窗调度若在同一帧到达同一状态 s，会对相同信号样本应用相同因果窗，因此概率质量可在 Markov trellis 上递归合并。</li>
+<li>Theorem 3：该递归以每帧 O(s_max) 复杂度计算所有 O(3^M) 可行调度的贝叶斯混合。</li>
+<li>Theorem 2：相对于 M 帧内最多 k 次分辨率变化的最优 hindsight 窗调度，累计 mix-loss regret 为 O((k+1) log M)。</li>
+<li>Proposition 2：posterior expectation 后的混合谱等价于数据自适应有效窗的 STFT。</li>
+<li>Theorem 4：posterior filtering 相比 predictive weighting 严格占优，可消除瞬态滞后。</li>
+<li>Theorem 5：通过 envelope-normalized overlap-add 合成流实现精确时域重建。</li>
+</ul>
+<h2>实验结果</h2>
+<p>论文摘要与引言部分报告了在合成信号和海洋生物声学信号上的评估：
+- 能自适应跟踪分辨率变化。
+- 提升频谱集中度。
+- 实现精确时域可逆重建。
+- 摘要未给出具体数值指标；截取内容中也未包含完整实验表格或定量对比结果。</p>
+<h2>一句话评价</h2>
+<p>U-STFT 将窗长选择从逐帧贪婪优化提升为带 regret 保证的贝叶斯序列决策，在保持 STFT 线性结构与精确重建能力的同时，实现了数据自适应的时频分辨率跟踪。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">核心痛点</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>传统基于 RVQ 的神经语音编码器在每个帧上使用固定数量的码本，不随语音内容变化。</li>
+<li>相邻语音帧的 latent 往往高度相关，逐帧独立量化会重复传输上一帧重建中已经包含的信息，造成码率冗余，低码率下尤其严重。</li>
+<li>现有可变码率方案如 SoundStream、EnCodec 在训练中随机改变活跃 RVQ 深度，但在每个工作码率下仍是逐帧均匀分配码本；VRVQ 虽能逐帧自适应分配码本，但引入额外的可学习重要性子网和码率控制模块。</li>
+<li>论文希望在不修改预训练编码器-解码器主干、不增加额外可训练码率控制模块的前提下，在 RVQ 瓶颈处利用时间冗余降低码率。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">方法创新</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>提出 AKDQ（Adaptive Key-Delta Quantization），一种可插拔的逐帧 key-or-delta 传输策略，插入在编码器与解码器之间的 RVQ 瓶颈处。</li>
+<li>每帧被分类为 K-frame 或 D-frame：K-frame 使用全部 c_K 个 VQ 量化，作为参考锚点；D-frame 复用上一帧重建结果，仅用少量 c_D 个 VQ 量化帧间残差，从而降低码率。</li>
+<li>K-frame 与 D-frame 复用同一组 RVQ 码本，不引入额外量化器参数；接收端和编码端都能直接获得上一帧量化 latent 作为参考，无需额外边信息。</li>
+<li>设计 bit-bank 驱动的因果 K/D 调度器：将目标码率预算建模为账户，D-frame 存入 β bits，选择 K-frame 时取出 Δb bits，使实际 K-frame 比例和码率逼近目标码率。</li>
+<li>调度器采用优先级级联规则：R1 首帧强制为 K-frame；R2 连续 D-frame 达到 L_max 时强制刷新为 K-frame 以防漂移；R3 当 bit-bank 足够支付 K-frame 时选择 K-frame；R4 在预算允许且当前帧难度高于指数滑动平均阈值时选择 K-frame；否则为 D-frame。</li>
+<li>难度分数使用当前 latent 与上一帧重建 latent 的相对均方误差衡量，并维护指数滑动平均作为自适应阈值，使刷新决策相对于局部难度而非固定阈值。</li>
+<li>调度器只依赖当前编码器输出和过去状态，因此完全因果、可流式推理，无额外 lookahead。</li>
+<li>给出实际码率核算公式与可行目标码率范围；由于最多允许 L_max 个连续 D-frame，K-frame 比例 ρ 被限制在 1/(L_max+1) 到 1 之间。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">实验设置</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>数据集：16 kHz LibriTTS，使用 train-clean-100 和 train-clean-360 训练，dev-clean 验证，test-clean 测试。</li>
+<li>编码器家族：DAC（波形域、非因果卷积主干）和 MDCTCodec-S（因果谱域编码器，改编自已有工作）。</li>
+<li>量化器：两者均使用 improved RVQ（iRVQ），采用低维、L2 归一化 lookup。</li>
+<li>超参数：c_K=4，c_D=1，码本大小 M=1024，帧率 f_r=50 Hz，L_max=3，α=0.1，b_flag=1；可行目标码率约 0.925 至 2.05 kbps，实验选取 B_target=1.0 kbps 和 1.5 kbps。</li>
+<li>基线：每个编码器家族训练 1.0、1.5、2.0 kbps 的固定 VQ RVQ 编码器；2.0 kbps 模型作为上界参考，并用于初始化 AKDQ；同时比较 VRVQ，其使用可学习重要性子网进行逐帧 VQ 分配。</li>
+<li>训练：AdamW，单张 NVIDIA RTX 3090；固定 RVQ 基线训练 400k steps；AKDQ 从对应 4-VQ checkpoint 的 200k steps 分支，再微调 200k steps，总训练预算一致。</li>
+<li>评价指标：STOI、LSD、SIM、SI-SDR、ViSQOL、UTMOS，以及 10 名听测者对每个条件 10 条语音进行 5 分制 MOS 评分并报告 95% 置信区间。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">实验结果</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>在因果与非因果两类编码器家族上，AKDQ 相比直接训练的低码率 RVQ 基线均改善了码率-质量折中。</li>
+<li>在 DAC 上，AKDQ 以 1.5 kbps 达到与基线 RVQ 2.0 kbps 相当的重建质量，节省 25% 码率。</li>
+<li>论文片段中的实验表格被截断，因此更完整的各指标数值和消融结果未能从给定内容中提取。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">一句话评价</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>AKDQ 通过在 RVQ 瓶颈处引入因果 bit-bank 调度的关键帧-差分帧自适应量化，在不改编码器-解码器主干的前提下有效利用帧间冗余，为低码率神经语音编码提供了一种简单、可插拔且可流式的码率节省方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">核心痛点 (Pain Point)</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>在多说话人环境中，仅凭“语义完整度”无法决定助手何时该回应：
+- 一个<strong>语义完整的句子</strong>可能来自<strong>干扰说话人</strong>，而目标用户仍在说话、附和（acknowledging）或要求等待（requesting time）。
+- 反之，即便用户说出一个完整的“等一下”请求，也不应触发回应——它仍在<strong>保留发言权</strong>（retain the floor）。
+- 打断（interruption）判断同样存在归属问题：同一段重叠语音，在目标说话人参考不同时，结论可能完全相反（应打断 vs 应忽略）。</p>
+<p>因此作者提出以<strong>说话人身份为条件的语义话轮推断</strong>（speaker-conditioned semantic turn inference）：不仅要判断“说完了没有”，还要判断“这些话是不是目标用户的、表达的是什么会话状态”。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">方法创新 (Method)</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <h3>2.1 任务形式化</h3>
+<p>给定注册语音（enrollment）$r$、截至 $t$ 的混合语音 $x_{1:t}$、任务指令 $q$，建模 $P_\theta(y \mid r, x_{1:t}, q)$：
+- <strong>主任务（五状态话轮判定）</strong>：complete / incomplete / backchannel / wait / target-absent。
+- <strong>独立打断任务</strong>：助手正在说话，输出 interrupt / ignore。
+两个任务都以注册语音为条件。</p>
+<h3>2.2 模型架构</h3>
+<ul>
+<li>基于 <strong>CocktailASR-1</strong>（参考条件化的混合语音直接 ASR，无需显式分离）：继承 <strong>Data2Vec2 声学编码器 + 线性投影器 + Qwen3 语言模型后端</strong>。</li>
+<li>仅在 LLM 的 query/value 投影上做 <strong>LoRA</strong> 适配：144 个张量、<strong>7,667,712 可训练参数</strong>，rank=16、scaling=32、dropout=0.05；声学编码器、投影器、原始解码器权重与输出头<strong>全部冻结</strong>。</li>
+<li>环境信息通过混合语音本身提供，不额外引入环境编码器、分离网络或话轮分类头。</li>
+</ul>
+<h3>2.3 联合监督（Joint Transcription + Turn Supervision）</h3>
+<ul>
+<li>输出格式：<code>&lt;answer&gt;目标转写文本&lt;/answer&gt;</code> + <code>&lt;decision&gt;话轮状态&lt;/decision&gt;</code>；</li>
+<li><strong>结构化 CoT 变体</strong>：在前面加 <code>&lt;think&gt;</code> 块，显式表示“目标是否在场 / 语义线索 / 助手上下文”；作者强调该中间监督<strong>并不假设模型内部推理是忠实的</strong>（确定性模板来自合成标签）。</li>
+<li>损失：$L = L_{text} + L_{decision} + 0.2 L_{CoT} + 0.1 L_{EOS}$（对照模型省略 CoT 项）。</li>
+<li>目标转写是<strong>被监督输出</strong>，从不在推理时作为输入；目标缺失与非目标打断样本使用空 answer。</li>
+<li>解码在结束 decision 标签、EOS 或生成长度上限处停止。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">数据构造 (Data)</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li><strong>文本与语义标签</strong>：Qwen3-8B 生成双语文本计划，再由 <strong>DeepSeek（deepseek-flash，非思考模式）</strong> 两次扩展；prompt 控制语言、话题、角色、声学场景与语义状态。</li>
+<li><strong>说话人参考</strong>：中文用 <strong>AISHELL-1</strong>、英文用 <strong>LibriSpeech</strong>，每人 1–4 s 独立语句用于合成条件与注册。</li>
+<li><strong>语音合成与混音</strong>：<strong>CosyVoice2-0.5B</strong> 合成；场景包括 target-only、non-target-only、双人重叠、目标+噪声、三人语音（重叠时目标在干扰语音中途开始；三人序列间隔 150 ms，目标最后）；高斯噪声 SNR ∈ {5,10,15,20} dB；16 kHz 峰值归一化；<strong>未模拟房间声学与设备回声</strong>。</li>
+<li><strong>规模</strong>：训练池 <strong>115,204</strong> 条冻结记录（114,994 话轮 + 210 打断；中文 57,709 / 英文 57,495），观测前缀共 <strong>303.74 小时</strong>；验证集 430 条（42 内容组 / 74 说话人），原始测试集 410 条（39 组 / 62 身份）；补充评测 5,540 条话轮；另有诊断子集（350 条错误参考、888 条在场性案例）。</li>
+<li><strong>审计</strong>：内容组、波形哈希、注册哈希、各角色说话人身份在 train/val/test 间互不重叠；真实录音混合仅带在场标签。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">训练配置</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>两个联合训练变体均从同一个 1,000-update 的初始 adapter 出发；每个变体 <strong>164,278 次联合呈现</strong>（每条合格记录一遍 + 49,074 次额外打断呈现 + 54,759 次 native-ASR 重放），共 <strong>219,037 updates</strong>。</li>
+<li>AdamW，lr=$10^{-5}$，batch size=1，seed=20261028，梯度裁剪 1；两个变体的初始化、记录顺序、重放计划、最终 checkpoint 选择完全一致（但 CoT 会带来额外 token 与算力）。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">实验结果 (Results)</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>合成多说话人测试集上，五状态 <strong>macro F1 = 0.811</strong>；目标转写 <strong>CER = 4.20%</strong>；</li>
+<li><strong>全部 10 组参考交换的打断对（reference-swapped interruption pairs）均判断正确</strong>，说明模型确实在使用说话人身份条件而非仅靠语义；</li>
+<li><strong>CoT 的负面结论</strong>：结构化 CoT 降低了转写错误，但在验证集与测试集上<strong>都降低了话轮 macro F1</strong>——中间监督并非免费午餐；</li>
+<li>评测将“话轮判别 / 目标转写 / 识别能力保持”分开考察，揭示一个维度的强性能<strong>不能保证</strong>其他维度。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">贡献总结</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ol>
+<li>形式化<strong>目标条件化语义话轮推断</strong>（五状态 + 独立打断决策）；</li>
+<li>通过联合“目标转写 + 话轮”监督改造 CocktailASR-1，并对比 decision-only 与 structured-CoT 两种配置；</li>
+<li>分别评估话轮判别、目标转写与识别保持，指出多指标联合评估的必要性。</li>
+</ol>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">局限</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>标签与文本均来自<strong>合成计划</strong>，无人工标注或 ASR 校验；</li>
+<li>输入在生成器定义的端点截断，属于<strong>离线前缀决策</strong>而非真人对话中的连续端点检测；</li>
+<li>未模拟房间声学/回声，真实录音部分仅有在场标签。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">一句话评价</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>SpeakerTurn 把“该不该回应”从纯语义完整度问题重构为<strong>以注册说话人为条件的语义-身份联合判定</strong>问题，用极轻量 LoRA 在 CocktailASR-1 上实现转写与五状态话轮的联合生成，并用“参考交换打断对全对”与“CoT 反而降 F1”两个结果给出了颇具说服力的实证洞察。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">核心痛点</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li><strong>语音中的“强调”承载文本无法表达的信息</strong>。同一句话重读不同词会产生截然不同的对比焦点，例如 “She <strong>called</strong> today”（不是别人）、“She <strong>called</strong> today”（不是发短信）、“She called <strong>today</strong>”（不是昨天）。当前高保真 TTS 系统虽然自然度很高，但缺少这种细粒度控制手段，用户难以准确传达意图。</li>
+<li><strong>现有两类强调控制方案各有明显缺陷</strong>：</li>
+<li><strong>直接学习强调标签或特征</strong>（把 emphasis tag 作为额外输入）：声学实现完全交给模型，但需要昂贵的词级强调标注数据；</li>
+<li><strong>通过韵律属性间接控制</strong>（pitch、energy、duration）：把强调限制在少数韵律参数上，往往与语言相关，且自然度不如端到端生成。</li>
+<li><strong>反馈式后训练（RL/DPO）已有探索，但仍存在问题</strong>：如 EMORL-TTS 用 GRPO + 手工设计的 pitch/energy 对比奖励，Fish Audio S2 先用 SFT 教 <code>[emphasis]</code> 指令再用 GRPO 惩罚遗漏的指令。这些方法要么依赖任务特定的奖励设计（在线 RL 成本高、不稳定），要么仍需额外标注。</li>
+<li><strong>本文设定</strong>：给一个<strong>从未见过任何强调标注</strong>的预训练多语种零样本扩散 TTS 模型，<strong>事后（post hoc）</strong>加上词级强调控制能力。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">方法创新</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>整体是一个“两阶段、检测器在环（detector-in-the-loop）”的简单配方：<strong>SFT + Diffusion-DPO</strong>，全程无需人工强调标注、无需任务特定奖励模型。</p>
+<h3>2.1 基座模型</h3>
+<ul>
+<li>多语种零样本 <strong>latent diffusion TTS</strong>（结构类似 DMOSpeech 的 teacher 模型，flow matching 训练）。</li>
+<li>输入三部分：原始文本 <code>x</code>（冻结 T5 编码）、IPA 音素序列 <code>p</code>（可学习嵌入表）、参考音频 <code>r</code>；目标音频与参考音频均由冻结的 <strong>DAC</strong> 编解码为 latent。</li>
+<li>训练目标为速度预测（velocity matching）MSE：<code>L(θ)=E‖v_θ(z_t,t,e_x,e_p,z_r) − v‖²</code>；推理时从纯噪声出发数值积分（如 Euler）得到干净 latent，再由 DAC 解码回波形。</li>
+</ul>
+<h3>2.2 SFT 阶段：用强调标记“教会”模型</h3>
+<ul>
+<li>在<strong>文本路径和音素路径同时</strong>用 <code>&lt;emp&gt;...&lt;/emp&gt;</code> 包裹被强调的词，例如 <code>She &lt;emp&gt;called&lt;/emp&gt; today.</code> / <code>Si: &lt;emp&gt;kO:ld&lt;/emp&gt; t@deI</code>。</li>
+<li>伪标签来自一个<strong>现成的多语种强调检测器</strong>（7 语种训练：en/de/es/fr/it/pt/zh，其他语言零样本），对每个词打分，阈值取 <strong>0.35</strong>，超阈值即标记。</li>
+<li>在“有标记 + 无标记”混合数据上微调，使模型获得初步的标记跟随能力。</li>
+</ul>
+<h3>2.3 DPO 阶段：用偏好对强化强调</h3>
+<ul>
+<li>采用 <strong>Diffusion-DPO</strong>：扩散模型似然不可解析，故用去噪目标在每个噪声层级做相对比较——压低 chosen 相对参考模型（SFT 终模型）的去噪误差、抬高 rejected 的误差；<code>β=0.1</code>。</li>
+<li><strong>关键工程点：加入 replay 去噪损失</strong>。仅优化偏好损失不稳定（模型漂移、两边去噪质量都退化），因此总损失 <code>L = L_replay + λ·L_diff</code>，<code>λ=0.1</code>。replay 数据可用真实 SFT 语料（corpus replay）或偏好对中的 chosen 样本（chosen replay），论文在第 4.2 节做了对比。</li>
+</ul>
+<h3>2.4 偏好对构造（本文较有特色的设计）</h3>
+<ul>
+<li>对每个输入，用 SFT 模型采样 <strong>K=5 个带标记候选</strong> 与 <strong>N=3 个无标记基线</strong>，全部用<strong>同一个检测器</strong>打分。</li>
+<li>定义两个量：</li>
+<li><strong>提升度</strong> <code>δ_k(τ)=s_k(τ)−s̄_0(τ)</code>：目标词相对基线平均分的提升；</li>
+<li><strong>选择性</strong> <code>ρ_k</code>：非目标词中分数低于“目标词最低分”的比例，用于防止“整句都读响”来作弊。</li>
+<li><strong>复合排序分</strong> <code>g_k = λ_min·δ_min + λ_avg·δ̄ + λ_sel·ρ</code>，权重 <code>(0.6, 0.4, 0.3)</code>；<code>δ_min</code> 项惩罚漏掉任何一个目标词。取 <code>g_k</code> 最高/最低者为 chosen / rejected。</li>
+<li><strong>硬过滤</strong>：候选需 <code>δ_min ≥ 0.20</code>（ja/zh 放宽到 0.15）；chosen 与 rejected 均需满足 <code>CER ≤ 0.20</code>（Qwen3-ASR 转写对比）、<code>NISQA ≥ 2.0</code>、<code>SIM ≥ 0.15</code>（ECAPA-TDNN on WavLM-Large 的说话人相似度）、削波比例 ≤ 0.001。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">实验结果</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <h3>训练配置</h3>
+<ul>
+<li>三阶段：<strong>预训练</strong>（700k steps，30 万小时内部数据，21 语种）→ <strong>SFT</strong>（约 258k 高质量样本 / 711 小时，其中 45% 带 <code>&lt;emp&gt;</code> 标记）→ <strong>DPO</strong>（10k steps，8 GPU，每步 32 对 + 64 条 replay，AdamW，lr 2e-5，β=0.1）。</li>
+<li><strong>最终偏好数据集仅 5,171 对</strong>：en 957 / de 878 / es 1,314 / fr 796 / ja 662 / zh 564 —— 凸显数据与算力效率。</li>
+</ul>
+<h3>对比基线</h3>
+<ul>
+<li><strong>Fish-S2 (Fish Audio S2 Pro)</strong>：支持零样本音色克隆 + 内联 <code>[emphasis]</code> 标签，是<strong>最贴近本文设定</strong>的公开系统；</li>
+<li><strong>WordVoice</strong>：离散词级（中文为字级）属性 token（duration/energy/pitch/boundary/tone），无显式强调概念，仅支持中英；本文通过二次生成把目标词 pitch 设为参考均值 +4.5 半音、energy +4dB、duration ×1.45（中文 ×1.35）来<strong>模拟强调</strong>；</li>
+<li><strong>Qwen3-TTS (CustomVoice)</strong>：用自然语言 instruct 控制强调，但不支持音色克隆，只能用内置音色。</li>
+</ul>
+<h3>评测协议</h3>
+<ul>
+<li><strong>6 语种</strong>（de/en/es/fr/ja/zh）词级强调控制，每语种 35 句、每句 1 个标注目标词，共 <strong>210 句</strong>（与训练文本无重叠）；8 条参考音频（4 男 4 女）。</li>
+<li>客观：强调强度（检测器分数）、CER、NISQA、SIM；主观：听测界面 Q1 强调强度、Q2 自然度（1–5 分），并询问是否其他词也被误强调。</li>
+</ul>
+<h3>主要结论（据可见部分）</h3>
+<ul>
+<li><strong>DPO 能显著增强强调控制</strong>，且只需数千条偏好对与数千训练步；</li>
+<li>增益在<strong>六个语种上一致成立</strong>；</li>
+<li>与强公开系统对比，客观与主观评测均显示模型产生<strong>可感知的强调</strong>，同时<strong>保持自然度与整体质量</strong>；</li>
+<li>消融关注 corpus replay vs. chosen replay 两种 replay 数据源的取舍（chosen replay 不需要额外数据管线）。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">一句话评价</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>EmpDPO 用“现成强调检测器产伪标签 → SFT 教标记 → 检测器打分的偏好对做 Diffusion-DPO”这一条<strong>无需人工标注、无需奖励建模、数据与算力极省</strong>的流水线，把词级强调控制成功“事后外挂”到多语种零样本扩散 TTS 上；其中“提升度 + 选择性”的复合偏好对构造和 replay 正则是两个真正值得借鉴的工程要点，代价是效果上限受制于外部检测器的可靠性与阈值设计。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">局限与可讨论之处</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li>强调的“金标准”完全由外部检测器定义（检测器偏差即模型偏差），阈值 0.35 为固定超参；</li>
+<li>单句仅评测一个目标词为主，多目标词/复杂焦点结构的覆盖有限；</li>
+<li>依赖 30 万小时内部预训练数据，复现门槛较高；</li>
+<li>WordVoice 基线需要两次生成 + 强制对齐 + 手工调参模拟强调，比较条件并非完全对等。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">核心问题与背景</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>在日语金融播报生成场景中，few-shot 语音克隆（基于 neural codec / semantic token 的两阶段框架 + VITS 解码器）已被用于低成本批量生产每日市场评论音频。此时主要质量瓶颈不再是自然度，而是<strong>读音正确性</strong>。</p>
+<ul>
+<li>日语大量汉字词存在多读音，需依赖领域与上下文判别，例如 市況（shijō「行情」vs. ichiba「集市」）、大勢（taisei「大势」vs. ōze「众人」）。</li>
+<li>金融文本还包含读音特殊的术语（上値 uwane、後場 goba、手仕舞い tejimai）和易错的连音/音便数字表达（十分 juppun vs. jūbun）。</li>
+<li>误读来源有两类：<strong>文本前端（front-end）预测错误</strong>，以及<strong>声学模型在少量说话人数据上微调后偏离给定音素</strong>（如 専念 在 9 个候选中全部被读成 sennen，尽管前端读音正确）。</li>
+</ul>
+<p><strong>现有防护措施的问题</strong>：工业界常用“ASR 质量门”，即用 Whisper 等强识别器转写合成语音，将输入与转写都转成假名后比对，不一致则重新生成。作者指出该门控<strong>双向不可靠</strong>：</p>
+<ol>
+<li><strong>漏检</strong>：强识别器同时是强语言模型，音频实际说 ichiba 时，最可能的转写仍是「市況」，形态分析器再转回期望读音 shijō，门控通过，错误直达听众。</li>
+<li><strong>误报</strong>：音频正确时，生僻术语的普通识别错误改变假名串，触发无谓的重新生成。</li>
+</ol>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">方法创新</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>提出<strong>读音级校验（Stage 2）</strong>，不依赖识别器“写了哪个汉字”，而是直接比较各候选读音对音频的 CTC 似然：</p>
+<ul>
+<li>对句中每个易混词 w，设期望读音 r*（来自领域词典）与少量可混淆替代读音集合 A(w)；句子拆为 x = p w q，上下文假名 ρ(p)、ρ(q) 由前端给出；候选 r 的标签序列 y(r) = ρ(p) r ρ(q)。</li>
+<li>打分：s(r) = log P_CTC(y(r) | a)，其中 P_CTC 由在 Common Voice Japanese 上用平假名目标微调过的 <strong>wav2vec 2.0 XLSR-53</strong> 计算。</li>
+<li>判别：m(w) = max_{r∈A(w)} s(r) − s(r*) &gt; θ 则标记该词，句中任一 Rip 被标记则整句失败（实验中 θ = 0）。</li>
+<li><strong>关键优势</strong>：y(r) 与 y(r*) 仅在目标片段不同，识别器的上下文错误在两者中近似抵消，边距 m(w) 主要由该词本身的声学证据决定；代价仅为每句一次 CTC 前向 + 每候选一次 CTC loss 计算。</li>
+<li><strong>易混读音词典构建</strong>（三条来源）：① 替换表中每次人工记录的历史误读；② 领域术语表提供的金融读音（常与通用域默认读音不同）；③ 由构成汉字的字典读音及前端与术语表不一致时的前端输出枚举（本研究未用，每词手工选 1 个替代）。新增术语只需加一行词典，无需音频样本。</li>
+<li><strong>重要工程约束</strong>：期望读音不能取自驱动合成器的同一前端，否则前端错则合成器与校验器“错得一致”（论文 V-F 给出真实案例）。</li>
+<li><strong>流水线整合</strong>：Stage 1（WhisperX large-v3 转写 + pyopenjtalk 转假名 + 全等比对，可捕获漏读/重复/幻觉）与 Stage 2 串联；失败句用新随机种子重生成，最多 K = 9 次（三轮各三候选），全失败则取最佳候选并上报被标记词，供运营补充替换表。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">实验设置</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <ul>
+<li><strong>声音</strong>：3 个生产用克隆音色（F1、F2 女声，M1 男声），LoRA rank 分别为 64/32/32，每音色约 30 分钟单人日语数据，按风格使用 3–10 s 参考音频。</li>
+<li><strong>测试集</strong>：30 个金融市场评论高频术语，每词一个金融读音 + 一个合理误读，误读分三类：(a) 读音选择错误 21 词（如 市況 ichiba、前場 maeba、相場 aiba）；(b) 音变（连浊/促音）错误 7 词（例 大手 ōde、寄り付き yoridzuki、手仕舞い teshimai、日経平均 nichikei）；(c) 数字音便 2 词（十分 jūbun、専念 sennen）。每词写 2 个由上下文决定金融读音的自然句，共 60 句，平均时长 4.1 s。</li>
+<li><strong>三种输入条件（固定种子）</strong>：K = 目标词替换为正确读音平假名；W = 替换为注入误读平假名；N = 原始汉字文本。共 60×3×3 = 540 条语音，其中 K+W 360 条为<strong>受控集</strong>，N 180 条衡量自然输入行为。前端对平假名确定性转音素，故 K/W 天然提供无需人工标注的 ground truth。</li>
+<li><strong>对比方法</strong>：(i) 已部署的 Stage 1 门控；(ii) 直接音素转写基线（平假名 CTC 贪婪解码，期望读音未出现在输出即报警）；(iii) 所提 Stage 2（θ = 0）。指标为 W 集召回、K 集误报率、精确率、边距 m(w) 的 ROC-AUC，附 Wilson 95% 置信区间与 McNemar 精确检验。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">主要结果</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>| 方法 | 召回 (W) | 误报 (K) | 精确率 |
+|---|---|---|---|
+| Stage 1: Whisper + 假名比对 | 78.9% [72.4, 84.2] | 44.4% [37.4, 51.7] | 64.0 |
+| 贪婪平假名 CTC | 100% [97.9, 100] | 48.3% [41.1, 55.6] | 67.4 |
+| <strong>所提方法（θ=0）</strong> | <strong>91.7% [86.7, 94.9]</strong> | <strong>5.0% [2.7, 9.2]</strong> | <strong>94.8</strong> |</p>
+<ul>
+<li>所提方法 <strong>AUC = 0.990</strong>；边距分布图中正确读音（K）与注入误读（W）在 θ = 0 处几乎完全可分。</li>
+<li>相比 Stage 1，多检出 35 条 Stage 1 漏掉的误读，同时把误报从 44.4% 压到 5.0%。</li>
+<li>贪婪音素转写虽 100% 召回，但输出噪声大（如 おおはば 被解码成类似的乱码假名串），误报 48.3%，无法作为门控使用——说明“读音级打分 + 边距比较”优于“硬性字符串匹配”。</li>
+<li><strong>自然汉字输入（N 集）</strong>：检出一个 Stage 1 对某一音色完全漏掉的前端读音错误；并将需重新生成的句子比例从 <strong>38.9% 降到 6.1%</strong>。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="" target="_blank">一句话评价</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-10-31</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Unknown</span>
+                <strong>ID:</strong> <span class="tag"></span>
+                <a href="pdfs/.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Unknown<br>
+                <div style="margin-top:5px"></div>
+            </div>
+            <div class="summary-section">
+                <p>本文将语音识别中的 CTC 似然打分与计算机辅助发音评测中的“goodness-of-pronunciation”思想迁移到 TTS 质量门控，用“期望读音 vs. 混淆读音的似然边距”取代“ASR 转写字符串比对”，巧妙绕开了强语言模型会把错误读音“改写回正确汉字”的根本缺陷，在仅增加极小计算开销的前提下把误读检出率从 78.9% 提升到 91.7%、误报率从 44.4% 降到 5.0%，是一篇工程价值高、问题定义清晰、实验设计（K/W/N 三条件构造 ground truth）严谨的工业界落地论文。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-10-28</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2610.37640" target="_blank">Partially Edited Audio: Generation, Defense, and Open Problems</a>
