@@ -1,0 +1,465 @@
+# Arxiv Daily Deep Report - 2026-11-03
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 11
+---
+
+## 1. VoxLock: Target-Speaker Extraction for Voice Agents Without an Enrollment Step
+
+**作者**: Arbaz Siddiqui
+**链接**: [2610.40727](https://arxiv.org/abs/2610.40727)
+**分类**: Target-Speaker Extraction (Speech Enhancement) | **关键词**: Target Speaker Extraction, Voice Isolation, BSRNN, Voice Agents, Streaming Speech Enhancement, Enrollment-free, Word Error Rate, Background Speech Leakage
+
+## VoxLock：无需注册步骤的语音助手目标说话人提取
+
+### 核心痛点
+- 语音助手（voice agent）会“听见”麦克风附近的所有人：邻座同事、电视、车内第二个人。这些人的话被写入转写文本，助手还会对着这些话作答。
+- 传统降噪（noise suppressor，如 DeepFilterNet3）目标是保留所有人声，因此对此无效；Krisp、ai-coustics、Sanas 出售“voice isolation”商业滤波器，但闭源、按分钟或按设备收费。
+- 学术界的 TSE（target-speaker extraction，目标说话人提取）需要一段“注册录音（enrollment）”，而语音助手只有通话本身；且 TSE 论文通常在仿真混合信号上报告 SI-SDR 等信号级指标，而语音助手关心的是识别器在真实录音上“写出了什么”。
+
+### 方法创新
+1. **从通话本身取声纹样本（no enrollment）**：模型固定吃 3 s 主叫音频。
+   - 离线整文件：取前 15 s 中最响的 3 s（允许“向前看”15 s）。
+   - 在线流式：音频先原样通过，累计到 3 s 语音（10 ms 帧，能量高于最近 2 s 最安静帧 10 dB）即作为样本并开始分离。
+   - 共同假设：主叫是最响、最早说话的人（耳麦/手持手机场景成立）。
+2. **基座模型**：REAL-TSE 的 causal `tfmap_context` BSRNN（WeSep 实现），16 kHz、STFT 512 点 / hop 128、6 个 band-split 块、单向序列建模，27M 参数；原作者确认权重为 Apache-2.0。
+3. **双路样本注入**：① 通话频谱的每一帧对样本频谱的帧做注意力，产生额外输入通道；② 分离器的 band 特征对样本的帧级 ECAPA-TDNN 特征做注意力，结果按 band 相乘调制。
+4. **算法延迟仅 24 ms**（= 512 采样窗 − 128 采样 hop），8-bit 模型可在一颗 CPU 线程的 77% 占用下跑实时通话。
+5. **四阶段渐进微调**（单卡 NVIDIA L4，全部参数含 ECAPA 分支，负 SI-SDR + AdamW wd=0.01、梯度裁剪 5）：
+   - **S1 仿真通话**（4000 步，6 s 样本）：LibriSpeech 近场主叫 + 1–2 名背景说话人（通常低 0–15 dB），一半样本背景与主叫一样近，否则在仿真房间中距 1.5–5 m；25% 过电话信道；样本为首 3 s 混合或主叫另一句话（含噪/纯净）。
+   - **S2 真实串音**（4000 步）：混入 AMI 耳麦音频（40 场会议）；前 1000 步为“佩戴者独说”的精确目标 + 仅有他人的串音（提升 0–12 dB）；后 3000 步为 8 s 纯串音中粘贴 3–4 s 主叫片段（片段外目标静音）。不使用评测集与 REAL-T 的会议。
+   - **S3 长通话**（800 步，30 s 样本）：修复“主叫连续说话 40 s 内衰减 20 dB”的退化。
+   - **S4 距离与房间**（400 步）：修复“只保留更近说话人”的捷径，主叫近/中/远与背景独立摆放，并加入真实 AMI 房间底噪。
+   - 学习率：S1（cosine）与 S2 为 1e-4，S2 最后 1000 步退火至 1e-5，S3/S4 为 3e-5。
+
+### 实验设置与结果
+- **指标**（用下游识别器 Parakeet TDT 0.6B 的输出来评分，Krisp 用 v2 + Krisp 官方文本归一化，AMI 用 v3）：WER（仅主叫词）、**missed** = (S+D)/N（丢失的主叫词比例）、**leak** = 中点落在“只有背景语音”（距主叫语音 >0.25 s）区域的被识别词数/分钟；95% bootstrap 区间按人重采样（5000 次），未做多重比较校正。
+- **Krisp benchmark（265 条真实录音，85.3 min 纯背景语音）**：VoxLock 4.95% WER / missed 4.22% / leak 0.11（共 9 个背景词混入），未处理为 23.21% / 4.28% / 66.48（5674 词）；因果 live() 版 5.15%（仍低于 Krisp Default 的 5.30%）。与 Krisp Default 在 WER、missed、leak 上均无显著差异；显著优于 Krisp Lite、Krisp HD（边界显著）、ai-coustics VF 2.2 L/S、Sanas SE 1.0、REAL-TSE 起点（9.81%）、Hush（12.09%）、DeepFilterNet3（13.30%）、TIGER+caller pick（14.72%）、SAM Audio small（33.77%）。Krisp Default 泄漏 130 词。
+- **AMI 134 窗口（5 场会议 / 7 人，开发期可见，非盲）**：VoxLock 10.12% WER、missed 6.77%、leak 2.12/min（16 词），为表中最低 WER 与最少漏词；仅 ai-coustics VF 2.2 S 的漏背景词更少（8 词，显著）。
+- **盲测 AMI（400 窗口 / 16 人 / 11 场，全部来自 AMI 标准 test partition，评分前按哈希冻结）**：WER 42.95% → 10.63%，leak 98.19 → 1.17 词/min；REAL-TSE 起点 14.75%；“取前 3 s 语音（Silero VAD）而非最响 3 s”无显著差异（Krisp 上 +0.13 点）；live() 为 11.97%。
+- **确实用了样本吗？** 改用同一会议中他人的 3 s 语音作样本：VoxLock 丢词 17%（正确样本为 8%），而 REAL-TSE 起点丢词 61% 并跟随错误说话人（69.92% WER）。说明 VoxLock 既依赖样本，又学到“保留主导的近场说话人”，错误样本是退化而非“切换目标”。
+- **阶段消融**：大部分收益来自 S1（Krisp 9.99% → 5.61%，盲 AMI 14.75% → 11.07%）；S3/S4 主要降低 Krisp 上的 leak（2.25 → 0.11 词/min）并把 WER 从 5.61% 压到 4.95%。
+- **代价**：在几乎没有背景语音的电话场景，WER 从 3.82% 升到 5.36%（Krisp Default 4.15%）；工作与呼叫中心场景则从 29.31% / 25.13% 降到 4.83% / 4.90%。在 200 个“仅有主叫说话”的盲集窗口上，比未处理高 0.31 点（7.49% vs 7.18%，区间 [−0.32, +1.33]，不显著）。
+
+### 局限
+- 依赖“主叫最响且最早开口”的假设；样本取错会显著掉点。
+- 两个开发集（Krisp、AMI 134）在开发期被查看过，非盲；盲集仅 11 场会议 / 16 人，区间偏窄（同会议内人不独立）。
+- 盲集上缺少 ai-coustics、Krisp、Sanas 与开源基线的对比（密钥/输出不可得）。
+
+### 一句话评价
+VoxLock 用单卡微调一个 27M 因果 BSRNN，把“需要注册录音”的 TSE 改造成“从通话开头自取 3 s 样本”的可流式语音隔离模块，并以真实录音上的下游识别指标（WER / 漏词 / 背景词泄漏）证明其与最佳商业滤波器持平、显著优于多种商业与开源方案，同时模型、代码与逐文件分数全部开源。
+
+---
+
+## 2. ARPEGE: Dataset and Methods to Estimate Acoustic and Geometric Parameters of Rooms from Sound
+
+**作者**: Jean-Daniel Pascal Prieto (UMRAE, MACARON), Prerak Srivastava, Cédric Foy (UMRAE), Antoine Deleforge (MACARON)
+**链接**: [2610.41543](https://arxiv.org/abs/2610.41543)
+**分类**: Room Acoustics / Acoustic Reflector and Room Geometry Estimation | **关键词**: Room Impulse Response, Acoustic Reflector Localization, Room Parameter Estimation, Ambisonic Spherical Array, Acoustic Digital Twin
+
+# ARPEGE 论文总结
+
+## 核心痛点
+- 从声音中定位并表征室内声学反射体（即“听见房间的墙壁”）是空间音频、音频增强现实、声学数字孪生、声学诊断与 SLAM 等应用的重要基础。
+- 现有方法缺少高质量、带几何与反射体标注的公开 RIR 数据；获取此类标注数据耗时且成本高。
+- 已有数据集存在房间数量少、阵列/声源摆放受限、仅单通道或双耳、缺少全向指向性测量、忽略扬声器朝向影响等不足。
+
+## 数据集与方法创新
+- 发布 ARPEGE 数据集，全称为 Acoustic Reflector, room Parameter and Geometry Estimation。
+- 包含 248 条球阵房间脉冲响应（RIR），采集自 6 个空房间、44 个设备摆放位置。
+- 使用 Genelec 8020 扬声器与两个 Eigenmike 球阵：em32（32 麦克风）与 em64（64 麦克风）。
+- 每个 RIR 标注声源、麦克风以及所有声学反射体的相对位置，并给出对应 image source 标注。
+- 房间覆盖多种尺寸、表面材料、朝向与距离；包含近场约 1.40 m 与远场最高 4.84 m 的声源距离，以及前向、后向、斜向扬声器朝向。
+- 设备 3D 位置与房间尺寸现场测量；阵列 3-DoF 朝向通过直达路径到达时间与 PCA 后验恢复；标注误差估计约 5 cm。
+- 额外包含约 12 分钟男女、法语/英语真实人声，以及 28 组、每组 20 次拍手录音；部分房间提供 192 通道分布式阵列录音与混合声源场景。
+- 提供基于 Pyroomacoustics 图像源法的初始重仿真代码，可结合实测扬声器/麦克风指向性进行数字孪生式复现。
+
+## 实验与结果
+- 在 ARPEGE 上评估 image source localization 方法：先用 Real2Sim 扩散模型将实测 RIR 早期部分映射为 sinc 尖峰 echogram，再用无网格 3D 反演方法得到 image source 点云。
+- 评估对象为 6 个房间中 40 条近场、前向、em32 的 RIR；仅评估距接收器 7.5 m 内的 image sources。
+- 使用 Real2Sim 时，一阶 image source 的召回率为 97.3%，平均径向误差 0.09 m、角度误差 4.67°、欧氏距离误差 0.30 m；不使用扩散时为 57.6%。
+- 二阶召回率 83.9%，三阶 60.8%，四阶 37.3%；平均径向误差约 0.12–0.18 m，角度误差约 5.7–6.3°。
+- 论文还演示了盲房间参数估计方法 [7]，但截取片段未展开其定量结果。
+
+## 一句话评价
+- ARPEGE 是面向“听见墙壁”问题的带几何与反射体标注多房间球阵 RIR 数据集，并提供数字孪生重仿真与基准方法代码，对声学反射体定位和房间参数估计研究具有较高基准价值。
+
+---
+
+## 3. Scalable Audio-LLM System for Speech MOS Evaluation: A Diagnostic Case Study and Adaptation Roadmap
+
+**作者**: Dimitrios Kokkinis, Panagiotis Kakoulidis, Nikolaos Ellinas, Chrysovalanti Lymperi, Alexandra Vioni, Georgios Vardaxoglou, Iakovi Alexiou, Myrsini Christidou, Jeasung Lee, Gunu Jho, Inchul Hwang, Pirros Tsiakoulis, Aimilios Chalamandaris
+**链接**: [2610.41539](https://arxiv.org/abs/2610.41539)
+**分类**: Speech Quality Evaluation / Text-to-Speech MOS Prediction | **关键词**: Speech MOS, Audio-LLM, Qwen2-Audio, LoRA, SOMOS, TTS Evaluation
+
+## 核心痛点
+- 企业级 TTS/语音系统在 CI/CD 中持续更新，需对大量合成语音做质量评估。
+- 人工 MOS 是金标准，但成本高、周期长、无法支撑高频离线批量评估。
+- 传统回归式 MOS 预测器虽轻量，但鲁棒性和最终 QA 可靠性不足，且只输出单一分数、诊断价值有限。
+- 直接使用 Audio-LLM 做零样本 MOS 评估存在严重失败：分数压缩、与人工评分相关性低、位置偏置等。
+
+## 方法创新
+- 以 Qwen2-Audio-7B-Instruct 为代表性 Audio-LLM，系统审计零样本 MOS 评估能力，覆盖直接打分、评分细则、few-shot、成对偏好、Chain-of-Thought 等提示策略。
+- 分析 SOMOS 数据集，提取与人类 MOS 自然度感知强相关的客观声学维度，重点围绕语音流畅性/语速与音高变化/表现力，构建诊断性基准，用于暴露 Audio-LLM 的低层声学感知盲区。
+- 提出 expressivity 指标，用于刻画人类对表现力的感知。
+- 提出混合系统设计：用 SOMOS 作为对齐数据，通过 LoRA 参数高效微调 Qwen2-Audio-7B-Instruct，使其直接输出 MOS；推理时采用 4-bit 量化加 LoRA，降低显存占用，支持离线大批量评估。
+- 还探索两阶段解耦方案：Audio-LLM 先生成定性声学描述，再由纯文本 LLM Llama-3-8B-Instruct 将描述映射为数值 MOS，作为微调前的零样本缓解策略。
+
+## 实验结果
+- 零样本直接打分普遍给出过高分数（>4.5），更多在评判转写准确性而非声学保真度或韵律自然度。
+- few-shot 条件下模型倾向复制上下文中的 MOS 数值，而非评估目标音频。
+- 成对偏好任务出现确定性位置偏置，模型系统性地选择第一个样本。
+- CoT 能偶尔指出机器人声、数字伪影等缺陷，但最终数值分数仍偏高，与其文本分析矛盾。
+- 两阶段文本到分数映射仅带来有限提升：Pearson r 从 base 的 -0.0312 提升到 temperature=1.5 时的 0.2467，说明基座模型部分理解质量但难以稳定映射为标量分数。
+- 诊断基准显示基座模型难以正确区分慢/快语速、平直/富有表现力的语调，表明高层 MOS 失败可能源于低层声学特征识别不足。
+- 摘要称 LoRA 微调后相对基座模型和 UTMOS 等神经基线有改进，并形成企业级语音质量保障的实践蓝图；但截取内容未给出完整微调实验数值。
+
+## 一句话评价
+这是一篇面向企业 TTS 质量保障的诊断性案例研究：它清晰揭示了现成 Audio-LLM 在 MOS 评估中的失败模式与感知盲区，并给出基于 SOMOS 诊断基准和 LoRA 对齐的可落地改进路线，但完整微调收益仍需结合全文实验数据进一步核验。
+
+---
+
+## 4. Parameter-Efficient Fine-Tuning of Transformer Encoders for Audio-Image-Symbolic Music Retrieval
+
+**作者**: Eliseo Fuentes-Martinez, Antonio Hidalgo-Centeno, Jorge Calvo-Zaragoza, Antonio Javier Gallego
+**链接**: [2610.41512](https://arxiv.org/abs/2610.41512)
+**分类**: Score-based Multimodal Music Information Retrieval (MIR) | **关键词**: Parameter-Efficient Fine-Tuning, LoRA, QLoRA, Multimodal Music Retrieval, Score-based MIR, Transformer Encoders, Audio-Image-Symbolic Retrieval
+
+## 论文概览
+论文研究基于乐谱的多模态音乐检索，如何用参数高效微调（PEFT）适配预训练 Transformer 编码器，并检验单模态判别能力的提升能否转化为更好的多模态表示。作者在 TriScore 与 Musical Theme Dataset 上比较全量微调、LoRA、QLoRA，覆盖 9 个音频、乐谱图像和符号乐谱编码器。
+
+## 核心痛点
+1. 音频、乐谱图像、符号乐谱是同一音乐内容的不同表示，检索需要模态内判别性强且跨模态兼容的表示。
+2. 早期方法依赖 chroma、bootleg score 等中间表示，需预处理和领域知识，可能引入误差。
+3. 冻结预训练编码器计算方便但可能遗漏音乐结构；全量微调灵活但需为每个编码器、模态、数据集和任务维护独立参数，多模态系统中成本高。
+4. PEFT 在 NLP 和视觉领域广泛研究，但在乐谱多模态 MIR 的异构编码器上效果不清楚；且单模态性能提升不必然带来多模态兼容性提升。
+
+## 方法创新
+1. 系统比较冻结线性探测（LP）、全量微调、LoRA、QLoRA 在 9 个预训练音频、图像和符号乐谱 Transformer 编码器上的表现。
+2. 两阶段评估协议：Stage I 通过监督单模态分类评估并选择各模态编码器；Stage II 引入任务特定共享投影，检验单模态适配收益能否迁移到多模态场景。
+3. 设计受控 2×2 实验：编码器适配（冻结 vs 适配）× 共享投影（原始 vs 投影后），分离适配、投影及其交互作用。
+4. 下游评估覆盖类别级多模态分类、基于最终标题表示的曲目级检索，以及跨模态排除与邻域组成分析，刻画共享空间的局部组织。
+
+## 实验结果
+1. 在 18 个模态-目标任务组合中，LoRA 或 QLoRA 有 14 个被选中，常能匹配或超过全量微调，同时显著减少可训练参数。
+2. 单模态收益并未均匀迁移到多模态分类：在 TriScore 作曲家分类上，适配与投影互补；在 TriScore 乐器分类以及 MTD 乐器/合奏任务上，二者 largely redundant；在 MTD 作曲家分类上，二者部分干扰。
+3. TriScore 上最终“适配+投影”的标题表示支持曲目级检索，平均 Top-5 和 Top-10 准确率分别为 55.32 和 64.68。
+4. 跨模态排除与邻域分析显示，投影空间中存在较强的模态特定局部结构。
+
+## 一句话评价
+该论文表明 PEFT 可作为全量微调的高效替代方案，但单模态判别性提升并不自动保证更好的多模态组织，需分离评估编码器适配与共享投影的作用。
+
+---
+
+## 5. Hierarchical Dual-Graph Retrieval for Long-form Audio Reasoning
+
+**作者**: Eunsang Lee, Taein Ju, Jiyoung Lee
+**链接**: [2610.41390](https://arxiv.org/abs/2610.41390)
+**分类**: Audio Retrieval-Augmented Generation (Long-form Audio Reasoning with Large Audio Language Models) | **关键词**: Long-form Audio Reasoning, Large Audio Language Model (LALM), Retrieval-Augmented Generation (RAG), Hierarchical Multimodal Graph, DualGraph, Personalized PageRank, Multi-hop Reasoning, Paralinguistic Cues
+
+## 论文基本信息
+
+- **标题**: Hierarchical Dual-Graph Retrieval for Long-form Audio Reasoning (AUDIOHELIX)
+- **作者**: Eunsang Lee*, Taein Ju*, Jiyoung Lee† (Ewha Womans University)
+- **机构**: Division of Artificial Intelligence & Software, Ewha Womans University
+- **代码**: https://github.com/ewha-mmai/audiohelix
+
+## 核心痛点
+
+1. **长音频超出有效上下文**:大音频语言模型(LALM)通常把整段录音一次性输入,而真正与查询相关的内容往往分散在时间上相距很远的小片段中,模型难以定位应关注的位置。例如一段 35 分钟的录音约占用 52.5K tokens,远超其文本转写所需的 token 数,计算与显存开销巨大。
+2. **纯文本 RAG 丢失副语言信息**:现有基于 ASR 转写(或转写+描述)的 RAG 丢弃了语调、停顿、说话风格、情绪等副语言线索;若用音频描述(audio captioning)把线索“文字化”,则易产生幻觉,且受限于 captioning prompt 的覆盖范围。
+3. **纯音频 RAG 噪声大**:原始音频中存在大量冗余(静音、重复措辞),给检索引入噪声;同时跨模态的朴素检索存在 modality gap 问题,效果不佳。
+4. **单一粒度不足**:粗粒度片段保留上下文但含无关内容,概念节点精确但缺乏上下文,难以自适应匹配查询所需的粒度;孤立 chunk 级匹配无法支撑多跳(multi-hop)推理。
+
+## 方法创新
+
+**AUDIOHELIX**:面向 LALM 的分层双图(DualGraph)检索增强生成框架。
+
+### 1. 离线构建三层次 DualGraph
+- **Chunk 级**:将长音频切分为定长 chunk(c_i),作为 audio chunk 节点 v_c;同时用 Qwen2.5-Omni 为每个 chunk 提取文本描述(ASR + 事件 caption)。
+- **Unit 级**:每个 chunk 再切为 M 个定长声学单元,用预训练音频-文本编码器得到 acoustic unit 节点 v_u^a;文本描述按句切分并嵌入,得到 language unit 节点 v_u^t,形成 N×M 规模的细粒度节点。
+- **Semantic Concept 级**:声学概念节点通过对全部 chunk 的声学单元嵌入做谱聚类(spectral clustering),以各簇质心作为 acoustic concept 节点 v_s^a;语言概念节点由 LALM 抽取每个 chunk 提到的文本概念得到 v_s^t。
+- **边构造**:基于层级包含关系连接 concept 与其来源 unit 及父 chunk(按连接占比加权);并通过嵌入相似度为每个声学单元额外连接最近的 n 个声学概念(相似度需超过阈值 γ),以补偿声学相似性。图对每段录音只离线构建一次。
+
+### 2. 查询时图上的相关性传播检索
+- 从与查询最相似的语言/声学概念节点出发,以相似度初始化节点权重 R。
+- 通过共享 unit 在概念节点间传播相关性(Eq.1):对同时连接 v_i^s 与邻居 v_j^s 的单元,用查询—单元相似度更新概念权重;迭代至最大传播步数 P,已访问单元不重复访问。
+- 将概念得分按系数 W_c=0.05 与边权 E、对数压缩 ψ(x)=ln(1+x) 聚合到 chunk(Eq.2),再用 Personalized PageRank (PPR) 在全图传播,取 Top-K_c 个 chunk。
+- 在每个检索到的 chunk 内按查询相关性选取 Top-K_u 个声学单元以进一步降低推理开销;最终以时间顺序组织音频单元与文本描述(转写+caption),构造 [{A_u*; D_c*}; Q] 输入 LALM 生成答案。
+- 对不支持多输入的 Audio-Flamingo-3,将所选音频单元按原始时间戳位置嵌入拼接为单条录音。
+
+### 3. 主要贡献
+- 首次为 LALM 的 RAG 构建分层多模态图(DualGraph)。
+- DualGraph 通过共享概念节点把时间上相距遥远的证据连接起来,实现跨片段的相关性传播与多跳推理。
+- 保留细粒度副语言信息的同时缓解 modality gap,无需显式学习统一跨模态嵌入。
+
+## 实验结果
+
+**基准**:TraceA V-Bench(AR 子集)、MMAU-Pro(long/ultra-long 子集)、AudioMarathon(除 ASR 外全部任务)。
+**基线模型**:Audio-Flamingo-3、Voxtral-3B、Qwen3-Omni-30B。
+**对比方法**:LinearRAG、PlanRAG-Audio。
+
+| 模型 | TraceA V | MMAU-Pro | AudioMarathon |
+|---|---|---|---|
+| Audio-Flamingo-3 (base) | 56.9 | 50.7 | 57.3 |
+| + AUDIOHELIX | **59.4** | **52.3** | **58.5** |
+| Voxtral-3B (base) | 48.1 | 40.9 | 56.4 |
+| + AUDIOHELIX | **50.6** | **56.5** | **57.9** |
+| Qwen3-Omni-30B (base) | 71.3 | 66.1 | 63.7 |
+| + AUDIOHELIX | **71.6** | **67.2** | **66.1** |
+
+- AUDIOHELIX 在三个基准、三个 LALM 上**一致优于**全音频直接处理与现有 RAG 方法(LinearRAG、PlanRAG-Audio),相对 PlanRAG-Audio 提升 6.0~32.8 个点;而其他 RAG 方法常导致性能下降。
+- 仅使用原始音频的一小部分子集即取得提升,说明检索有效。
+
+## 消融实验(以 Audio-Flamingo-3 / Voxtral-3B / Qwen3-Omni-30B 为例)
+
+- **w/o Text**(去掉语言分支):性能普遍下降(如 Voxtral 48.1→41.1),说明文本语义证据重要。
+- **w/o Audio**(去掉声学分支):在部分设置下亦下降(如 Qwen3-Omni 71.3→65.7),说明副语言线索不可缺。
+- **Naïve RAG**:表现不稳定,在 Voxtral 上显著下降(40.9→30.5)。
+- **LinearRAG(使用本文文本)**:部分指标接近甚至超过完整方法(如 AF-3 的 TraceA V 60.0),说明文本抽取质量有贡献,但整体不如双图结构稳健。
+- 结论:图结构检索、图构造方式与双模态互补均对最终性能有贡献。
+
+## 实现细节要点
+
+- TraceA V-Bench:45s chunk / 5s acoustic unit;MMAU-Pro 与 AudioMarathon:30s chunk / 6s unit。
+- 10 个声学聚类、每个单元连 top-3 最近质心,γ=0.85。
+- Top-K_c:TraceA V 为 15,其余为 8;每 chunk 选 2 个声学单元(K_u=2)。
+
+## 一句话评价
+
+AUDIOHELIX 用“文本+声学”双通道、chunk/unit/concept 三层级的可复用图结构配合 PPR 相关性传播,把长音频 RAG 从孤立的片段匹配升级为跨时距的多跳证据串联,在多个基准与多个 LALM 上稳定超过全音频输入与现有 RAG 基线,是长音频推理 RAG 方向一次扎实且结构清晰的工程化推进。
+
+---
+
+## 6. From prediction error to sparse events: Biologically inspired signed-dyadic coding for Mandarin keyword spotting
+
+**作者**: Zijian Zhou, Rui Liu, Rongxiang Nie, Rui Ma, Ziyao Zhang, Xin Du
+**链接**: [2610.41381](https://arxiv.org/abs/2610.41381)
+**分类**: Spiking Neural Network Keyword Spotting | **关键词**: Predictive coding, Signed-dyadic coding, Event-based encoding, Mandarin keyword spotting, Spiking neural network, Low-power hardware
+
+## 核心痛点
+- 连续脉冲关键词识别（continuous spiking keyword spotting）中，相邻 log-mel 声学帧高度时间相关，但稠密输入接口仍逐帧传输，反复触发 SRAM 访问和下游神经计算；即使隐藏层活动稀疏，输入侧仍产生大量冗余工作。
+- 现有事件编码存在不同取舍：Rate coding 通过时间窗内重复事件表示幅度，TTFS 通过脉冲延迟表示幅度；Delta 类编码依赖参考状态的变化，但若直接作用于已阈值化的隐藏脉冲，可能对上升和下降跳变都产生事件，反而增加流量。
+- 因此，事件码的“放置位置”与编码本身同样重要：应在仍存在时间冗余、尚未显式稀疏的声学输入端进行预测编码，而不是对已经阈值化的隐藏脉冲流再次编码。
+
+## 方法创新
+- 论文提出 **Predictive Signed-Dyadic Coding (PG)**：一种可训练的、有损的事件编码接口。每个输入通道维护局部预测状态，计算当前帧与预测的残差，仅当残差超过学习阈值时发送事件。
+- 预测与残差：设输入为 \(x_{t,a}\)，预测状态为 \(p_{t,a}\)，则 \(\hat{x}_{t,a}=\alpha p_{t,a}\)，残差 \(r_{t,a}=x_{t,a}-\hat{x}_{t,a}\)。可训练参数包括尺度 \(s\)、归一化阈值 \(\tau\) 和预测系数 \(\alpha\)。
+- 事件负载为 **符号 + 有限二进指数（signed-dyadic）**：归一化残差 \(u=|r|/s\)，硬门控为 \(g=1[u\ge\tau]\)；事件携带地址、符号和指数 \(k\)，解码值形如 \(q=g\,\mathrm{sgn}(r)\,s\,2^{-k}\)。接收端仅需定点比较、移位和加减即可重建，无需通用乘法器、浮点指数运算或大查找表。
+- 训练时使用软门控与 straight-through 估计器处理硬门控和指数选择，前向推理使用硬事件表示；padding 帧不更新并保持上一状态。
+- 选择性放置原则：比较三种部署方案 **DIRECT**（每帧稠密编码）、**INPUT-PG**（仅在声学输入处应用 PG）、**ALL-PG**（输入和隐藏边界均应用 PG）。论文认为隐藏层 LIF 脉冲已经过阈值化，再次编码其跳变会引入包、状态和解码开销，因此只在预期节省超过 PG 开销的层使用 PG。
+- 硬件接口：事件包包含地址、有效位、符号和指数；解码器进行符号扩展、移位并累加到预测寄存器。路由实现基于 Sky130HD，Deep-SNN 结构为 40→256→256→128→5，含 LIF 与时间聚合。
+
+## 实验结果
+- 在 Mandarin keyword spotting 的 720 个测试片段上，**INPUT-PG 达到 90.00% 准确率**，同时平均 **SRAM 读取降低 33.87%**，**推理周期降低 32.77%**。
+- 在 Sky130HD 路由评估中，对一个固定硬件片段测得 **增量推理能耗降低 39.49%**（不含权重加载）。论文明确区分软件负载评估（720 片段）与路由能耗评估（一个固定片段）。
+- 学习到的 INPUT-PG 参数在三个随机种子下平均为：Deep-SNN 的 scale/threshold/alpha 约为 (0.2118, 0.2306, 0.8917)，LIF-TCN 约为 (0.2186, 0.2321, 0.8949)；路由实验中冻结为定点常数（如 scale_q15=6863、threshold_q15=7472、alpha_q16=58629）。
+- 能耗核算边界排除模拟前端、ADC、log-mel 提取、封装、片外存储和系统 I/O；resident energy 假设权重已在 SRAM，transported energy 额外计入固定 220,948 字节权重加载。
+
+## 一句话评价
+论文将生物预测处理/感官适应思想转化为可训练、乘法器友好的 signed-dyadic 稀疏事件接口，并通过“只在仍有时间冗余的输入侧做预测编码”的选择性放置原则，在 Mandarin KWS 上同时验证了精度、存储访问、周期和路由能耗收益。
+
+---
+
+## 7. From Transcription to Reformulation: Defining and Benchmarking Grounded Generative Speech Recognition
+
+**作者**: Qing Wang, Qihan Hu, Hang Lv, Yan Yang, Boqing Liu, Xuechao Zhu, Zehan Li, Hongjie Chen, Jian Kang, Jie Li, Yongxiang Li, Lei Xie
+**链接**: [2610.41292](https://arxiv.org/abs/2610.41292)
+**分类**: Speech Recognition | **关键词**: Grounded Generative Speech Recognition, Speech Language Models, Reformulation Hierarchy, Benchmark, LLM-as-a-judge, Speech Grounding
+
+## 核心痛点
+
+传统 ASR 将识别定义为“语音→唯一逐字转写文本”的序列转换问题，评测依赖人工标注的唯一参考文本与 WER / CER 等精确匹配指标。然而随着 Speech Language Models（SLM）的兴起，模型可以输出加标点、逆文本归一化（ITN）、去口语冗余、翻译、会议摘要、结构化信息等**可读、格式化、任务导向**的文本。这些输出虽与字面转写不同，却忠实于语音语义，此时：
+
+- 精确匹配指标会**错误惩罚合理的改写**（如去 disfluency、恢复标点、生成摘要）；
+- 指标**无法衡量生成内容是否真正“接地”（grounded）于输入语音**，即无法识别声学幻觉。
+
+## 方法创新
+
+1. **提出新范式 GSR（Grounded Generative Speech Recognition）**：把语音识别重新定义为“生成由声学输入所支撑（grounded）的、任务特定的文本表示”，而非恢复单一字面转写。
+2. **形式化“接地改写空间”**：R(S) = {Y | G(Y,S) ≥ γ}，其中 G(·,·) 为接地函数，γ 为最低接地阈值；当 G(Y,S) < γ 时即对应幻觉现象。并引入指令 P 与结构化上下文先验 C = {C_conversational, C_environmental, C_meta}，得到任务子空间 R(S,P,C) ⊆ R(S)。特别指出：上下文只改变可用证据，**不提升允许的改写层级**，改写自由度由任务目标决定。
+3. **四级改写能力层级（Reformulation Hierarchy）**：
+   - Level 0 字面转写（Literal Transcription）：R0(S) = {Y | Y ≈ T}；
+   - Level 1 规范化改写（Canonical Reformulation）：标点恢复、分句、大小写、ITN，实体/数值/时间/否定/逻辑关系不变；
+   - Level 2 语义改写（Semantic Reformulation）：去口语冗余、复述、方言规范化、翻译等，语义保持；
+   - Level 3 语音接地结构化（Speech-grounded Structuring）：生成结构化/摘要式表示。
+   层级通过“人类可理解度” H(Y) = Σ w_i M_i（Faithfulness、Coverage、Key Information Preservation、Conciseness、Readability 五维加权）设定阈值 h_l 来参数化，并满足单调扩张关系 R3 ⊂ R2 ⊂ R1 ⊂ R0 ⊆ R(S)。作者强调该层级刻画的是**输出自由度而非任务难度**。
+4. **构建 GSR-Bench**：首个面向生成式语音识别的综合基准，覆盖精炼会议转写、跨方言翻译、上下文感知语音理解、静音/噪声等边界鲁棒性场景。
+5. **多维评测框架**：针对词级指标的局限，结合“语音接地评估”与“LLM-as-a-judge 语义评判”，并通过人类偏好研究验证其可靠性。
+
+## 实验结果与发现
+
+- 评测覆盖从传统 ASR 流水线到端到端 Speech-LLM 的代表性架构。
+- **权衡关系**：面向转写的模型字面准确率高，但难以完成高层级改写；生成式模型可读性与任务适应性更好，却引入新风险。
+- **关键失效模式**：声学幻觉（acoustic hallucination）、无支撑生成（unsupported generation）、指令漂移（instruction drift）。
+- 结论：需要在“接地生成”的更广视角下评测语音系统，兼顾转写保真度、改写能力与接地可靠性。
+
+## 一句话评价
+
+本文把语音识别从“唯一转写匹配”推进到“接地改写生成”，用形式化空间 + 四级层级 + 综合基准与语义判官评测，为 Speech-LLM 时代的识别评测提供了首个系统性框架，并清晰揭示了保真度与生成自由度之间的结构性权衡与典型失效模式。
+
+---
+
+## 8. Incongruence-Aware Evaluation of Multimodal Speech Emotion Recognition in Audio Large Language Models
+
+**作者**: Fengji Jing, Guy Laban
+**链接**: [2610.40883](https://arxiv.org/abs/2610.40883)
+**分类**: Multimodal Speech Emotion Recognition | **关键词**: Speech Emotion Recognition, Audio Large Language Models, Modality Incongruence, Valence-Arousal-Dominance, Robustness Evaluation, Cross-modal Integration
+
+# 论文总结：Incongruence-Aware Evaluation of Multimodal Speech Emotion Recognition in Audio Large Language Models
+
+## 核心痛点
+- 音频大语言模型（audio LLMs）同时处理“说了什么”和“怎么说”，但文本语义与声学韵律并不总是一致；现有评测多关注总体准确率，缺少对跨模态情感不一致这一自然现象的连续、可验证度量。
+- 多模态情感识别文献常默认“增加模态只会带来收益”，但跨模态冲突可能造成系统性错误。若文本单模态对照使用不同模型，会把模型因素与模态因素混淆。
+- 需要区分“跨模态整合失败”与“转写文本本身难读或情感标注噪声”这两种解释。
+
+## 方法创新
+- 统一 VAD 空间：文本 VAD 由 NRC-VAD 词典逐词查表，并对匹配词取元素均值；音频 VAD 由微调 wav2vec2-large 回归得到。完全未被词典覆盖的 utterance 被排除。
+- 跨模态距离转连续不一致分数：在共享 VAD 空间计算文本与音频距离，用二成分高斯混合模型将距离转为无阈值连续概率 p_incon，并以人类判断验证，Spearman r_s = 0.65。
+- 评测设计：在 eNTERFACE’05、MELD、CMU-MOSEI 上评估三个具备音频能力的模型；固定模型比较音频存在与否；控制真实情感标签和特征空间距离；在 eNTERFACE 上跨三个音频 LLM、十二种条件分析。与六个更简单分层指标比较，并做去除情感词典的重建消融。
+- 贡献包括：可复用的不一致评分工具；paradigm dissociation，即生成式音频 LLM 受害而监督判别器不受害甚至受益；跨语料的多模态成本证据；开放基准，包括逐样本 VAD 特征、p_incon 分数、经有效性检查的 LLM 预测、prompt 和分析代码。
+
+## 实验结果
+- 在三个语料中，只要音频存在，p_incon 升高会提高错误几率，且控制 ground-truth emotion 和 feature-space distance 后仍成立。
+- 在相同 VAD 特征上，监督分类器表现相反：不一致若影响则帮助判别模型。作者据此认为，困难可能来自音频 LLM 整合原始证据的方式，而非 VAD 特征几何本身；同时承认无法完全区分监督模型与提示模型之间的类别差异。
+- 纯文本效应不可靠：只替换读取转写文本的模型，就在一个语料上使效应符号反转。因此不一致惩罚更适合解释为双通道冲突的整合成本，而非词汇属性。
+- 不使用情感词典重建分数仍复现核心结果；在六个更简单替代指标中，它是唯一在三个语料都能预测错误的 label-free 分数。
+
+## 一句话评价
+该论文提出并验证了一个连续、可复用的跨模态情感不一致评分，系统证明音频 LLM 在文本与语音情感冲突时更易出错，同时揭示生成式多模态整合与监督判别模型之间的显著范式差异。
+
+---
+
+## 9. TAPE: Learning General Audio Effect Representations
+
+**作者**: Phillip Long, Yongyi Zang, Qihui Yang, Christodoulos Benetatos, Junfei Liu, Randal Leistikow, Julian McAuley, Perry R. Cook
+**链接**: [2610.40759](https://arxiv.org/abs/2610.40759)
+**分类**: Audio Effect Modeling and Style Transfer | **关键词**: audio effects, differentiable DSP, effect representation learning, audio style transfer, real-time audio processing
+
+## 核心痛点
+- 音乐人和混音工程师常能从参考录音中听出效果链，并将其迁移到新素材，但这一过程依赖专业经验。
+- 专业音频处理器种类多、内部实现常不公开，且只能通过处理后的音频间接观察，难以直接建模。
+- 已有神经音频效果模型多针对单一设备或单一效果类型；风格迁移方法要么只对少数处理器做单步参数预测，要么像 ST-ITO 那样对每个样例做昂贵搜索。
+- 目标不仅是匹配音色，还要输出人类可读、可编辑的控制参数，并能以演奏级缓冲区大小实时运行。
+
+## 方法创新
+TAPE 将音频效果迁移建模为“从处理后参考音频提取效果嵌入，再用可微 DSP 链把该处理施加到另一段干声”的问题。
+
+### 1. 问题形式化
+- 设干声为 dry、插件配置为 θ，处理后音频为 wet=F_θ(dry)；模型只观测 (dry, wet) 对和插件身份，不接触 F_θ 本身。
+- 编码器 f 将湿参考 wet_A 映射为嵌入 z=f(wet_A)∈R^256；解码器 g 将 z 描述的处理施加到另一段干声 dry_B：g(dry_B;z)≈wet_B。
+- A 与 B 共享同一插件与设置 θ，但波形内容不同，因此跨内容重建迫使 z 捕捉效果信息而非源内容。
+
+### 2. 效果编码器
+- 使用 48 kHz、80 带 log-mel 前端，接 Conformer，并用可学习 query token 池化为 256 维嵌入。
+- 以 68 个插件身份为标签，使用 additive-margin softmax 训练；加入 VICReg 的方差与协方差项，防止嵌入维度坍缩或相关。
+- 仅使用插件级粗标签，不预测 preset 或干声来源，目的是让编码器区分处理器，把更细的设置信息留给解码器从 z 中读取。编码器训练后冻结。
+
+### 3. 可解释可微 DSP 解码器
+- 解码器不是黑盒生成器，而是由 5 个可微 DSP 模块组成的因子化链：均衡、压缩、波形整形、残差音色网络、混响。
+- 每个模块通过小型 head p_m(z) 从嵌入预测物理可读参数，例如五段滤波器增益/截止频率/Q、压缩器阈值/比率/攻击/释放、波形整形驱动/偏置/曲线/混合、分频带 RT60，以及模块门控。
+- 一次前向传播即可输出可检查、可编辑的参数，无需逐样例搜索。
+- 训练流程包括：先用插件分类塑造嵌入空间，再冻结编码器训练解码器，最后用对抗式微调提升感知相似度。
+
+### 4. 因果实时化
+- 模块不含学习式自回归循环，因此可做小每缓冲区开销的因果近似。
+- 作者用 C++ 实现训练后权重，在模拟宿主回调中以 128 样本缓冲区流式运行。
+
+## 实验结果
+- 在 68 个处理器、8 个效果家族的嵌入上，t-SNE 显示同家族处理器在无家族标签监督下形成邻近簇，说明嵌入捕获了效果家族结构。
+- 插件分类：八层编码器在留出湿声片段上达到 72.5% top-1 插件准确率；六层编码器达到 78.7%，更深堆叠和更细标签反而降低准确率；插件级监督下配置准确率接近零。
+- 与 DeepAFx-ST 及近似 ST-ITO 链的逐样例搜索相比，TAPE 取得更低频谱误差；搜索在多数样例上更接近参考音频的效果嵌入，但离配对目标更远。TAPE 比该搜索快 275×。
+- 对抗式微调后，在两套不相交的音频对上，所有听者都认为其迁移效果优于仅重建版本。
+- 实时性：单 CPU 核心上处理 128 样本缓冲区达到实时的 1.8×，无错过截止时间。
+
+## 局限
+- TAPE 只能驱动自身近似 68 个处理器的 DSP 链，不能直接控制用户已有的插件。
+- 当前链不含调制阶段，对复杂效果链的覆盖仍有限。
+- 编码器只用插件身份监督，配置/预设信息提取程度尚未被充分评估；方法也未显式强制源内容不变性。
+
+## 一句话评价
+TAPE 将效果识别式编码器与可解释、可微、可实时的 DSP 解码链结合，在无需逐样例搜索的情况下实现跨内容音频效果迁移，并兼顾可编辑参数与因果流式处理，是音频效果表示学习走向实用化的重要尝试。
+
+---
+
+## 10. Apriel Voice 27B Preview: An Open Model for Speech, Reasoning, and Tool Use
+
+**作者**: Aman Tiwari, Akshay Kalkunte, Akintunde Oladipo, Jash Shah, Tara Bogavelli, Hoang Nguyen, Nishanth Madhusudhan, Vishal Juneja, Sridhar Nemala, Srinivas Sunkara, Sathwik Tejaswi Madhusudhan, Shruthan Radhakrishna, Masoud Hashemi, Kelechi Ogueji, Khalil Slimi, Saloni Mittal, Pulkit Pattnaik, Shashank Maiya, Dhruv Jhamb, Esakkivel Esakkiraja, Katrina Stankiewicz, Gabrielle Gauthier Melançon, Fanny Riols, Amit Saha, Lakshmi Sirisha Chodisetty, Nitin Aggarwal, Anil Madamala, Sagar Davasam, Segan Subramanian, Vikas Yadav, Sai Rajeswar Mudumba
+**链接**: [2610.40738](https://arxiv.org/abs/2610.40738)
+**分类**: Speech-Language Models | **关键词**: Speech-Language Model, Voice Agent, Online Distillation, Tool Use, Mixture-of-Experts, Speech Conditioning
+
+# 核心痛点
+- 语音助手不能只完成语音识别或转录，还需要理解请求、基于上下文推理、维持多轮对话、调用工具并解释工具返回结果。
+- 传统三段式 ASR+LLM+TTS 或后端委派架构把语音理解、推理、工具使用拆到不同组件；语音识别准确不等于任务可完成，文本能力强也不保证音频输入下推理可靠。
+- 关键问题是如何把语音接口接入已训练好的强解码器，同时尽量保留文本、图像输入能力和工具调用行为。
+
+# 方法创新
+- Apriel Voice 27B Preview 基于 post-trained Gemma 4 26B-A4B 检查点，属于 MoE 主干，约 26B 总参数、约 4B 激活参数/token；保留文本和图像接口，新增连续语音接口，由同一推理主干生成回复或工具调用。语音合成器外置且可替换。
+- 语音前端使用冻结的 Whisper large-v3-turbo 编码器输出 1280 维声学特征；学习投影器约 47.7M 参数，采用 8 帧堆叠、RMSNorm、SwiGLU 和线性映射到 2816 维解码器空间；投影特征替换保留音频位置，支持多音频段与文本交错；推理不先产生转写文本。
+- 两阶段训练：Stage 1 冻结语音编码器和语言主干，仅训练投影器，通过多语种转写、翻译和续写建立语音接口；Stage 2 联合更新投影器、语言主干和 MoE 路由器，使用语音任务、自动构建的语音条件对话、工具交互和文本回放。监督信号包括源相关交叉熵 CE 和对冻结原始主干的 forward KL 在线蒸馏，教师模型仅训练时使用。
+- 数据与效率创新：自动把内部生成的任务对话转换为语音条件样本，包括自动跨度选择、每段对话内一致参考音色和转换保真检查；采用本地教师服务、教师与学生计算重叠、融合全词表 CE/FKL 损失和协调 checkpoint，以支撑在线蒸馏。文本批次通过零值依赖保持投影器在分布式计算图中；原始视觉塔和桥接保持冻结。
+
+# 实验结果
+- thinking mode 下：Big Bench Audio 98.90；Speech-BFCL 81.13；τ-Voice 平均任务成功率 65.51%；平均延迟 1.91 秒。
+- 英文 EVA accuracy 为 51.27%，experience pass@1 为 74.13%。
+- 通过自定义平台和 Apriel Live 提供交互式语音体验。评估覆盖语音、文本、图像、多语翻译、服务交互和企业工作流；语音基准汇总见论文表 5，但片段未给出完整表格。
+
+# 一句话评价
+- 该工作提出以共享 MoE 推理主干为核心、用轻量语音投影器和两阶段在线蒸馏接入语音接口的开放语音代理路线，在语音推理与工具调用基准上表现突出，但完整实验细节和更广泛泛化仍需结合全文验证。
+
+---
+
+## 11. JYVA at BeTraC: Audio-Based Medical Note Generation with SOAP Section-Specific Queries
+
+**作者**: Youness Dkhissi (LIUM), Valentin Vielzeuf, Antoine Caubrière, Jean-Emile Dartois (IRT b-com)
+**链接**: [2610.40695](https://arxiv.org/abs/2610.40695)
+**分类**: Medical Speech Summarization / SpeechLLM | **关键词**: SOAP note generation, SpeechLLM, Q-Former, medical dialogue summarization, hallucination, section-aware queries
+
+# JYVA at BeTraC: 基于 SOAP 小节特定查询的音频医疗笔记生成
+
+## 核心痛点
+
+1. **幻觉问题严重**：LLM 在摘要任务中仍易生成无输入支撑、与输入不一致或事实错误的内容；在语音对话摘要中尤为突出，因为语音缺乏结构、含有犹豫/重复/断句等不流畅现象，增加内容选择与忠实生成的难度。
+2. **医疗场景容错极低**：SOAP 笔记（Subjective、Objective、Assessment、Plan）对可靠性与事实准确性要求极高；且医疗笔记中的合理临床抽象/改写常被表面匹配指标误判，评价本身也很困难。
+3. **直接套用通用 SpeechLLM 不适配长医疗对话**：长对话会产生大量音频 token，其中许多与任务无关，全部送入 thinker 会增加幻觉与重复内容的风险。
+4. **不应把 SOAP 生成当作通用自由形式摘要**：SOAP 笔记有预定义小节结构，每个小节需要不同类型的证据，因此应显式建模该结构以改善信息选择与事实忠实度。
+
+## 方法创新
+
+**整体架构**：基于 Qwen2.5-Omni-3B，移除视觉编码器与 TTS 模块，仅保留 speech tower（冻结）、音频投影模块与 decoder-only 的 thinker。核心是引入任务特定的 **Q-Former 适配器**，从语音嵌入中抽取紧凑的临床相关表示。
+
+**两阶段训练**：
+
+- **Stage 1：Q-Former 预训练**
+  - 移除原生 Qwen 音频投影器，替换为可训练 Q-Former；speech tower 冻结。
+  - Q-Former 通过 cross-attention 接收语音嵌入，输出 96 个可学习查询：**32 个 Subjective 查询 + 32 个 Objective 查询 + 32 个 Assessment-and-Plan 查询**，即“小节特定查询”，形成面向 SOAP 结构的归纳偏置。
+  - 与 thinker 上的 LoRA 适配器联合训练；主目标为生成 SOAP 笔记；额外加入**医疗概念生成目标**（概念由官方开放医疗匹配器从 ground-truth SOAP 笔记中抽取），以保留长对话中的事实性临床信息；并加入**小节特定辅助损失**——每组查询对应其 SOAP 小节的损失（L_S、L_O、L_AP）。
+  - 训练目标：L_SOAP + L_concept + 各小节辅助损失。
+- **Stage 2：thinker 最终微调**
+  - 恢复原生 Qwen 音频投影器，将 Stage 1 预训练的 Q-Former 冻结并入完整系统，丢弃 Stage 1 的 LoRA，重新为 thinker 训练一个新的 LoRA；speech tower、原生音频投影器、Q-Former 均冻结。
+  - thinker 同时接收两路互补音频信息：①冻结 Q-Former 产生的 96 个任务特化临床 token 组成的紧凑音频前缀；②原生 Qwen 音频通路投影后的语音嵌入。**Q-Former token 拼接在原生音频 token 之前**作为临床前缀。
+  - 本阶段唯一训练目标为生成完整 SOAP 笔记；不使用说话人分离或显式说话人角色掩码，全流程端到端训练。
+
+**推理与后处理**：beam search（16 beams）、最大 512 新 token、长度惩罚 1.0、重复惩罚 1.2、no-repeat 5-gram 阻断以抑制退化重复；再用确定性脚本标准化输出（去除特殊 token、首个 Subjective 之前的文本，规范化小节标题/子标签/常见医学术语，去重与去除客套话）。
+
+**实现细节**：Q-Former 96 查询、2 层、8 注意力头、dropout 0.1；LoRA rank 16、α=32；单张 Nvidia H100、梯度检查点、batch size 1、梯度累积 8、cosine 学习率衰减、5% warmup、6 epochs；LoRA 学习率 5e-5，Stage 1 Q-Former 学习率 1e-4；按最佳验证损失选模。
+
+## 实验结果
+
+- **官方排名**：BeTraC lightweight track 第 4 名；官方 SynthDoPaCo 测试集 **Concept F1 = 0.5005**，远超基线（0.245），接近最优系统（0.543）。
+- **多测试集一致性**：Official 0.501 / Mock 0.455 / Realistic 0.425 / All 0.486；均显著高于基线（0.245/0.254/0.244/0.248）。Realistic 子集下降最大，可能反映对人类语音鲁棒性较弱，也可能因该子集仅含 3 段对话。
+- **LLM-as-a-judge**：在简洁性与结构上低于顶级系统，但在忠实度与覆盖度上更接近；**幻觉表现属挑战中最佳之一**。
+- **渐进式消融（Concept F1 与幻觉指标）**：
+  - Baseline：C-F1 0.26，Struct 47%，Claims 9.7%，Nums 15.0%，Rep 13.0%，Hallu 26.5%
+  - +解码约束：0.28，Struct 98.5%，Rep 0.0%，但 Nums 恶化至 60.0%、Hallu 60.5% → 说明解码约束只改善输出形式，不改善事实可靠性
+  - +微调基线：0.47，Struct 100%，Claims 1.3%，Nums 15.5%，Hallu 15.5%
+  - **+本文系统：0.51，Struct 99.8%，Claims 0.4%，Nums 7.5%，Rep 0.0%，Hallu 7.5%** → 同时提升事实可靠性与任务性能
+- **鲁棒性**：在含 >2 分钟连续非语音内容的对话与 9 段退化语音子集上，微调基线 C-F1 从 0.47 降至 0.31，而本文系统仅从 0.51 降至 0.48，稳定性明显更好。
+- **最难样本**：在微调基线最差 5% 对话上改进一致；整体在 77.5% 的验证集对话上优于该基线，说明增益主要来自困难对话。
+
+## 一句话评价
+
+本文用“SOAP 小节特定 Q-Former 查询 + 概念与分节辅助损失”的两阶段轻量适配，在不改冻结语音编码器的前提下把结构先验注入 SpeechLLM，用很小的参数代价同时换来更高的 Concept F1 与显著更低的幻觉率，是医疗语音笔记生成中“结构化归纳偏置提升忠实度”的一个简洁而有效的实证。
+
+---
+
