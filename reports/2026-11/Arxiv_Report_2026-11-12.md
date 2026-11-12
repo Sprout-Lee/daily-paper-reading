@@ -1,0 +1,423 @@
+# Arxiv Daily Deep Report - 2026-11-12
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 11
+---
+
+## 1. ESDCodec: Ultra-Low Bitrate Speech Codec with Enhanced Semantic Disentanglement and Subband Decoding
+
+**作者**: Nan Xu, Kecan Mao, Xin Gu, Yi Zhao, Zhi Gong
+**链接**: [2611.14043](https://arxiv.org/abs/2611.14043)
+**分类**: Neural Speech Codec | **关键词**: Ultra-low bitrate speech codec, Semantic disentanglement, Subband-aware decoding, Frozen codebook, Dual-stream quantization, Speech language models
+
+## 基本信息
+- 论文：ESDCodec: Ultra-Low Bitrate Speech Codec with Enhanced Semantic Disentanglement and Subband Decoding
+- 机构：WeChat, Tencent Inc.
+- 任务：超低码率神经语音编解码，兼顾高质量重建与面向 SLM 的离散 token 建模。
+
+## 核心痛点
+- 低码率与高保真重建存在固有权衡；当码率降至约 1 kbps 时，RVQ 类编解码器重建性能明显恶化。
+- Single-Codec、WavTokenizer 等单码本方案虽降低码率，但缺少显式语义建模，语义感知应用效果受限。
+- 传统声学 token 与语义 token 存在语义内容不对齐问题，导致与语音语言模型（SLM）的兼容性不足。
+- 现有双流编解码器虽能解耦语义与声学信息，但如何在超低码率下统一语义-声学建模与高质量重建仍是开放挑战。
+
+## 方法创新
+1. 双流量化框架：编码器将 24 kHz 波形经 960 倍时间压缩映射到 25 Hz 帧级隐空间；语义支路仅生成单个语义 token q0，声学支路用 RVQ 渐进编码补充声学细节，从而显著降低码率。
+2. 增强语义量化器：采用随机初始化且冻结的基矩阵 S 与可学习线性投影 W 重参数化码本，C=S×W，仅更新 W；通过最近邻查表量化，缓解码本坍缩并提升码本利用率。语义量化器使用 16384 大小、1024 维冻结码本和 1024 维轻量投影器，并在量化后接 ConvNeXt 模块，结合 w2v-BERT-2.0 与 ConvNeXt 特征的 SSL 蒸馏损失增强语义判别力。
+3. 子带感知解码：在解码器上采样过程中引入轻量条件网络（仅增加 9.6M 参数），用 ConvNeXt 预测子带信号的幅度与相位，经逆 STFT 得到子带波形，并将子带先验通过下采样层注入各上采样阶段，为波形重建提供细粒度频谱指导。
+4. 训练目标：联合对抗损失、特征匹配损失、全带/子带多尺度 Mel 重建损失、条件网络 STFT 损失、SSL 蒸馏损失以及语义/声学双流的 VQ codebook/commitment 损失。
+5. 实现细节：声学 RVQ 使用 11 层、码本大小 1024、维度 8；条件网络使用 6 个 ConvNeXt block，FFT/窗/帧移为 960/960/240；训练使用 Emilia 约 97,000 小时英中双语数据，LibriSpeech test-clean 作为域外测试集。
+
+## 实验结果
+- 在 LibriSpeech test-clean、约 0.85 kbps 超低码率下，ESDCodec 达到 25 Hz、75 tok/s，参数量 89.78M。
+- 关键指标：PESQ 2.49、STOI 0.921、V/UV F1 0.936、Pitch 误差 33.86、ViSQOL 2.74、WER 4.18、MUSHRA 88.2。
+- 与同码率 DualCodec（PESQ 2.32、STOI 0.912、V/UV F1 0.929、Pitch 38.76、ViSQOL 2.61、WER 4.70、MUSHRA 85.8）相比，ESDCodec 在大多数客观与主观指标上更优，且参数量更低。
+- WER 4.18 优于 DualCodec 的 4.70，但略高于 1.0 kbps X-Codec 的 3.75；后者码率更高。
+- 论文还报告在基于 LLM 的语音生成任务中，ESDCodec 持续优于现有 codec 模型；代码与预训练模型已开源。
+
+## 一句话评价
+ESDCodec 通过冻结码本语义量化与子带条件解码，在 0.85 kbps 超低码率下实现了语义/声学双流解耦的高质量语音编解码，并提升了与语音语言模型的兼容性。
+
+---
+
+## 2. Passive ladder-network representation of the radiation impedance of a spherical cap on a rigid sphere
+
+**作者**: Ronald M. Aarts
+**链接**: [2611.14016](https://arxiv.org/abs/2611.14016)
+**分类**: Electroacoustics / Loudspeaker Modeling (Acoustic Radiation Impedance Network Synthesis) | **关键词**: radiation impedance, spherical cap on a rigid sphere, Cauer ladder network, passive network synthesis, continued fraction expansion, spherical harmonics / Legendre modes, loudspeaker closed-box model, baffled piston, residual mass truncation
+
+## 论文总结：刚性球上球冠辐射阻抗的无源梯形网络表示
+
+### 核心痛点
+- 传统扬声器辐射负载建模采用**无限障板中的刚性圆活塞**，其辐射阻抗虽有 Bessel/Struve 函数闭式解，但几何上并不符合闭箱扬声器的真实情形（背面为有限箱体、辐射进入 4π 空间）。
+- **刚性球上轴向运动球冠**是更真实的闭箱模型（其指向性、障板阶跃、声功率与真实扬声器吻合更好），但其辐射阻抗缺少适合**集总参数（lumped-element）电路设计**的表示。
+- 已有工作的不足：Bellows & Leishman 只把低频极限归约为一个外部末端修正（即单个质量）；Hélie & Rodet 用低阶参数化模型对均匀脉动球冠做拟合，并检验稳定性，只适用于实时仿真；Kjerbye Nielsen 只给出会议摘要，没有网络细节。集总参数设计需要的是：**无源（时域仿真稳定）、在给定带宽内精确、而非仅低频准确**的电路。
+
+### 方法创新
+论文提出对球冠辐射阻抗的**逐模态精确网络实现**，共三步：
+
+1. **每个球谐模态的精确有限 Cauer 梯形网络**
+   - 模态比阻抗：`Z_n = -jρc·h_n^(2)(kR)/h_n^(2)'(kR) = ρc·s·q_n(s)/[(s+n+1)q_n(s) - s·q_n'(s)]`，其中 `s = jkR`，`q_n` 为反 Bessel 多项式。
+   - 因为 `Z_n/ρc` 是**正实有理函数**，对导纳和阻抗交替在 `s=0` 处移极点（Cauer 第二型），得到以 `ρc` 终结的**高通梯形网络**。
+   - 利用 Hankel 函数递推 `h_{m-1}^(2) + h_{m+1}^(2) = (2m+1)h_m^(2)/ξ`（与 Chu 的电磁球模态电路综合完全平行），得到部分分母 `(n+1)/s, (2n-1)/s, (2n-3)/s, …, 1/s`，由 1 闭合。
+   - 元件值闭式、正、与频率无关：`M0 = ρR/(n+1)`，`C1 = R/((2n-1)ρc²)`，`M2 = ρR/(2n-3)`，`C3 = R/((2n-5)ρc²)`，…，共 `n+1` 个储能元件（并联质量、串联柔顺），末端接 `ρc`。
+   - 正系数保证**无源性**；对 `n≤8` 符号验证、`n≤30` 数值验证（相对误差 < 1e-14）。
+
+2. **通过无源理想变压器耦合各模态**
+   - 球冠 `0≤θ≤θ0` 沿轴向以 `v0·f(θ)` 运动，法向速度为 `W(θ)=v0·f(θ)cosθ`（球冠外为零）。
+   - 机械辐射阻抗按 Legendre 正交性解耦：`Z_m = F/v0 = Σ_n w_n Z_n`，`w_n = 4πR²/(2n+1)·|W_n/v0|² ≥ 0`。
+   - 每个 `w_n` 由一个**匝比 1:√w_n 的理想变压器**实现（无源），在机械端口 `(F, v0)` 处串联；等效面积 `A_f` 定义声阻抗 `Z_A = Z_m/A_f²`，刚性球冠 `A_f = S_d = πR²sin²θ0`（投影面积）。
+   - 刚性球冠的 Legendre 系数有闭式：`W_n/v0 = ½[(n+1)I_{n+1} + n·I_{n-1}]`，`I_0 = 1-x0`，`I_l = (P_{l-1}(x0) - P_{l+1}(x0))/(2l+1)`。
+   - 物理解读：模态 0 对应单极子（闭箱低频 4π 辐射）；模态 1 携带前后不对称（障板阶跃，`kR≈1–2`）；高阶模态表征球冠边缘的速度不连续，主要是夹带质量，在 `kR≈n` 附近才开始辐射。
+
+3. **残余质量闭合截断级数**
+   - 保留 `0…N` 阶模态精确；由于 `Z_n ≈ jωρR/(n+1)`（当 `n≫kR`），其余模态合并为串联在机械端口的**单个质量** `M_res = ρR·Σ_{n>N} w_n/(n+1)`。
+   - 总低频辐射质量 `M_r = ρR·Σ_{n≥0} w_n/(n+1)`；对径向脉动球冠可化为 `M_r/S_c² = ρl_+/S_c`（与 Bellows 的外部末端修正一致）。
+   - 网络对任意 `N` 都保持**无源**，截断网络在由 `N` 决定的带宽内逼近完整解。
+
+### 实验结果
+- 参数设置：`θ0 = π/8`，`R = 8.2 cm`；等效于 3.2 cm 驱动器的曲面面积，投影半径 `a_d = 3.14 cm`。
+- **验证**：式 (4) 的实部复现 Ref. 6 的声功率级数（Wronskian 给出 `Re Z_n = ρc/[(kR)²|h_n^(2)'(kR)|²]`）；`N=30` + 残余质量的梯形网络在 `kR≤20`、`θ0∈{5π/32, π/8, π/10}` 下相对误差 < 1e-9。
+- **小球冠极限**：固定 `ka_d`，`θ0→0` 时应收敛到障板活塞；`ka_d = 0.5, 1, 2` 时相对差为 12%/10%/10%（`θ0=π/16`）、6.2%/5.3%/4.9%（`π/32`）、3.2%/2.7%/2.5%（`π/64`），随 `θ0` 线性下降。
+- **收敛性**：误差在 `kR=5` 处最大；`N=5` 无 `M_res` 误差 17%，加 `M_res` 降至 5.8%；`N=10` 为 3.6% 与 0.2%；`kR≤1` 时 `N=5`+`M_res` 精度优于 0.1%。经验准则 **`N ≳ kR_max + 5`**；`N` 过小（如 `N=2`）时残余质量会高估电抗。
+- **与障板活塞的三点关键差异**（相同投影面积、Stenzel 型速度剖面 `K=0…3` 对比）：
+  1. 低频辐射阻**恰为同体积速度活塞的一半**（`ρck²/4π` 对 `ρck²/2π`），即 3 dB 差异（对应轴上 6 dB 障板阶跃），直接影响效率与灵敏度。
+  2. 低频辐射质量仅为活塞（`8/3·ρa_d³`，`K=0`）的 **0.758 倍**；对 `K=1,2,3` 分别为 0.783、0.801、0.813 倍。
+  3. **基本没有电阻过冲**：`K=0` 时峰值 0.964，高频极限 0.962，而活塞峰值达 1.13；高频电阻趋于 `2(1-x0³)/(3sin²θ0) = 0.962`（因 `v0cosθ` 作用在比 `S_d` 更大的曲面上）。
+
+### 一句话评价
+该文把一个看似只能数值求解的球冠辐射阻抗问题，转化为**逐模态精确、元件值闭式、严格无源**的有限梯形网络 + 理想变压器 + 残余质量的电路模型，为闭箱扬声器的集总参数/时域仿真提供了可直接落地的严格替代模型；其与 Chu 电磁球模态电路综合的类比尤为优雅。
+
+---
+
+## 3. DialInstruct-TTS: Interactive Expressive Speech Generation via Multi-Turn Dialogue with Fine-Grained Temporal Control
+
+**作者**: Wangzixi Zhou, Bagus Tris Atmaja, Sakriani Sakti
+**链接**: [2611.13875](https://arxiv.org/abs/2611.13875)
+**分类**: Instruction-based Expressive Text-to-Speech | **关键词**: Multi-turn TTS, Expressive Speech Generation, Temporal Control, Dialogue-based Speech Editing, Non-target Preservation
+
+## 核心痛点
+现有基于自然语言指令的 TTS 系统大多只支持 **one-shot、utterance-level** 控制：一条指令决定整句的说话风格；即使只想微调某个短片段或某个属性，用户也必须重写完整指令并重新生成整句。这种交互方式不适合细粒度、迭代式的语音精修，因为全句重生成可能破坏已经满意的区域。真实配音/导演式交互通常是迭代的：用户会基于上一版结果说“这一段更生气”“同一段弱一点”“只改这里，其他保留”。
+
+## 方法创新
+论文提出 **DialInstruct-TTS**，一个面向多轮对话式表达性语音生成与精修的框架，核心包括：
+- **Qwen-based Dialogue Revision Planner**：本地部署 Qwen3-8B，不更新参数；每轮整合对话历史、上一轮控制状态和最新用户反馈，解析上下文相关/相对指令，生成 resolved global caption、delta plan 和更新后的完整 **TemporalPlan**。支持添加、增强、减弱、保留、替换、移除控制等修订操作，避免用户重复陈述完整控制规格。
+- **Temporal Acoustic Control Module**：在基本冻结的 flow-matching TTS 骨干 Irodori-TTS 上实现 span-level 控制，覆盖 **emotion、speaking rate、volume、phonation**。通过 frame-local cross-attention adapter 将 TemporalPlan 语义绑定到目标帧，并通过属性特定控制器分别实现情感、语速、音量和气声修改。
+- **Reference-latent revision**：目标区域和过渡区域按当前指令更新，非目标区域保留上一轮声学实现，从而实现“只改被请求的属性或时间片段，保留已满意语音”。
+- **参数高效适配**：RF-DiT 骨干和 DAC-VAE 解码器保持冻结，仅训练新增模块；训练时使用 MFA 对齐将目标文本 span 映射到声学 latent 时间线，并构造 target/transition/non-target masks。
+
+## 技术细节
+TemporalPlan 中每个控制项被编码为 control token，包含控制类型、值、强度、应用类型和目标文本范围等信息。Temporal Localization 使用 MFA 对齐得到目标、过渡和非目标 mask，并为每个声学帧构造文本、token 内相对位置、span 内相对位置、语速类别和时长比例等条件。控制残差通过 Control Cross-Attention Adapter 和 Attribute Controller 聚合后注入冻结 RF-DiT 的后期 block。情感分支采用 Temporal Emotion ControlNet 生成全局-局部-全局的帧级轨迹；语速控制器同时影响时长预测和声学生成，并在推理时重映射 mask、位置特征和 reference latent；音量控制器将 dB 增益转为连续条件并限制目标区域外能量变化；气声控制器使用独立 whisper 分支建模气声音质，而不是简单能量衰减。
+
+## 实验结果
+根据摘要和引言，主观评价显示 DialInstruct-TTS 在 **全局指令遵循、局部风格准确实现、非目标区域保持** 方面均有改善；与传统需要完整重述指令并重生成整句的 one-shot 交互相比，显著提升了感知便利性和交互舒适度。用户研究还表明，在迭代精修场景中用户明显更偏好该方法。由于提供的论文片段被截断，未包含具体数值结果、完整实验设置和消融细节。
+
+## 一句话评价
+DialInstruct-TTS 将表达性 TTS 从“一次性整句生成”推进到“多轮对话式、细粒度时间可控、非目标保持”的交互范式，方法设计有较强问题针对性，但当前片段尚未给出完整客观指标与实验细节。
+
+---
+
+## 4. Walrus Technical Report
+
+**作者**: Alkis Koudounas, Osamu Take, Hayato Futami, Quentin Jodelet, Emiru Tsunoo
+**链接**: [2611.13689](https://arxiv.org/abs/2611.13689)
+**分类**: Speech Language Models (Unified Speech-Audio Foundation Models) | **关键词**: SpeechLLM, data-centric training recipe, three-stage data curriculum, task-aware data weighting, code-switching ASR, multi-talker ASR, speech-to-speech translation, discrete speech tokens, VQ tokenizer, Vocos vocoder, audio understanding, multilingual
+
+## 论文信息
+- **标题**: Walrus Technical Report
+- **机构**: Sony Group Corporation, Speech & Language AI Lab (Tokyo, Japan)
+- **作者**: Alkis Koudounas, Osamu Take, Hayato Futami, Quentin Jodelet, Emiru Tsunoo
+- **arXiv**: 2611.13689v1 [eess.AS], 10 Nov 2026
+- **项目页**: github.com/sony-speech/walrus
+
+## 核心痛点
+1. **真实应用天然是多任务的**: 会议助手需要转写重叠说话人，并标注谁说了什么；配音系统需要翻译语音，再用自然音色合成回放；媒体平台需要转写嘈杂娱乐音频，并描述其中的音乐与音效；此外还需识别情绪、回答音频相关问题、处理句中语码转换。每条任务单训一个模型成本高，级联流水线还会逐级传播错误。
+2. **现有 SpeechLLM 研究过度集中于“堆参数/改架构”**: 模型缩放与架构重设计被大量研究，但**数据如何清洗、混合、按任务调度**几乎无人系统报告。
+3. **最难的场景本质是数据问题**: 语码转换语音、重叠说话人、娱乐音频、需要推理的音频问答在公开语料中极为稀少。
+4. **任务间 token 预算严重失衡**: 朴素混合数据会让长生成输出（如 TTS）主导损失，削弱核心识别能力，并造成灾难性遗忘。
+
+## 方法创新
+### 核心主张
+**不提出新架构，而是把全部设计精力投入数据工程**：骨干网络固定，从而使性能增益可归因于数据配方。
+
+### 架构（刻意保持简单）
+- **骨干**: 从 **Gemma 4 E4B** 初始化（decoder-only Transformer，约 4B 有效参数、含 embedding 共约 8B），保持架构不变并全参数微调，使用 SDPA；单套权重服务所有任务，通过自然语言 prompt 选择任务。
+- **语音输入**: 沿用 Gemma 4 E4B 设计，**USM encoder** 将语音编码为连续表示后与文本 prompt 一起送入 decoder；微调时**解冻 encoder** 以适配自有音频域。
+- **语音输出（TTS/S2ST）**: 自回归预测离散语音 token，词表扩展 8192 个专用 speech token。
+- **语音 VQ tokenizer**: 单层 VQ，重建 **W2v-BERT 2.0 第 20 层**自监督特征（实证最能捕捉语义内容）；strided conv 将帧率 50Hz→25Hz；3 层 Conformer 编码；512 维空间、8192 码本单码本量化；对称 Conformer 解码器；VQ-VAE 目标（余弦重建损失 + commitment 损失）。最终 **25 token/s × 13 bit = 325 bps** 极低码率。
+- **Vocoder**: GAN 式、单步非自回归；基于 **UniCATS (CTX-vec2wav)** 但生成器换成 **Vocos** 提升音质；VQ token 先经 VQ decoder 还原为连续特征，再由 Vocos 转波形。**以源语音为条件**（W2v-BERT 2.0 第 8 层特征，低层更强编码说话人身份），实现音色与韵律迁移，并降低对“源-目标录音说话人/韵律匹配”的数据要求。训练损失含多周期/多带判别器、mel 谱损失、feature-matching 损失、多分辨率谱损失。
+
+### 数据配方（主要贡献）
+1. **三阶段数据课程 (three-stage data curriculum)**: 从广覆盖多语数据 → 多说话人、语码转换 → 领域特定数据；每阶段在稳定基础上叠加新数据与新任务。
+2. **任务感知 + 数据集感知加权 (task-aware & dataset-aware weighting)**: 平衡 token 预算差异巨大的任务，并在学习更难任务时保护核心技能不被遗忘。
+3. **两个变体**: **Commercial-Ready (CR)** 仅用商业可用数据训练；**Research (R)** 使用完整课程以追求最佳整体质量。
+4. **难任务数据管线**: 合成语码转换、多说话人混合、娱乐语音、对话上下文、closed captioning、音频推理。
+5. **规模**: 超过 **6 亿样本**、**20+ 任务**、**100+ 语言**；训练/推理时每个样本的 prompt 从任务专属模板池中采样，提升对措辞的鲁棒性。
+
+### 支持的任务族
+- **识别**: ASR、Context-ASR（用前文语境）、Keyword-ASR（关键词偏置）、Timestamp-ASR（词/段级时间戳）、CS-ASR（句中双语混说，按各自语言音系转写）、MT-ASR（最多 4 说话人、含重叠语音、带说话人归属、target-speaker ASR）、Diarization。
+- **翻译**: MT、AST（直接/级联）、S2ST（直接/级联）。
+- **生成**: TTS。
+- **理解**: Audio Captioning、Closed Captioning、Audio QA、Timestamp-QA、Audio Reasoning、Instruction Following、SER。
+- **语言覆盖**: ASR 100+ 语言；CS-ASR 支持英-日，以及英/日与中、法、德、印地、意、西混合（主/次脚本均可）；MT-ASR 支持中英法德意日西的 2/3/4 人混合；AST/S2ST 支持 10 种语言（其中一种是英语或日语）双向翻译；closed captioning 支持中英法德意日西。
+
+## 实验结果
+| 基准 | Walrus | 对比系统 |
+|---|---|---|
+| VoxPopuli 多语 ASR | **92.2% 词准确率 (7.8 WER)** | Gemma 4: 88.2% (11.8 WER) |
+| FLEURS 多语 ASR | **94.7%** | Qwen3-Omni-30B: 93.8%；Whisper Large-v3: 92.0% |
+| CS-FLEURS 语码转换 | **92.8% 字准确率 (7.23 CER)** | Gemma 4: 67.7% (32.30 CER)；Qwen3-Omni: 61.3% |
+| LibriMix clean 2-mix 多说话人 | **19.32 cpWER** | Qwen3-Omni-30B: 37.04；VibeVoice-ASR: 59.34 |
+| Japanese Daily Talk | **56.29 cpCER** | VibeVoice-ASR: 71.99 |
+| CVSS-C X→En S2ST | **43.63 ASR-BLEU** | Qwen3-Omni-30B: 41.27 |
+| FLEURS X→En / En→X S2ST | 32.28 / 22.94 | Qwen3-Omni-30B: 33.60 / 25.67（但 Walrus 在说话人相似度、韵律与情感保持上更优，优于 SeamlessM4T v2） |
+| MMSU 音频理解 | **64.1%** | Audio-Flamingo-3: 61.4%；Qwen2.5-Omni: 60.6% |
+| MMAU-Pro | **71.92%** | Gemini-Flash-3.7: 70.40%；GPT-4o-Audio: 52.50% |
+
+- **规模效率**: 在多数基准上追平甚至超越 4 倍大的 Qwen3-Omni-30B。
+- **CR → R 变体**: 所有基准一致提升，语码转换 CER 降 19 点，内部娱乐数据 WER 降 9 点。
+- **可比开源 SpeechLLM 完全无法处理重叠说话人**（无法产生有效输出）。
+
+## 一句话评价
+Walrus 用“固定 8B 骨干 + 三阶段数据课程 + 任务/数据集感知加权 + 325 bps 离散语音 token”的组合证明：**在多任务语音音频建模中，数据工程而非架构创新才是质量的首要驱动力**，并在多语种、多说话人、语码转换 ASR、语音翻译与音频理解上给出了 SOTA 级证据。
+
+---
+
+## 5. Emilia2: A Large-Scale Dataset for Controllable Long-Form Speech Generation
+
+**作者**: Qinke Ni, Dekun Chen, Junwen Qiu, Huan Liao, Xu Li, Xingwen Han, Wan Lin, Kunyu Feng, Yuxiang Wang, Yusheng Mu, Chaoren Wang, Yingda Shen, Mingjie Chen, Haolong Zheng, Xulin Fan, Mark A. Hasegawa-Johnson, Zhizheng Wu
+**链接**: [2611.13614](https://arxiv.org/abs/2611.13614)
+**分类**: Text-to-Speech | **关键词**: 可控长时语音生成, 多语言语音数据集, 零样本 TTS, 非言语发声标注, 指令式语音合成
+
+## 核心痛点
+- 长时语音生成不仅要保证内容可懂，还需在数分钟级录音中保持**内容对齐、说话人身份一致、自然停顿与轮次转换、表达风格一致**。
+- 现有公开训练语料大多只有几十秒级样本；公开长时基准每条录音最多覆盖两个说话人，且缺少逐说话人参考音频。
+- 零样本 TTS 多面向短句，简单拼接会导致音色漂移、停顿不自然和韵律不连续；同时，长时生成中的**风格控制与非言语发声（NV，如笑声、叹气）控制**仍缺乏大规模带标注数据。
+- 现有语料在时长、说话人覆盖、风格指令和 NV 标注上难以统一，缺少可支撑可控长时语音生成的数据基础。
+
+## 方法创新
+- 提出 **EMILIA2**：229K 小时、41 种语言的大规模多语言数据集，面向可控长时语音生成。
+- 提出 **EMILIA2-PIPE** 数据构建流水线，将野生录音组织为三个互补视图：
+  - **短句**：0.5–30 s 的同说话人短语音；
+  - **单说话人长时语音**：跨相邻同说话人区域扩展至至少 30 s，遇说话人切换终止；
+  - **多说话人对话**：至少 30 s、包含 2–6 个说话人的窗口，保留原始轮次顺序与时间信息。
+- 构建过程保留转写、说话人分配、停顿和跨句声学过渡，而不是简单拼接独立裁剪的短句。
+- 流水线包括：FFmpeg 检查与重采样、Mel-Band RoFormer 人声分离、DiariZen 说话人日志、FireRedVAD 语音边界切分、DNSMOS 质量过滤、合成语音分类器过滤、FireRedLID 语种识别，以及 Qwen3-ASR-1.7B 与 IndicConformer-600M 多语种转写。
+- 支持表达控制：为 **4.77M** 样本提供自然语言指令标注，为 **933K** 样本提供非言语发声标签；指令覆盖性别、年龄、口音、情感、语速、音量、音高等声学属性，NV 标签与文本交错。
+- 规模统计：三个视图合计 **105,643,159** 个样本、**398,467** 小时视图音频；指令标注 **4,766,441** 样本/25,053 小时；NV 标注 **933,006** 样本/14,626 小时。
+- 长时样本占比高：超过 5 分钟的样本占单说话人长时语音小时的 **50.0%**，占对话小时的 **66.8%**。
+- 提出 **EMILIA2-testset**：23 小时双语录音基准，单条最长 30 分钟、最多 4 个说话人，每个说话人配参考音频。
+- 在两种建模范式上验证数据价值：非自回归掩码生成模型 **Emilia2-NAR** 与自回归流匹配模型 **Emilia2-AR**。
+
+## 实验结果
+- **Emilia2-NAR** 仅用 0.6B backbone，在 TTSD-Eval 上取得对比系统中最优的中文 CER 和英文 WER：**5.27%/9.93%**，优于包括 8B MOSS-TTSD 在内的系统。
+- **Emilia2-AR** 在 InstructTTSEval 上取得中文/英文平均分 **76.2/78.3**，与 Qwen3-TTS-12Hz-VD 的 **77.1/77.9** 基本持平。
+- 结果表明 EMILIA2 能支撑长时语音生成与分钟级表达控制，并适配 AR 与 NAR 两类不同建模架构。
+
+## 一句话评价
+EMILIA2 通过统一短句、单说话人长时语音和多说话人对话三种视图，并配套指令与 NV 标注，显著填补了可控长时语音生成领域的大规模多语言数据与基准缺口，实验也初步验证了其作为数据基础的有效性。
+
+---
+
+## 6. Off-target posterior mass: A training-free diagnostic for fine-tuning spoken language diarization probes
+
+**作者**: Zhuoyan Tao, Aditya Kommineni, Shrikanth Narayanan
+**链接**: [2611.13430](https://arxiv.org/abs/2611.13430)
+**分类**: Spoken Language Diarization | **关键词**: Spoken Language Diarization, Off-target Posterior Mass, Language Identification, Speech Foundation Models, Training-free Diagnostic, Probe Gain
+
+### 核心痛点
+- 说话人语言日志化（Spoken Language Diarization, SLD）需要输出帧级或时间段级的语言标签，现有多数系统采用“预训练语音模型提取 LID 后验/嵌入 + 聚类”的级联流程。
+- 对预训练模型进行探针式微调（probe fine-tuning）可提升 SLD 性能，但增益高度依赖数据集；在真实语料中，语言分布不均衡、语码切换缺少明确声学边界，导致是否值得标注/训练难以预判。
+- 现有预训练模型质量评估或免标签准确率预测方法多来自视觉/自然语言处理，如 NCE、H-score、LEEP、LogME、AutoEval、Average Threshold Confidence，尚缺乏面向 SLD 微调增益的训练无关诊断指标。
+
+### 方法创新
+- 提出 Off-target Posterior Mass（OTPM）：用预训练语音模型输出的多语言 LID 后验概率，计算每个窗口分配给非目标语言集合的概率质量，并在语句/语料窗口上平均。
+- OTPM 仅依赖下游语料、目标语言集合和预训练模型，不需要语言标签、不需要聚类、不需要微调，属于 training-free 且 label-free 的诊断指标；取值范围为 [0,1]，越接近 0 表示后验质量越集中于目标语言。
+- 将 OTPM 与 probe gain 关联：probe gain 定义为预训练后验聚类 LDER 与探针输出聚类 LDER 之差，即 Δ = LDER_Pretrain − LDER_Probe。假设 OTPM 越大，微调越可能把非目标语言后验质量重新分配到目标语言，从而带来更大 SLD 增益。
+- 使用普通最小二乘回归（OLS）在训练语言对上拟合 OTPM 到 probe gain 的映射，并在未见语言对/真实语料上测试预测能力。
+- 探针包括两类冻结特征上的逻辑回归：posterior probe 基于 LID 后验（Whisper base 99 维、large-v3 100 维）；encoder probe 基于最终层编码器输出的均值池化特征（512/1280 维）。
+
+### 实验设置与结果
+- 合成双语数据来自 FLEURS：32 个训练语言对，19 个未见测试语言对；每对由每种语言 10 条测试集话语拼接，间隔 0.3 s，通常 45 条话语；训练语言对 OTPM 范围为 0.015 到 0.978。
+- 真实语料包括 SEAME 普通话-英语、VoxPopuli 德语-英语、DISPLACE 2024 英语-印地语-马拉雅拉姆语多方对话；训练分别使用 150、60、34 条录音。
+- 级联流程包含 Silero VAD、10 s 窗口/0.4 s  hop、余弦凝聚层次聚类（平均连接、GMM 校准阈值、offset 0.015）、VBx 重分割（Fa=1.5, Fb=2），并用 dscore 计算无 collar 且包含重叠语音的 LDER。
+- 在 19 个未见合成双语语言对上，OTPM 与 probe gain 的 Spearman 相关性为 Whisper base 0.56、Whisper large-v3 0.69；在真实语料上相关系数较小，分别为 0.23 和 0.27，但 OTPM 相比基线更能对齐 probe gain。
+- 论文还报告了聚类“collapse”现象，即模型对某些多语言录音只输出单一语言标签，说明 SLD 失败模式需要与 LDER 一并观察。
+
+### 一句话评价
+- 该工作提出一个简单、可解释、训练无关且免标签的 SLD 微调增益诊断指标，在合成双语数据上表现出中高相关性，在真实语料上相关性较弱但仍优于基线，展示了用于数据筛选和标注决策的潜力，尚需更广泛验证。
+
+---
+
+## 7. Assessing Alignment in Automatic Piano Transcription Datasets: A Benchmark for Scoring Methods
+
+**作者**: Lucas de Souza Brandão, Lucas Gris, Joaquim Cavalcante, Chukwuemeka Nkama, Andrea Poltronieri
+**链接**: [2611.14443](https://arxiv.org/abs/2611.14443)
+**分类**: Automatic Piano Transcription / Audio-MIDI Alignment Benchmark | **关键词**: Automatic Music Transcription, Audio-MIDI Alignment, Piano Transcription, Dataset Benchmark, MIDI Corruption, Alignment Scoring
+
+## 核心痛点
+自动音乐转录（AMT）依赖成对的音频–MIDI 数据集，并隐含假设二者具有近乎完美的时序对齐。然而，MAPS、MusicNet 等常用钢琴数据集已被发现存在对齐误差，可能对模型训练和评估产生偏差。现有分析多依赖 AMT 模型性能，而模型表现可能受与对齐无关的因素影响；同时，缺少跨数据集的系统性对齐质量评估方法。
+
+## 方法创新
+论文提出一个基于受控 MIDI 破坏的音频–MIDI 对齐评分方法基准框架，覆盖三类破坏：音高交换、结构性增删音符、音符起始时间偏移。破坏强度 S 被离散为 11 个等级；起始偏移采用二次映射，最大 500 ms，并在 50 ms 以下分配多个等级，以细粒度评估时序错位。
+
+评分方法分为四类：
+- 嵌入类：CLaMP 3、CLAP；
+- 特征对齐类：基于 CENS、DLNCO 的 DTW 方法，以及基于频谱图、DLNCO、CENS 的帧级余弦相似度方法；
+- 起始类：Onset-F1，使用 Madmom 检测音频起始并与 MIDI 起始比较；
+- 转录类：Basic Pitch、Transkun、ByteDance 的标准 MIREX F-measure。
+
+论文进一步提出 STI（Soft, Transcription-based, pitch-constrained Inter-Onset Interval）评分。STI 将每个音符表示为音高、起始时间和同音高约束的 IOI，通过匈牙利算法在预测 MIDI 与参考 MIDI 间进行全局匹配；同音高音符对的代价为起始时间差与 IOI 差的等权和，异音高匹配施加大惩罚；再用 exp(-c/tau) 计算软匹配权重，其中 tau=0.05，最终得到连续的精密度、召回率和 F 值。
+
+评估指标包括单调性、稳定性、敏感性和一致性，用于衡量评分方法随破坏强度增加而下降的规律性、跨样本稳定性、整体响应幅度及退化平滑程度。
+
+## 实验结果
+实验使用 MAESTRO、SMD 和 MAPS-S 的验证集音频–MIDI 对，其中 MAPS-S 由 MAPS 的合成子集构成，作为精细时序评估参考。结果显示：嵌入类方法在各类破坏下单调性普遍最低；STI 与基于 CENS、频谱图的方法整体表现最强。STI 在起始偏移破坏下显著优于标准 AMT F-measure，并表现出最高的细粒度时序错位敏感性；其单调性达到 1.00，起始破坏敏感性约为 0.93–0.95，优于 AMT-BP、AMT-BD、AMT-TK 的约 0.74–0.80。论文随后将最佳方法应用于常用钢琴 AMT 数据集，揭示其相对对齐质量趋势，为数据策划、模型训练和 AMT 评估提供依据。
+
+## 一句话评价
+该论文提供了系统、可控的音频–MIDI 对齐评分基准，并提出对细粒度起始错位高度敏感的 STI 方法，对提升钢琴 AMT 数据集质量评估与模型评测可靠性具有实用价值。
+
+---
+
+## 8. Earlybird: Predictive Streaming Speech Recognition in 29M Parameters
+
+**作者**: Sahil Mahendrakar
+**链接**: [2611.14421](https://arxiv.org/abs/2611.14421)
+**分类**: Speech Recognition (Streaming / Predictive ASR) | **关键词**: streaming speech recognition, predictive speech recognition, low-latency ASR, word-level latency, knowledge distillation, quantization-aware training, confidence calibration, on-device ASR
+
+## 核心痛点
+
+流式语音识别器通常要等说话人**说完一个词之后**才输出该词，延迟约 90–400 ms。对语音助手/voice agent 而言，这段延迟本可以用来启动搜索或规划回复。人类听语音时并不需要听完整个词——多数词凭前几个音素结合上下文即可识别，下一个词也常可预测。论文提出的问题是：一个小的端侧识别器能否做到同样的事——**在词结束之前就正确输出该词**，并额外猜测后续词、给出置信度。
+
+## 方法创新
+
+1. **起点与压缩**：以 Moonshine streaming Tiny（34M，编码器-解码器，80 ms chunk）为基础，将词表裁剪到 19,007 个 token（大语料中出现过的词 + 全部单字符 token，保证任何词仍可拼写），参数降到 **29M**；裁剪后各测试集 WER 与原模型相差不超过 0.4 个点。原运行时每词要回退约 300 ms 音频，Earlybird 则**每一步都解码完整转写、无 hold-back**。
+
+2. **随机截断音频训练（核心）**：用强制对齐得到词边界，定义词的“到期时刻” τ_i = max(s_i + min(0.5(e_i−s_i), h), e_i − ℓ)，其中 lead ℓ=300 ms、最小已听音频 h=50 ms。每个训练样本把语音在随机 80 ms 步长处截断，目标为**所有已到期词的完整拼写**（即使该词音频只刚开始）+ 结束符 + **后两个词作为猜测**。由于 t′>t 的目标总是包含 t 的目标，模型天然学会“不输出之后要撤回的内容”。尾部标点延迟到下一词到期才输出，避免逗号出现又消失。
+
+3. **只在教师正确处蒸馏**：以原 Moonshine Tiny 为教师，**仅在该 token 位置教师 top-1 与标签一致时**施加蒸馏损失。若全位置蒸馏，猜测词会变得不够果断（概率分散到多个候选）。
+
+4. **Padding frames**：每步编码器额外看到由“已听音频之后的静音”计算出的三帧（不使用未来音频），让模型可以像说话人已停止那样收尾一个词；该技巧把 LibriSpeech test-clean 的中位词延迟从 −50 ms 推进到 **−90 ms**。
+
+5. **量化与置信度**：QAT 将权重压到 4 bit（音频前端 8 bit），权重文件 **16.8 MB**（含裁剪分词器与配置 17.6 MB）。每个词的置信度就是其 token 概率之积，**无温度缩放或额外校准步骤**。
+
+6. **数据与训练计划**：LibriSpeech（960 h，MFA 词时间）+ 约 300 h People's Speech clean（wav2vec 2.0 CTC 对齐）+ 约 25 h Kokoro 合成语音（音素时长给出精确词时间），采样权重 1:3:3:3:1；真实转写仅在教师（Moonshine Medium）写出与参考完全一致的词时保留；不使用非商业语料。单卡 batch 48，四阶段：10k 步流式截断训练 → 20k 步带两个猜测词的前缀训练 → 5k 步 padding frames → 5k 步 4-bit QAT。
+
+## 实验结果
+
+- **中位词延迟 / WER（负值表示词结束前）**：LibriSpeech clean **−90 ms / 2.3**（Moonshine Tiny +270/3.9，Whistle +400/3.1，Whisper base +90/2.3）；test-other −60/9.7；TED-LIUM −68/5.4；People's Speech −66/14.5；Earnings-22 −46/18.4；合成语音 −73/5.6。**六个测试集上全部为最早**，比 Moonshine Tiny 运行时早约 360 ms，比 Whistle 早 490–580 ms，比 Whisper base 早 160–200 ms。
+- **全测试集上结论依旧**：LibriSpeech clean 全部 2,620 句 −90 ms；TED-LIUM 全部 1,155 句 −67 ms；People's Speech 500 句 −63 ms；Earnings-22 1,000 句 −43 ms。p95 延迟：Earlybird +80 ms，Moonshine Tiny +520 ms，Whistle +925 ms。
+- **词结束前正确预测比例**：LibriSpeech clean **68.8%**，对照 Moonshine Tiny 3.4%、Whistle 9.1%、Whisper base 25.4%；TED-LIUM 52.1% vs 1.0/2.6/17.6；People's Speech 31.8% vs 1.0/2.9/11.3；合成 56.9% vs 2.2/6.8/22.0。
+- **代价是修订（revisions）**：LibriSpeech clean 每词 1.29 次，低于 Moonshine Tiny 的 2.07，但高于 Whistle 的 0.16 与 Whisper base 的 0.39；自发/噪声语音上每词 2–6 次。
+- **精度与体积**：在 Open ASR Leaderboard 八个英语集上，每个集都优于 Moonshine Tiny，与同尺寸 Whistle 大致持平；是唯一一个体积远低于 1 GB、而中位词能在词结束前预测正确的模型。作为对照，流式 Nemotron 0.6B（int8 464 MB）为 +230 ms；离线 Parakeet TDT 0.6B v2（约为 Earlybird 的 70 倍大、每 240 ms 重解码）达到 −10 ms 且错误率约为其一半。
+- **校准**：对仍在说的词，原始置信度已校准，**ECE 3.7–5.5**；猜测的下一个词同样有校准置信度。
+
+## 一句话评价
+
+Earlybird 用“随机截断 + 到期词全拼 + 后两词猜测 + 仅在教师正确处蒸馏 + padding frames”这一套**不改架构、不看未来音频**的训练方法，把一个 29M / 16.8 MB 的流式识别器变成能在词结束**之前**（中位 −90 ms）正确吐词的预测式识别器，并以可校准的置信度和 1.3 次/词的修订代价，把“早”与“稳”的权衡第一次摆到了小模型可用的位置上。
+
+## 局限与启发
+
+- 修订率显著高于 Whistle/Whisper（1.29 vs 0.16/0.39），在自发、噪声语音上达 2–6 次/词，下游需能容忍改写（可配合 LocalAgreement 类提交策略）。
+- 评测采用“各模型自己的代码/引擎”，处理时间不计入，衡量的是“模型决定输出什么”而非硬件速度；Parakeet 的对比使用了不同语句集与重解码间隔。
+- 猜测词只到后两个、lead 固定 300 ms，是否可学习/自适应 lead 与更长猜测仍开放。
+- 思路可迁移：把“到期时刻”定义与截断训练用于其他流式序列任务（如流式翻译、增量对话理解）。
+
+---
+
+## 9. Spatio-Temporal Calibration of a Vehicle-Mounted Microphone Array for Autonomous Driving
+
+**作者**: Marvin Seegert, Richard Taupitz, Korbinian Moller, Johannes Betz
+**链接**: [2611.14003](https://arxiv.org/abs/2611.14003)
+**分类**: Microphone Array Calibration | **关键词**: microphone array calibration, spatio-temporal calibration, balloon burst, LiDAR-acoustic fusion, autonomous driving, TDOA, acoustic shadow, direction-of-arrival
+
+# 论文总结
+
+## 核心痛点
+- 自动驾驶中声学感知可利用声音衍射感知相机/LiDAR 视线外目标，但要把声源定位结果与视觉感知融合，必须将分布式麦克风阵列在车辆 3D 坐标系中完成空间与时间配准。
+- 现有麦克风阵列几何标定方法多假设小型、无遮挡的室内装置；车辆车身会产生声影，远侧麦克风接收到的是绕过车身的非视距衍射声，直线传播模型无法描述其额外时延。
+- 现有工作缺少以 LiDAR 提供度量、尺度无歧义声源位置的跨模态参考；最大真实孔径仅约 0.69 m，远小于车辆尺度；多数评估停留在参数误差，未充分连接下游 DOA 任务；且没有处理传播路径中的散射体。
+
+## 方法创新
+1. **气球爆炸作为单一跨模态靶标**：LiDAR 定位气球并获得度量三维声源坐标；每个麦克风接收爆炸的陡峭起始沿；相机通过气球消失时刻为音频流提供时间对齐。
+2. **时空联合标定**：以 TDOA 批处理非线性最小二乘同时估计所有麦克风位置 p_m 与各次爆炸发射时间 T_b；预测到达时间为 T_b + ‖p_m − s_b‖ / c，残差为预测减实测；采用 soft-ℓ1 损失限制坏观测影响，并用粗网格搜索初始化、高度约束 0 ≤ z_m ≤ 2 m 排除镜像解。
+3. **固定声速避免退化**：声速由温湿度气压按会话计算并固定，不与会几何联合估计；因为远场下自由发射时间会吸收共同距离，阵列尺度与声速近似构成不可分辨方向。
+4. **声影鲁棒加权**：每个观测按自身 timing variance 加权，对受车身遮挡、延迟到达的衍射声进行折扣而非直接丢弃，无需车体模型；贡献中称消融显示优于显式 masking。
+5. **信号处理与定位细节**：声学端用全局包络峰值检测与 NMS 粗定位爆炸，500 Hz 零相位高通去风噪和低频模糊，CFD 两遍检测 onset，并用 l_max/c 回声门限制直接路径；LiDAR 端对气球点云做球拟合/跟踪；相机端用 ROI 帧差和 Gaussian 加权确定爆炸帧，并以量化噪声建模；profile likelihood 分离时间偏移与抖动。
+6. **采样策略**：约十余个环绕车辆分布的气球爆炸即可，爆炸点分布比单纯增加数量更重要；随机化扎破方向可将双瓣辐射造成的声学原点系统性偏移转化为可平均噪声。
+
+## 实验结果
+- 在真实全尺寸车辆、户外场景验证：8 个麦克风、4 个簇、约 4.9 m 孔径。
+- 留出集距离残差为 6.37 cm，接近由 onset 定时噪声设定的 6.07 cm 下限。
+- 标定后的阵列跟踪移动声源，与车辆自身 LiDAR 的方向估计相差在数度以内。
+- 十余个环绕分布的爆炸足够；Table I 对比显示此前真实硬件最大独立测量声源孔径约 0.69 m，且多为室内；本文是车辆尺度、户外、全车硬件验证。
+- 消融/对比要点：方差加权对声影遮挡的鲁棒性优于显式 masking；联合估计在阵列分散时会显著退化，本文通过跨模态 LiDAR 参考与固定声速规避相关问题。
+
+## 一句话评价
+本文提出以气球爆炸为跨模态靶标、LiDAR 提供度量声源位置、按观测方差折扣车身声影的车辆麦克风阵列时空标定管线，在真实全尺寸车辆户外实现厘米级距离残差和数度级 DOA 跟踪，填补了车辆尺度非视距声学标定的空白。
+
+---
+
+## 10. On the information rate of phones, syllables and words
+
+**作者**: Herman Kamper
+**链接**: [2611.13990](https://arxiv.org/abs/2611.13990)
+**分类**: Speech Information Theory | **关键词**: information rate, bitrate, linguistic units, tokenisation, language models, byte pair encoding, LibriSpeech
+
+## 核心痛点
+现有研究报告了 phone 约 50 bps、syllable 约 39 bps 等信息率，但不同研究对信息率的定义不同、估算数据也不同，因此无法直接比较不同语言单元的编码效率。论文要回答：在相同语音内容和相同建模预算下，phone、syllable、word、多词组合或介于其间的 tokenisation，哪一种能用最少比特编码语音内容？这一问题关系到语音/语言系统设计、人类语言处理理论以及零资源语音处理中应发现何种单元。
+
+## 方法创新
+1. **明确信息率定义**：将 bitrate 定义为每秒比特数，即 `bitrate = -1/D * sum_t log2 Pθ(w_t|w_{1:t-1})`，其中 D 为数据时长，Pθ 为有限模型估计的单元概率。
+2. **理论澄清**：在完美语言模型下，不同 tokenisation 只是同一底层样本空间的不同随机变量表示，所有单元的理想 bitrate 相同；因此真正有意义的是在**有限建模预算**下比较不同单元。
+3. **受控比较多种单元**：在 LibriSpeech 960 小时英语有声书训练集的 forced alignments 上，比较 phone、syllable、word、word-token 级 BPE 得到的多词组合，以及 phone 子词 BPE 等中间 sanity check。
+4. **两类有限模型**：使用 absolute discounting n-gram 语言模型（多数单元 trigram 最佳，并用三阶 spelling model 处理未登录 syllable/word）和 decoder-only transformer 语言模型（基于 OPT-125M 修改，主体约 20M 参数，6 层、512 隐维、8 头、FFN 2048、上下文 2048；输出层随单元变化，phone 约 39 个输出，word 约 56k 输出）。
+5. **统一评估**：在 dev-clean（5.4 小时、40 说话人）上比较 held-out 数据的信息率，保证不同 tokenisation 对应同一语音内容。
+
+## 实验结果
+- 最佳结果：20M 参数 transformer 使用 **word 单元**，达到 **28.07 bps**。
+- phone 单元最佳 bitrate 为 **29.56 bps**。
+- 在 word 级 BPE 中加入 **5,000 个 word merges** 时，word-BPE 组合为 **29.27 bps**。
+- 对 n-gram 模型，加入少量 word-BPE merges 可优于孤立 word；但无论 n-gram 还是 transformer，加入过多 word merges 都会使 bitrate 变差。
+- 总体结论：在受限建模容量下，word 或略长于 word 的单元通常最有效；word-like units 在“较短时长、小词表单元（如 phone）”与“较长时长、大词表单元（如长多词组合）”之间取得较好平衡。
+
+## 一句话评价
+论文通过统一的信息率定义和受控模型预算，系统证明了“理想模型下所有 tokenisation 等价，但有限模型下 word 级或略长于词的单位更高效”，为语音单元选择与零资源语音发现提供了清晰的信息论参考。
+
+---
+
+## 11. GigaEdge Spench: An SDK for Practical Streaming Speech Enhancement
+
+**作者**: Artem Sokolov, Artem Khaidarov, Yana Lysova, Alexander Gladkikh, Vitaliy Yulis
+**链接**: [2611.13243](https://arxiv.org/abs/2611.13243)
+**分类**: Streaming Speech Enhancement (Audio Enhancement) | **关键词**: GigaEdge Spench, streaming speech enhancement, cross-platform deployment, ONNX Runtime, TensorFlow Lite, WebAssembly, acoustic echo cancellation, temporal frame grouping, model sharing
+
+# 论文总结：GigaEdge Spench
+
+## 核心痛点
+- 实时语音增强应用需要连续接收音频块并保持流状态，而宿主 audio callback 的 block size 可能不同；这一要求不仅适用于神经网络图，也适用于采样率转换、归一化、回声消除等 DSP 阶段。
+- 跨平台部署困难：同一套增强能力需要运行在 CPU 服务器、Android/iOS 移动端和浏览器中，且设备算力、麦克风质量差异大，还要与视频编解码共享资源，避免音频中断和处理伪影。
+- 仅看质量分数不足以判断模型是否适合真实应用，必须同时考虑完整处理成本、缓冲延迟、chunk size、执行后端以及共享模型时的并发流容量。
+- 已有流式实现中，部分降噪器将模型与单个流状态绑定，且每次神经调用处理一个 spectral frame；公共 API 对 playback-reference AEC、可配置响度控制、独立输入输出采样率等应用级需求支持有限。
+
+## 方法创新
+- 提出开源 SDK GigaEdge Spench，其中 Spench 表示 Speech、Enhancement、Channel；应用可构建可配置的 enhancement channel，即有序音频处理流水线。
+- 通道可单独或组合使用 normalization、neural denoising、sample-rate conversion，以及在平台支持时使用 acoustic echo cancellation；normalization 还可在不加载神经模型的情况下运行，并可选不同 DSP block。
+- 共享 C++ core 负责采样率转换、频谱处理和每流模型状态，提供 C/C++ 接口；平台 wrapper 连接 Android、iOS 和 Web Audio，并通过 worker-based execution 支持实时音频。
+- 同一 C++ core 支持 ONNX Runtime 与 TensorFlow Lite，覆盖 native、mobile 和 WebAssembly；独立 stream context 可共享模型实例及 ONNX session，新流不需要单独推理 session。
+- 支持 temporal frame grouping：同一流的连续帧可在一次推理调用中处理，使 chunk size 不仅影响音频传入方式，也影响推理执行方式。
+- 发布 8 kHz INT8 denoiser，以及 48 kHz FP32 的 discriminative 与 hybrid 模型；每个流保留自己的 resampler、spectral overlap、输出缓冲和统计信息。
+- 将 recurrent-state caching、model sharing、ring buffer、worker thread 等成熟方法集成为可配置部署系统，并支持神经增强的输入/输出采样率独立选择；AEC 复用 SpeexDSP。
+
+## 实验与结果
+- 在 EARS–WHAM v2 上评估发布模型的质量与处理成本，并与 RNNoise、DPDFNet2 对比；其中 DPDFNet2 使用 sherpa-onnx 的 48 kHz HR 配置并做共享模型适配。
+- 所有测试的 native 与 Web 配置均能以快于实时的速度处理文件，但更大的 chunk 需要更多时间收集输入。
+- 实验表明，更大的 chunk 可能比增加 CLI 进程带来更高吞吐；算术成本最低的模型不一定在质量与实测容量之间取得最佳平衡。
+- 测量共享模型在 CPU 上可同时处理的流数量；由于对比配置均共享模型资源，容量差异不能归因于 session 复制。
+- 所有 SDK 计时使用 ONNX Runtime；RNNoise 参考实现使用其原生 C kernel。
+
+## 一句话评价
+GigaEdge Spench 不是提出新的网络结构，而是提供一个可配置、跨平台的开源流式语音增强 SDK，并通过实验系统分析了模型带宽、时间帧分组、chunk size、执行环境与共享模型容量之间的工程权衡。
+
+---
+
