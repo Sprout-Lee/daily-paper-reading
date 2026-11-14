@@ -108,11 +108,578 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 2671 篇论文 | 涵盖 184 天的数据
+            共收录 2685 篇论文 | 涵盖 185 天的数据
         </div>
     </div>
     
-    <h2 class="month-divider">2026-11</h2><h2 class="date-divider">📅 2026-11-12</h2>
+    <h2 class="month-divider">2026-11</h2><h2 class="date-divider">📅 2026-11-14</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16933" target="_blank">Kezek: Splitting Mono Two-Person Conversations into Per-Speaker Tracks for Full-Duplex Dialogue Data</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2611.16933</span>
+                <a href="pdfs/2611.16933.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bagzhan Karl, Alizhan Karl<br>
+                <div style="margin-top:5px"><span class="tag"></span></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: Extra data: line 2 column 1 (char 2104)</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16787" target="_blank">MESH: Multi-receiver Evaluation of Spatial Hearing across Egocentric and Allocentric Views</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Understanding / Audio Benchmark Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2611.16787</span>
+                <a href="pdfs/2611.16787.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Wen Wen, Bohan Li, KwanHo Tam, Yu Xi, Jing Peng, Shuai Wang, Kai Yu<br>
+                <div style="margin-top:5px"><span class="tag">Spatial Hearing</span><span class="tag">Multi-receiver Distributed Perception</span><span class="tag">Egocentric and Allocentric Views</span><span class="tag">Spatial Localization and Tracking</span><span class="tag">Spatially Cued Speech Transcription</span><span class="tag">Benchmark</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>在多接收器（multi-receiver）的真实声学环境中，一个空间听觉系统不仅需要判断“谁在说、在哪说、如何移动”，还必须保证语音信号始终与正确的物理声源保持关联。然而，现有基准测试（如 SpatialSceneQA、SO-Bench、SEA-LM、LOCATA 等）大多只孤立评估数值空间预测、空间选择性转写、声源跟踪或分布式语音处理中的某一环：方向估计正确不代表距离正确，转写流畅也不代表说话人匹配正确。因此，现有基准普遍缺乏对“语音—位置—运动”三者跨接收器、跨时间一致性关联能力的系统评估。</p>
+<h2>方法创新</h2>
+<p>作者提出 <strong>MESH</strong> 基准，通过<strong>自我中心（egocentric）</strong>与<strong>异我中心（allocentric）</strong>两种坐标视角来评估上述关联能力：</p>
+<ul>
+<li><strong>Egocentric 视角</strong>：以单个机器人接收器的局部坐标系表达空间查询与预测，输入为该接收器自身的四通道一阶 Ambisonic（FOA）录音，以及同伴协作元数据（其他机器人的位姿、播放语音转写与播放时间区间、房间上下文）。</li>
+<li><strong>Allocentric 视角</strong>：以共享的 3D 世界坐标系表达声源位置，输入为所有可用接收器的同步录音与元数据，要求系统跨设备把声学观测关联到同一物理声源。</li>
+</ul>
+<p>两种视角通过坐标系与输入协议定义，对模型架构保持开放（既可直接用音频语言模型预测，也可用 agent 协调信号处理工具与专家模型）。</p>
+<p><strong>数据构建</strong>：每个场景包含 H∈{1,2,3} 个人类声源与 N∈{1,2,3} 个机器人接收器；共 800 个基础场景、覆盖 100 个房间；每个基础场景生成 1 个静态实现与 2 个独立采样的动态实现（共享语音内容、噪声与初始布局），共约 40,000 个问题，涵盖 8 个静态任务与 5 个动态任务（合计 13 个任务），分为<strong>定位</strong>（数值空间定位、数值轨迹）与<strong>转写</strong>（空间线索引导的目标语音转写）两大类。</p>
+<h2>实验结果</h2>
+<ul>
+<li>评估了 <strong>11 种音频模型配置</strong>与 1 个使用专家工具的<strong>语言模型 agent</strong> 参考系统。</li>
+<li>最佳静态距离估计准确率（20% 相对误差内）仅 <strong>21.90%</strong>；最佳动态方向跟踪准确率（20° 内）仅 <strong>41.54%</strong>。</li>
+<li>四个转写任务的最低词错误率仍在 <strong>59.15%–73.10%</strong> 之间。</li>
+<li>消融与额外实验表明：现有模型<strong>无法有效利用同伴信息</strong>，在<strong>多说话人</strong>与<strong>动态</strong>场景下表现尤差，且出现“转写错说话人”“距离估计不准”“源—接收器距离变化时预测近乎恒定”等失败模式。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>MESH 首次以自我中心/异我中心双视角、静态/动态共享场景、数值定位+空间线索转写的统一协议，系统性揭示出现有音频模型在“分布式声学信息可获得”与“有效用于空间语音理解”之间存在显著鸿沟。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16718" target="_blank">MusicRWKV: A Multimodal RWKV Framework for Music Representation Learning</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Music Representation Learning (MIR)</span>
+                <strong>ID:</strong> <span class="tag">2611.16718</span>
+                <a href="pdfs/2611.16718.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Terry Tan<br>
+                <div style="margin-top:5px"><span class="tag">MusicRWKV</span><span class="tag">RWKV</span><span class="tag">Multimodal Music Representation Learning</span><span class="tag">Self-Supervised Learning</span><span class="tag">Music Information Retrieval</span><span class="tag">Soft ROSA</span><span class="tag">FiLM Conditioning</span><span class="tag">Invertible Compression</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>MusicRWKV 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有音乐基础模型（MERT、MusicFM、MuQ 等）多基于 Transformer，自注意力的二次复杂度在处理长时长音乐录音时带来显著计算与内存开销。</li>
+<li>Transformer 推理常依赖 KV cache，内存消耗随序列长度增长；高分辨率音频 tokenizer 会产生极长 token 序列，成为训练与部署瓶颈。</li>
+<li>音乐理解本质上是多模态的，需要整合波形、频谱和语义元数据；但 RWKV 原生不提供 cross-attention，多模态融合仍是开放问题。</li>
+<li>现有 RWKV 音乐研究主要集中于符号音乐生成（如 MIDI-RWKV），尚未系统探索 RWKV 作为音频自监督音乐表示学习骨干的潜力。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 MusicRWKV：据作者称，这是首个面向基于音频的音乐表示学习的多模态 RWKV 框架。</li>
+<li>统一建模三类模态：waveform tokens、spectrogram tokens 和 metadata tokens；各模态由独立的 RWKV 编码器处理。</li>
+<li>引入可逆音频压缩模块：在保持重建能力的同时缩短波形和频谱 token 序列，降低 RWKV 编码器的有效序列长度，适配长音乐录音。</li>
+<li>采用 FiLM-based conditioning 进行模态感知特征调制，在不引入昂贵 cross-attention 的情况下实现多模态交互。</li>
+<li>通过多模态融合将各模态表示映射到统一联合表示空间，并以多模态自监督目标进行预训练。</li>
+<li>可选增强：将 Soft ROSA 作为可微检索机制引入 RWKV block，探索神经-符号交互对表示学习的影响。</li>
+<li>下游评估采用共享骨干设计，针对任务调整输入模态与预测头，并从零训练任务特定模型。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>在多样化 MIR 基准上评估，覆盖 music tagging、genre classification、key estimation、emotion recognition、instrument classification 和 singing voice analysis。</li>
+<li>受控预训练消融显示，Soft ROSA 可提升验证集性能。</li>
+<li>逐层 telemetry 分析发现：深层网络中检索行为从分布式检索逐步转向选择性检索。</li>
+<li>结果表明，RWKV 可作为 Transformer 之外的高效替代骨干，并有效适配异构音乐理解任务。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>MusicRWKV 率先将 RWKV 与多模态自监督学习结合到音频音乐表示学习中，以可逆压缩、FiLM 条件和可选 Soft ROSA 兼顾长序列效率与多模态融合；实验初步证明其跨 MIR 任务适配性与 Soft ROSA 的有效性，但完整的大规模对比和最终性能仍需结合全文进一步验证。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16637" target="_blank">The Unseen Threat: How Complementary Combinations of Acoustic Features Compromise Speech Privacy</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Privacy / Privacy-Preserving Speech Processing</span>
+                <strong>ID:</strong> <span class="tag">2611.16637</span>
+                <a href="pdfs/2611.16637.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jule Pohlhausen, Jörg Bitzer<br>
+                <div style="margin-top:5px"><span class="tag">speech privacy</span><span class="tag">acoustic feature fusion</span><span class="tag">privacy-utility trade-off</span><span class="tag">automatic speech recognition</span><span class="tag">speaker verification</span><span class="tag">voice activity detection</span><span class="tag">speaker diarisation</span><span class="tag">Mel spectrogram</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结：The Unseen Threat: How Complementary Combinations of Acoustic Features Compromise Speech Privacy</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>语音信号包含语言内容、说话人身份、健康状态、政治观点等敏感信息；在长期便携录音和生态瞬时评估场景中，设备受功耗、内存和算力限制，通常需要在设备端提取低复杂度声学特征，再离线分析。</li>
+<li>现有隐私评估多关注单一声学特征，例如经时间平滑与下采样的 Mel 谱；但不同声学特征融合后是否会泄露更多隐私仍缺乏系统研究。</li>
+<li>论文指出，仅对单一特征做隐私评估可能低估特征融合后的隐私泄露风险，尤其是当互补特征同时提升对话分析效用时。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>系统评估宽带 RMS 电平、pitch 单独使用，以及它们分别与 τ=500 ms 时间平滑、下采样 Mel 谱组合后的隐私与效用表现。</li>
+<li>采用 informed attacker 知情攻击者范式：攻击者完全知道隐私保护特征提取流程，并可用相同处理后的数据训练或微调攻击模型，属于最强攻击设定。</li>
+<li>隐私维度使用 ASR 词错误率 WER 评估语言内容泄露，WER 越高表示保护越强；使用 ASV 等错误率 EER 评估说话人身份泄露，EER 越高表示保护越强，50% 接近随机决策。</li>
+<li>效用维度使用 VAD 的 Matthews 相关系数 MCC 评估语音/非语音分类，MCC 越高越好；使用说话人日志 DER 评估说话人标签分配，DER 越低越好。</li>
+<li>特征细节：基线为 80 维 Mel filterbank，25 ms 窗长、12.5 ms 帧移；平滑 Mel 的功率谱密度递归平滑并按 τ/L=40 下采样，再将每个下采样帧重复 40 次以匹配原帧率并支持逐帧融合；RMS 在同一时间段计算；pitch 使用 YIN 算法，搜索范围 80–400 Hz。RMS 或 pitch 单独输入时重复 80 次以匹配模型输入维度。</li>
+<li>主要贡献包括：对 RMS、pitch 单独及与平滑 Mel 组合时的语言内容和说话人身份泄露进行系统评估；面向日常对话行为给出隐私-效用权衡评估；强调互补特征组合会损害语音隐私。</li>
+</ul>
+<h2>实验设置</h2>
+<ul>
+<li>ASR：Transformer+CTC，约 71.5M 参数，LibriSpeech 960 h 训练，LibriSpeech test-clean 测试，报告该模型在 test-clean 上 WER 为 2.34%。</li>
+<li>ASV：ECAPA-TDNN，约 21.9M 参数，LibriSpeech 360 h 训练；在 LibriSpeech 和 VCTK 测试子集上按 VoicePrivacy Challenge 2020 配置评估，报告加权平均 EER。论文提到此前方法在 VoxCeleb2 上训练，而本文缩小训练集以降低计算量并保持趋势。</li>
+<li>VAD：CRDNN，约 109K 参数，LibriParty 训练与测试。</li>
+<li>SD：TDNN，AMI 评测集，使用标准 Full-corpus-ASR 划分和 HeadsetMix 录音流，并使用人工标注的 oracle VAD。</li>
+<li>所有指标给出 α=5% 置信区间，采用说话人级 bootstrap 估计。WER 和 EER 是当前攻击模型与条件下的经验代理，不是形式化隐私保证。</li>
+<li>论文假设 RMS 有助于短词识别和时间分辨率，但长句和低信噪比下会退化；pitch 有助于说话人变化检测，但主要来自浊音，直接作为 VAD 时在 LibriParty 测试集上 precision 为 93.20%、recall 为 13.20%。</li>
+<li>注：所给内容在实验假设后截断，完整结果表未包含；以下结果主要依据摘要。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>摘要报告：RMS 和 pitch 单独使用时暴露的信息有限；但它们与 500 ms 平滑 Mel 谱融合后，对话分析效用提高，同时语音内容泄露显著增加。</li>
+<li>与 RMS 的组合表明，细粒度时间动态会放大粗采样频谱特征的泄露。</li>
+<li>说话人身份保护在所有测试特征下仍然有限。</li>
+<li>总体结论：对单一声学特征进行的隐私评估可能低估特征融合后的泄露风险。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该文揭示了一个重要但易被忽视的风险：低复杂度声学特征与平滑 Mel 谱的互补融合会在提升对话分析效用的同时显著放大语音内容泄露，提示隐私评估必须考虑特征组合而非孤立特征。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16371" target="_blank">Structured Speaker Conditioning for Diarization-Guided Target-Speaker ASR</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Target-Speaker ASR</span>
+                <strong>ID:</strong> <span class="tag">2611.16371</span>
+                <a href="pdfs/2611.16371.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ruoyu Wang, Shutong Niu, Jun Du, Weixin Zhu, Yannan Wang<br>
+                <div style="margin-top:5px"><span class="tag">Structured Speaker Conditioning</span><span class="tag">Target-Speaker ASR</span><span class="tag">Speaker Diarization</span><span class="tag">Conditional Low-Rank Modulation</span><span class="tag">Meeting Transcription</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结</h2>
+<p><strong>标题</strong>：Structured Speaker Conditioning for Diarization-Guided Target-Speaker ASR</p>
+<h3>核心痛点</h3>
+<ul>
+<li>会议长音频通常按窗口处理，目标说话人条件需要在局部活跃说话人组合变化、说话人轮换和重叠语音下，仍保持与同一 session speaker 一致。</li>
+<li>现有 diarization-guided 方法常将说话人活动轨迹压缩为四状态 STNO：silence、target-only、non-target-only、overlap。该表示会丢失信息：不同干扰人数、不同干扰人 hand-over 历史可能映射为相同目标条件。</li>
+<li>仅依赖活动轨迹无法区分局部活动完全相同的不同说话人；需要引入 session-level 声学身份线索。</li>
+<li>对角 FDDT 仅做通道级缩放和偏移，缺少条件相关的跨通道混合能力，限制了条件对预训练声学编码器的控制表达。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li>提出 Structured Speaker Conditioning（SSC），将局部活动结构与会话级声学身份结合，构造 identity-consistent target conditions，用于控制声学编码器。</li>
+<li>Target-Centric Relational Encoding（TCRE）：保留每个说话人的活动历史，并用共享因果时序编码器与因子化二阶、三阶关系建模目标-干扰人交互；对说话人排列等变，能捕获重叠、干扰人数和 turn changes，聚合代价随 track 数线性增长。</li>
+<li>Reference-Based Speaker Conditioning（RSC）：从 session audio 和 diarization 中提取说话人身份，与 diarization tracks 关联并增强 TCRE 特征；有助于处理目标语音完全重叠、目标活动漏检、说话人 track 交换等情况。</li>
+<li>Conditional Low-Rank Modulation（CLRM）：将联合条件转换为 FiLM 式通道仿射调制，并加入 rank-8 低秩跨通道残差，其 core 随目标条件变化；把对角调制扩展为条件依赖的通道混合。</li>
+<li>训练上采用 SFT；FireRedAudio 系统进一步用 GSPO 优化，奖励基于 target-speaker transcription error。</li>
+<li>提供 timestamp 变体，可联合生成句子边界与文本。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>在 Qwen3-ASR-0.6B 与 FireRedAudio 上评估，使用四个域内会议测试集：AliMeeting、AISHELL-4、AMI-SDM、NOTSOFAR-1，并评估三个未见域。指标为 cpER，中文按字符、英文按词计算。</li>
+<li>Oracle diarization + Qwen3-ASR-0.6B 下，完整 SSC 仅使用 1.46M conditioning parameters，在四个会议测试集上相较 STNO-FDDT 取得 6.23% 平均相对 cpER 降低。</li>
+<li>Predicted diarization + GSPO 下，FireRedAudio text 系统在四个域内集上相较 DiCoW 和 MOSS-TD 分别取得 17.9% 与 17.3% 平均相对错误率降低，并在三个未见域上也优于二者。</li>
+<li>在预测 diarization 下，四个测试集宏平均 cpER 为：纯文本 15.60%，带时间戳 15.96%。</li>
+<li>场景分析显示，在至少三个并发说话人、目标语音完全重叠等困难条件下收益更大；固定 checkpoint 干预支持 session identity 与 condition-dependent core 的贡献，其中 session identity 在目标漏检和 track 交换下贡献最明显。</li>
+<li>SSC 还可跨 audio foundation models 迁移。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该论文把 diarization 的活动结构与会话级声学身份联合编码为结构化条件，并用条件低秩调制增强编码器适配，在多个会议测试集和跨域场景上优于 STNO、DiCoW、MOSS-TD 等基线，是 diarization-guided target-speaker ASR 中一种有效的条件设计。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.16051" target="_blank">Human-Likeness and Conversational Preference Diverge for Synthesized Agent Speech in Customer-Service Calls</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2611.16051</span>
+                <a href="pdfs/2611.16051.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jeffrey M. Girard, Antony D'Avirro, Jason Z. Zheng, Jacqueline R. Vertino, Benjamin Peloquin<br>
+                <div style="margin-top:5px"><span class="tag">speech synthesis</span><span class="tag">human-likeness</span><span class="tag">conversational preference</span><span class="tag">perceptual evaluation</span><span class="tag">prosody</span><span class="tag">customer-service calls</span><span class="tag">voice agents</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文信息</h2>
+<ul>
+<li>标题：Human-Likeness and Conversational Preference Diverge for Synthesized Agent Speech in Customer-Service Calls</li>
+<li>作者：Jeffrey M. Girard, Antony D’Avirro, Jason Z. Zheng, Jacqueline R. Vertino, Benjamin Peloquin</li>
+<li>机构：Fluid Concepts Research, San Francisco, USA</li>
+</ul>
+<h2>核心痛点</h2>
+<ul>
+<li>语音智能体在客服通话中的表现不仅取决于说了什么，也取决于语音、发音和韵律等表达方式。</li>
+<li>现有 TTS 听测通常只评估 naturalness 或 human-likeness，即听起来像不像真人，却很少直接询问听众是否愿意与这个智能体对话，即 conversational preference。</li>
+<li>这种评估偏差可能导致系统选型错误：一个系统可能更像真人，但并不是用户更愿意交谈的对象。</li>
+<li>自动自然度指标 UTMOS、UTMOSv2、NISQA 主要针对 naturalness 或整体质量设计，尚不清楚它们是否能预测 conversational preference。</li>
+<li>同一 TTS 系统内部不同 voice 差异可能很大，若每个系统只测一个 voice，也可能误判系统优劣。</li>
+</ul>
+<h2>方法与创新</h2>
+<ul>
+<li>使用 ToolTalk 客服通话语料，抽取 120 个客服代表 turn，长度 8–30 词，中位数 14 词，覆盖 97 位演员和 8 个客服领域。</li>
+<li>使用 6 个商业 TTS 系统合成这些 turn：Cartesia Sonic 3.6、Deepgram Aura-2、ElevenLabs v4 Turbo、Google Gemini 2.5 Flash TTS、OpenAI gpt-4o-mini-tts、Rime Coda。</li>
+<li>每个系统采样 8 个 stock voices，男女各半；同一演员的所有 turn 使用同一随机 voice，以减少 voice 混杂。</li>
+<li>所有音频经过模拟电话信道处理，包括 300–3,400 Hz 带通、8 kHz G.711 µ-law 和重采样到 16 kHz，以模拟真实客服电话并降低录音质量差异。</li>
+<li>设计两个成对偏好听测实验：Study 1 比较两个不同 TTS 系统的 render；Study 2 比较演员原始录音与一个 TTS render。</li>
+<li>同一批 trial 被两组听众分别判断：一组回答哪个智能体听起来更像真人，即 human-likeness；另一组回答更愿意与哪个智能体对话，即 conversational preference。</li>
+<li>使用 Bradley–Terry 逻辑混合模型建模选择结果，分离系统强度、voice、render、听众偏差等随机效应。</li>
+<li>比较 voice 内部方差与系统间方差，检验 voice 采样不足带来的评估风险。</li>
+<li>测试 UTMOS、UTMOSv2、NISQA 三个自动自然度分数是否能预测两种主观判断。</li>
+<li>提取 7 个可解释韵律特征：分句间和分句内 0.2 秒以上停顿数、语速、短语末延长、音高变化、句末音高斜率、重音突出度变化。</li>
+</ul>
+<h2>实验与主要结果</h2>
+<ul>
+<li>Study 1 包含 720 个系统间比较，每个比较由每组 9–11 名听众判断；质量控制后共有 455 名听众和 13,649 个判断。</li>
+<li>Study 2 包含 708 个演员录音与 TTS render 的比较，每个比较由每组 4–5 名听众判断；质量控制后共有 199 名听众和 5,868 个判断。</li>
+<li>两种判断对系统的排序显著不同：conversational preference 强度与 human-likeness 强度不成比例，χ²(4)=25.6，p&lt;.001。</li>
+<li>OpenAI 在两种判断中均排名最低；Cartesia 在 conversational preference 中最高，在 human-likeness 中与 Rime 接近并列最高。</li>
+<li>听众在 human-likeness trial 中选择系统而非演员录音的比例为 19%，但在 conversational preference trial 中为 36%；对最受偏好的系统达到 49%。</li>
+<li>同一系统内部不同 voice 的差异约为系统间差异的四分之三，说明每个系统只测一个 voice 可能严重误判其真实表现。</li>
+<li>三个自动自然度分数中，有两个与更低的 human-likeness 相关，但没有任何一个能预测 conversational preference。</li>
+<li>在该客服通话场景中，两种判断都倾向于偏好更快的语速和更少的分句间停顿；conversational preference 还偏好更大的音高变化。</li>
+<li>结论是：仅测 human-likeness 或每个系统只测一个 voice，可能错误判断用户真正更愿意与哪个智能体对话。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文通过大规模成对听测清楚揭示了 human-likeness 与 conversational preference 的系统性分歧，并指出 TTS 评估若只测自然度或单一 voice，可能做出与用户真实偏好不一致的智能体选型决策。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.15919" target="_blank">qVocalTract: Efficient encoding framework of vocal-tract spectra on a quantum computer</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Quantum Acoustic Modeling</span>
+                <strong>ID:</strong> <span class="tag">2611.15919</span>
+                <a href="pdfs/2611.15919.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sheng Li, Jiyi Li<br>
+                <div style="margin-top:5px"><span class="tag">vocal-tract transfer functions</span><span class="tag">quantum state preparation</span><span class="tag">matrix product states</span><span class="tag">ancilla-free staircase</span><span class="tag">quantum acoustic processing</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>论文信息</h3>
+<ul>
+<li>标题：qVocalTract: Efficient Encoding Framework of Vocal-Tract Spectra on a Quantum Computer</li>
+<li>作者：Sheng Li, Jiyi Li</li>
+<li>核心任务：在量子计算机上高效编码声道传递函数/频谱，并比较不同量子态制备方案在真实硬件噪声下的声学重建能力。</li>
+</ul>
+<h3>核心痛点</h3>
+<ul>
+<li>声道传递函数连接发音几何与语音声学共振，是结构化声学数据上量子处理器的物理测试案例。</li>
+<li>振幅编码将 N=2^n 个值存入 n 个量子比特，但通用态制备门数随 N 增长，加载电路是实际量子表示的核心瓶颈。</li>
+<li>传统 sequential MPS 制备通过 ancilla 寄存器传递 bond index；增大 bond dimension χ 可提高近似能力，但会增大 site unitary 和 ancilla routing 成本，在稀疏连接处理器上噪声累积严重。</li>
+<li>近似精度与电路噪声之间存在权衡，需要找到在真实硬件上兼顾频谱包络误差和共振恢复的制备深度。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li>提出 qVocalTract 框架，采用无 ancilla 的 staircase 分层制备来加载声道频谱。</li>
+<li>目标态：对 G(f) 在 f_m = m f_max/N 采样，N=2^14，f_max=10 kHz；使用峰值归一化对数幅度 x_m = 20 log10|G(f_m)| − max_j 20 log10|G(f_j)|，编码为 |ψ⟩ = ||x||^{-1} Σ x_m|m⟩，所有目标幅度非正。</li>
+<li>MPS 压缩：右正则 tensor-train SVD，截断 bond dimension χ；14 sites 时 χ=2,4,8 的存储 tensor 数分别为 104,360,1192。</li>
+<li>Sequential MPS 基线：每个 site isometry 扩展为数据 qubit + ceil(log2 χ) ancilla 的 unitary；ancilla 携带 site 间 bond，末端回到零；大 χ 增加两比特门和路由成本。</li>
+<li>无 ancilla staircase：bond-two MPS 只需 n−1 个最近邻两比特门和 1 个单比特门；下一个数据 qubit 携带 bond。先从目标构造 U1，再从残差态 U1†|ψ⟩ 构造下一层，重复得到 U1U2...UL|0⟩，最后构造的层最先作用。</li>
+<li>对 L≥2 使用局域 polar-decomposition 更新门：单门目标 overlap 为 Tr(gE)，对 E=WΣV† 做 SVD，最大化 unitary 为 g=VW†；最多 40 次 forward sweeps，fidelity 增益低于 1e-7 停止。</li>
+<li>读出：计算基测量估计 P(m)=|φ_m|²，利用已知目标符号和尺度得到 x̂_m = −||x||₂ sqrt(P̂(m))；因全分辨率采样不足，合并 B=64 个相邻 bin 得到 256-bin 包络，间距 39.06 Hz；RMSE 在 0–10 kHz 计算；共振取 150–4000 Hz 内前三个峰，至少 3 dB prominence、约 200 Hz 间隔；缺失峰计为失败。还复现 tensor-product readout correction，用全零/全一校准电路修正粗边缘概率，假设读出误差独立。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>硬件：ibm_kawasaki；Qiskit，transpiler optimization level 3，固定种子，XY4 dynamical decoupling；对比 ideal sampler 和 FakeTorino 噪声模型。DVTD 含两名说话人的 44 个声道配置；参考案例 s1-01（speaker 1 的 tense /a/），目标共振 527、1113、2285 Hz。采样：ideal 100000 shots，噪声模型 20000，硬件 50000；44-case sweep 每例 20000 shots。</li>
+<li>参考元音：sequential χ=2/4/8 的编译 CZ 数 39/461/1839，device RMSE 6.63/7.82/10.30 dB；无噪声近似随 χ 改善，但硬件误差随门数增加而恶化。staircase L=1/2/3/4 门数 29/67/98/130，device RMSE 6.50/4.51/3.52/4.88 dB；L=3 最佳，检测共振 488、1113、2246 Hz，均在一个粗 bin 内接近目标；L=4 改善理想近似但硬件误差升至 4.88 dB。</li>
+<li>44 例数据集：L=3 校正后平均硬件 RMSE 4.74 dB，sequential χ=2 和 χ=4 分别为 7.15 和 9.15 dB；三共振均在 100 Hz 内的成功比例为 0.30，两个 sequential 基线均为 0.00。原始计数重算：L=3、χ=2、χ=4 平均 RMSE 4.77、7.16、9.22 dB；staircase 在 44 例中均优于两个基线；校正前后均有 13/44 满足三共振标准。原始三层的 F1/F2/F3 MAE 为 157、324、522 Hz，基于 44/44/43 个有效配对；校正表给出 160/310/518 Hz。</li>
+<li>对实测传递函数：三层硬件 RMSE 5.96 dB，其无噪声近似为 4.75 dB；sequential χ=8 仅在参考元音评估，未纳入 44 例 sweep。</li>
+<li>噪声模型：FakeTorino 下 sequential 随 χ 增大而退化；模型略偏好 L=4（4.21 vs 4.27 dB），硬件偏好 L=3（3.52 vs 4.88 dB），说明电路噪声会影响最佳制备深度。</li>
+<li>模态探针：独立实验使用平方根幅度编码 η_m ∝ sqrt(|G(f_m)|)，实幅度；一层 staircase，最多 84 个两比特门/电路，48 kHz 下 48 个时间采样，每样本 2000 shots；与理想制备态探针相关系数硬件 0.974，噪声模型 0.989，理想采样器 0.998。该实验验证制备态的相干处理，而非语音合成。</li>
+</ul>
+<h3>讨论与局限</h3>
+<ul>
+<li>结果将态制备成本与声学精度直接关联：更大 sequential bond dimension 降低近似误差但增加分解和路由成本；staircase 以更小步长增加局域两比特门，在测试处理器上给出近似精度与累积噪声的平衡。</li>
+<li>经典优化使用每个案例的完整目标向量；包络恢复需要大量采样；峰值提取对缺失和虚假共振敏感，需要重复硬件运行估计变异性。</li>
+<li>结论（截断部分）表明无 ancilla staircase 在测试的 sequential 基线上改善频谱恢复，三层提供...（原文截断）。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>qVocalTract 用无 ancilla 的 staircase 态制备在真实超导硬件上把声道频谱重建误差显著压低到约 3.52 dB（参考元音）和 4.74 dB（44 例平均），揭示了量子声学处理中“近似精度—电路噪声”的关键折中。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.15464" target="_blank">RSE-TTS: Compact Text-to-Speech through Shared Text-Aware Reference Encoding and Generation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2611.15464</span>
+                <a href="pdfs/2611.15464.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Ming Ma, Mingjie Chen, Yuanzhong Zheng, Hengyao Bao, Hailin Yu, Shijing Yu, Hao Qiu, Gongfan Cao, Xiao Li, Xuemin Zhao, Youhai Jiang<br>
+                <div style="margin-top:5px"><span class="tag">Text-to-Speech</span><span class="tag">Zero-shot Voice Cloning</span><span class="tag">Reference Encoding</span><span class="tag">Speaker Similarity</span><span class="tag">Parameter-efficient TTS</span><span class="tag">Autoregressive TTS</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>将 TTS 能力迁移到紧凑模型时，小型生成器既要准确表达新文本内容，又要保持参考说话人的身份与风格，因此如何高效利用参考语音是关键。</li>
+<li>声学续写（prompting）直接把参考语音放入生成历史，能保留丰富音色信息，但会把目标合成与参考话语耦合：长 prompt 占用上下文，录音伪影、异常停顿、参考语音与转写不匹配等问题会干扰合成。</li>
+<li>参考编码器将参考语音压缩为固定条件，可解耦参考处理与目标生成，但核心难点是压缩后仍保留足够的说话人身份和表达细节。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文提出 RSE-TTS，核心是 Reconstructive Speaker Encoder（RSE）：让参考编码与语音生成共享同一个预训练自回归 TTS 主干。</li>
+<li>关键发现：预训练 TTS 生成能力可迁移到参考压缩；用 TTS 主干初始化独立编码器比随机初始化显著提升生成语音的说话人相似度；联合编码参考文本与参考语音还能进一步增强。</li>
+<li>RSE 将参考文本、参考语音、EOS 和 8 个可学习 query 一起输入共享 Global Transformer，通过因果注意力一次前向得到 8 个压缩向量 Z；再与归一化投影后的 CAM++ 说话人嵌入相加，形成条件 Z̄。</li>
+<li>目标分支同样使用共享 Global Transformer，以 Z̄、目标文本和 BOS 为输入进行自回归生成；Local Transformer 逐帧生成 codec token，最后由 codec decoder 还原波形。</li>
+<li>训练采用 teacher forcing 的目标语音自回归交叉熵，同时包含 EOS 预测；梯度从目标预测经 Z̄ 回流到 query readout 和共享主干，从而联合训练参考编码与目标生成。</li>
+<li>由于编码与生成共享主干，相比独立预训练编码器，编码器与生成器合计参数量减少 48%。</li>
+<li>论文通过转写扰动和激活干预进行机制分析：破坏文本-语音对应关系后，恢复中间参考音频表示或较后的 query 表示可恢复生成说话人相似度，说明参考文本通过中间声学表示影响压缩 query 状态，进而支持音色重建。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>基于 MOSS-TTS-Nano 的 Global–Local 自回归 codec TTS 架构：Global 为 12 层、隐藏维 768，Local 为单层自回归生成每帧 codebook 索引；冻结 codec 以 12.5 帧/秒、16 个 codebook、48 kHz 重建音频。</li>
+<li>控制消融包含 5 个变体：独立音频随机初始化、独立音频预训练初始化、独立文本+音频、共享音频、共享文本+音频（RSE）。所有变体使用相同数据顺序、学习率计划、8 个 query、辅助说话人条件和目标端目标函数。</li>
+<li>使用大规模内部英语语料训练，得到一个 118M 参数生成器。</li>
+<li>在 Seed-TTS、CV3-eval、MiniMax 三个英语基准上，RSE-TTS 相比对应官方 MOSS-TTS-Nano cloning 模式同时改善 WER 与说话人相似度。</li>
+<li>结合 acoustic continuation 后，RSE-TTS 的说话人相似度接近显著更大的系统，同时 WER 低于所评估的 CosyVoice 3 和 MOSS-TTS-Local。</li>
+<li>评估使用相同目标文本和参考录音；参考经过 RE-USE 增强、VAD 去首尾静音和响度归一化；SIM 为 WavLM 说话人嵌入余弦相似度。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>RSE-TTS 通过复用预训练 TTS 主干实现文本感知的 8 向量参考压缩，在显著降低参数量的同时提升紧凑 TTS 的可懂度与说话人相似度，并给出了有机制解释的实证分析；但其跨语言泛化、完整基准细节和压缩表示的鲁棒性仍需结合全文与更多实验进一步验证。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.15362" target="_blank">JEV-VAD: Efficient Semantic Endpointing via Task-First Conditioning and Decoder-Prefix Pruning</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Error</span>
+                <strong>ID:</strong> <span class="tag">2611.15362</span>
+                <a href="pdfs/2611.15362.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jintao Liang, Nan Li, Longbiao Wang, Tubin Huang, Min Xu<br>
+                <div style="margin-top:5px"><span class="tag"></span></div>
+            </div>
+            <div class="summary-section">
+                <p>总结生成失败: Expecting ',' delimiter: line 1 column 1260 (char 1259)</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.15087" target="_blank">Scaffolding Self-Transduction with Alignment Attention Mask for Aligner-Encoder ASR</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2611.15087</span>
+                <a href="pdfs/2611.15087.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Jaeyoung Lee, Masato Mimura<br>
+                <div style="margin-top:5px"><span class="tag">Aligner-Encoder ASR</span><span class="tag">Self-Transduction</span><span class="tag">Alignment Attention Mask</span><span class="tag">Forced Alignment</span><span class="tag">End-to-End ASR</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>端到端 ASR 需要从序列级监督中同时解决语音-文本对齐与 token 预测。</li>
+<li>Aligner-Encoder 将帧到 token 的对齐放在 encoder self-attention 内部完成（self-transduction），取消 transducer lattice 与 decoder cross-attention，解码快速且无 lattice；但训练准则不保证对齐，self-attention 必须仅靠序列级监督自行学习。已有工作观察到对齐在少数上层 encoder 层突然出现，优化脆弱，长句易累积删除错误。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 alignment attention mask 来 scaffold self-transduction：用外部 forced alignment 得到的单调帧-token 对齐路径构造 attention mask，只作用于单个 encoder 层中选定的若干 self-attention heads。</li>
+<li>对 token 位置 query，限制其只能关注对齐路径附近宽度为 b 的 band。定义 length band（仅用目标长度 U 的线性中心）与 path band（用外部 RNN-T forced aligner 的累计 token index）。</li>
+<li>mask 以乘性方式作用于选定 head 的 pre-softmax attention 权重；训练中可 faded out，推理时恢复未修改架构；也可在训练和推理中保持 active 作为 oracle，衡量对齐被外部解决后的性能上限。</li>
+<li>该工作声称是首次将外部对齐路径直接迁移到执行对齐的 encoder self-attention 中，并用 oracle mask 测量该架构的对齐解决性能天花板。</li>
+</ul>
+<h2>模型与训练要点</h2>
+<ul>
+<li>Aligner-Encoder 将前 U 个 encoder 位置与 U 个目标 token 一一配对，第 u 个 token 由 encoder 位置 u 预测，其余 encoder 位置被丢弃。</li>
+<li>Predictor 为单层 LSTM，Joiner 为单层前馈网络，训练使用 teacher forcing 与交叉熵损失；推理使用 beam search 与长度惩罚。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在 LibriSpeech 上，faded alignment mask 将 test-clean/test-other WER 从 Aligner baseline 的 3.9/6.4 改善到 3.5/5.9，且推理不需要外部 aligner。</li>
+<li>oracle masks 更强，达到 1.2/2.9 WER；作者将其视为 100M 级 Conformer、无外部语言模型条件下该架构的上界准确率。</li>
+<li>结果表明对齐推断是 Aligner-Encoder ASR 的主要瓶颈，改进对齐机制可能为端到端 ASR 带来显著 headroom。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>论文利用 Aligner-Encoder 内部可掩码的对齐场，将外部 forced alignment 转化为 encoder self-attention 的结构约束，并以 faded 与 oracle 两种设置清晰揭示了对齐瓶颈及其性能上限，方法简洁且诊断价值强。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.14929" target="_blank">Speech Tokenizers are Vulnerable: Transferable Semantic Attack and Robust Tokenizer</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Security & Adversarial Robustness</span>
+                <strong>ID:</strong> <span class="tag">2611.14929</span>
+                <a href="pdfs/2611.14929.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Zhisheng Zhang, Yifan Mi, Yixuan Zhou, Haiyun Li, Shengbo Cai, Dongfu Song, Ziang Xu, Jie Hao, Zhiyong Wu<br>
+                <div style="margin-top:5px"><span class="tag">speech tokenizer</span><span class="tag">adversarial attack</span><span class="tag">transferability</span><span class="tag">semantic representation drift</span><span class="tag">robust tokenizer</span><span class="tag">psychoacoustic constraint</span><span class="tag">ASR</span><span class="tag">LALM</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音 tokenizer 是 ASR、TTS 与 LALM 的语音前端，负责把连续语音映射为离散 token 或连续表示；其鲁棒性直接决定整个语义流水线的可靠性。</li>
+<li>现有研究主要评估 tokenizer 对高斯噪声的鲁棒性，但语义级对抗攻击可暴露更严重漏洞：小扰动即可破坏语义编码，导致下游 ASR 与 LALM 性能显著下降。图 1 显示，T-SemAttack 在约 19.48 dB 下造成的 FSC 下降甚至低于 5 dB 高斯噪声条件下的结果。</li>
+<li>现有可迁移 ASR 攻击通常依赖完整 ASR/LALM 结构或 CTC 等代理目标，优化成本高、可迁移性受限，且对 tokenizer 前端表示漂移、token 崩溃及下游注意力干扰的传播机制分析不足。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 T-SemAttack：一种面向语音 tokenizer 语义表示的可迁移语义攻击。该方法联合扰动多个代理语义编码器，包括 S3Tokenizer、HuBERT、Whisper encoder 与 MFCC，通过最小化干净语音与对抗语音在多个编码器中的帧级平均余弦相似度，使语义表示发生漂移并诱导错误 token/特征。</li>
+<li>为兼顾攻击效果与感知质量，引入心理声学掩码约束：仅当扰动在时频单元中的能量超过掩蔽阈值时施加惩罚；总目标结合语义损失、心理声学损失与扰动范数约束，并采用 PGD 式投影更新，约束 L∞ 范数。</li>
+<li>分析层面研究逐层表示漂移与跨模型梯度对齐，发现深层语义表示会发生显著偏移，不同代理编码器的输入梯度存在方向对齐，表明输入空间中共享的对抗敏感方向可能是跨模型迁移性的关键因素。</li>
+<li>基于攻击分析提出 ROSETok：一种鲁棒语音 tokenizer，结合噪声训练与鲁棒语义蒸馏，在保持高保真重建的同时提升下游 SpeechLLM 对高斯噪声和对抗攻击的鲁棒性。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在双语、多说话人数据集、9 个开源与黑盒 ASR 系统、4 个 LALM 上评估；摘要与引言报告 T-SemAttack 在感知质量、攻击效率与攻击有效性方面达到 SOTA，并展现强迁移攻击性能。</li>
+<li>验证了对去噪、数据变换等自适应防御的鲁棒性；ROSETok 在高保真重建与下游任务中表现出鲁棒性。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该论文系统揭示了语音 tokenizer 的语义级安全瓶颈，提出可迁移语义攻击 T-SemAttack 及对应鲁棒 tokenizer ROSETok，为语音前端安全与下游 SpeechLLM 鲁棒性提供了攻击-防御一体化研究框架。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.14908" target="_blank">Hy ASR 3.0 Technical Report</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2611.14908</span>
+                <a href="pdfs/2611.14908.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Aoxiong Yin, Auden Li, Chao Huang, Chuanyang Hu, Eitan Wang, Ethan Zou, Fangming Feng, Guangyu Chen, Guinan Li, He Wang, Jiahong Li, Meng Yu, Mingyu Cui, Peng Wang, Rongjie Li, Steve Yves, Teddy Sun, Tian Zheng, Wei Liu, Yang Zhou, Yixuan Zhang, Zhennan Lin, Zhihang Xu, Zhuohao Li, Ziqiang Zhang, Anji Zhang, Bang Wang, Caisheng Ouyang, Chengqi Zhu, Chong Li, Conglian Xie, Dongdong Wang, Edward Wang, Evelynn Liu, Ferman Yang, Feng Lu, Gang Zhang, Jathon Zhang, Jaxl Liu, Jiachen Luo, Jian Li, Jingxi Gui, Kysun Wang, Liang Dong, Longsha Zhou, Na Hu, Qi Chen, Rilin Chen, Rui Yuan, Shanshan Sang, Siyu Yan, Steven Hong, Taihui Wang, Weiwei Li, Xiangyu Zhang, Xiaotong Yang, Xue Hu, Xue Jiang, Yameng Li, Yifu Sun, Yuhuan Zhou, Zhiang Chen, Zhibin Wang<br>
+                <div style="margin-top:5px"><span class="tag">LLM-based ASR</span><span class="tag">contextual biasing</span><span class="tag">hotword retrieval</span><span class="tag">dialect recognition</span><span class="tag">robust speech recognition</span><span class="tag">multi-teacher on-policy distillation</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Hy ASR 3.0 技术报告总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>需要在普通话、英语、粤语及其他中文方言上同时取得高识别准确率。</li>
+<li>需要有效利用异构外部上下文，包括热词列表、问答对话和摘要，以提升任务相关识别。</li>
+<li>需要在长音频、儿童与老年人语音、低音量语音、 whispered speech 和噪声环境等挑战条件下保持稳健。</li>
+<li>需要在不额外输入上下文的情况下，利用同一句内部信息消歧同音词和音近关键词。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>系统采用 LLM-based ASR 架构，由音频编码器、音频适配器、LLM 解码器和音频条件热词检索机制组成。</li>
+<li>外部上下文以文本前缀形式置于音频嵌入之前；热词检索模块根据音频表示和候选热词列表选择相关词条。</li>
+<li>句内上下文通过音频与转录序列本身捕获，用于同音词和音近关键词消歧，而不作为单独外部输入。</li>
+<li>音频编码器采用迭代 HuBERT 风格自监督学习：先用 Best-RQ 训练 bootstrap encoder，量化中间表示构造离散目标；再用 HuBERT 中间模型和残差向量量化生成多级目标，最终编码器从掩码语音输入预测这些目标。</li>
+<li>编码器在数千万小时语音上分两阶段训练，先大规模预训练，再在更强调中文方言、降低噪声录音和短句权重的重平衡数据上继续预训练，并加强掩码策略与 utterance mixing。</li>
+<li>预训练分为大规模预训练和定向继续预训练。大规模阶段使用多系统 ASR 生成候选假设，经 ROVER 融合和多阶段质量过滤构造伪转录，并结合领域感知数据平衡与数据压缩；报告称仅用 50% 原始训练数据即可取得更好性能。</li>
+<li>定向继续预训练增加方言语音、上下文偏置数据和挑战声学条件数据比例，提升方言识别、上下文偏置能力与鲁棒性，并将 SFT 数据减少到原来的十分之一。</li>
+<li>后训练包括 SFT 与强化学习。SFT 使用迭代伪标注，将上一轮最佳 SFT checkpoint 作为教师模型生成下一轮伪转录。</li>
+<li>RL 阶段先训练通用 ASR、方言 ASR、上下文偏置 ASR 三个独立专家，再通过多教师 on-policy 蒸馏 MOPD 将三个专家能力整合到统一模型，目标为 token 级 KL 蒸馏。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>公共基准：普通话 4.64% CER/WER，对比 FunASR Flash 4.77%，RERR 约 2.7%；英语 5.22%，对比 StepAudio 3 ASR Max 5.38%，RERR 约 3.0%；方言 4.80%，对比 Qwen3 ASR Flash 5.45%，RERR 约 11.9%。</li>
+<li>报告正文称粤语公共基准达到 5.06%，相对 Qwen3 ASR Flash 约 11.0% RERR；KeSpeech 上为 3.77%，对比 FunASR Flash 4.33%。</li>
+<li>内部基准：普通话 3.18%，对比 Doubao ASR 2.0 3.78%，RERR 15.9%；英语 5.50%，对比 Doubao ASR 2.0 6.42%，RERR 14.3%；粤语 4.81%，对比 Qwen3 ASR Flash 6.00%，RERR 19.8%；code-switching 4.20%，对比 FunASR Flash 5.30%，RERR 20.8%。</li>
+<li>上下文识别：句内上下文目标关键词召回 61.88%，对比 Seed 2.0 Lite 54.64%，提升 7.24 个百分点；对话 QA 上下文召回 83.94%，对比 82.20%，提升 1.74 个百分点。</li>
+<li>鲁棒识别：长语音 CER 2.35%，对比 StepAudio 3 ASR Max 3.58%，RERR 34.4%；儿童加老年人语音 6.25%，对比 Doubao ASR 2.0 6.43%，RERR 2.8%；whispered speech 7.49%，对比 FunASR Flash 9.27%，RERR 19.2%。</li>
+<li>系统支持普通话、英语、粤语及另外 12 个主要中文方言组；内部人工评测覆盖 91 个次区域变体，报告称达到 SOTA。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>Hy ASR 3.0 是一个面向多语言与多方言场景的 LLM-based ASR 系统，通过热词检索与外部上下文条件化、句内上下文消歧、三阶段训练和多教师 on-policy 蒸馏，在识别准确率、上下文利用和复杂语音鲁棒性上均取得显著且较全面的实验增益。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.14801" target="_blank">Distributionally Robust BEST-RQ For Speech Representation Learning</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2611.14801</span>
+                <a href="pdfs/2611.14801.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Muhammad Khan, Xiaodong Cui, Brian Kingsbury, George Saon<br>
+                <div style="margin-top:5px"><span class="tag">BEST-RQ</span><span class="tag">Distributionally Robust Optimization</span><span class="tag">Self-Supervised Learning</span><span class="tag">Speech Representation Learning</span><span class="tag">Codebook Quantization</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li><strong>BEST-RQ 依赖固定随机量化器</strong>：BEST-RQ 使用固定的随机投影矩阵和随机码本构造离散预测目标，计算高效且无需学习码本，但表示质量对随机码本配置较敏感。</li>
+<li><strong>单一随机码本未必最优</strong>：不同随机初始化会导致不同的码本利用率与预训练任务难度；针对某一配置优化的表示可能对特定目标空间过拟合。</li>
+<li><strong>简单多码本平均训练存在假设偏差</strong>：等权平均多个码本隐含假设所有码本诱导的预测任务同等可靠、同等有信息量，但实际中不同码本的利用率和难度不同，均匀平均仍可能偏向部分码本，不能显式提升对较差配置的鲁棒性。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li><strong>将每个随机码本视为一个 group</strong>：论文提出 DRO-BEST-RQ，把不同随机码本对应的 BEST-RQ 量化配置建模为不同 group，同一批语音在不同码本下产生不同伪标签目标空间。</li>
+<li><strong>Group DRO 训练目标</strong>：不再仅最小化所有码本的平均损失，而是求解带 KL 正则的 group DRO minimax 问题：</li>
+<li>最小化共享编码器与各组预测头的参数；</li>
+<li>最大化关于 group 分布 z 的加权损失，使训练自适应地强调当前表现较差的码本配置。</li>
+<li><strong>KL 散度正则</strong>：对 group 分布 z 相对均匀分布 µ 施加 KL 正则，防止优化过度集中到单一码本，保持多配置之间的平衡贡献。</li>
+<li><strong>模型结构</strong>：共享编码器 θE 加 group-specific 预测头 ηg；每个码本对应一个预测头，编码器在所有 BEST-RQ 配置间联合优化。</li>
+<li><strong>优化算法</strong>：采用小批量随机梯度下降—投影随机梯度上升（SGD-PSGA）求解 minimax 问题；模型参数用 SGD 更新，group 分布 z 用梯度上升后投影到概率单纯形 ∆G。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li><strong>数据集</strong>：在 Multilingual LibriSpeech（MLS）上评估，使用英语、西班牙语、法语、德语、葡萄牙语五种语言。</li>
+<li><strong>数据规模</strong>：英语从 44,659.74 小时中随机选取 4,000 小时；其他四种语言使用全部训练数据；五语言多语数据合并去标签后共 8,121.73 小时用于 BEST-RQ 无监督预训练。</li>
+<li><strong>主要结论</strong>：分布鲁棒 BEST-RQ 在多个码本设置下优于传统的均匀平均多码本训练，说明显式建模码本配置差异并自适应重加权可提升表示鲁棒性。</li>
+<li><strong>注意</strong>：所给片段未包含具体 WER 等数值结果，因此无法在总结中给出精确性能提升幅度。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文将 BEST-RQ 的多随机码本训练重新表述为带 KL 正则的 Group DRO 问题，通过自适应强调表现较差的码本配置，在保持固定随机量化高效性的同时提升了语音表示对量化目标空间变化的鲁棒性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.14774" target="_blank">An LLM Is All You Need: Data-Efficient Adaptation to Full-Duplex, Word-Level Spoken Dialogue</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-14</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Full-Duplex Spoken Dialogue</span>
+                <strong>ID:</strong> <span class="tag">2611.14774</span>
+                <a href="pdfs/2611.14774.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tairan Chen, Richard Yucheng He, Yihang Liu, Baodong Cao, Chen Xu<br>
+                <div style="margin-top:5px"><span class="tag">full-duplex spoken dialogue</span><span class="tag">frozen LLM adaptation</span><span class="tag">turn-taking</span><span class="tag">thinker-talker</span><span class="tag">word-level frame clock</span><span class="tag">finite-state machine</span><span class="tag">backchannel</span><span class="tag">barge-in</span><span class="tag">data-efficient training</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>论文概要</h3>
+<p>论文提出一种数据高效的全双工语音对话改造方案：从已具备语音与文本理解能力的通用多模态 LLM（Qwen3-Omni）出发，冻结其主干权重，仅训练轻量适配器，将模型转换为逐词级、帧同步的全双工对话系统。系统采用 thinker–talker 级联结构，在 80 ms 帧时钟上运行，thinker 每帧输出一个 agent 文本 token，talker 将离散 token 转为语音。</p>
+<h3>核心痛点</h3>
+<ul>
+<li><strong>全双工行为获取成本高</strong>：现有系统如 Moshi、SyncLLM 依赖数十万到数百万小时语音训练，计算昂贵，并会改写提供系统知识的语言模型。</li>
+<li><strong>轮次转换决策粒度粗或隐式</strong>：端到端模型将 turn-taking 隐式留在音频流中，难以检查或约束；显式方案多以时间片或状态机粗粒度决定，难以做到逐词级重叠、打断与反馈。</li>
+<li><strong>逐帧采样易产生非法序列</strong>：若每帧自由采样是否说话、说什么、是否暂停，单个错位 token 可能导致训练中未见的序列。</li>
+<li><strong>thinker 与 talker 耦合</strong>：现有 thinker–talker 模型常通过连续表示耦合两半，导致必须联合训练。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li><strong>冻结 LLM + 轻量适配</strong>：保持 Qwen3-Omni 冻结，仅训练 LoRA、17 个新 token embedding、音频适配器和 channel-fusion 层，共约 97M 参数。</li>
+<li><strong>逐词级全双工建模</strong>：在 12.5 Hz / 80 ms 帧时钟上，每帧预测一个 agent 文本 token；pause、yield、onset 作为同一词表中的 token，由有限状态机（FSM）屏蔽非法 token，保证采样合法。</li>
+<li><strong>四阶段课程学习</strong>：依次完成音频对齐、暂停时机、双通道时间线上的轮次转换、打断与 backchannel 处理；每阶段以模型在上一格式下的行为为锚，约 30 GPU-hours 完成转换。</li>
+<li><strong>离散 token 接口解耦 thinker 与 talker</strong>：talker 只读取 thinker 的离散 token，因此两半可独立训练、顺序不限。</li>
+<li><strong>初始化与 KL 锚定</strong>：新输入路径初始化使冻结 LLM 首先看到已有理解的表示；格式变化以旧格式下模型自身行为为 KL 锚，阶段主要教“何时说”而尽量保持“说什么”。</li>
+</ul>
+<h3>实验结果</h3>
+<p>摘要报告在 Full-Duplex-Bench 与 InteractionBench 上，该系统与通过大规模语音训练构建的开源全双工系统具有竞争力：在对比系统中，它最不容易在用户仅停顿时抢话，backchannel 频率最高，并在口语任务准确率、groundedness 和长对话连贯性上领先。论文片段未给出具体数值，完整结果需见实验部分。</p>
+<h3>一句话评价</h3>
+<p>该工作把全双工对话的核心从“大规模语音重训练”转向“冻结 LLM 上的轻量、分阶段、逐词级适配”，在数据与算力效率上提供了有吸引力且可解释的工程路线。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-11-12</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2611.14443" target="_blank">Assessing Alignment in Automatic Piano Transcription Datasets: A Benchmark for Scoring Methods</a>
