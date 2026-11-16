@@ -1,0 +1,198 @@
+# Arxiv Daily Deep Report - 2026-11-16
+
+**来源**: https://arxiv.org/list/eess.AS/recent
+**篇数**: 6
+---
+
+## 1. Marimba: A System One Model for Speech
+
+**作者**: Solano Amadori
+**链接**: [2611.18330](https://arxiv.org/abs/2611.18330)
+**分类**: Speech Understanding | **关键词**: typed speech decisions, frozen ASR encoder, calibration, turn-end detection, term spotting, speaker change detection
+
+## 核心痛点
+语音应用需要在同一段短音频窗口上同时回答多类问题，例如是否出现某个词、说话人是否结束、是否有人说话、语言是什么、是否为同一说话人、是否发生说话人变化以及说话人数量等。现有方案存在以下问题：
+- 音频语言模型（Qwen2-Audio、SALMONN、Qwen3-Omni 等）通常需要为每个问题单独构造 prompt 并生成文本，输出 token 对数概率并非面向 typed 决策空间校准后的概率。
+- 仅将 1-best ASR 转录交给文本模型会丢失识别器不确定性，罕见词或专名一旦解码错误，下游难以恢复或校准。
+- 单任务工具彼此割裂，无法在请求时通过统一接口同时处理词项、轮次结束、语音活动、语种和说话人等问题。
+- Jev 等 typed decision 模型能输出声明选项上的概率，但不接受音频输入。
+
+## 方法创新
+论文提出 marimba，一个面向语音的 System One typed decision 接口，核心是基于冻结的 Qwen3-ASR 0.6B 特征：
+- **统一接口**：将词汇评分、非词汇预测、语种识别和冻结的 turn-end readout 分离组织，输出 choice、yes/no 或 score 三类 typed JSON 结果。
+- **词汇问题零样本评分**：使用冻结 ASR decoder 对同一 8 秒窗口做 greedy 解码和 4-beam 搜索，共得到 5 条假设；将查询词与每条假设归一化后做精确 token 序列匹配，以包含该词的假设比例作为原始分数，再用 held-out 校准集上的 Platt scaling/logistic regression 映射为概率。新增词项不增加 decoder 前向次数。
+- **非词汇问题 question-conditioned head**：冻结 encoder 提取帧级特征，question-and-option encoder 表示问题和候选选项，cross-attention scorer 输出候选上的 typed 分布；训练时打乱选项顺序，避免类别与固定位置绑定。
+- **turn-end 专用 readout**：在 encoder 第 18 层特征上拟合冻结 logistic readout，池化最后两秒有效帧，短输入左填充并屏蔽 padding。
+- **语种识别**：直接使用 ASR 模型自身的 language scores。
+- **说话人相关任务**：使用第 12 层 speaker readout 进行说话人变化检测和说话人数目判断。
+- **困难负样本与校准评估**：构造语音上易混淆的 hard negatives，包括真实药物混淆词对、未被说出的词项以及 withheld terms；报告 AUROC、ECE、accuracy-targeted coverage，并区分不同数据来源的不确定性与缺失测量。
+- **任务套件**：覆盖 term spotting、个人信息存在性、turn end、voice activity、language identification、same speaker、speaker change、speaker count 等 typed 语音决策。
+
+## 实验结果
+- 私有对话测试集上 decoder AUROC 为 0.80–0.92；公开朗读语音上为 0.92–0.97。
+- Speech Commands 四分类准确率为 0.93；二值词汇决策 ECE 最大为 0.08。
+- 个人信息检测将 greedy transcript 送入私有 curated PII pipeline，在合成巴西葡萄牙语语音上 item-level F1 为 0.904，在参考转录上为 1.000。
+- 第 12 层 speaker readout 在 AMI 和 VoxConverse 上检测说话人变化的 AUROC 为 0.966–0.980，高于 ECAPA baseline；说话人数目（0、1、2、3+）判断比 pyannote 3.1 更准确。
+- turn-end readout 在 Smart Turn 自身测试集上 AUROC 为 0.930，低于 Smart Turn v3.2 的 0.982。
+- 在按 next speaker 标注的 ICSI 会议子集上，AUROC 为 0.716，对比方法为 0.712；配对置信区间包含零，优势不显著。
+
+## 一句话评价
+marimba 提出了一种以冻结 ASR 特征为核心、面向多类语音判断的统一 typed decision 接口，在词项检测、校准、说话人变化和说话人数目等任务上表现有竞争力，但在 turn-end 检测和部分会议场景中仍落后或仅与专用系统持平。
+
+---
+
+## 2. Reproduction of Simulated Acoustics Scenes Using Acoustics Room Transformer for speech intelligibility tests in Clinics
+
+**作者**: Ali Fallah, Kirsten C Wagener, Pascal Pflueger, Steven van de Par
+**链接**: [2611.18103](https://arxiv.org/abs/2611.18103)
+**分类**: Virtual Acoustics and Clinical Speech Intelligibility Testing | **关键词**: Acoustic Room Transformation, Speech Intelligibility, Speech Reception Threshold, Room Compensation, Virtual Acoustics, Six-loudspeaker Reproduction
+
+# 论文总结
+
+## 核心痛点
+- 临床与听觉研究中，语音清晰度常通过 SRT 测试评估，但耳机呈现虽然精确，却不适合助听器/人工耳蜗用户及需要空间声的场景。
+- 扬声器呈现更接近临床与真实聆听，但受测试房间声学影响显著；即使低混响听音室，房间声学也可能显著改变 SRT，导致不同诊所结果不可比。
+- 理想的多通道阵列和消声室在临床环境中通常不可得，因此需要一种在普通混响房间、有限扬声器条件下复现虚拟声场景并补偿播放房间声学的方法。
+- 混响会改变语音的时域、频谱和空间线索，降低清晰度并削弱 S0N90 相对 S0N0 的空间释放效益，因此必须控制混响能量与双耳相干性。
+
+## 方法创新
+- 论文提出并扩展 Acoustic Room Transformation（ART）方法，用于临床语音清晰度测试中的虚拟声场景复现，重点针对 S0N0 与 S0N90 两种 SRT 配置。
+- 系统使用六只扬声器：一只前方扬声器和一只侧方扬声器复现直达声成分；其余四只扬声器（前方两只、后方两只）生成混响场。
+- 参考虚拟环境由 RAZR 生成，包括参考 BRIR_ref 和虚拟声源 VAS；BRIR_ref 按分离时间 T_ref 分为直达与混响部分。
+- 复现时对直达声进行能量优化；对混响场同时根据能量和双耳相干性进行调整；并施加额外直达声增益，使复现信号的清晰度指数 C50 匹配参考目标。
+- 方法通过时不变滤波和交叉混合补偿播放房间声学，保留直达声的方向性以及混响场的空间扩散性。相比先前四扬声器 ART，本文扩展为六扬声器并增加用于直达语音与噪声源的专用通道，以支持双耳语音清晰度与 SRT 测试。
+
+## 实验与结果
+- 论文报告了语音清晰度测试结果，比较 ART 处理后的复现场景与参考信号在 S0N0 和 S0N90 条件下的 SRT。
+- 结果表明，经 ART 处理后，复现场景的 SRT 值在两种条件下都非常接近参考信号，因此可在不同测试房间声学条件下获得可比的语音测试结果。
+- 由于提供的片段被截断，具体受试者数量、SRT 数值、统计检验和跨房间稳健性细节未在片段中完整给出。
+
+## 一句话评价
+- 这是一个面向临床落地的紧凑型房间声学补偿与虚拟声复现框架，用六扬声器在普通混响房间中实现与参考接近的 SRT，实用价值较强，但仍需全文中的定量结果与跨房间验证支撑其稳健性。
+
+---
+
+## 3. Anomalous Sound Detection Using Separation Features and Paired-Mixture Representation Learning
+
+**作者**: Seunghyeon Shin, Seokjin Lee
+**链接**: [2611.17895](https://arxiv.org/abs/2611.17895)
+**分类**: Anomalous Sound Detection | **关键词**: Anomalous Sound Detection, Source Separation, Representation Learning, Contrastive Learning, Acoustic Condition Monitoring
+
+## 论文总结
+
+### 核心痛点（Core Pain Points）
+- 声学状态监测场景中，故障样本稀少且故障声学特征随故障类型和工况变化剧烈，难以采集有代表性的异常样本，因此必须依赖正常录音进行学习。
+- 转速、负载、麦克风布置、环境噪声等变化会改变正常声音，因此检测器需要在保留机器状态信息的同时容忍正常声学变化。
+- 详细的工况元数据（机器型号、转速/负载、机器实例 ID、section/domain 标签）往往需要额外监测系统或人工标注，且在不同环境中可用性差异大；现有方法（如辅助分类、伪标签、大规模预训练特征）多依赖这类标注或外部预训练资源。
+- 作者希望仅在“正常录音 + 机器类型信息”约束下（无细粒度工况属性、无实例 ID、无 domain 标签用于训练与打分）实现异常声音检测。
+
+### 方法创新（Method Innovation）
+- **两阶段表示学习框架**：
+  1. **分离器（Separator）阶段**：将目标机型正常录音与其他机型录音混合，让分离器学习估计“目标分量”（target-component estimation），提供输入–参考对监督。
+  2. **聚合网络阶段（分离器冻结）**：用共享同一目标片段的“配对混合（paired mixtures）”训练区域注意力（regional attention）与多阶段融合（multi-stage fusion），采用**对比目标**和**目标–参考一致性目标**。
+- **区域化特征聚合**：区别于全局平均池化（GAP），对预定义时–频区域保留独立摘要，聚合时保留粗粒度位置信息，再进行多阶段融合。
+- **基于干扰的嵌入校正**：利用配对混合的嵌入差异估计协方差统计量，与正常参考中心化（normal-reference centering）结合，对干扰相关变化进行校正；随后用**余弦最近邻（cosine nearest-neighbor）打分**与正常参考比较。
+- **机器类型信息组织**：每个目标机型拥有自己的分离网络、特征聚合网络、正常参考集与校正统计量；其他机型录音池作为非目标源，按录音级均匀采样。
+- 三大贡献：①利用正常目标录音定义分量估计目标与配对混合对应关系的两阶段表示学习器；②将正常参考中心化与配对混合差异协方差结合的嵌入校正；③跨机型、跨域、跨特征提取器配置的系统与组件级对比分析。
+
+### 实验结果（Experimental Results）
+- 数据集：DCASE 2022 Challenge Task 2 的 development-test 数据。
+- 系统配置：两 block、64 通道，三次独立训练/评估运行。
+- 性能：总体调和平均（harmonic mean）**64.56%**（三次平均），样本标准差仅 **0.33 个百分点**。
+  - 比“直接配对混合学习”高 **2.23 个百分点**。
+  - 比使用外部预训练教师模型的蒸馏系统低 **0.31 个百分点**（即在无外部预训练条件下接近蒸馏方法）。
+- 消融/对比结论：
+  - 在代表系统中，配对混合协方差与正常协方差在结合中心化时，前者带来更好的检测性能。
+  - 学习式聚合与后续校正带来的增益在三次训练中均保持稳定。
+  - 对于学习到的嵌入，余弦最近邻打分优于基于全局正态统计的 Mahalanobis 打分器。
+
+### 一句话评价
+该论文提出了一种无需外部预训练、仅依赖正常录音与机器类型信息的两阶段异常声音检测框架，创新性地将源分离监督、配对混合对比表示学习与基于干扰协方差的嵌入校正结合，在 DCASE 2022 Task 2 上以极低方差取得 64.56% 的调和平均，接近依赖外部预训练教师的蒸馏系统，证明了分离特征与配对混合表示学习在真实工况约束下的有效性。
+
+---
+
+## 4. FEND: Far-End Detection in Outbound Voice AI Calls
+
+**作者**: Abhishek Kumar, Suraj Agrawal, Aashraya Sachdeva
+**链接**: [2611.18050](https://arxiv.org/abs/2611.18050)
+**分类**: Telephony Speech Classification / Voice AI | **关键词**: Far-End Detection, Answering Machine Detection, Voice AI, AI Callee Detection, Speech Timing, IVR Detection, Voicemail Detection
+
+## 核心痛点
+出站 Voice AI 呼叫接通时，远端可能是真人、语音信箱/应答机、IVR，或越来越多地是替机主接听的另一个 AI。传统 AMD 只输出 human/machine 二值标签，面向人类呼叫中心设计，无法告诉 Voice AI agent 下一步该做什么：留言、继续 IVR 导航、与 AI 短对话，还是直接与真人交谈。最昂贵的错误是把真人误判为自动端并挂断。
+
+## 问题定义与数据
+论文把 far-end detection 定义为四类互斥问题：HUMAN、VOICEMAIL/AM、IVR、AI CALLEE，并按自动化系统替谁说话来区分 IVR 与 AI callee。作者从自有出站部署随机抽取 1,000 通电话人工标注，分布为真人 48.1%、语音信箱 44.6%、AI 接听 6.9%、IVR 0.4%。公共基准 Telephony-AMD 含 400 条英/西/法/德语音频，分层划分为 119 条调参集和 281 条评估集。
+
+## 方法创新
+FEND 同时读取远端原始音频帧和流式 ASR 转写，运行多个独立检测器：STFT 检测留言提示音 beep；多语言关键词匹配语音信箱短语；LLM 工具调用检测 voicemail；另一个 LLM 工具调用检测 IVR；AI callee 检测器不依赖内容，而从 ASR 词级时间戳提取 7 个语速/停顿统计特征，用逻辑回归分类，阈值按 5% 真人误报预算设定。各检测器在决策窗口 W 内持续运行并可触发，最终按证据确定性优先级仲裁：VOICEMAIL > IVR > AI CALLEE，未触发则默认 HUMAN，目标在 20 秒内返回单一标签。作者还复现了 Asterisk 20.6.0 的 AMD 模块用于离线对比。
+
+## 实验结果
+公共基准上，语音信箱相关组件达到 100% 准确率且不将真人误判为自动端，而 Asterisk AMD 对真人的误判率为 30% 至 66%。AI callee 的声学特征跨录音条件不迁移，但语音时间特征可迁移，区分 AI 与真人的 ROC-AUC 为 0.952，原因是合成语音词间停顿显著更短。生产流量上，区分真人与任意自动端的 F1 达 0.979，仅 2.9% 真人被赋予自动端标签，满足最关键的低真人误报约束。
+
+## 一句话评价
+FEND 将传统二值 AMD 升级为面向 Voice AI 出站呼叫的四类远端检测框架，以多证据检测器加优先级仲裁实现低真人误报的实时分类，并给出语音时序是识别 AI 接听关键信号的有力证据。
+
+---
+
+## 5. Cross-Linguistic Acoustic Biomarkers of Cognitive Impairment Across Interactive and Single-Speaker Speech Tasks
+
+**作者**: Kenyu Ikeuchi, Tomoaki Ohtsuki, Michelle Cohn, Alyssa Weakley, Yui Ishihara, Joseph Hoang, Taishiro Kishimoto, Sarah Tomaszewski Farias, Jet M. J. Vonk, Chen-Nee Chuah
+**链接**: [2611.17710](https://arxiv.org/abs/2611.17710)
+**分类**: Multilingual Speech Analysis for Dementia Detection | **关键词**: 认知障碍检测, 多语言语音分析, 声学生物标志物, 可解释机器学习, 对话语音, 跨语言泛化
+
+## 核心痛点
+- 痴呆与轻度认知障碍（MCI）全球患病规模大，临床神经心理评估依赖专业人员，并受语言、文化和教育背景影响，难以在资源不足地区规模化推广。
+- 语音分析具有非侵入、可及和可纵向监测的优势，但现有多语言痴呆检测研究存在三方面不足：
+  1. 多依赖单一任务类型，如看图描述（PD）或朗读，对自发对话关注不足；
+  2. 常忽略任务模态与交互结构对声学标志物的影响；
+  3. 大量使用黑箱 Transformer 嵌入模型，临床可解释性有限，且较少融合语言学与临床专家知识。
+- 全球语音数据存在严重跨语言不平衡，验证数据集中于英语等高资源语言，直接池化异质语音数据可能掩盖语言和任务特异性。
+
+## 方法创新
+- 开展跨语言、跨任务的声学分析，整合五个异质数据集，覆盖四种语言（西班牙语、普通话、英语、日语）和四类任务（看图描述、朗读、自由对话、自传体记忆访谈）。
+- 数据集包括：ADReSSo（英语，PD）、Ivanova（西班牙语，朗读）、Chou（普通话，PD，TAUKADIAL 子集）、PROMPT（日语，自由对话）、Davis ADRC（英语，自传体记忆访谈）。统一将参与者分为健康对照（HC）与认知受损（MCI/痴呆），并排除 MMSE < 10 的严重受损记录以提高跨数据集可比性。
+- 提出可解释的声学分析框架：先进行说话人日志化并提取参与者语音，再使用 openSMILE eGeMAPS、pyAudioAnalysis、Praat 等工具提取声学特征；随后依次进行统计过滤、语言学/临床专家引导过滤和基于机器学习模型的特征选择，在保持分类性能的同时获得紧凑、可解释的特征集。
+- 特征覆盖时间特征、语音速率、韵律、频谱、音质、F0、MFCC、停顿与响应停顿等。其中时间特征包括发言时长统计、全局语音比例、回合内停顿、对话中的响应停顿，以及基于音节估计的语速、发音速率和平均音节时长。
+- 系统比较认知受损相关声学特征在不同语言和任务间的表现，而不仅追求分类准确率。
+
+## 实验设置与主要结果
+- 论文从摘要中报告的核心发现是：声学特征并不能在所有任务和语言间统一泛化。
+- 时间特征在全部数据集中较稳健，能够持续捕捉与认知受损相关的时间组织/时序紊乱，且较少受语言或任务影响。
+- 语速特征表现出明显任务依赖性：在内容与节奏由外部锚定的单说话人任务中更有信息量，而当语音内容高度个体化时可靠性下降。
+- 音高相关特征呈现语言特异性：声调语言（如普通话）更偏向 chroma 相关特征，非声调语言更偏向 F0 相关特征。
+- 研究结论强调不应不加区分地池化异质语音数据，多语言痴呆检测需要可解释、上下文感知的自动语音分析方法。
+
+## 一句话评价
+- 该研究不以刷高分类准确率为首要目标，而是通过跨语言、跨任务的可解释声学分析揭示了痴呆相关语音标志物的任务依赖性与语言特异性，对多语言语音痴呆筛查的数据池化策略和临床可解释性具有重要方法学警示价值。
+
+---
+
+## 6. Multiple spontaneous otoacoustic emissions as a single standing wave unstable to modulation
+
+**作者**: Yasuki Murakami
+**链接**: [2611.17599](https://arxiv.org/abs/2611.17599)
+**分类**: Cochlear Mechanics / Auditory Biophysics | **关键词**: spontaneous otoacoustic emissions, cochlear standing wave, gain modulation, sideband generation, intermodulation products, two-dimensional cochlear model, van der Pol oscillator, cubic saturation
+
+## 核心痛点
+- 自发性耳声发射（SOAE）的起源尚未定论。主流解释包括：①耳蜗行波往返形成驻波共振，每个 SOAE 对应一个独立共振峰；②毛细胞临界（Hopf）振荡器或耦合 van der Pol 振荡器链产生局部振荡；③部分 SOAE 是其他成分的互调/畸变产物。
+- 多 SOAE 谱线对上述观点构成挑战：驻波观点需要解释多个共振为何同时振荡；互调观点需要解释多个主振荡为何能共存。
+- 独立振荡共享饱和型耳蜗放大器，强成分会通过双音抑制或主导模态抑制压制其他成分。以往模型多把饱和仅处理为周期平均增益下降，这只能抑制其他谱线，不能产生新谱线。
+
+## 方法创新
+- 论文提出：单个耳蜗驻波可通过自身“泵浦”增益而产生边带。立方饱和使增益随位移在每周期变化两次，即增益以 2f 振荡；该增益调制类似激光中的 pump，可通过四波混频耦合两个边带。
+- 模型为二维不可压缩耳蜗流体 + 集总中耳 + 双自由度耳蜗分区微机械（基底膜 BM 与盖膜 TM），主动力由 uc=ub-ut 驱动，并受立方饱和限制，是模型唯一非线性。
+- 通过在增益 γ0(x) 上设置台阶（10.5 mm 处，基底侧 1、顶侧 0.6）制造单一已知反射位置，从而获得可分析的驻波共振；SFOAE 计算中使用更小台阶 1→0.98。
+- 黏性阻尼按 BM 速度的余弦模态施加，阻尼随波数增长，以移除短波数值不稳定，同时尽量不影响长波。
+- 数值上采用 RK4 时间积分（Δt=5 μs），并通过叠加 p=pa+ẍsχ 闭合中耳-流体耦合回路；对驻波附近含泵浦的线性化特征值进行分析，并用时间域解验证。
+
+## 主要结果
+- 带增益台阶的二维耳蜗模型产生单一驻波。
+- 该驻波的增益泵浦会使邻近共振附近的一对谱线失稳。
+- 其余谱线可解释为主谱线与该对边带的相位锁定互调产物。
+- 因此，一组等间隔 SOAE 可由一个自持驻波产生：间隔遵循驻波共振，其他谱线又是互调产物，从而让“独立共振”和“互调产物”两种解释在同一机制下共存。
+
+## 一句话评价
+该工作提出了一种统一视角：单个驻波通过自泵浦增益调制产生边带与互调谱线，为多 SOAE 共存提供了无需多个独立振荡的机制；但其适用范围明确限定为由单个驻波产生的一组等间隔谱线，并非一般 SOAE 谱。
+
+---
+
