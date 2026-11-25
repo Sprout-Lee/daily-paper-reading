@@ -108,11 +108,970 @@
     <div class="header">
         <h1>Arxiv Papers Knowledge Base</h1>
         <div class="stats">
-            共收录 2727 篇论文 | 涵盖 190 天的数据
+            共收录 2748 篇论文 | 涵盖 191 天的数据
         </div>
     </div>
     
-    <h2 class="month-divider">2026-11</h2><h2 class="date-divider">📅 2026-11-23</h2>
+    <h2 class="month-divider">2026-11</h2><h2 class="date-divider">📅 2026-11-25</h2>
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.33059" target="_blank">ClusterVAD: Threshold-Free Unsupervised Voice Activity Detection with Pre-Trained Neural Representations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice Activity Detection (VAD)</span>
+                <strong>ID:</strong> <span class="tag">2611.33059</span>
+                <a href="pdfs/2611.33059.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Karl El Hajal, Mathew Magimai.-Doss<br>
+                <div style="margin-top:5px"><span class="tag">Voice Activity Detection</span><span class="tag">Unsupervised Learning</span><span class="tag">Speech Foundation Models</span><span class="tag">Self-Supervised Representations</span><span class="tag">Threshold-Free Decision</span><span class="tag">Sonority</span><span class="tag">Hidden Markov Model</span><span class="tag">Baum-Welch</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li><strong>监督式 VAD</strong> 依赖带标注数据，并继承训练语料的领域与标注约定，跨域时可靠性下降。</li>
+<li><strong>现有无监督 VAD</strong> 多依赖能量、过零率、谱形状、基频、双高斯、似然比检验、分段 SNR、零频滤波等手工声学特征，难以像数据驱动模型一样从更多数据中获益，在远场、噪声或非典型语音（如构音障碍语音）中容易退化。</li>
+<li>论文试图调和监督式与无监督式 VAD：既利用大规模自监督语音基础模型（SFM）学到的数据驱动表征，又避免训练检测器和人工阈值。</li>
+</ul>
+<h2>方法创新</h2>
+<p><strong>ClusterVAD</strong> 是一种基于冻结 SFM 表征的无监督 VAD，核心假设是：SFM 为从异构语音数据中抽象语音信息，必须隐式学会区分语音与非语音，因此该区分信息已嵌入表征中。</p>
+<h3>拟合阶段（仅在辅助无转写语音上运行一次）</h3>
+<ol>
+<li><strong>特征提取</strong>：冻结 SSL 编码器将波形映射为每 20 ms 一帧的 D 维表征，取单个中间层 ℓ。</li>
+<li><strong>PCA 白化</strong>：对辅助数据帧去均值，投影到前 d 个主成分并缩放至单位方差，缓解 SSL 表征各向异性导致的距离偏差。</li>
+<li><strong>k-means 码本</strong>：对白化帧聚类得到 K 个质心，并以余弦相似度 + softmax 温度 T 定义帧到簇的后验。</li>
+<li><strong>簇标注</strong>：计算辅助音频的 sonority（音节显著性的声学度量：gammatone 滤波器组包络驱动 5 Hz 阻尼振荡器，取最能量带求和），计算每个簇的平均 sonority，再用一维 2-means 将簇分为低 sonority（非语音）和高 sonority（语音）两组。Sonority 只在拟合时使用，推理时不需要。</li>
+</ol>
+<h3>推理阶段</h3>
+<ol>
+<li>用同一冻结编码器和层提取目标音频帧并白化。</li>
+<li>计算帧与各质心的余弦相似度，softmax 得到软簇分配。</li>
+<li>对簇标签边缘化，得到帧级语音概率 P(sp|xt)。长录音用重叠窗和 Hann 权重平均。</li>
+<li><strong>两种决策方式</strong>：</li>
+<li><strong>调参阈值</strong>：在带标注开发集上调阈值和最短段时长/hangover。</li>
+<li><strong>无阈值决策</strong>：对每条录音拟合两状态 HMM，状态为 ns/sp，发射为 logit zt 的高斯分布，用 Baum–Welch 估计高斯参数和转移概率，自转移充当 hangover；再用 Viterbi 解码得到语音/非语音段。该方式不需要调任何决策参数。</li>
+</ol>
+<h3>实现细节</h3>
+<ul>
+<li>从 11 个模型中在开发集选择 3 个最佳编码器：HuBERT Large 第 10 层、data2vec 2.0 Base 第 0 层、OLIVE-J 第 4 层。</li>
+<li>码本数据：LJSpeech 中随机 1000 条utterance，约 1.8 小时单说话人朗读英语，无转写，且不与评测语料重叠。</li>
+<li>参数：d=128 主成分，K=100 簇，T=0.1；sonority 使用 50–7500 Hz 的 20 个 gammatone 带、5 Hz、Q=0.5、10 个最能量带。</li>
+<li>推理：5 s 窗、2.5 s hop；Baum–Welch 10 次迭代，初始高斯位于 zt 的 10/90 百分位、方差为四分之一，等初始状态概率。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在覆盖会议、远场与噪声录音、普通话和构音障碍语音的基准上评测。</li>
+<li>在 <strong>pause-level 参考</strong>上取得最低检测错误；在 <strong>speaker turn-level 参考</strong>上具有竞争力。</li>
+<li>结果表明 ClusterVAD 跨域稳健，并能以细粒度检测停顿；说明 SFM 表征本身内含语音/非语音区分信息，可在不训练检测器的情况下被利用。</li>
+<li>摘要还指出，阈值无关决策使码本和簇标签来自无转写辅助数据，决策则按每条录音自适应拟合。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ClusterVAD 将冻结语音基础模型的表征聚类与 sonority 簇标注、每录音 HMM 决策结合，提供了一种无需标注、无需人工阈值的无监督 VAD，在跨域和细粒度停顿检测上表现突出，验证了 SFM 表征中隐含的语音/非语音判别能力。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.32910" target="_blank">Mask-Based Speech Enhancement for Spatial Audio: Effects of Signal Representation and Channel-Specific Masking</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Speech Enhancement</span>
+                <strong>ID:</strong> <span class="tag">2611.32910</span>
+                <a href="pdfs/2611.32910.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Sheli Hendel, Boaz Rafaely, Dorothea Kolossa<br>
+                <div style="margin-top:5px"><span class="tag">空间音频语音增强</span><span class="tag">时频掩蔽</span><span class="tag">Ambisonics</span><span class="tag">波束形成器</span><span class="tag">通道特定掩蔽</span><span class="tag">双耳空间线索</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>空间音频场景中的语音增强不仅要提升语音质量与可懂度，还要保留声场的空间特性，例如目标声源与干扰声源的定位、双耳空间线索以及混响感知。现有的时频掩蔽方法多针对单通道输出进行优化，常用 SI-SDR、PESQ、STOI 等指标评价，容易忽略掩蔽对通道间空间信息的破坏。已有工作虽然开始比较波束形成器域与 Ambisonics 域掩蔽，或比较麦克风、波束形成器与 Ambisonics 表示，但仍缺乏一个覆盖“信号表示 × 掩蔽策略 × 理想/神经网络掩蔽”的系统性分析，尤其缺少对混响保留以及由双耳重放信号计算的 ITD/ILD 等空间保真度的综合评估。</p>
+<h2>方法创新</h2>
+<p>论文提出一个系统性比较框架，在模拟混响声学场景中比较三种信号表示下的时频掩蔽：</p>
+<ol>
+<li>麦克风阵列信号域；</li>
+<li>波束形成器输出域；</li>
+<li>一阶 Ambisonics 域。</li>
+</ol>
+<p>同时比较两类掩蔽：</p>
+<ul>
+<li>理想比率掩蔽（IRM），作为 oracle 参考；</li>
+<li>轻量级深度学习掩蔽估计器 FT-JNF，作为实际可估计掩蔽。</li>
+</ul>
+<p>分析还区分共享掩蔽与通道特定掩蔽：共享掩蔽对所有通道使用同一个掩蔽，计算效率更高；通道特定掩蔽为每个通道独立估计掩蔽，可能提升增强性能，但也可能引入通道相关失真并破坏空间线索。论文还比较一阶与三阶 Ambisonics，以考察 Ambisonics 阶数对三种表示性能差距的影响。评估维度覆盖语音重建、感知质量、可懂度、混响保留以及双耳空间线索保留。</p>
+<h2>主要结果</h2>
+<p>根据摘要，论文发现：</p>
+<ul>
+<li>在波束形成器域进行通道特定掩蔽，能够在语音质量和可懂度方面取得最佳表现；</li>
+<li>在 Ambisonics 域进行通道特定掩蔽，能够更好地保留残余干扰的空间特性；</li>
+<li>将空间表示从三阶 Ambisonics 降至一阶 Ambisonics，会显著缩小波束形成器域与 Ambisonics 域之间的性能差距，原因是低阶 Ambisonics 对应波束形成器的空间分辨率较低；</li>
+<li>在一阶 Ambisonics 通道上使用共享掩蔽，可以获得接近通道特定掩蔽的语音增强性能，同时只需要一个掩蔽估计网络，因而在增强性能、空间保真度和计算复杂度之间提供了实用折中。</li>
+</ul>
+<h2>贡献总结</h2>
+<p>论文的主要贡献包括：</p>
+<ol>
+<li>证明波束形成器域通道特定掩蔽在语音质量和可懂度上优于 Ambisonics 域与麦克风域；</li>
+<li>证明 Ambisonics 域通道特定掩蔽在保留残余干扰空间属性方面优于波束形成器域与麦克风域；</li>
+<li>证明 Ambisonics 域共享掩蔽以较低计算成本取得接近通道特定掩蔽的增强性能。</li>
+</ol>
+<p>论文强调信号表示与掩蔽策略应联合设计，并指出一阶 Ambisonics 加共享掩蔽是空间音频语音增强中兼顾性能、空间保真度与复杂度的实用方案。</p>
+<h2>一句话评价</h2>
+<p>这是一项面向空间音频语音增强的系统性对比研究，清晰揭示了信号表示与通道掩蔽策略在语音增强性能和空间保真度之间的权衡，并为实际系统设计提供了一阶 Ambisonics 共享掩蔽这一高性价比方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.32593" target="_blank">Perfect Scores, Misplaced Explanations: A Controlled Study of Explainability in Audio Deepfake Detection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Deepfake Detection / Explainable AI</span>
+                <strong>ID:</strong> <span class="tag">2611.32593</span>
+                <a href="pdfs/2611.32593.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> David Combei, Dan Oneata, Francesco Paissan, Cem Subakan, Horia Cucu, Adriana Stan<br>
+                <div style="margin-top:5px"><span class="tag">音频深伪检测</span><span class="tag">可解释人工智能</span><span class="tag">忠实性评估</span><span class="tag">频谱掩码</span><span class="tag">定位评估</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>论文指出，在音频深伪检测中，解释方法可能在标准可解释性指标上取得近乎满分，但生成的解释并不可解释。具体而言，基于 fidelity 与 faithfulness 优化的掩码虽然能保留或翻转检测器预测，却可能定位到与真实合成伪影无关的区域。作者强调：高 fidelity/faithfulness 不等于正确局部化，且用于填充被移除区域的 fill 信号会显著改变解释与定位，而指标对此不敏感。</p>
+<h3>方法创新</h3>
+<ul>
+<li>检测器：冻结的 wav2vec2 XLS-R 2B 主干，取第 9 层特征，全局平均池化后接低正则逻辑回归分类器，输入 16 kHz 波形。</li>
+<li>解释器：在输入频谱图上学习软稀疏掩码 m，通过可微 iSTFT 将掩码频谱转回波形并送入冻结检测器；采用 U-Net 结构，输出 sigmoid 掩码。</li>
+<li>优化目标：fidelity 要求只保留掩码区域时预测不变；faithfulness 要求移除掩码区域时预测改变；同时加入 L1 稀疏约束。以多样本摊销优化训练解释器。</li>
+<li>Fill 设计：比较零填充、训练集平均频谱填充、配对真实录音频谱填充、以及使检测器最大不确定的优化 fill；并采用 bootstrap 方式联合更新 fill 与解释器。</li>
+<li>基线：随机 superpixel 基线、Captum 的 Saliency、Input×Gradient。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li>真实数据：使用 MLAADv9 10% 子集（27k fake）与 M-AILABS 的 27k real；检测器 EER 为 7.4%。所提解释器在 fidelity/faithfulness 上接近 1.0，优于梯度方法；但随机基线也能取得约 0.99 fidelity，说明指标本身可能被任意解释“刷高”。</li>
+<li>受控实验：基于 LJ Speech 真实音频，用 LibriTTS 训练的 HiFi-GAN 声码器生成对应版本，并在复频谱域替换一个 1 kHz 频带；固定频带设置 EER 0.0%，变化频带设置 EER 0.04%。</li>
+<li>定位结果：固定频带下，优化 fill 的 AUC 为 0.81、RMA 0.29；real fill 达 AUC 0.897、RMA 0.436；变化频带下，优化 fill 基本跌至随机水平（AUC 0.505、RMA 0.124），而 real fill 仍为 AUC 0.728、RMA 0.358。梯度方法在受控设置中基本处于随机水平。</li>
+<li>定性观察：不同 fill 在相同输入上产生差异很大的掩码，部分掩码扩展到填充静音区，难以对应可信的合成伪影；这些差异未反映在 fidelity/faithfulness 指标中。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>该论文通过受控扰动揭示了一个关键问题：音频深伪检测中的标准 xAI 指标可能给出“满分但错位”的解释，评估解释性时必须同时检查真实定位能力与 fill/baseline 敏感性。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.32286" target="_blank">Reproducing the Speech Labels of Qwen3-Omni's Talker: Mimi in bf16, and a Last-Frame Pitfall</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Tokenization / Neural Audio Codec (Speech LLM reproducibility & fine-tuning)</span>
+                <strong>ID:</strong> <span class="tag">2611.32286</span>
+                <a href="pdfs/2611.32286.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuxuan Chen<br>
+                <div style="margin-top:5px"><span class="tag">Qwen3-Omni Talker</span><span class="tag">Mimi audio codec</span><span class="tag">speech label encoder identification</span><span class="tag">teacher-forced likelihood calibration</span><span class="tag">last-frame padding pitfall</span><span class="tag">LoRA voice adaptation</span><span class="tag">codebook embedding regression</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文总结：Reproducing the Speech Labels of Qwen3-Omni's Talker: Mimi in bf16, and a Last-Frame Pitfall</h2>
+<h3>1. 核心痛点（Problem）</h3>
+<ul>
+<li><strong>Qwen3-Omni 的两阶段语音生成</strong>：Thinker（MoE 语言模型）先写文本，Talker（较小的 MoE）再把文本与隐藏状态转成音频码；每 80 ms 一帧，每帧 16 个 codebook——Talker 预测 codebook 0，多 token 预测器（MTP）预测 codebooks 1–15，卷积解码器 Code2Wav 把码还原为 24 kHz 波形（12.5 Hz 帧率）。</li>
+<li><strong>关键缺口</strong>：官方只发布了三个“生成器”，<strong>没有发布把训练音频转成码的 label encoder</strong>。因此外部研究者无法为新音色造出与训练分布一致的标签，也就无法有效微调 Talker（而 Talker 恰恰决定“听起来像谁”）。</li>
+<li>社区已知 Qwen3-Omni 的码“能用 kyutai Mimi 的解码器解出来”，但“能解码”并不等于“标签与 Mimi 编码器一致”：权重是否微调过、精度是 fp32 还是低精度、用 moshi 参考实现还是 transformers 移植版、音频是否做预处理，都悬而未决。量化差异很敏感：在 codebooks 1–4 上，bf16 推理会改变 <strong>12%</strong> 的码，moshi 换成 transformers（均 bf16）约 <strong>15%</strong>，限带到 16 kHz <strong>40%</strong>，响度归一化 <strong>67%</strong>。</li>
+</ul>
+<h3>2. 方法创新（Method）</h3>
+<p>论文提出三条“探针”，把未发布的 label encoder 与候选编码器 C 连接起来，并<strong>先在校准模型上测量每个测试的敏感度</strong>再下结论：</p>
+<p><strong>(a) 白盒探针（§3.1）</strong>：Qwen 检查点没有编码器/量化器，但每个生成器在每个 codebook 上都有一张 2048 行的学到的 embedding 表。用 Mimi 第 k 层码本向量对 Qwen 对应表做 ridge 回归，报告 5 折交叉验证 R²。</p>
+<p><strong>(b) 解码器探针（§3.2，负面结果）</strong>：Code2Wav 是在 (E_Q(x), x) 上训练的，看似天然见证者——替换单个码为次近码字，看哪个编码器的量化边界能预测解码器“抵抗”的替换。它把 fp32 参考排第一，但<strong>校准失败</strong>：三个从零训练的 Code2Wav 架构解码器（其中一个仅用 random-5% 标签训练）同样把参考排第一，seed 效应约为标签效应的 4 倍。结论：解码器几乎不携带编码器量化边界的信息，该测试不能作为证据。</p>
+<p><strong>(c) 校准的 Talker 似然检验（§3.3, §4）</strong>：Talker/MTP 是在 E_Q 的码上做交叉熵训练的，标签差异会直接体现在似然里。对每个候选编码器 C 编码音频，在 teacher forcing 下喂给 Talker（codebook 0）与 MTP（codebooks 1–15），用固定朗读提示词（中英文）与预设音色 Ethan（Chelsie 结论相同），计算
+Λ(C) = (1/T) Σ_t Σ_{k=0}^{15} [log p(c^ref_{t,k}) − log p(c^C_{t,k})]（nats/frame），Λ&lt;0 表示模型更偏好 C 的码。
+为消除“某些码本身更好预测”的偏置，训练 <strong>13 个小码语言模型</strong>（沿用 Talker 的因子分解：codebook 0 用时序 Transformer，codebooks 1–15 用 depth Transformer，无文本输入），各自用某一编码器编码的 107.6 h 数据训练，按同样方式打分；同标签不同 seed 的两个模型给出噪声水平（约 0.01–0.05 nats）。</p>
+<p><strong>(d) 最后帧陷阱（§5）</strong>：transformers 的 <code>MimiModel</code> 在输入长度不是 1920 采样点整数倍时，会在编码器内部对隐藏状态做零填充，导致<strong>最后一帧编码与 kyutai 编码器不同</strong>；这些最后一帧码常被解码成噪声爆发，且会被微调后的模型学会复现。</p>
+<h3>3. 实验结果（Results）</h3>
+<ul>
+<li><strong>白盒证据</strong>：每张 Qwen 表都只能由 Mimi 对应层预测——Talker codebook 0 R²≈0.45，MTP codebooks 1–15 为 0.77–0.89，Code2Wav 为 0.25–0.65；打乱行或换用其他 Mimi 层作为零假设时 R² ≤ −0.03。阴性对照 Qwen3-TTS-Tokenizer-12Hz（架构完全相同，225 个张量名与形状一致、223 个值不同）什么都预测不出，从而排除“完全不同的 tokenizer”。但该检验无法区分“同一编码器”与“量化器冻结的微调编码器”。</li>
+<li><strong>似然检验结论</strong>：Talker <strong>最偏好 kyutai moshi 包 + bf16 权重</strong>的 Mimi 标签，优于所有其他变体；band-limited 输入（Λ 大幅惩罚，如 −5.15）、响度归一化（+3.65 以上）、transformers bf16（+0.145 左右）、随机扰动与两个微调方向的候选都被惩罚。由此<strong>排除 20% 以上数据被限带</strong>以及响度归一化，并排除作者测试的两个微调方向。</li>
+<li><strong>精度不影响、填充才影响</strong>：在 LoRA 音色适配中，精度在测试里没有影响，<strong>padding 才关键</strong>。</li>
+<li><strong>最后帧陷阱的代价</strong>：用该标签做 LoRA 微调后，<strong>44–55% 的生成句子以噪声爆发结尾</strong>；同一帧让基于 Mimi 的 <strong>CSM-1B 多花 119 nats</strong>。对输入尾部做零填充可同时消除两者；但若只是把一个 batch 填充到最长项，最长那条实际未被填充——batch size 为 8 时仍有 <strong>6%</strong> 的句子以爆发结尾（而非 1%）。</li>
+<li><strong>数据与统计</strong>：校准模型用 107.6 h 的 VCTK(mic1) + AISHELL-3，263 位说话人，24 kHz、10 s 切块；Talker 测试用 64 位留出说话人的 512 条语音（2–9 s，0.49 h，22,295 帧，每人 8 条，按说话人而非文件留出）；所有置信区间为说话人级 bootstrap（B=1000）的 95% 区间，各模型共享重采样权重以便配对比较。</li>
+<li><strong>诚实的边界说明</strong>：识别的是<strong>行为</strong>而非逐比特权重（改变 codebooks 1–4 中 2–10% 码的随机权重扰动检测不到）；只排除了 ≥20% 数据被限带的情形。</li>
+</ul>
+<h3>4. 交付物（Contributions）</h3>
+<ol>
+<li>认定标签编码器：白盒证据表明 Talker 的码本就是 Mimi 的前 16 个码本；校准后的似然检验唯一地指向“kyutai moshi 包 + bf16 权重”的 Mimi。</li>
+<li>一个负面结果：曾把公开编码器排第一的解码器测试无信息量。</li>
+<li>发现 transformers 与 kyutai 之间的最后帧不一致，导致约一半微调句子以噪声爆发结尾。</li>
+<li>发布编码配方（尾部填充至两倍长度、<code>num_codebooks=16</code>、bf16、<code>n = ceil(T/1920)</code> 帧、取 <code>[:, :16, :n]</code>；用 transformers 时把输入填充到 1920 的整数倍）、一个 label checker 与一套 Talker 微调工具包。</li>
+</ol>
+<h3>5. 一句话评价</h3>
+<p>这是一篇“逆向工程 + 严谨校准”的典范复现工作：它用可校准的似然检验把一个未发布的语音标签编码器定位到“Mimi + moshi + bf16”，并顺带揪出 transformers 移植版最后帧的隐蔽 bug——既是 Qwen3-Omni/CSM-1B 语音微调的实用配方，也为“如何证明你的复现是对的”提供了一个可借鉴的方法论（先用已知标签测出测试的敏感度，再下结论）。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.32023" target="_blank">IncrementDET: Continual AI-Generated Music Detection via Enrollment</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">AI-Generated Music Detection</span>
+                <strong>ID:</strong> <span class="tag">2611.32023</span>
+                <a href="pdfs/2611.32023.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Runbao Du, Wei Li, Qile He<br>
+                <div style="margin-top:5px"><span class="tag">AI-generated music detection</span><span class="tag">continual learning</span><span class="tag">enrollment</span><span class="tag">audio forensics</span><span class="tag">few-shot adaptation</span><span class="tag">Šidák correction</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>AI 生成音乐在流媒体平台快速普及，但听众难以区分 AI 与人类音乐，平台治理和版权保护需要可靠的 AI 音乐检测。</li>
+<li>现有通用检测器通常在固定生成器集合上训练，面对不断出现的新生成器泛化能力差；新生成器发布频繁时，更新通用检测器需要大量数据和算力，且易对旧生成器产生灾难性遗忘。</li>
+<li>音乐领域尚缺乏面向“生成器持续到来”的检测基准，现有 SONICS、FakeMusicCaps、MoM 等只评估固定划分或留出生成器，不能衡量检测器如何学习新生成器。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文定义新任务：持续 AI 生成音乐检测（continual AI-generated music detection），并提出相应基准：12 个生成器按顺序到来，每个检测器在每步获得相同的新生成器样本和人类音乐，评估更新前后性能与更新成本。</li>
+<li>提出 IncrementDET：使用冻结音乐编码器 MuQ 提取时间池化特征；对每个新生成器训练一个逻辑回归分类器，称为 needle，用于区分该生成器样本与固定人类参考曲目。</li>
+<li>新生成器通过“enrollment”加入：只训练一个新 needle，旧 needle 保持不变；每个 needle 在独立人类校准集上设阈值，并用 Šidák 校正控制整体误报率，使总 FPR 保持在目标水平。</li>
+<li>检测时，只要任一线索 needle 打分超过其阈值，即判为 AI 生成。该方法只需少量新生成器样本、几秒训练，显著降低更新成本。</li>
+<li>构建 EvoMusicFake-17K 数据集：包含 6 个近期生成器的 6,000 首生成曲目（115 小时）和来自 4 个平台的 11,111 首人类曲目（651 小时），并联合 FakeMusicCaps、Suno、FMA、MagnaTagATune 等数据用于基准。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在标准跨生成器评估中，IncrementDET 在全部 12 个留出生成器上取得更低 EER，优于 SOTA 通用检测器 SpecTTTra。</li>
+<li>在持续检测基准中，新生成器尚未 enrollment 前，IncrementDET 的平均 TPR@5%FPR 为 57.2%，而 SpecTTTra 在各种更新策略下最高仅 27.4%。</li>
+<li>经过完整序列后，IncrementDET 对第一个生成器仍保持 96.4% 平均 TPR@5%FPR，SpecTTTra 全量重训为 79.4%，显示更好抗遗忘能力。</li>
+<li>仅用新生成器 25 首曲目时，IncrementDET 对新生成器达到 93.2% 平均 TPR，并在其他生成器上保持 99.2%；微调 SpecTTTra 为 84.6%，其他生成器降至 43.1%。</li>
+<li>更新成本显著低于经验回放或全量重训，且结构可推广到生成图像和视频检测。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>IncrementDET 以冻结编码器加独立线性“needle”的 enrollment 机制，在少量样本和低更新成本下实现了持续 AI 音乐检测，在准确性、抗遗忘和误报控制之间取得了有竞争力的平衡。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.31276" target="_blank">Lexical Tone and Word Order Matter in Translation: Prosodic Correspondence Across Languages</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Translation (Cross-Lingual Prosody Analysis)</span>
+                <strong>ID:</strong> <span class="tag">2611.31276</span>
+                <a href="pdfs/2611.31276.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Haopeng Xie, Ismail Rasim Ulgen, Shengying Zhao, Berrak Sisman, Philipp Koehn<br>
+                <div style="margin-top:5px"><span class="tag">prosodic correspondence</span><span class="tag">lexical tone</span><span class="tag">word reordering</span><span class="tag">dubbing</span><span class="tag">speech-to-speech translation</span><span class="tag">pitch and energy correlation</span><span class="tag">word alignment</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>Lexical Tone and Word Order Matter in Translation: Prosodic Correspondence Across Languages</h1>
+<p><strong>作者/机构</strong>：Haopeng Xie, Ismail Rasim Ulgen, Shengying Zhao, Berrak Sisman, Philipp Koehn（Johns Hopkins University）</p>
+<h2>核心痛点</h2>
+<ul>
+<li>韵律（pitch/energy）承载强调、情感与意图，但在<strong>翻译跨语言对应性</strong>上的研究严重不足，尤其是涉及<strong>声调语言（lexical tone）</strong>和<strong>语序差异大（word reordering）</strong>的语言对时。</li>
+<li>已有唯一细粒度证据（Xie et al., 2026）只在德语–英语、英语–西班牙语、英语–法语三个<strong>非声调、语序相近的欧洲语言对</strong>上报告了词级 pitch/energy 正相关；并且该研究通过重排声学片段来对齐对应词，难以区分“局部韵律对应”与“整句层面的韵律趋势”。</li>
+<li>两个关键未解问题：(1) 声调语言中 pitch 同时承担词汇辨义功能，是否会削弱跨语言 pitch 对应？(2) 语序差异导致的词重排与对齐覆盖率变化，是否会降低测得的词级相关性？</li>
+</ul>
+<h2>方法创新</h2>
+<ol>
+<li><strong>首个系统的词级跨语言韵律对应研究</strong>，覆盖声调与非声调亚洲语言：英语–普通话、英语–泰语、英语–越南语（有词汇声调），英语–日语（词调/pitch-accent）、英语–韩语（非声调对照），并额外用同一流程处理 10,000 对英语–法语作为欧洲语言参照。</li>
+<li><strong>数据与流程</strong>：使用 SpeechVecAlign 从专业配音电视剧对话中挖掘语义对应话语；多级过滤——SQUIM 音频质量（SI-SDR ≥ 7.5、STOI ≥ 0.91、PESQ ≥ 1.25）、pyannote 说话人分离（仅保留单说话人）、SONAR 语义相似度 ≥ 0.45（并以 0.63 做敏感性检验）；whisper_timestamped 做带时间戳转写；分词按语言定制（中文 OpenCC + spaCy zh_core_web_sm，日语 ja_core_news_sm，泰语 PyThaiNLP newmm，越南语按音节空格切分，韩语 Kiwi 形态素）。</li>
+<li><strong>基于 episode 的交叉拟合（cross-fitting）声调调整</strong>：估计并剔除与声调相关的 pitch 变异，再用匹配话语对比量化调整带来的增益，从而检验“声调是否解释了低对应性”。</li>
+<li><strong>区分局部对应与结构因素</strong>：比较语义对齐 vs 时间对齐（temporal pairing）、统计对齐覆盖率、计算重排距离，并将覆盖率重加权到法语分布以排除覆盖率混淆。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li>所有语言对的平均 pitch 与 energy 相关均<strong>高于打乱基线</strong>，但<strong>普遍低于此前欧洲语言报告值</strong>。</li>
+<li>声调调整后，英语–普通话、英语–泰语、英语–越南语的 pitch 对应<strong>上升</strong>（增益区间均不含 0），但调整后的均值<strong>仍低于</strong>已发表欧洲估计与本文法语参照。</li>
+<li>英语–日语与英语–韩语同样低于欧洲估计，说明<strong>声调状态本身不足以解释</strong>这一落差。</li>
+<li>声调语言之间的直接比较：普通话–越南语、越南语–泰语有调整增益，普通话–泰语无显著变化。</li>
+<li>日语、韩语具有<strong>最大的平均重排距离、最低的对齐覆盖率</strong>，以及重排话语中最大的“时间对齐优于语义对齐”增益；重排越大，时间对齐优势越明显（越南语、泰语、日语、韩语均如此）。</li>
+<li>pitch 相关随对齐覆盖率上升，但覆盖率不能完全解释差距：在 60–80% 覆盖率区间，法语为 0.223，亚洲语言对仅 0.094–0.155；重加权到法语覆盖率分布也无法弥合差距。语义对齐下亚洲语言对相关仍为正但低于法语。</li>
+</ul>
+<h2>贡献总结</h2>
+<p>(1) 覆盖声调/非声调亚洲语言的系统词级韵律对应分析（含声调语言间直接比较与同流程欧洲参照）；(2) 交叉拟合的声调调整，证明声调相关变异会带来 pitch 失配，但声调状态不是唯一解释；(3) 证明语序重排程度会与句级 pitch 趋势、语义对齐交互，共同塑造测得的对应性。</p>
+<h2>一句话评价</h2>
+<p>该文以严谨的对齐–过滤–交叉拟合流程，首次把“跨语言韵律对应”从欧洲非声调语言扩展到亚洲声调语言与强重排语言，明确指出<strong>词汇声调与语序重排是限制细粒度声学对应的两大结构性因素</strong>，为表达性语音翻译的韵律建模划定了现实边界。</p>
+<h2>局限（据片段推断）</h2>
+<p>仅分析英语为共同参照的一端（英语录音本身可能是配音）；数据来自专业配音电视剧，风格受限；声调调整依赖 episode 级交叉拟合的估计精度；论文后续章节（如具体相关数值表、统计检验细节）在提供的片段中被截断。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.31267" target="_blank">ToneMamaba: Learning Contextualized Tonal Contours with Boundary-Reset State Space Models</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Recognition</span>
+                <strong>ID:</strong> <span class="tag">2611.31267</span>
+                <a href="pdfs/2611.31267.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Po-Yu Chiu, Yi-Fen Liu<br>
+                <div style="margin-top:5px"><span class="tag">Mandarin tone recognition</span><span class="tag">State Space Models</span><span class="tag">Mamba-2</span><span class="tag">Boundary-reset</span><span class="tag">F0 contour</span><span class="tag">Rhythm modeling</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>普通话（Mandarin）词汇声调在连续语流中的识别十分困难：一个音节的 F0（基频）轨迹会同时受到<strong>相邻声调上下文</strong>与<strong>时长变化（durational variation）</strong>的双重影响，导致声调轮廓（tonal contour）发生重塑。</p>
+<p>先前的基线方法 <strong>ToneNet</strong> 虽然从 F0 序列、音节/词边界以及节奏信息中学习声调轮廓表示，但存在两个关键缺陷：
+1. 它依赖<strong>静态边界嵌入（static boundary embeddings）</strong>与相对位置编码来表达语言边界；
+2. 基于 Transformer 的注意力机制<strong>并未显式约束</strong> F0 token 或 [CLS] 表示只能在自身语言单元（音节/词/IPU）内进行注意力，即表示可能“越界”聚合信息。</p>
+<h2>方法创新</h2>
+<p>论文提出 <strong>ToneMamba</strong>，一种边界感知的状态空间模型（SSM），核心思路是把语言边界从“软嵌入”改造为 Mamba-2 中的“硬状态重置”。主要贡献有三点：</p>
+<ol>
+<li><strong>层次化边界重置（Boundary-Reset）</strong>：利用 Mamba-2 的结构化状态空间对偶（SSD）公式中显式的隐状态传播特性，在<strong>音节（SYL）、词（WRD）、IPU</strong> 三个语言层级分别定义重置掩码：当 sm(t) ≠ sm(t−1) 时触发重置，门控 gt = 1 − rm,t 使每个语言单元从“干净状态”重新开始累积 F0 信息。</li>
+<li><strong>共享权重的双向扫描 + 通道级方向融合</strong>：前向/后向扫描共享参数（仅方向不同），在每一时间步通过一个 2×2 的通道级权重 Wc 融合双向隐状态，再用乘性门控 Zm = Um ⊙ SiLU(RMSNorm(Vm)) 得到各层级表示；最后用固定 logits (αIPU, αWRD, αSYL)=(1,2,3) 经 softmax 得到权重 (0.090, 0.245, 0.665) 做多层级加权融合，显著减少融合参数量。</li>
+<li><strong>动态音节池化 + 节奏门控修饰</strong>：用硬 Gumbel-Softmax（直通估计器）在每个音节内部动态选取显著的 F0 表示来形成音节轮廓（替代固定的 [CLS] token）；并用<strong>节奏修饰器（Rhythm Modifier）</strong>取代 Transformer 交叉注意力——将音节/韵母/元音三段时长向量投影后，通过 sigmoid 门控自适应地调制音节表示 c̃i = LN(ci + gi ⊙ vi)。</li>
+</ol>
+<h2>实验结果</h2>
+<ul>
+<li><strong>数据集</strong>：朗读语料 FCU-VOICE-360 与对话语料 MCDC-8。</li>
+<li><strong>模型配置</strong>：256 维，8 层 CE + 4 层 IE 的 Mamba-2，SSM 状态大小 64，分类器为 256→256 tanh + 0.3 dropout + 256→5；AdamW，初始学习率 5e-3，余弦衰减，10% warm-up。</li>
+<li><strong>主结果</strong>：ToneM+r(swu→wu) 在朗读语料达 <strong>97.9%</strong>、对话语料达 <strong>74.8%</strong>，相比 ToneNet+r（97.0% / 58.9%）分别提升 <strong>+0.9</strong> 和 <strong>+15.9</strong> 个百分点；参数量仅 5.4M（基线 6.9M）。</li>
+<li><strong>消融结论</strong>：</li>
+<li><strong>词级重置最有效</strong>：单层 CE 重置中 ToneMw→u 达 96.2%/63.3%，优于音节级（93.0%/61.7%）与 IPU 级（94.4%/60.2%）。</li>
+<li><strong>节奏修饰器收益显著且一致</strong>，尤其在对话语音中（58.9%→74.8%），说明时长变化对自发语音的声调识别至关重要。</li>
+<li>IE 增加词级重置可从 72.9% 进一步提升到 74.8%，同时保持朗读语音 97.9%。</li>
+<li>t-SNE 可视化显示 IPU/WRD/SYL 三层级表示具有清晰的分层结构。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>ToneMamba 巧妙地把 Mamba-2 显式的状态传播特性“转译”为语言层级边界重置，用轻量、可解释的机制取代 Transformer 的静态边界嵌入与交叉注意力，在对话语音的声调识别上取得大幅提升，是 SSM 在语音韵律/声调建模上一次扎实且有效的落地。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.30927" target="_blank">SpeechSplice: Pronunciation Control in Encoder-Decoder LLM-based TTS by Replacing Encoder Hidden States</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Text-to-Speech</span>
+                <strong>ID:</strong> <span class="tag">2611.30927</span>
+                <a href="pdfs/2611.30927.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kiyoshi Kurihara, Jumpei Ukita, Yusuke Iwasawa, Yutaka Matsuo<br>
+                <div style="margin-top:5px"><span class="tag">pronunciation control</span><span class="tag">encoder-decoder LLM-based TTS</span><span class="tag">hidden state replacement</span><span class="tag">training-free</span><span class="tag">cross-attention</span><span class="tag">G2P-free</span><span class="tag">activation patching</span><span class="tag">zero-shot voice cloning</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>SpeechSplice：通过替换编码器隐状态控制编码器-解码器 LLM-TTS 的发音</h2>
+<h3>核心痛点</h3>
+<ul>
+<li>主流 LLM-based TTS（VALL-E、CosyVoice 2、Llasa、Qwen3-TTS、T5Gemma-TTS 等）将传统语言前端并入单一序列模型，直接从文本映射到语音，从而获得了自然度、多语言与零样本音色克隆能力，但<strong>在推理阶段失去了可编辑的发音接口</strong>。</li>
+<li>结果是系统经常读错专有名词、多音字/同形异音词（heteronyms）、数字与领域术语。传统流水线靠 G2P 模块逐条修正词典即可解决，而端到端 LLM-TTS 没有这个入口。</li>
+<li>权重编辑或微调（如 LoRA、UtterTune、SonoEdit）虽能恢复控制，但<strong>必须离线进行、且被报告会造成质量退化乃至灾难性遗忘导致的语音崩溃</strong>。部分系统仅支持音素/pinyin 级控制，仍依赖前端。</li>
+</ul>
+<h3>方法创新</h3>
+<ul>
+<li><strong>SpeechSplice：免训练（training-free）的编码器输出替换方法</strong>，用于编码器-解码器 LLM-TTS 的 G2P-free 词级注入，不改动任何权重。</li>
+<li>流程：给定源句 x（含歧义实体 e）与目标读音 r_e 的书写形式 x'，用<strong>同一个冻结编码器</strong>分别编码得到 H_src 与 H_tgt；在编码器最终层输出上，把实体 token 跨度 I_src(e) 的隐状态替换为目标跨度 I_tgt(e) 的隐状态，拼接为 H̃ = [h_src(1:s1-1), h_tgt(u1:un), h_src(sm+1:T)]。</li>
+<li>拼接会改变编码器序列长度（T → T-m+n），因此需重建 attention mask 与位置索引；当长度必须固定时，改用池化矩阵 A_e（行归一化）把目标状态聚合到源位置，消融实验中取 A_e = 1/n 均匀平均。</li>
+<li>关键洞察：最终编码器输出是文本编码与语音生成之间的<strong>文本侧接口/瓶颈</strong>，检索与注入都在此处完成；实体跨度通过带字符偏移的分词确定。</li>
+</ul>
+<h3>实验结果</h3>
+<ul>
+<li><strong>跨架构、跨语言评测</strong>：10 个公开 TTS 系统、17 个「模型–语言」条件。编码器-解码器类（cross-attention 读文本）：T5Gemma-TTS、SpeechT5、LongCat-AudioDiT、Irodori-TTS、Kiseki-TTS；解码器-only 类（文本与语音共享同一 self-attention 序列）：Qwen3-TTS、XTTS-v2、Llasa-3B、CSM-1B、Bark。语言覆盖 EN / JA / ZH。</li>
+<li><strong>核心条件性结论</strong>：替换之所以生效，取决于生成器是否通过 <strong>cross-attention</strong> 读取编码文本——cross-attention 架构下发音更多被推向目标读音，共享 self-attention 序列的架构则较弱。第二个前提是<strong>分词器必须给源词与目标词不同的 token id</strong>（SpeechT5 英文-only 分词器在 JA/ZH 上不满足，故被排除而非记为失败）。</li>
+<li><strong>人类评测</strong>：母语听者（英/日/中）在带 neither 选项的成对比较中，判定 SpeechSplice 输出实现目标读音的比例为 <strong>98.6%–100.0%</strong>；独立 MOS 研究显示自然度与未修改合成<strong>无显著差异</strong>；且仅评估说话人相似度、自然度、音高、时长的保持情况。</li>
+<li><strong>与传统方案对比</strong>：在英文 split 上与 VoiceCraft 零样本 TTS、EdiTTS 内容替换比较；SpeechSplice 与 VoiceCraft 使用同一 3.25s LibriTTS test-clean 音色提示，EdiTTS 因不能克隆任意提示说话人而只能编辑其 Grad-TTS 骨干合成语音。</li>
+<li>基准规模：跨语言基准每语言 300 对（50 个人工实体对 × 6 个句模板）；跨架构基准每语言另 300 对（30 个实体对 × 10 模板，目标为日文姓氏，源为英文名或中文姓氏），源句与目标句仅在一个实体跨度上不同。</li>
+</ul>
+<h3>一句话评价</h3>
+<p>SpeechSplice 用「把目标读音的编码器隐状态搬到源句实体位置」这一极简、免训练、不改权重的激活级干预，把发音控制重新装回 LLM-TTS，并首次系统性地刻画了该方法在何种架构条件下成立（cross-attention + 分词器区分 token），兼具工程可用性与架构层面的实证价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.30723" target="_blank">BiSAT: Bidirectionally Aligned Semantic-Acoustic Tokenization for Speech Language Models</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Tokenization for Speech Language Models</span>
+                <strong>ID:</strong> <span class="tag">2611.30723</span>
+                <a href="pdfs/2611.30723.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Y. Lu, L. Wang, S. Okada<br>
+                <div style="margin-top:5px"><span class="tag">Speech Tokenization</span><span class="tag">Semantic-Acoustic Tokenization</span><span class="tag">Shared-Index Vector Quantization</span><span class="tag">Zero-shot Text-to-Speech</span><span class="tag">Speech Language Models</span><span class="tag">Conditional Flow Matching</span><span class="tag">CTC</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音语言模型（Speech LM）以离散 token 序列生成语音，因此 tokenizer 需要在低码率、单码流条件下同时保留声学细节与语言内容。</li>
+<li>语义增强 tokenizer 可能丢失韵律、音色等声学细节；声学导向 tokenizer 又保留过多音色、韵律和录音条件变化，削弱与文本的对齐，导致自回归语言模型重复或跳词。</li>
+<li>统一 tokenizer 试图结合声学重建与语义监督，但把两类目标放入同一或融合表示空间容易产生干扰；现有方法多依赖预训练/冻结语义教师，语义目标在 tokenizer 训练中固定。</li>
+<li>许多声学/统一 tokenizer 与对抗波形重建耦合，判别器评价自然度而非码忠实性，协同训练的解码器可能合成码中不存在的细节，使重建质量与结构化语义码模式解耦。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 BiSAT：声学分支与语义分支分离，每个分支拥有独立 encoder、codebook 和 decoder，并通过 shared-index 机制耦合，最终产生单一离散码流。</li>
+<li>每帧使用共享索引向量量化器，选择使两分支加权平方欧氏距离/量化误差之和最小的同一个 index；声学分支以 mel 频谱重建训练，语义分支以 CTC 训练，不使用对抗训练，也不依赖固定语义教师。</li>
+<li>由于共享索引依赖两个分支，任一 encoder 的更新都会影响两分支的量化分配，形成 bidirectional alignment；两个连续表示空间分开学习，以降低声学重建与语义识别之间的潜在干扰。</li>
+<li>波形合成被推迟到 TTS 阶段的独立声学解码器与 vocoder，tokenizer 码仅由 mel 重建和 CTC 监督塑形。</li>
+<li>基于 BiSAT 提出 BiSAT-TTS：自回归文本-语音 LM + 参考条件 flow-matching 声学解码器 + 预训练 vocoder，用于零样本 TTS。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>评估包括：从离散码进行语音重建；SUPERB 与 ML-SUPERB 理解探针，覆盖语言、说话人和副语言任务；配对 codebook 诊断分析；零样本 TTS。</li>
+<li>摘要报告显示：BiSAT 能在低码率单流中保留可访问的语言与声学结构，对 in-the-wild 与 out-of-domain 语音具有较强泛化能力，并学到互补的配对 codebook。</li>
+<li>BiSAT-TTS 在更少训练数据下匹配或超过当前 SOTA 的语音 LM-based TTS 基线；作者强调可访问的码结构与模式（不仅是重建质量）有益于自回归语音建模。片段未给出具体实验数值。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>BiSAT 通过分离声学/语义连续表示并用共享索引耦合为单流离散码，在避免冻结语义教师与对抗波形重建耦合的同时，兼顾低码率语音 tokenizer 的语义可理解性与声学可重建性，并验证了其对零样本 TTS 的价值。</p>
+<h2>其他信息</h2>
+<ul>
+<li>作者单位：Japan Advanced Institute of Science and Technology（JAIST）。</li>
+<li>论文贡献包括 BiSAT 统一 tokenization 框架、BiSAT-TTS 零样本 TTS 系统，以及覆盖重建、下游理解、诊断分析和零样本 TTS 的综合评估。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.30714" target="_blank">LiveAudio: From Bidirectional to Autoregressive Diffusion for Real-Time Streaming Video-to-Audio Generation</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Video-to-Audio Generation (Streaming / Real-Time Generation)</span>
+                <strong>ID:</strong> <span class="tag">2611.30714</span>
+                <a href="pdfs/2611.30714.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Yuxuan Jiang, Zehua Chen, Yusheng Dai, Andong Wang, Weibei Dou, Jun Zhu<br>
+                <div style="margin-top:5px"><span class="tag">streaming video-to-audio</span><span class="tag">autoregressive diffusion</span><span class="tag">block-causal DiT</span><span class="tag">asymmetric distribution matching distillation</span><span class="tag">real-time generation</span><span class="tag">audio-visual synchronization</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文基本信息</h2>
+<ul>
+<li><strong>标题</strong>：LiveAudio: From Bidirectional to Autoregressive Diffusion for Real-Time Streaming Video-to-Audio Generation</li>
+<li><strong>作者机构</strong>：清华大学（Yuxuan Jiang, Zehua Chen, Weibei Dou, Jun Zhu）、莫纳什大学（Yusheng Dai）、中国人民大学（Andong Wang）</li>
+<li><strong>任务</strong>：实时流式视频到音频（Video-to-Audio, V2A）生成</li>
+</ul>
+<h2>核心痛点</h2>
+<ol>
+<li><strong>离线范式的固有限制</strong>：现有主流双向扩散 Transformer（DiT）V2A 模型（如 Diff-Foley 类工作）在每个音频位置都能注意（attend）到整段视频与音频，因此必须等整段视频可获取后才能开始生成，采样还需 50 步 + CFG，速度慢、延迟高。</li>
+<li><strong>交互式应用需求冲突</strong>：直播、游戏、交互式世界模型等场景逐帧送入视频，要求声音实时跟随，音频只能依赖“已经播放过”的画面，且生成速度不能慢于播放速度。</li>
+<li><strong>现有流式模型“从零训练”的缺陷</strong>：V-AURA、SoundReactor、SwanSphere、WorldSonus、LiveFoley 等均以因果自回归骨干 + 局部扩散头从零训练，无法继承双向模型已具备的音质与同步能力，需要重新学习、往往还要额外训练目标。</li>
+<li><strong>视频生成领域的“双向→因果少步”路线尚未在 V2A 上被探索</strong>，且该路线迁移到 V2A 面临三大挑战：(a) 视频条件是随时间到达的，不能使用未来帧；(b) 因果生成器看不到未来音频/视频，会损害音画同步；(c) 实时预算内既要少步采样（去掉 CFG）又要编码输入视频。</li>
+</ol>
+<h2>方法创新</h2>
+<p><strong>整体思路</strong>：不从头训练流式模型，而是把已有双向 V2A 模型“改造”为自回归扩散流式生成器，并将问题解耦为<strong>因果性</strong>与<strong>效率</strong>两个子问题，用渐进式流水线依次解决。</p>
+<h3>1) 自回归扩散架构（保证因果性）</h3>
+<ul>
+<li><strong>分块生成</strong>：音频 latent 被切分为 K 个块，块 k 一旦生成立即由<strong>因果音频 VAE</strong> 解码播放，配合 <strong>block-causal DiT</strong> 与已完成块的 KV cache。</li>
+<li><strong>同步对齐的视频条件（sync-aligned video conditioning）</strong>：采用 Synchformer（25 fps 尾随窗口）提供时序/同步特征，CLIP（每帧，8 fps）提供语义，文本通过 cross-attention / AdaLN 注入且为可选；关键在于每个音频 token 只接收“已播放”的视频，从而把视频条件也变成因果的。</li>
+<li><strong>形式化</strong>：pθ(x1:K | f1:T, y) = Π_k pθ(x_k | c_k)，c_k = (y, x_</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29871" target="_blank">Which Layer to Trust? Layer Selection in Frozen Speech Encoders for Singing-Voice Deepfake Detection under Signal Corruption</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Singing-Voice Deepfake Detection / Audio Anti-Spoofing</span>
+                <strong>ID:</strong> <span class="tag">2611.29871</span>
+                <a href="pdfs/2611.29871.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Benjamin Hurt, Yefei Yang<br>
+                <div style="margin-top:5px"><span class="tag">singing-voice deepfake detection</span><span class="tag">self-supervised speech encoders</span><span class="tag">layer selection</span><span class="tag">signal corruption robustness</span><span class="tag">XEUS</span><span class="tag">XLS-R</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>冻结自监督语音编码器已成为音频深度伪造检测的常用前端，但使用哪一层或层混合通常依赖开发集选择；开发集含训练攻击且只用干净音频，部署时却会遇到噪声、混响和有损编码。</li>
+<li>在歌声深度伪造检测（SVDD）中，语音检测器不能直接迁移，且最强挑战系统依赖SSL前端；层选择对未见攻击和信号退化的鲁棒性缺少系统考察。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>在CtrSVDD基准上系统研究冻结编码器的层选择：对冻结XEUS（19层E-Branchformer）和XLS-R 300M（24层wav2vec 2.0）的每一层分别训练检测头，并训练一个可学习层混合头。</li>
+<li>检测头结构为线性投影+LayerNorm+MHFA（K=64,H=8）+LayerNorm+线性分类器；同一seed的所有头共享一次编码器前向和相同数据顺序，保证层间比较配对；仅训练头、融合模块和混合权重，编码器冻结。</li>
+<li>测试覆盖干净音频、MUSAN加性噪声（20/10/5/0 dB）、325个真实RIR混响、MP3 128/32 kbit/s与Opus 32/12 kbit/s有损编码；指标包括主EER（A09–A13）和A14 EER（商用歌声合成、域外攻击），并用按歌手分层bootstrap检验显著性。</li>
+<li>对XEUS还测试SSL–CQCC交叉注意力融合，并分析相对深度、开发集选层规则与最佳测试层之间的差距。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>干净音频：XEUS主EER从L1的16.9%降至L9–L12最低，L10最佳；最后一层L19比L10在主EER差1.99 pp、A14 EER差4.80 pp。四个seed无法区分L9–L12（如L10−L11为−0.57±0.77 pp，各seed赢家不同）。学习层混合主要权重在L6–L12、L19仅0.014，主EER 8.84%差于L10的7.50%（3/4 seeds），但优于开发集选的L8约0.99 pp；在A14和噪声下反而更差。CQCC融合无一致增益。</li>
+<li>开发集选层不可靠：XEUS开发EER在L3–L12仅1.23–1.65%，而测试主EER跨7.50–15.10%；全体19层Spearman ρ=0.29（p=0.24），L8–L13内几乎不相关（ρ=−0.03）。四seed规则选L8，比L10平均差2.32 pp且四seed一致；三seed选L11；15个子集中选L8十次、L11三次、L9两次，从未选到最佳测试层，平均损失1.76 pp。学习混合开发EER最低（0.92%）但主测试仅排第7/20。XLS-R更严重：两个seed都选L4，比最佳测试层L9差4.13 pp，ρ=0.36（p=0.08）。A14上XEUS开发集与A14排序一致（ρ=0.74），L8也是干净A14最佳；XLS-R不一致（ρ=0.12）。</li>
+<li>XEUS在退化下：干净、噪声和编码条件下最佳层通常仍在L9–L12（30个per-seed最佳层中28个如此）。噪声伤害所有层但上层最重，L19−L10从干净1.99 pp扩大到4.2–7.3 pp，L10在每个seed都更好。MP3 128 kbit/s几乎不改变层剖面，Opus 12 kbit/s比MP3 32 kbit/s伤害更大。混响行为不同：L10–L19主EER均达18.7–20.6%，L19−L10为−0.18±1.44 pp（4个seed中2个L19更好），per-seed最佳层为L19、L12、L13、L12，上层追平中层而非最佳层移到全新深度；L1–L7仍明显较差（23–29%）。学习混合在噪声下每个seed都比L10差1.2–3.7 pp，在两个低码率编码下差1.8和2.1 pp。</li>
+<li>XLS-R在退化下最佳层向更浅层移动；与XEUS不同，体现编码器间层选择漂移不一致。</li>
+<li>A14探索性分析：XEUS干净音频最佳A14层为L8（13.52%），领先L10 0.54 pp（3/4 seeds）但在seed噪声内；噪声下L8仍最佳且领先扩大到2.2–3.5 pp，在每个SNR和每个seed上成立，并通过歌手重采样与混响检验；用测试片段一半选层也在另一半得到L8，后训练的第四个seed作为留出检查。说明商用合成攻击更依赖较早层，尤其噪声下。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该文用配对、多seed、多退化条件的系统实验揭示：冻结SSL编码器的层选择不能仅靠域内开发集和干净音频可靠决定，中层通常优于末层但最佳深度会随编码器、信号退化和攻击类型漂移；结论对SVDD部署有明确警示，但证据主要来自CtrSVDD和两个编码器，A14分析为探索性且部分条件seed较少。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29865" target="_blank">Characterizing Frozen SSL Encoders and Backends for Cross-Domain Speech Deepfake Detection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Deepfake Detection / Anti-Spoofing</span>
+                <strong>ID:</strong> <span class="tag">2611.29865</span>
+                <a href="pdfs/2611.29865.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Benjamin Hurt, Oscar O'Donnell, Yefei Yang, Anjani Sethi, Priyanka Durai<br>
+                <div style="margin-top:5px"><span class="tag">speech deepfake detection</span><span class="tag">anti-spoofing</span><span class="tag">self-supervised learning</span><span class="tag">frozen encoders</span><span class="tag">cross-domain evaluation</span><span class="tag">cross-attention fusion</span><span class="tag">XEUS</span><span class="tag">XLSR-53</span><span class="tag">MHFA</span><span class="tag">AASIST</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>语音深伪检测（anti-spoofing）的主流架构是“大规模自监督学习（SSL）语音编码器 + 轻量后端”，常见做法是在 ASVspoof 2019 LA 等小规模伪造语料上<strong>全量微调 SSL 编码器</strong>。</li>
+<li>全量微调能获得很好的域内 EER，但容易过拟合已知攻击，面对未见攻击、编解码、录音条件时跨域迁移差；在 In-the-Wild 等真实场景中性能可下降一个数量级。</li>
+<li>现有工作多关注“如何适配编码器”，较少系统回答：<strong>如果冻结编码器，不同预训练表示与不同后端在跨域场景下如何组合、如何交互、需要多少可训练参数</strong>。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文固定一个已发表的 <strong>cross-attention 融合 recipe</strong>：SSL 特征与 CQCC 特征通过交叉注意力融合，后端分类 bona fide / spoof。</li>
+<li>采用 <strong>冻结编码器的因子实验设计</strong>：</li>
+<li>编码器：<code>XEUS</code>（超百万小时、4057 种语言、含歌唱 voice 与去混响目标） vs. <code>Wav2Vec2 XLSR-53</code>；</li>
+<li>后端：<code>MHFA</code>（multi-head factorized attentive pooling） vs. <code>AASIST</code>；</li>
+<li>形成 2×2 四系统，编码器均冻结，仅训练投影层、cross-attention、后端与分类器。</li>
+<li>架构细节：</li>
+<li>SSL 流输出帧级特征 <code>f_ssl ∈ R^{T_ssl×1024}</code>；</li>
+<li>频谱流提取 60 维 CQCC（20 个倒谱系数 + Δ/ΔΔ，constant-Q 96 bins/octave）；</li>
+<li>两流线性投影到 <code>D=128</code>，CQCC 长度线性插值到 SSL 帧数；</li>
+<li>以 SSL 为 query、CQCC 为 key/value 做 cross-attention，并用残差保留 SSL summary：<code>H = Softmax(QK^T/√D)V + f_ssl</code>；</li>
+<li>后端生成 utterance embedding，经 LayerNorm + Linear 二分类。</li>
+<li>控制变量：冻结状态、CQCC 分支、预处理、融合机制、评测协议保持一致；层聚合策略（XEUS 末层 vs. XLSR-53 最后四层均值）、训练 epoch、MHFA 学习率调度作为各编码器的合理配置，不视作严格单变量控制，并在消融中单独分析层聚合。</li>
+<li>评测覆盖五个基准：ASVspoof 2019 LA（域内）、ASVspoof 2021 LA（近域，编解码/传输）、ASVspoof 2021 DF（压缩深伪音频）、In-the-Wild（真实名人/政客录音）、ASVspoof 5（大规模众包，16 种 eval attacks）。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li><strong>编码器与后端存在交互，而非独立贡献</strong>：MHFA 更适合较强编码器；AASIST 能从较弱编码器恢复更多并提升稳定性，说明后端选择不能简单跨编码器迁移。</li>
+<li>在固定 recipe 内，冻结编码器选择带来<strong>大且可重复的跨数据集差异</strong>：使用 MHFA 时，冻结 XEUS 相对冻结 XLSR-53 在 LA21、DF21、ASV5 上降低 error 约 <strong>58–77%</strong>，在 ITW 上提升更温和；该排序在 matched-aggregation 消融中保持。</li>
+<li>容量匹配的 <code>WavLM Large</code> 诊断表明，XLSR-53 较弱<strong>不能仅由参数量解释</strong>。</li>
+<li>与三 seed 全编码器微调基线相比：冻结 XEUS 仅更新 <strong>&lt;0.4M 参数 vs. 316M</strong>，在 ASVspoof 5（EER 与 min-DCF）和 LA21 上小幅胜出，在 DF21 与 ITW 上落后；在四个 OOD 集合中的三个上观察到更低的 seed 波动。</li>
+<li>训练与评测设置：所有系统在 ASVspoof 2019 LA 上训练、无数据增强；16 kHz 重采样、pre-emphasis 0.97、裁剪/填充到 64,600 samples、25 ms/10 ms 分帧；三个 seed <code>{42, 1234, 2025}</code>；报告 pooled EER（%）mean±std，并给出 class-stratified bootstrap 95% 置信区间。</li>
+</ul>
+<h2>一句话评价</h2>
+<ul>
+<li>该文不追求 SOTA EER，而是通过<strong>冻结 SSL 编码器的共享 pipeline 因子实验</strong>，系统刻画编码器表示与后端在跨域语音深伪检测中的交互和可迁移性，强调“冻结大模型 + 轻量后端”的高效跨域比较价值。</li>
+</ul>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29557" target="_blank">S$2$SCORE: A Textless Unified Evaluation Metric for Speech-to-Speech Translation Systems</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech-to-Speech Translation Evaluation</span>
+                <strong>ID:</strong> <span class="tag">2611.29557</span>
+                <a href="pdfs/2611.29557.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Lalaram Arya, Mrinmoy Bhattacharjee, S. R. Mahadeva Prasanna<br>
+                <div style="margin-top:5px"><span class="tag">Speech-to-Speech Translation</span><span class="tag">Textless Evaluation</span><span class="tag">Speech Quality Assessment</span><span class="tag">Multi-task Learning</span><span class="tag">Semantic Adequacy</span><span class="tag">Speaker Similarity</span><span class="tag">Acoustic Naturalness</span></div>
+            </div>
+            <div class="summary-section">
+                <h1>S2SCORE 论文总结</h1>
+<h2>核心痛点</h2>
+<ul>
+<li>现有 S2ST 评估方法大多依赖文本：先通过 ASR 转写，再用 BLEU、METEOR、BLEURT、COMET、MetricX-24 等文本指标评估，主要衡量语义充分性。</li>
+<li>纯文本评估会丢弃与翻译质量相关的声学信息，并引入额外 ASR 系统的计算开销和转写错误。</li>
+<li>现代 S2ST 输出质量是多维的：不仅要求语义保真，还要求说话人相似性和声学自然度。现有无文本方法如 BLASER、BLASER 2.0、textless S2ST metric、SpeechQE 仍主要关注语义充分性，其他维度通常需要独立指标，导致评估流程碎片化、开销增加。</li>
+<li>作者指出，据其所知，尚无现有无文本评估框架能够联合建模语义充分性、说话人相似性和声学自然度，并给出统一的整体质量分数。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 S2SCORE：一个统一的无文本 S2ST 评估框架，采用多任务、多头架构，同时评估语义充分性、说话人相似性和声学自然度，并输出经过人类评分校准的整体质量分数。</li>
+<li>架构包含任务特定特征提取器、共享 MLP 模块 S-MLP 和三个预测头：</li>
+<li>语义表征使用 SONAR 编码器，支持多语言语音/文本嵌入；</li>
+<li>声学自然度使用 log-Mel 频谱特征；</li>
+<li>说话人相似性使用预训练 WavLM-SV 嵌入。</li>
+<li>S-MLP 采用硬参数共享：将 4096 维输入映射到 1024 维共享表示，经两层全连接、tanh 激活和 dropout 处理，再路由到各任务头。</li>
+<li>翻译评估头基于 SONAR 嵌入构建源端与译端交互特征，遵循 BLASER 2.0 使用逐元素乘积和绝对差；REF 变体额外加入参考语音嵌入，最终通过回归头预测语义充分性，并以 xCOMET-XXL 分数为监督，使用 MSE 损失。</li>
+<li>声学自然度头从译语音提取 log-Mel 频谱，经任务特定投影器映射到共享空间，再由 S-MLP 和回归头预测自然度，并以 UTMOSv2 分数为监督，使用 MSE 损失。</li>
+<li>说话人相似性头将源语音与 N 个译音候选配对，包括 1 个正样本和 N−1 个负样本；使用 WavLM-SV 提取嵌入，经共享空间和投影得到 128 维嵌入，以余弦相似度计算分数，并用 InfoNCE 对比损失训练。</li>
+<li>总损失为三个任务损失的加权和，权重在验证集上选择。</li>
+<li>统一质量分数：将三个头的分数归一化到 [0,1] 后，以可学习权重 αT、αN、αS 加权组合，权重由留出验证集上的人类整体质量评分学习，从而得到人类校准的 S2SCORE ∈ [0,1]。</li>
+<li>提出可扩展监督策略：不依赖大规模人工标注，而是用成熟评估模型自动生成监督标签，包括 xCOMET-XXL 监督语义、UTMOSv2 监督自然度、WavLM-SV 对比监督说话人保持。</li>
+<li>构建多语言 S2ST 数据：使用 CVSS 的 fr–en、es–en、de–en、zh–en 和 BhasaAnuvaad 的 hi–en；译音由多种 S2ST 系统生成，包括 Whisper large-v2 + XTTS-v2 级联、SeamlessM4T-v2 级联/ST 模式、DS2ST-LM 直接模型；每个源句使用 6 个目标音色（3 男 3 女）合成，以构造匹配和不匹配说话人对。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在五个语言对上评估，S2SCORE 与人类判断、独立参考指标以及训练监督指标均表现出较强一致性，说明具有较好的泛化能力。</li>
+<li>无参考变体 S2SCORE-QE  consistently 优于 S2SCORE-REF，并在语义充分性预测上强于 BLASER 2.0。</li>
+<li>数据集统计显示训练/验证/测试按 80%/10%/10% 划分，且句级和说话人无重叠。</li>
+<li>数据质量方面，ASR-BLEU 随语言对变化较大（15.16–26.57），而 xCOMET-XXL 相对稳定（0.554–0.591），句级 xCOMET-XXL 分布覆盖 [0,1] 且无明显偏斜，表明翻译质量条件多样。</li>
+<li>人类评分由五名具有研究生教育背景、精通非母语英语的标注者收集；为学习聚合权重，从训练和验证集中随机抽取 2500 条译音（每个语言对 500 条）进行整体质量评分。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>S2SCORE 将语义、说话人和声学自然度统一到一个无文本多任务评估框架中，并用成熟指标实现可扩展监督，为 S2ST 多维质量评估提供了有前景的统一方案。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29465" target="_blank">Voice Agents: From Auditory Intelligence to Auditory Agency</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spoken Dialogue Systems and Voice Agents</span>
+                <strong>ID:</strong> <span class="tag">2611.29465</span>
+                <a href="pdfs/2611.29465.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kele Xu, Qisheng Xu, Xinwang Liu, Huaimin Wang<br>
+                <div style="margin-top:5px"><span class="tag">Voice Agents</span><span class="tag">Auditory Agency</span><span class="tag">Commitment Boundary</span><span class="tag">Agency Closure</span><span class="tag">Full-Duplex Interaction</span><span class="tag">Embodied Agents</span><span class="tag">Closed-Loop Evaluation</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文概览</h2>
+<p><strong>标题</strong>：Voice Agents: From Auditory Intelligence to Auditory Agency<br />
+<strong>作者</strong>：Kele Xu, Qisheng Xu, Xinwang Liu, Huaimin Wang（国防科技大学等）<br />
+<strong>性质</strong>：立场/综述型（position &amp; survey）论文，发表于 Proceedings of the IEEE，arXiv:2611.29465<br />
+<strong>核心主张</strong>：语音系统正从“听觉智能（auditory intelligence）”走向“听觉能动性（auditory agency）”，评价与研究的基本单元应从单个能力指标转向“从语音证据到可观测后果”的接口链路。</p>
+<hr />
+<h2>一、核心痛点（Problem）</h2>
+<ol>
+<li><strong>能力集成快于系统级观测</strong>：全双工交互、推理、记忆、工具调用、具身控制等能力被快速整合进同一运行时（runtime），但学界对“整合后的系统究竟做了什么”缺乏端到端观测手段。</li>
+<li><strong>识别准确与回答流畅不等于任务正确</strong>：即使 ASR 准确、回复流畅，也无法判断请求是否被正确理解、动作是否被授权、外部状态是否与用户意图一致。</li>
+<li><strong>流式场景下的“过早行动”问题</strong>：系统可在说话人尚未说完或正在修正时就开始准备动作；早期解释一旦写入持久状态或触发执行，后期修正难以撤回。</li>
+<li><strong>架构融合导致责任边界模糊</strong>：经典口语对话系统（如 Plato）有明确模块接口，便于检查中间决策；而基座模型架构让感知、对话管理、规划紧密耦合，中间决策的责任主体难以定位。</li>
+<li><strong>现有评测按“能力”切分</strong>：各能力分别评测，忽视能力之间的耦合与失败传播。</li>
+</ol>
+<hr />
+<h2>二、方法与框架创新（Framework Contributions）</h2>
+<p>论文不提出新模型，而是提出一套<strong>分析框架与参照点</strong>，用于比较架构与解读评测结果：</p>
+<ol>
+<li><strong>两个正交维度</strong></li>
+<li><em>Auditory intelligence（听觉智能）</em>：感知、说话人/受话人归属、增量理解、轮次协调、语音生成、修复等交互能力。</li>
+<li><em>Auditory agency（听觉能动性）</em>：目标导向的持久状态——推理、规划、记忆、授权、行动、观测、验证、恢复。</li>
+<li>
+<p>明确强调：两者<strong>不是成熟度标尺</strong>，系统问题出现在二者交汇处。</p>
+</li>
+<li>
+<p><strong>承诺边界（Commitment boundary）</strong></p>
+</li>
+<li>定义：可修订的听觉证据转化为持久状态、计划或可执行请求的那一点。</li>
+<li>
+<p>关键区分：<strong>声学端点（endpointing）≠ 承诺决策</strong>。前者问“语音是否似乎结束”，后者问“证据是否足以让下游状态或动作依赖当前解释”。将二者分离，可使过早动作更易识别与回滚。</p>
+</li>
+<li>
+<p><strong>能动性闭环（Agency closure）</strong></p>
+</li>
+<li>流程：授权 → 执行 → 观测外部状态 → 与意图状态比对 → 不匹配则恢复/补偿 → 向用户沟通结果。</li>
+<li>
+<p>强调需拆分的混淆事件：工具选择 ≠ 工具执行；执行 ≠ 状态改变的证据；观测状态 ≠ 已验证用户目标达成。</p>
+</li>
+<li>
+<p><strong>四个可持续追问的问题</strong></p>
+</li>
+<li>
+<p>承诺了什么？谁拥有该决策？什么证据确立了后果？意图与观测不一致时发生了什么？</p>
+</li>
+<li>
+<p><strong>架构演进梳理（Section II）</strong></p>
+</li>
+<li><em>识别+策略阶段</em>：POMDP 式对话管理（信念状态、显式奖励）、Plato 的模块化可替换组件、词混淆网络传递识别不确定性、时序表达网络与在线 RL 联合优化信念跟踪与策略。</li>
+<li><em>神经与语音原生阶段</em>：TTS 进步、语音到语音翻译去文本中间表示（Translatotron 2 的语音保持、离散单元、两遍解码、单语训练数据、SeamlessM4T 多语扩展）、AudioPaLM 的语音-语言共享建模、SpeechGPT 的离散语音指令跟随、SpiRit-LM 的书面/口语 token 交错与韵律风格单元、双通道生成式对话模型（无需显式轮次模块）。</li>
+<li><em>流式与时序控制</em>：增量对话架构中的可添加/修订/提交的部分解释单元、增量生成（先开口后规划）、流式 SLU 从不完整音频预测意图与槽位、响应时机模型、TurnGPT + 语音活动预测用于机器人轮次与打断处理、语义端点判定（Phoenix-VAD）、自适应检测残留播放导致的误打断、融合模型区分停顿/反馈语/打断/继续，以及 device-directedness（说话是否针对助手）。</li>
+</ol>
+<hr />
+<h2>三、实验结果</h2>
+<ul>
+<li>本文为<strong>框架/立场型论文，未报告自建实验或定量基准结果</strong>。</li>
+<li>其“证据”来自对既有系统的横向梳理（全双工交互、推理、记忆、工具、具身、人类控制），归纳出一个一致的<strong>系统级错配（systems-level mismatch）</strong>：集成速度 &gt; 对集成系统实际行为的端到端观测能力。</li>
+<li>评测部分的处理方式是“<strong>按端点读取结果</strong>”：不比较单一分数，而是检查评测究竟观测到了哪一层（识别、理解、决策、执行还是状态验证）。</li>
+</ul>
+<hr />
+<h2>四、研究议程与意义</h2>
+<ul>
+<li>设计目标：在<strong>承诺、执行、验证均可归因（attributable）</strong>的前提下，保留从语音证据到后果的可追踪链路（trace）。</li>
+<li>记忆需携带身份、来源（provenance）与时序范围；授权决定哪些合法计划可进入执行；恢复机制处理失败或部分状态转移。</li>
+<li>后续结构：架构（II）→ 交互智能（III）→ 能动智能（IV）→ 以人为中心的控制（V）→ 闭环评测（VI）→ 研究议程（VII）。</li>
+</ul>
+<hr />
+<h2>五、一句话评价</h2>
+<p>本文不提供新模型或新指标，而是给出“承诺边界 + 能动性闭环”这一对清晰的分析参照点，把语音智能体研究从能力清单式比较，推进到“语音证据如何变成可归因后果”的系统级因果链路审视，是语音智能体从 demo 走向可部署系统时值得对齐的概念框架。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29315" target="_blank">SWIFT: A Handcrafted, Arithmetic-Minimal FPGA Engine for Real-Time Audio Deepfake Detection</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Audio Deepfake Detection / Speech Anti-Spoofing</span>
+                <strong>ID:</strong> <span class="tag">2611.29315</span>
+                <a href="pdfs/2611.29315.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Chirantan Banerjee, Soumita Chatterjee, Bhargab B. Bhattacharya, Hafizur Rahaman<br>
+                <div style="margin-top:5px"><span class="tag">Audio Deepfake Detection</span><span class="tag">FPGA</span><span class="tag">Integer Lifting Wavelet Transform</span><span class="tag">Fixed-Point DSP Features</span><span class="tag">Stacked Ensemble</span><span class="tag">Edge Computing</span><span class="tag">BinDCT</span><span class="tag">Mahalanobis Anomaly Detection</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>SWIFT: 面向实时音频深度伪造检测的手工设计、算术极简 FPGA 引擎</h2>
+<p><strong>作者/机构</strong>: Chirantan Banerjee, Soumita Chatterjee, Bhargab B. Bhattacharya, Hafizur Rahaman（印度 IIEST Shibpur 信息技术系 / VLSI 技术学院）</p>
+<h3>一、核心痛点</h3>
+<ul>
+<li>生成式语音克隆（VALL-E 类 codec-language 模型、扩散模型、GAN vocoder）已能仅凭数秒参考音频复制人声，被用于绕过银行生物识别、企业欺诈与定向虚假信息；人耳已难以分辨真伪。</li>
+<li>现有检测器普遍依赖<strong>高精度、大参数量神经编码器</strong>（HuBERT-ECAPA、WavLM、Transformer 等），功耗高、无法部署到呼叫中心、IoT 设备、移动取证套件等边缘硬件。</li>
+<li>已有的深度伪造硬件加速仅针对<strong>图像/视频</strong>的量化 CNN，且跑在数据中心级 FPGA 卡上；据作者所知，<strong>尚无手工设计（非神经网络）的音频深度伪造检测器被映射到嵌入式 FPGA</strong>。</li>
+<li>部署的检测器本身也是 ML 系统，面临对抗样本、软硬件木马、权重比特翻转等威胁，因此<strong>紧凑、可完全审查的整数流水线</strong>更具吸引力。</li>
+</ul>
+<h3>二、方法创新</h3>
+<p><strong>总体思路</strong>：SWIFT（Streaming Whiten-Integer Forensic Trust-Engine）完全不含神经网络，在<strong>高频噪声域</strong>工作——因为 vocoder、扩散合成器、GAN、codec 语言模型都会在此留下微弱但有结构的伪造痕迹。</p>
+<ol>
+<li><strong>预处理与信号标准化</strong>：统一转为单声道、峰值归一化到 [-1,1]、重采样至 16 kHz（保留 7 kHz 以下内容），40 ms 窗长 / 20 ms 帧移（50% 重叠），Q15 定点量化。</li>
+<li><strong>一阶整数高通残差</strong>：<code>hf[n] = x_Q15[2n+1] − x_Q15[2n]</code>，即整数 Haar 提升方案的 predict 步 + 2 倍抽取；每输出样本仅需一次整数减法、无乘法器，幅频响应 2|sin(ω/2)|。它抑制携带音素信息的低频声道共振，暴露上采样棋盘伪影、相位失配、神经 vocoder 渲染足迹。图 2 显示：在噪声残差上真实/伪造语音的马氏距离呈两个清晰分离峰（仅 ~4 处重叠），而原始音频上严重重叠——证明分离度来自残差而非度量本身。</li>
+<li><strong>九族 192 维定点描述子</strong>：</li>
+<li><strong>DWT 倒谱分位数量（104 维）</strong>：整数 LeGall 5/3 提升 DWT，丢弃第一级近似，LH 细节再分解为 HL/HH；以非对称交错复用 <code>c = 3·s1 + (s2 ≫ 1)</code> 合并（s1 为 LH/HL 每第 4 个系数的 128 点零填充序列，s2 为 HH 在偏移 0/2 处），再用仅含移位与加法的 <strong>BinDCT26</strong> 压缩，取均值、中位绝对偏差、5%/95% 分位数四统计量。基于块的 vocoder 合成会在小波细节带留下周期性结构化尖峰。</li>
+<li><strong>噪声马氏异常距离（10 维）</strong>：每个训练折内仅用真实样本拟合 (μ_real, Σ_real)，逐帧计算 <code>D_M = sqrt((x−μ)ᵀΣ⁻¹(x−μ))</code>，取 10 个汇总统计量刻画相对真实麦克风噪声底的漂移。</li>
+<li><strong>噪声 Poincaré 相空间几何（24 维）</strong>：<code>SD1 = σ(y[n+τ]−y[n])/√2</code>，<code>SD2 = σ(y[n+τ]+y[n])/√2</code>；真实发声轨迹为丰富不规则的吸引子，确定性合成器则过平滑或过紊乱。</li>
+<li><strong>噪声相位抖动（10 维）</strong>：跟踪该几何的帧间漂移。</li>
+<li><strong>局部关系异常（10 维）</strong>：对片段自身质心打分，捕捉整体过于平滑或在合成边界突跳的录音。</li>
+<li><strong>Token 周期性通量（8 维）</strong>：暴露与 codec 帧率锁定的周期性。</li>
+<li><strong>F0 抖动与 shimmer（8 维）</strong>：合成器会抹平或夸大声带微颤。</li>
+<li><strong>谱包络差分（10 维）</strong>：log 谱差分 ΔS、Δ²S 区分过平滑过渡与脉冲式边界。</li>
+<li><strong>调制谱（8 维）</strong>：<code>R_mod = Σ_{f&lt;4} M(f) / Σ_{4≤f&lt;20} M(f)</code>，对比 4 Hz 以下慢调制能量与含自然 4–8 Hz 音节节律的 4–20 Hz 频带。</li>
+<li><strong>两级堆叠分类引擎（Algorithm 1）</strong>：</li>
+<li><strong>Level-0</strong>：11 条并行成员流水线（9 个特征族各一 + PCA 白化全拼接 + 未白化全拼接）。每条统一四步级联：方差阈值（&lt;1e-5 剪枝）→ 标准化 → 可选 PCA 白化（保留 99.5% 方差）→ 类平衡 LightGBM（extremely randomised splits、path smoothing），并用 3 折交叉验证做 <strong>Platt 校准</strong>，输出校准概率。</li>
+<li><strong>Level-1</strong>：11 列校准概率组成堆叠矩阵 P∈R^{N×11}，用 <strong>L1 正则化逻辑回归</strong> <code>min L_CE(w,b) + C⁻¹‖w‖₁</code> 融合，L1 惩罚自动抑制冗余成员、保留互补概率流。Level-1 融合器在 Level-0 的<strong>折外（out-of-fold）概率</strong>上训练。</li>
+<li><strong>软硬件划分与 FPGA 部署</strong>：</li>
+<li><strong>PL（可编程逻辑）</strong>：噪声残差、整数提升 DWT、交错复用、BinDCT26（纯整数加/移位）；以及定点线性分类器（SWIFT-HW，定点 MAC）。</li>
+<li><strong>PS（Cortex-A9）</strong>：权重加载、DMA、控制、分数回读。</li>
+<li><strong>软件</strong>：特征族 2–9 的 Q15 定点计算；LightGBM、Platt、L1 融合及全部训练（浮点）。</li>
+<li>整数前端 + 定点线性分类器保证软硬件<strong>位精确（bit-exact）</strong>一致。</li>
+</ol>
+<h3>三、实验结果</h3>
+<ul>
+<li><strong>精度</strong>：在 8 个基准（覆盖 TTS/codec、GAN-vocoder、ASVspoof、混合基准，含 MLAAD、AUDETER、ShiftySpeech、WaveFake、LibriTTS、ASVspoof 2021 等）上，采用<strong>片段级划分 + 嵌套交叉验证 + 泄漏控制 + 真假音频共享同一预处理链</strong>，参考模型最高准确率 <strong>99.86%</strong>，EER 最低 <strong>0.03%</strong>。</li>
+<li><strong>FPGA 指标（PYNQ-Z2 / Zynq-7020）</strong>：单帧数据通路延迟 <strong>7.85 µs（127.4k 帧/秒）</strong>，功耗 <strong>1.734 W</strong>，LUT 利用率 <strong>11.2%</strong>。</li>
+<li><strong>消融/对比</strong>：包含变换（DWT）对比实验，以及在相同特征上与 5 种标准分类器的对比；同时报告跨域（cross-domain）结果。</li>
+</ul>
+<h3>四、贡献总结</h3>
+<ol>
+<li>九族、整数友好的 DSP 噪声底描述子 + Platt 校准 LightGBM + 稀疏 L1 元学习器，无任何神经网络即达 99.86% 准确率 / 0.03% EER。</li>
+<li>PYNQ-Z2 上位精确定点前端 + 线性分类器的 FPGA 实现（含显式软硬件划分），7.85 µs/帧、1.734 W、11.22% LUT——据作者所知为<strong>首个手工设计、无神经网络的音频深度伪造检测器 FPGA 实现</strong>。</li>
+<li>泄漏控制的严格评测协议（片段级划分、嵌套 CV、多域基准、变换对比、五分类器对照）。</li>
+</ol>
+<h3>五、一句话评价</h3>
+<p>SWIFT 用「一阶整数高通残差 + 整数小波/BinDCT 倒谱 + 相空间与节律统计」这一套纯手工、仅需加减与移位的特征工程，配合校准堆叠集成，在精度上媲美大型神经检测器，同时首次把音频反欺骗检测压缩到 1.7 W、11% LUT 的嵌入式 FPGA 上实时运行，为可解释、可审查、抗硬件威胁的边缘取证提供了极具说服力的范式。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.29040" target="_blank">Speech Emotion Recognition Across Languages: Prosodic Patterns and Self-Supervised Learning</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Emotion Recognition (SER)</span>
+                <strong>ID:</strong> <span class="tag">2611.29040</span>
+                <a href="pdfs/2611.29040.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Tianqi Geng, Zhichen Han, Hui Feng, Jiahong Yuan, Korin Richmond, Yuanchao Li<br>
+                <div style="margin-top:5px"><span class="tag">Speech Emotion Recognition</span><span class="tag">Cross-lingual</span><span class="tag">Prosodic Patterns</span><span class="tag">Self-Supervised Learning</span><span class="tag">Speech Emotion Diarization</span><span class="tag">Parameter-Efficient Fine-Tuning</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>论文信息</h2>
+<ul>
+<li>标题：Speech Emotion Recognition Across Languages: Prosodic Patterns and Self-Supervised Learning</li>
+<li>作者：GENG Tianqi, HAN Zhichen, FENG Hui, YUAN Jiahong, RICHMOND Korin, LI Yuanchao</li>
+</ul>
+<h2>核心痛点</h2>
+<ul>
+<li>跨语言语音情感识别（SER）受语言与文化差异制约，目标语言情感数据稀缺时性能明显下降。</li>
+<li>对声学-韵律特征如何中介跨语言情绪沟通理解不足。</li>
+<li>缺乏机器（SSL模型）与人类听者在细粒度情绪感知上的系统比较。</li>
+<li>传统方法多依赖目标语言数据精调，跨语言迁移时性能下降；需更高效微调策略。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>构建中文（CN）、德语（DE）、英语（EN）情感语音韵律对比分析：提取平均f0、f0最小/最大、时长、平均强度、语速、强度标准差等；f0做半音归一化。</li>
+<li>统计建模：单因素ANOVA检验情绪对声学参数影响；线性混合效应模型 Parameter ~ emotion + (1|gender) + (1|language)，以neutral为参考，控制语言和性别随机效应。</li>
+<li>SSL层-wise分析：使用W2V2-CN/DE/EN，比较单语、跨语言、迁移学习三种设置，冻结参数提取特征，以UA评估，寻找SER最优层。</li>
+<li>参数高效微调（PEFT）：LoRA、Bottleneck Adapter、Weighted Gating，以及两阶段微调（源语言收敛后目标语言微调），用于跨语言SER。</li>
+<li>扩展至语音情感分割识别（SED）：在ZED上比较模型与人类对情感显著片段的识别，并进行选中/未选中片段的韵律特征分析。</li>
+</ul>
+<h2>实验设置</h2>
+<ul>
+<li>数据集：ESD（中文）、PAVOQUE（德语）、IEMOCAP（英语）、ZED（英语SED）。</li>
+<li>模型：WavLM-large（英语情感语音训练）及W2V2-base（CN/DE/EN预训练）。</li>
+<li>被试：6名母语中文（未学德语）与6名母语德语（未学中文），英语熟练，无听力/情绪理解障碍。</li>
+<li>SER任务：angry、happy、neutral、sad四类；每数据集每情绪400条，共1600条；验证/测试各200条；5折交叉验证；三语言等量数据。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>ANOVA与混合效应模型揭示跨语言和情绪特异性韵律模式；通用韵律特征（如强度、音高）与语言特定因素共同作用。</li>
+<li>中文摘要报告：汉语和德语声学参数在情绪表达中更依赖响度相关特征，英语则不然；响度是跨语言情感感知的重要线索。</li>
+<li>人类在跨语言SER任务中通常优于SSL模型；但SSL模型经高效微调后在跨语言SER显著提升，达到与母语人类听者竞争的水平。</li>
+<li>SED分析显示SSL模型在迁移学习场景中有效，能捕捉情感显著片段；模型与人类在细粒度情感分割上仍有差异。</li>
+<li>人类感知涉及更多跨语言和语境信息，当前SSL模型尚未完全覆盖。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>该研究将跨语言韵律分析、SSL层分析与参数高效微调、SED人机比较结合起来，系统揭示了通用与语言特定韵律线索及SSL跨语言情感识别的潜力；但当前片段未给出完整数值结果，需结合全文验证具体性能。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.28290" target="_blank">Preserving Prosody in Speaker Anonymization</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Speech Synthesis / Speaker Anonymization</span>
+                <strong>ID:</strong> <span class="tag">2611.28290</span>
+                <a href="pdfs/2611.28290.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Kevin Everson, Mari Ostendorf<br>
+                <div style="margin-top:5px"><span class="tag">speaker anonymization</span><span class="tag">prosody preservation</span><span class="tag">speech synthesis</span><span class="tag">CosyVoice2</span><span class="tag">prosody encoder</span><span class="tag">privacy</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>说话人匿名化（speaker anonymization）需要在改变说话人身份的同时保留交流意图；意图不仅包含文字内容，还包含重音、短语结构、疑问/犹豫等韵律信息。</li>
+<li>级联式 ASR-TTS 匿名化方法虽然能有效隐藏说话人，但会丢失韵律信息；端到端语音转换方法能保留一定韵律，却常残留说话人信息。</li>
+<li>韵律的声学相关量（如平均音高、语速）本身携带说话人属性，因此“有效匿名化”和“保留韵律”之间存在权衡。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>论文提出一种韵律保留的级联式说话人匿名化方法：将已有的预训练隐私保护韵律编码器集成到语音合成模型 CosyVoice2 中。</li>
+<li>韵律编码器基于 HuBERT 式自监督框架，使用帧级掩码预测和 span-boundary 目标训练；训练目标由 log F0、Δlog F0、c1、P 等韵律声学相关量聚类得到。</li>
+<li>为减少词汇内容和说话人信息，编码器输入使用 fLPC 估计的声门源并经过 1000 Hz 低通滤波；同时采用 log F0 说话人归一化和带梯度反转的对抗说话人识别损失来削弱说话人信息。</li>
+<li>韵律特征原始输出帧率为 62.5 Hz，本文下采样到 12.5 Hz，形成低帧率韵律嵌入序列。</li>
+<li>在 CosyVoice2 的 LLM 语音 token 生成中，将特殊 token P 和韵律特征序列插入文本编码与语音 token 序列之间，使自回归语音 token 预测以韵律特征和文本编码为条件。</li>
+<li>在 flow-matching 模型中，为所有编码层加入交叉注意力，将韵律特征作为 key/value，为 Mel 频谱生成补充语音 token 中缺失的韵律信息。</li>
+<li>推理阶段，匿名化通过“文本转写 + 源语音韵律特征 + 匿名化说话人嵌入”生成语音；由于目标说话人通常没有可用的 prompt 语音，模型省略 prompt Mel 频谱，LLM 输入形式为 S {text encodings} P {prosody features} T。</li>
+<li>该方法不是从文本预测韵律，而是将原始话语的韵律结构迁移到重合成语音中，从而控制词级韵律结构。</li>
+</ul>
+<h2>实验与结果</h2>
+<ul>
+<li>模型以预训练 CosyVoice2 权重初始化，在 GigaSpeech 上微调 LLM 和 flow-matching 模块，并与未集成韵律特征的基线模型比较。韵律编码器也在 GigaSpeech 上预训练。</li>
+<li>感知实验：构建 20 对句子，覆盖焦点、犹豫/不犹豫、不同短语结构、陈述/疑问等类别；使用相同无标点文本、不同韵律特征和匿名化说话人嵌入合成语音；17 名受试者参与。</li>
+<li>受试者将带韵律控制的音频匹配到目标语境转写的比例为 94.3%，仅 5% 的音频同时匹配两个转写，说明匿名语音中仍保留清晰且可区分的韵律信息。</li>
+<li>自然度 MOS：整体上韵律控制模型为 3.99±1.14，无韵律控制为 3.57±1.34；Focus、Hesitation、Phrase 三类均更高，Question 类略低（3.98±1.13 vs. 4.34±0.87），作者指出主要与怀疑/反问类疑问句有关。</li>
+<li>客观评估：使用 VoicePrivacy 2026 Challenge 在 LibriSpeech 上的部分评测设置，wav2vec2 ASR 提供转写，并从 LibriTTS-R 随机采样异性说话人嵌入；对 LLM 和 flow-matching 中韵律控制的四种组合进行消融。</li>
+<li>评估指标包括说话人验证 EER、ASR WER，以及通过动态时间规整对齐 torchcrepe 提取并 z-normalized 的 log F0 轮廓和能量轮廓来评估音高/能量保留。摘要结论称匿名化性能与已有工作有竞争力。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文通过将说话人解耦的低帧率韵律特征注入级联 TTS 的 LLM 与 flow-matching 模块，在保持匿名化竞争力的同时显著提升了韵律可感知性与自然度，是说话人匿名化中兼顾隐私与韵律信息的一条有效技术路线。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.28248" target="_blank">Granary-v2: Scalable Multilingual Speech Data Curation for Predictable and Controllable Model Outputs</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Multilingual Speech Data Curation / Speech-Language Modeling</span>
+                <strong>ID:</strong> <span class="tag">2611.28248</span>
+                <a href="pdfs/2611.28248.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Nithin Rao Koluguri, Meline Mkrtchyan, Nune Tadevosyan, Aaftab V, Sushmitha Deva, Fan Qian, Davit Karamyan, Kunal Dhawan, Taejin Park, Piotr Zelasko, Arushi Dhingra, Viraj Karandikar, Shuoyang Ding, Slyne Deng, Onur Yilmaz, Praateek Mahajan, Utkarsh Vaidya, Nikolay Karpov, Jagadeesh Balam, Boris Ginsburg<br>
+                <div style="margin-top:5px"><span class="tag">multilingual speech dataset</span><span class="tag">speech data curation</span><span class="tag">instruction-target pairs</span><span class="tag">speech-language models</span><span class="tag">automatic speech recognition</span><span class="tag">speech translation</span><span class="tag">NeMo Curator</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>大多数语音语料通常为每段录音只提供一个转写，且不同语料的转写规范不一致。单一参考文本无法教会语音语言模型：同一段语音如何按指令生成多种合法输出形式，例如保真转写、书面化转写、去除或保留 disfluency、代码切换转写、上下文 ASR、翻译、字幕和问答。因此，训练可控且可预测的多任务语音语言模型，缺少同一语音对齐多种任务目标的大规模数据基础。</p>
+<h2>方法创新</h2>
+<ul>
+<li>提出 Granary-v2：一个多语言语音数据集与可复用 curation 系统，基于 NeMo Curator 构建，包含 metadata extraction、ASR labeling、text label generation 三条可独立运行和组合的流水线。</li>
+<li>以 speech-faithful transcript 作为共同源表示，保留口语数字形式、语法、填充词、重复和 false starts，再派生对齐的书面形式和其他任务目标。</li>
+<li>为同一录音提供对齐的多种文本监督：语音保真转写、含或不含 disfluency 的书面形式、code-switched transcription、由转写派生的 caption、question-answer pairs，以及部分记录的 context 和翻译。</li>
+<li>将上述目标组织为 instruction-target pairs，用自然语言指令指定任务和输出形式，从而支持 prompt-controlled 的多任务训练。</li>
+<li>支持两类输入：无可信文本的音频和已有转写的语料；采用语言相关 ASR 路由、质量过滤，并在内部 manifest 中保留中间预测和质量决策，支持任务失败后的恢复。</li>
+<li>相对 Granary-v1，语言覆盖从 25 种扩展到 48 种，并新增对齐转写变体和多任务 instruction-target pairs。</li>
+</ul>
+<h2>数据规模与发布</h2>
+<ul>
+<li>完整处理后集合约 843,600 唯一音频小时，具体为 843,579.22 unique ASR hours，覆盖 48 种语言和 19 个 corpus entries。</li>
+<li>约 142,800 小时翻译为英语，具体为 142,778.43 小时；约 55k 小时英语音频翻译到 31 种目标语言。</li>
+<li>通过 Hugging Face 发布公开子集，包括部分生成标签和 instruction-target pairs；但公开子集排除 YODAS2、YouTube-Commons 和 ReazonSpeech-v2 的标签与指令对。</li>
+<li>开源基于 NeMo Curator 的 Granary-v2 pipeline 和模型训练 recipes。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>标签质量过滤评估：使用两个 English Transformer-TDT 模型，在相同 training-step budget 下比较全量数据与高质量子集。九项 benchmark 的 unweighted mean WER 从 4.91% 降至 4.67%，并在六项 benchmark 上取得改善。</li>
+<li>报告了 curation throughput，以及 Nemotron-3.5-Transcribe 使用 Granary-v2 作为部分训练数据后的下游 ASR 和 speech translation 结果。</li>
+<li>进行了定性文本模型比较，并给出高质量标签与全量标签的英文 ASR 对比。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>Granary-v2 是面向可控多任务语音语言模型的大规模多语言数据基础设施，核心价值在于将同一语音对齐到多种文本监督形式，并通过可复用、可恢复的 curation 流水线实现规模化生产。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.28056" target="_blank">NAVIQUAL-XR: Finding the Sweet Spot of a Live Music Environment in Augmented Reality</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Spatial Audio Quality Assessment / AR Audio QoE</span>
+                <strong>ID:</strong> <span class="tag">2611.28056</span>
+                <a href="pdfs/2611.28056.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Carl Timothy Tolentino, Andrew Hines<br>
+                <div style="margin-top:5px"><span class="tag">Augmented Reality</span><span class="tag">Quality of Experience</span><span class="tag">Binaural Audio</span><span class="tag">Objective Metrics</span><span class="tag">Subjective Tests</span><span class="tag">Live Music</span><span class="tag">Sweet Spot</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<ul>
+<li>AR/XR 空间音频已支持 6-DoF 导航与动态双耳渲染，但针对 AR 现场音乐环境的听众体验质量（QoE）评估仍缺乏标准化框架。</li>
+<li>现有空间音频主观测试多局限于盲听、3-DoF 或问卷式定性分析，难以覆盖 AR 中实时视觉上下文、用户移动、声源布局、房间声学与干扰因素等混杂变量。</li>
+<li>NAVIQUAL 框架虽可在虚拟声学环境中无物理部署地估计 QoE，并已在盲听 MUSHRA 条件下验证，但尚未在 6-DoF 可导航 AR 环境中验证其适用性与准确性。</li>
+<li>传统房间声学中的“sweet spot”通常指最佳听音位置；本文将其扩展为听众在 AR 现场音乐环境中选择的“主观 sweet spot”，即能提供最佳现场音乐体验的具体位置与朝向。</li>
+</ul>
+<h2>方法创新</h2>
+<ul>
+<li>提出 NAVIQUAL-XR：一个用于寻找 AR 现场音乐环境“sweet spot”的客观模型，并通过主观实验验证。</li>
+<li>系统流程包括：BINAMIX 空间音频合成、NAVIQUAL 客观质量图、客观 sweet spot 图；同时采集主观测试中的听众导航轨迹、最终位置与方向，形成主观 sweet spot 图。</li>
+<li>实验招募 25 名听众，使用 Magic Leap 2 AR 眼镜，在 12 个不同场景设置的 AR 环境中导航，覆盖纯听觉与视听两种模态。</li>
+<li>将主观 sweet spot 图与客观 sweet spot 图通过 MAE、SSIM、EMD 等相似度指标进行比较，以评估客观指标对人类主观选择的预测能力。</li>
+<li>围绕两大主题提出 6 个研究问题：主观听众体验（导航行为、主观 sweet spot 一致性、听觉 vs 视听差异）与客观指标评估（如何对比主观 sweet spot、预测精度、跨音乐类型/干扰配置/视觉线索的鲁棒性）。</li>
+<li>定义并聚合“平均 sweet spot”，类比标准化音频测试中的 MOS，用于统计多参与者选择。</li>
+</ul>
+<h2>实验结果</h2>
+<ul>
+<li>在预测主观 sweet spot 方面，源自 BINAQUAL 的定位质量指标优于信噪比（SNR），能更贴近地预测人类选择的 sweet spot。</li>
+<li>这表明在 AR 环境中，相位类线索对感知 QoE 的作用可能比强度类线索更重要。</li>
+<li>研究通过主观图与客观图的相似度指标（MAE、SSIM、EMD）对客观指标进行基准测试，展示了客观指标预测主观体验的潜力。</li>
+<li>结果可为未来沉浸式音频系统设计、AR 现场音乐空间布局与 QoE 评估方法提供指导。</li>
+</ul>
+<h2>一句话评价</h2>
+<p>本文首次将 NAVIQUAL 扩展到 6-DoF AR 现场音乐环境，并以 25 名听众的主观导航实验验证客观 sweet spot 预测，发现基于双耳定位质量的相位型指标比 SNR 更能解释 AR 中的感知 QoE。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.28026" target="_blank">REMORA: A Voice-First Memory Assistant for Grounded Personal Recall and Independent Living</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">Voice-First Assistive Memory Systems</span>
+                <strong>ID:</strong> <span class="tag">2611.28026</span>
+                <a href="pdfs/2611.28026.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Bilal Jawaid, Muhammad Maaz Uddin, Osama Farooqi, Saadia Karim<br>
+                <div style="margin-top:5px"><span class="tag">voice-first memory assistant</span><span class="tag">retrieval-augmented generation</span><span class="tag">grounded generation and abstention</span><span class="tag">speaker diarization</span><span class="tag">episodic memory</span><span class="tag">mild cognitive impairment</span><span class="tag">assistive technology</span></div>
+            </div>
+            <div class="summary-section">
+                <h2>核心痛点</h2>
+<p>日常生活中大量关键信息以口头形式出现且未被记录，例如用药间隔、临时变更的截止时间、文件放置位置等。这类信息具有操作性，却常在注意力被分散时出现，等到需要时只剩记忆这一份副本。对于轻度认知障碍、阿尔茨海默病或年龄相关情景记忆衰退人群，这种缺口会直接限制独立生活能力。传统笔记、提醒和日历要求用户先意识到信息重要、打断当前任务并准确转录，反而增加外源性认知负荷，且第一步正是记忆障碍最先影响的环节。</p>
+<h2>方法创新</h2>
+<p>REMORA（Reliable Enhanced Memory-Oriented Recall Assistant）是一个语音优先的记忆助手，核心设计包括：
+- ** consented speech capture<strong>：通过普通网页和移动端采集经同意的语音，降低硬件门槛；
+- </strong>语音转写与说话人分离<strong>：将对话转写并区分说话人，因为“谁说的”常是回忆查询的关键；
+- </strong>结构化记忆抽取<strong>：从对话中抽取任务、预约、姓名、指令、物品位置等记忆候选，每条记录保留指向源转写片段的溯源信息；
+- </strong>单一关系型记录系统<strong>：将记录、嵌入和关系保存在同一个关系型系统中，而不是拆分到关系库、向量库和图数据库；
+- </strong>混合检索<strong>：融合词汇、语义、关系和近因信号，因为单一信号无法覆盖用户追问个人过去的多种方式；
+- </strong>显式查询与置信度门控提示<strong>：用户可主动提问，系统也可在上下文可推断需求时给出提示，否则保持沉默；
+- ** grounding contract</strong>：生成只能使用检索到的证据，若没有支持性记忆则拒答而非编造，因为关于个人过去的流畅虚构会被当作事实执行；
+- <strong>隐私设计</strong>：可见的录音状态、可审阅记录和可靠删除被作为设计要求，而非可选设置。</p>
+<p>论文贡献包括：带溯源的单库记忆架构；面向个人记忆的混合检索形式及单一信号失效的查询类别；规定辅助回忆何时保持沉默的交互模型；将拒答正确性作为可测量结果的 grounding contract。</p>
+<h2>实验结果</h2>
+<p>论文片段报告了两类评估：需求调查和记忆丧失用户的试点研究。结果表明：会话性遗忘远不止存在于临床人群；在受控环境中，有依据且简洁的回忆是可行的；隐私而非准确性，是采用的主要约束。片段未给出具体样本量、准确率或统计数值，因此不能从截取内容判断完整实验强度。</p>
+<h2>一句话评价</h2>
+<p>REMORA 提出了一个以溯源、混合检索、拒答和隐私为核心的语音优先辅助记忆架构，问题定位清晰且设计原则合理，但截取片段显示其证据仍以需求调查和小规模试点为主，尚需完整定量评估验证其可靠性、可用性与实际部署价值。</p>
+            </div>
+        </div>
+        
+        <div class="paper-card">
+            <h2 class="paper-title">
+                <a href="https://arxiv.org/abs/2611.28020" target="_blank">SoundFleXR: Selectively Constraining Axes of Audio Rendering Presentations</a>
+                <span style="float:right; font-size:0.6em; color:#999; font-weight:normal;">2026-11-25</span>
+            </h2>
+            <div class="paper-meta">
+                <span class="tag category-tag">XR Spatial Audio Localization</span>
+                <strong>ID:</strong> <span class="tag">2611.28020</span>
+                <a href="pdfs/2611.28020.pdf" target="_blank" class="tag" style="background:#e74c3c; color:white; text-decoration:none;">📄 Local PDF</a><br>
+                <strong>Authors:</strong> Brandon Woodard, Hyunju Kim, Hyunsung Cho, David Lindlbauer, Rhonda Wilson, Joseph LaViola Jr<br>
+                <div style="margin-top:5px"><span class="tag">空间音频</span><span class="tag">扩展现实(XR)</span><span class="tag">头相关传输函数(HRTF)</span><span class="tag">声源定位</span><span class="tag">3DoF/6DoF交互</span></div>
+            </div>
+            <div class="summary-section">
+                <h3>核心痛点</h3>
+<p>XR 系统越来越多地依赖空间音频帮助用户定位、理解和交互虚拟内容，尤其是视野外内容。现有实践常以高保真、真实感作为默认目标，广泛使用完整 HRTF 渲染，但对不同 XR 任务目标下需要多少空间音频维度缺乏设计指导。人类对空间维度敏感度并不均匀：水平方位角依赖 ITD/ILD 等稳健双耳线索，垂直仰角依赖较弱的单耳频谱线索，且非个性化 HRTF 容易带来仰角误差和前后混淆。同时，XR 任务存在 3DoF 朝向任务与 6DoF 平移任务，二者所需空间信息可能不同。</p>
+<h3>方法创新</h3>
+<p>论文提出 SoundFleXR 研究，将“约束/收缩音频呈现维度”视为一种设计策略，而非单纯降低保真度。作者定义音频呈现维度为渲染器在虚拟声源与左右耳通道之间保留的方向结构，并比较三种条件：TWO-CHANNEL 普通双声道立体声、AZIMUTH-ONLY HRTF 仅保留方位角的 HRTF、FULL HRTF 完整 HRTF。实验覆盖 3DoF 朝向任务和 6DoF 搜索任务，结合定位准确率等定量指标与定性反馈，回答两个问题：更少空间维度的简化音频能否达到与 HRTF 相当的定位表现；任务目标、DoF 与音频呈现维度之间的匹配/错配能带来哪些设计经验与应用分类。</p>
+<h3>实验结果</h3>
+<p>摘要报告显示，AZIMUTH-ONLY HRTF 在总角度误差上相对 FULL HRTF 达到互为非劣效，覆盖不同任务条件，包括 3DoF 中最严格的 5° 容差；在 3DoF 和 6DoF 的方位角误差上，在 10° 及更大容差下也保持可比。相比之下，TWO-CHANNEL 需要更粗的容差才能达到非劣效：在 6DoF 方位角误差中于 15° 容差下可与 FULL HRTF 可比，但在 10° 下不能。由此论文提炼设计经验与应用场景，说明何时较少空间线索已足够、何时更丰富空间线索更有益。</p>
+<h3>一句话评价</h3>
+<p>SoundFleXR 挑战了“越真实越好”的默认假设，表明在主要依赖水平方位的 XR 定位任务中，仅方位角 HRTF 可在多种条件下不劣于完整 HRTF，而所需音频维度应由任务 DoF、空间需求与可接受容差共同决定。</p>
+            </div>
+        </div>
+        <h2 class="date-divider">📅 2026-11-23</h2>
         <div class="paper-card">
             <h2 class="paper-title">
                 <a href="https://arxiv.org/abs/2611.26796" target="_blank">Efficient Conversational Multi-Talker ASR with Predicted Speaker-Agnostic Activity Streams</a>
